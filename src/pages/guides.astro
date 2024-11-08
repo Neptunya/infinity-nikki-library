@@ -3,20 +3,20 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 ---
-
 <html lang="en">
 	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>INL</title>
+		<title>Astro</title>
 	</head>
 	<body>
 		<Header />
-		<h1>About the Infinity Nikki Library</h1>
-		<h2>WIP</h2>
-		<p>This site is a compliation of information and guides for Infinity Nikki</p>
+
+		<h1>Guides</h1>
+		<p>Want to learn more about how Infinity Nikki works?</p>
+		<ul>
+			<li><a href="/guides/styling-battle-scoring/">Styling Battle Scoring</a></li>
+		</ul>
 		<Footer />
 		<script>
 			import "../scripts/menu.js";
