@@ -18,3 +18,12 @@ window.addEventListener('resize', () => {
     header.classList.remove('no-transition');
   }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+	const banner = document.querySelector(".banner-container");
+	const content = document.querySelector(".content-container");
+
+	if (banner && content) {
+		content.classList.add("with-banner");
+	}
+});

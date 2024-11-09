@@ -16,7 +16,7 @@ import Footer from '../components/Footer.astro';
 	</head>
 	<body>
         <Header />
-		<div class="site-content">
+		<div class="content-container">
 			<h1>{frontmatter.title}</h1>
 			<p>Last Updated: {frontmatter.lastUpdated}</p>
 			<p>By: {frontmatter.author}</p>
@@ -24,7 +24,7 @@ import Footer from '../components/Footer.astro';
 		</div>
         <Footer />
 		<script>
-			import "../scripts/menu.js";
+			import "../scripts/script.js";
 		</script>
     </body>
 
