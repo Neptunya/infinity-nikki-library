@@ -1,16 +1,14 @@
 @import "header.css";
 
+body {
+	margin: 0;
+	padding: 0;
+}
+
 html {
 	background-color: #292535;
 	color: white;
 	font-family: 'PT Sans', sans-serif;
-}
-	
-body {
-	margin: 0 auto;
-	width: auto;
-	padding: 1rem 5rem;
-	line-height: 1.5;
 }
 
 img {
@@ -46,6 +44,20 @@ strong {
 	color: #edb1bd;
 }
 
-.expanded {
-	display: unset;
+.site-content {
+	margin: 0 auto;
+	width: auto;
+	padding: 1rem 5rem;
+	line-height: 1.5;
+}
+
+.banner-container {
+	position: relative;
+	width: 100%;
+	height: 50vh;
+	background-image: url('/src/images/homepage_banner.jpg');
+	background-size: cover; 
+	background-position: center;
+	background-repeat: no-repeat;
+	opacity: 0.8;
 }

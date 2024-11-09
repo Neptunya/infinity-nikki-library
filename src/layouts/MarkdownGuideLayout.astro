@@ -16,10 +16,12 @@ import Footer from '../components/Footer.astro';
 	</head>
 	<body>
         <Header />
-        <h1>{frontmatter.title}</h1>
-        <p>Last Updated: {frontmatter.lastUpdated}</p>
-        <p>By: {frontmatter.author}</p>
-        <slot />
+		<div class="site-content">
+			<h1>{frontmatter.title}</h1>
+			<p>Last Updated: {frontmatter.lastUpdated}</p>
+			<p>By: {frontmatter.author}</p>
+			<slot />
+		</div>
         <Footer />
 		<script>
 			import "../scripts/menu.js";

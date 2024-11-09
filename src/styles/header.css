@@ -1,7 +1,10 @@
 header {
 	position: sticky;
 	top: 0;
-	padding-top: 10px;
+	margin: 0 auto;
+	width: auto;
+	padding: 1rem 5rem;
+	line-height: 1.5;
 }
 
 .header-block {
@@ -63,7 +66,7 @@ header {
 
 .nav-links a:hover,
 .nav-links a:focus {
-	background-color: #5d566f;
+	background-color: #6c657d;
 	border-radius: 10px;
 }
 
@@ -79,7 +82,7 @@ header {
 	display: none;
 }
 
-  @media screen and (min-width: 600px) {
+@media screen and (min-width: 600px) {
 	.nav-links {
 		margin-left: 5em;
 		display: block;
