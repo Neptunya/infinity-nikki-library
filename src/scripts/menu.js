@@ -9,7 +9,7 @@ hamburger.addEventListener('click', () => {
 
 // Disable transition during window resize
 window.addEventListener('resize', () => {
-  if (window.innerWidth > 700) {
+  if (window.innerWidth > 600) {
     // Remove expanded class and prevent transition during resize
     navLinks.classList.remove('expanded');
     header.classList.add('no-transition');
