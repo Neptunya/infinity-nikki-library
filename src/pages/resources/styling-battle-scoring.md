@@ -16,14 +16,14 @@ To be frank, it doesn’t, unless you happen to be like me and are curious about
 
 This formula is **only an estimate based on the results I got in-game**, I do not have any way to 100% confirm its validity. Additionally, this estimation only holds true **when all scoring nodes in the Heart of Infinity are unlocked**. The below image shows where nodes that increase your score are located on the Heart of Infinity. That whole line gives you bonuses to your styling challenge scores.
 
-![The Heart of Infinity, with an emphasis on the arc that contains nodes that boost your styling challenge scores](../../images/scoring_nodes.png)
+![](../../images/scoring_nodes.png)
 
 If you haven’t unlocked any scoring nodes in the Heart of Infinity yet and would be willing to do some data collection, please shoot me (Neptunya) a DM on Discord.
 
 ## How are styling battles scored?
 The score of any clothing item **except Eurekas** in a styling battle can be estimated by the below formula, **assuming all scoring nodes in the Heart of Infinity are unlocked**. 
 
-![Latex for the equation: Score=(Recommended Style Values*3.7) +(ΣOther Style Values*0.336)](../../images/styling_challenge_score_formula.png)
+![](../../images/styling_challenge_score_formula.png)
 
 ### In plain language:
 
@@ -31,7 +31,7 @@ An item’s score in a styling battle is calculated by multiplying the recommend
 
 Style values refer to the elegant, fresh, sweet, sexy, and cool numbers each clothing item has.
 
-![Window that contains style values of a clothing item](../../images/clothing_item_details.png)
+![](../../images/clothing_item_details.png)
 
 You can get to the above window that has the style values by mousing over an item icon in the dress-up menu and hovering over the i that shows up, which will open up a window with the item’s details.
 
