@@ -1,28 +1,45 @@
 ---
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
+import PhotoExpeditionsLayout from '../../layouts/PhotoExpeditionsLayout.astro';
 import '../../styles/global.css';
+import '../../styles/photo-expeditions.css';
 ---
-<html lang="en">
-	<head>
-		<meta charset="utf-8"/>
-		<link rel="icon" type="image/png" href="src/images/pearfect_pal_logo.png" />
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-		<meta name="viewport" content="width=device-width" />
-		<title>Photo Expeditions | INL</title>
-	</head>
-	<body>
-		<Header />
-		<div class="content-container">
-			<h1>Photo Expeditions</h1>
-			<p>Last Updated: 11/09/2024</p>
-			<p>Need some help with photo Expedition locations and camera positioning? Look no further, your fellow stylists are here to help! Have information for locations not on this page? Join the <a href=https://discord.gg/infinitynikki>Infinity Nikki Discord server</a> and make your submission through the compendium forum!</p>
-		</div>
-		<Footer />
-		<script>
-			import "../../scripts/script.js";
-		</script>
-	</body>
-</html>
+
+<PhotoExpeditionsLayout>
+    
+            <div class="card" id="loc-4">
+                <h2>4. Lilina's Statue</h2>
+                <p>Contributed By: Neptunya<br>In Front of the Mayor's Residence, Florawish</p>
+                <img src="/src/images/photo-expeditions/4_map_cropped.png" />
+                <img src="/src/images/photo-expeditions/4_pic.jpeg" />
+            </div>
+            <div class="card" id="loc-7">
+                <h2>7. Lakeside Picnic Area</h2>
+                <p>Contributed By: Neptunya<br>In Front of the Mayor's Residence, Florawish</p>
+                <img src="/src/images/photo-expeditions/7_map_cropped.png" />
+                <img src="/src/images/photo-expeditions/7_pic.jpeg" />
+            </div>
+            <div class="card" id="loc-8">
+                <h2>8. Dock Benches</h2>
+                <p>Contributed By: Neptunya<br>In Front of the Mayor's Residence, Florawish</p>
+                <img src="/src/images/photo-expeditions/8_map_cropped.png" />
+                <img src="/src/images/photo-expeditions/8_pic.jpeg" />
+            </div>
+            <div class="card" id="loc-10">
+                <h2>10. Ruins Plaza Corner</h2>
+                <p>Contributed By: Neptunya<br>Dream Warehouse Spiral Corridor, Florawish</p>
+                <img src="/src/images/photo-expeditions/10_map_cropped.png" />
+                <img src="/src/images/photo-expeditions/10_pic.jpeg" />
+            </div>
+            <div class="card" id="loc-11">
+                <h2>11. Emerald Pond</h2>
+                <p>Contributed By: Neptunya<br>Cavern Near the Warehouse, Florawish</p>
+                <img src="/src/images/photo-expeditions/11_map_cropped.png" />
+                <img src="/src/images/photo-expeditions/11_pic.jpeg" />
+            </div>
+            <div class="card" id="loc-14">
+                <h2>14. Sanctum of the Observant</h2>
+                <p>Contributed By: Neptunya<br>In Front of the Sanctum of the Observant, Florawish</p>
+                <img src="/src/images/photo-expeditions/14_map_cropped.png" />
+                <img src="/src/images/photo-expeditions/14_pic.jpeg" />
+            </div>
+</PhotoExpeditionsLayout>

@@ -1,0 +1,39 @@
+input {
+    background-color: #353142;
+    color: white;
+    border: 1px solid #6c657d;
+    padding: 5px 10px;
+    margin: 0 10px;
+    margin-bottom: 10px;
+}
+
+input[type=number] {
+    font-size: 1rem;
+    width: 70px;
+}
+
+.card {
+    background-color: #353142;
+    padding: 15px;
+    margin: 10px 20px;
+    border-radius: 10px;
+    display: grid;
+    justify-content: start;
+}
+
+.card h2 {
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+.card p {
+    margin-top: 0px;
+}
+
+.card img {
+    margin-bottom: 10px;
+    display: block;
+    align-self: left;
+    max-height: 40vh;
+    border-radius: 5px;
+}

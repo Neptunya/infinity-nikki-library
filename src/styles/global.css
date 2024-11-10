@@ -6,8 +6,6 @@ html {
 	background-color: #292535;
 	color: white;
 	font-family: 'PT Sans', sans-serif;
-	display: grid;
-	grid-template-rows: 1fr auto;
 	
 }
 
