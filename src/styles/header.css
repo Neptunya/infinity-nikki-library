@@ -5,6 +5,7 @@ header {
 	width: auto;
 	padding: 1rem 5rem;
 	line-height: 1.5;
+	z-index: 100;
 }
 
 .header-block {
@@ -16,6 +17,7 @@ header {
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
+	overflow: visible;
 }
 
 .logo {
