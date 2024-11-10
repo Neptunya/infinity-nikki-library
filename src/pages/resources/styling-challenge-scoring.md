@@ -1,12 +1,12 @@
 ---
 layout: ../../layouts/MarkdownGuideLayout.astro
-title: 'Styling Battle Scoring'
-lastUpdated: 11/07/2024
-description: 'A breakdown on how styling battles are scored'
+title: 'Styling Challenge Scoring'
+id: 'styling-challenge-scoring'
+createDate: 11/07/2024
+lastUpdated: 11/09/2024
+description: 'A breakdown on how styling challenges are scored'
 author: 'Neptunya'
-image:
-    url: 'https://docs.astro.build/assets/rose.webp'
-    alt: 'The Astro logo on a dark background with a pink glow.'
+image: '/src/images/text-guides/styling-challenge-scoring/styling_challenge_scoring_banner.png'
 tags: ["math", "text guide"]
 ---
 ## Why does knowing the scoring formula matter?
@@ -20,14 +20,14 @@ This formula is **only an estimate based on the results I got in-game**, I do no
 
 If you haven’t unlocked any scoring nodes in the Heart of Infinity yet and would be willing to do some data collection, please shoot me (Neptunya) a DM on Discord.
 
-## How are styling battles scored?
-The score of any clothing item **except Eurekas** in a styling battle can be estimated by the below formula, **assuming all scoring nodes in the Heart of Infinity are unlocked**. 
+## How are styling challenges scored?
+The score of any clothing item **except Eurekas** in a styling challenge can be estimated by the below formula, **assuming all scoring nodes in the Heart of Infinity are unlocked**. 
 
 ![](../../images/text-guides/styling-challenge-scoring/styling_challenge_score_formula.png)
 
 ### In plain language:
 
-An item’s score in a styling battle is calculated by multiplying the recommended attribute’s value by 3.7 and adding that with the sum of the other attribute’s values, each multiplied by 0.336.
+An item’s score in a styling challenge is calculated by multiplying the recommended attribute’s value by 3.7 and adding that with the sum of the other attribute’s values, each multiplied by 0.336.
 
 Style values refer to the elegant, fresh, sweet, sexy, and cool numbers each clothing item has.
 
@@ -47,7 +47,7 @@ Once again, I just don’t have enough data. Eureka items don’t get score bonu
 
 ## How was this formula derived?
 
-I used round 1 of mira crown wishfield styling challenge, where the recommended style was sweet. I unequipped everything and just chose a dress, hair, and shoes and noted down the style values for each piece. Then, I went through the styling battle, noting down the score I got for the clothing, hair, and footwear category, which I did with all the dress, hair, and shoe options I had available.
+I used round 1 of mira crown wishfield styling challenge, where the recommended style was sweet. I unequipped everything and just chose a dress, hair, and shoes and noted down the style values for each piece. Then, I went through the styling challenge, noting down the score I got for the clothing, hair, and footwear category, which I did with all the dress, hair, and shoe options I had available.
 
 I modeled the scoring formula as:
 

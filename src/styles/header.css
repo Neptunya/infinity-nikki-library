@@ -84,6 +84,23 @@ header {
 	display: none;
 }
 
+.content-container.with-banner {
+	min-height: calc(65vh - 100px);
+	margin-top: 22vh;
+}
+
+.banner-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 35vh;
+	background-size: cover; 
+	background-position: center;
+	background-repeat: no-repeat;
+	opacity: 0.8;
+}
+
 @media screen and (min-width: 600px) {
 	.nav-links {
 		margin-left: 5em;
@@ -107,4 +124,16 @@ header {
 		display: none;
 	}
 	
+}
+
+#homepage-banner {
+	background-image: url('/src/images/homepage_banner.jpg');
+}
+
+#styling-challenge-scoring-banner {
+	background-image: url('/src/images/text-guides/styling-challenge-scoring/styling_challenge_scoring_banner.jpeg');
+}
+
+#photo-expeditions-banner {
+	background-image: url('/src/images/photo-expeditions/photo_expeditions_banner.jpeg');
 }

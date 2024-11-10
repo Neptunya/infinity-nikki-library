@@ -15,7 +15,8 @@ import Footer from '../components/Footer.astro';
 		<title>{frontmatter.title} | INL</title>
 	</head>
 	<body>
-        <Header />
+		<Header />
+        <div class="banner-container" id={frontmatter.id+"-banner"}></div>
 		<div class="content-container">
 			<h1>{frontmatter.title}</h1>
 			<p>Last Updated: {frontmatter.lastUpdated}</p>

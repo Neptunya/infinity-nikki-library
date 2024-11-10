@@ -33,6 +33,10 @@ h1 {
 	font-size: 2.5rem;
 }
 
+h3 {
+	font-size: 1.5rem;
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -59,17 +63,49 @@ strong {
 	padding-bottom: 50px;
 }
 
-.content-container.with-banner {
-	min-height: calc(65vh - 100px);
+.guide-card {
+	display: flex;
+	background-color: #353142;
+    padding: 15px;
+    margin: 10px 20px;
+    border-radius: 10px;
+	max-height: 100%;
+	overflow: hidden;
 }
 
-.banner-container {
-	position: relative;
-	width: 100%;
-	height: 35vh;
-	background-image: url('/src/images/homepage_banner.jpg');
-	background-size: cover; 
-	background-position: center;
-	background-repeat: no-repeat;
-	opacity: 0.8;
+.card-row {
+	flex-direction: row;
 }
+
+.card-col {
+	flex-direction: column;
+}
+
+.guide-card > img {
+	max-height: 100%;
+	height: auto;
+	border-radius: 5px;
+	margin: 10px;
+}
+
+.img-card-row {
+	max-width: 40%;
+}
+
+.img-card-col {
+	max-height: 25%
+}
+
+.guide-card-link {
+	text-decoration: none;
+	max-height: 10vh;
+}
+
+.guide-card-link h3, .guide-card-link p {
+	color: white;
+}
+
+.guide-card-link h3:hover {
+	text-decoration: underline;
+}
+
