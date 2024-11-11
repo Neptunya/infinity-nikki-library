@@ -3,6 +3,9 @@ const navLinks = document.querySelector('.nav-links');
 const header = document.querySelector('header');
 const guideCards = document.querySelectorAll('.guide-card');
 const imgCards = document.querySelectorAll('.guide-card > img');
+const content = document.querySelector(".content-container");
+const banner = document.querySelector(".banner-container");
+
 window.addEventListener('resize', () => {
   
   if (window.innerWidth > 600) {
@@ -34,12 +37,15 @@ window.addEventListener('resize', () => {
       img.classList.add('img-card-col')
     });
   }
+  
+  if (window.innerWidth > 1000) {
+    content.style.padding = "1rem 5rem";
+  } else {
+    content.style.padding = "1rem 2rem";
+  }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-	const banner = document.querySelector(".banner-container");
-	const content = document.querySelector(".content-container");
-
 	if (banner && content) {
 		content.classList.add("with-banner");
 	}
@@ -58,6 +64,12 @@ document.addEventListener("DOMContentLoaded", () => {
     imgCards.forEach(img => {
       img.classList.add('img-card-col')
     });
+  }
+  
+  if (window.innerWidth > 1000) {
+    content.style.padding = "1rem 5rem";
+  } else {
+    content.style.padding = "1rem 2rem";
   }
   
   // Toggle expanded class on click for smaller screens

@@ -76,8 +76,6 @@ input[type=text] {
 
 .content-container {
 	margin: 0 auto;
-	width: auto;
-	padding: 1rem 5rem;
 	line-height: 1.5;
 	min-height: calc(88vh - 100px);
 	padding-bottom: 50px;
