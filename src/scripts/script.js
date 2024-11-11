@@ -1,9 +1,4 @@
-// Toggle expanded class on click for smaller screens
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-hamburger.addEventListener('click', () => {
-  navLinks.classList.toggle('expanded');
-});
+
 
 // Disable transition during window resize
 const header = document.querySelector('header');
@@ -65,4 +60,18 @@ document.addEventListener("DOMContentLoaded", () => {
       img.classList.add('img-card-col')
     });
   }
+  
+  // Toggle expanded class on click for smaller screens
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  const contentWithBanner = document.querySelector('.content-container.with-banner')
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('expanded');
+    if (contentWithBanner.id === "header-expanded") {
+      contentWithBanner.removeAttribute('id');
+    } else {
+      contentWithBanner.id = "header-expanded";
+    }
+  });
+    
 });

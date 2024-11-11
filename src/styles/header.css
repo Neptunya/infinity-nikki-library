@@ -87,6 +87,7 @@ header {
 .content-container.with-banner {
 	min-height: calc(65vh - 100px);
 	margin-top: 22vh;
+	transition: margin-top 0.3s ease;
 }
 
 .banner-container {
@@ -124,6 +125,11 @@ header {
 		display: none;
 	}
 	
+}
+
+#header-expanded {
+	margin-top: 8vh;
+	transition: margin-top 0.3s ease;
 }
 
 #homepage-banner {
