@@ -1,10 +1,10 @@
 // Disable transition during window resize
 const navLinks = document.querySelector('.nav-links');
 const header = document.querySelector('header');
-const guideCards = document.querySelectorAll('.guide-card');
-const imgCards = document.querySelectorAll('.guide-card > img');
 const content = document.querySelector(".content-container");
 const banner = document.querySelector(".banner-container");
+const guideCards = document.querySelectorAll('.guide-card');
+const imgCards = document.querySelectorAll('.guide-card > img');
 
 window.addEventListener('resize', () => {
   
@@ -40,8 +40,10 @@ window.addEventListener('resize', () => {
   
   if (window.innerWidth > 1000) {
     content.style.padding = "1rem 5rem";
+    header.style.padding = "1rem 5rem";
   } else {
     content.style.padding = "1rem 2rem";
+    header.style.padding = "1rem 2rem";
   }
 });
 
@@ -68,8 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
   
   if (window.innerWidth > 1000) {
     content.style.padding = "1rem 5rem";
+    header.style.padding = "1rem 5rem";
   } else {
     content.style.padding = "1rem 2rem";
+    header.style.padding = "1rem 2rem";
   }
   
   // Toggle expanded class on click for smaller screens
