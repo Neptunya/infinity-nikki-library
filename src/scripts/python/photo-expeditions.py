@@ -13,8 +13,8 @@ def crop_map_img(num):
     bottom = (original_height + target_height) / 2
     
     cropped_im = im.crop((left, top, right, bottom))
-    save_loc = f"src/images/photo-expeditions/{num}_map_cropped.png"
-    cropped_im.save(save_loc, format="PNG")
+    save_loc = f"images/photo-expeditions/{num}_map_cropped.png"
+    cropped_im.save(f"public/{save_loc}", format="PNG")
     return save_loc
 
 data = pd.read_csv('src/scripts/python/csv/IN Data - Photo Expeditions.csv')
@@ -36,7 +36,7 @@ for _, row in data.iterrows():
                 <h2>{row['#']}. {row['Name']}</h2>
                 <p>Contributed By: {row['Contributor']}<br>{row['Teleport']}, {row['Area']}</p>
                 <img src="/{save_loc}" />
-                <img src="/src/images/photo-expeditions/{row['#']}_pic.jpeg" />
+                <img src="/images/photo-expeditions/{row['#']}_pic.jpeg" />
             </div>"""
     photo_expedition_cards.append(str(card))
 

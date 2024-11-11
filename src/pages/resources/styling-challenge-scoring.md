@@ -6,7 +6,7 @@ createDate: 11/07/2024
 lastUpdated: 11/09/2024
 description: 'A breakdown on how styling challenges are scored'
 author: 'Neptunya'
-image: '/src/images/text-guides/styling-challenge-scoring/styling_challenge_scoring_banner.png'
+image: '/images/text-guides/styling-challenge-scoring/styling_challenge_scoring_banner.png'
 tags: ["math", "text guide"]
 ---
 ## Why does knowing the scoring formula matter?
@@ -16,14 +16,14 @@ To be frank, it doesn’t, unless you happen to be like me and are curious about
 
 This formula is **only an estimate based on the results I got in-game**, I do not have any way to 100% confirm its validity. Additionally, this estimation only holds true **when all scoring nodes in the Heart of Infinity are unlocked**. The below image shows where nodes that increase your score are located on the Heart of Infinity. That whole line gives you bonuses to your styling challenge scores.
 
-![](../../images/text-guides/styling-challenge-scoring/scoring_nodes.png)
+![](/images/text-guides/styling-challenge-scoring/scoring_nodes.png)
 
 If you haven’t unlocked any scoring nodes in the Heart of Infinity yet and would be willing to do some data collection, please shoot me (Neptunya) a DM on Discord.
 
 ## How are styling challenges scored?
 The score of any clothing item **except Eurekas** in a styling challenge can be estimated by the below formula, **assuming all scoring nodes in the Heart of Infinity are unlocked**. 
 
-![](../../images/text-guides/styling-challenge-scoring/styling_challenge_score_formula.png)
+![](/images/text-guides/styling-challenge-scoring/styling_challenge_score_formula.png)
 
 ### In plain language:
 
@@ -31,11 +31,11 @@ An item’s score in a styling challenge is calculated by multiplying the recomm
 
 Style values refer to the elegant, fresh, sweet, sexy, and cool numbers each clothing item has.
 
-![](../../images/text-guides/styling-challenge-scoring/clothing_item_details.png)
+![](/images/text-guides/styling-challenge-scoring/clothing_item_details.png)
 
 You can get to the above window that has the style values by mousing over an item icon in the dress-up menu and hovering over the i that shows up, which will open up a window with the item’s details.
 
-![](../../images/text-guides/styling-challenge-scoring/clothing_item_info_hover.png)
+![](/images/text-guides/styling-challenge-scoring/clothing_item_info_hover.png)
 
 ### How do recommended labels play into this?
 
@@ -51,7 +51,7 @@ I used round 1 of mira crown wishfield styling challenge, where the recommended 
 
 I modeled the scoring formula as:
 
-![](../../images/text-guides/styling-challenge-scoring/score_formula_model.png)
+![](/images/text-guides/styling-challenge-scoring/score_formula_model.png)
 
 To determine each Style’s weight, I applied the least squares method using the equations from all available scores. The python code below shows how I did ran those calculations:
 

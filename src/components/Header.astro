@@ -1,14 +1,12 @@
 ---
 import Navigation from './Navigation.astro';
-import { Picture } from 'astro:assets';
-import myImage from '../images/pearfect_pal_logo.png';
 import Hamburger from './Hamburger.astro';
 ---
 
 <header>
 	<div class="header-block">
 		<a href="/">
-			<Picture src={myImage} formats={['png']} alt="Pear Pal" class="logo" />
+			<img src="/images/pearfect_pal_logo.png" class="logo"/>
 		</a>
 		<Hamburger />
 		<div class="break"></div>

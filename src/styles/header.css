@@ -127,13 +127,13 @@ header {
 }
 
 #homepage-banner {
-	background-image: url('/src/images/homepage_banner.jpg');
+	background-image: url('/images/homepage_banner.jpg');
 }
 
 #styling-challenge-scoring-banner {
-	background-image: url('/src/images/text-guides/styling-challenge-scoring/styling_challenge_scoring_banner.jpeg');
+	background-image: url('/images/text-guides/styling-challenge-scoring/styling_challenge_scoring_banner.jpeg');
 }
 
 #photo-expeditions-banner {
-	background-image: url('/src/images/photo-expeditions/photo_expeditions_banner.jpeg');
+	background-image: url('/images/photo-expeditions/photo_expeditions_banner.jpeg');
 }
