@@ -1,6 +1,5 @@
-
-
 // Disable transition during window resize
+const navLinks = document.querySelector('.nav-links');
 const header = document.querySelector('header');
 const guideCards = document.querySelectorAll('.guide-card');
 const imgCards = document.querySelectorAll('.guide-card > img');
@@ -63,7 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Toggle expanded class on click for smaller screens
   const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.querySelector('.nav-links');
   const contentWithBanner = document.querySelector('.content-container.with-banner')
   hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('expanded');
