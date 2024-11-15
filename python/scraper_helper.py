@@ -38,7 +38,7 @@ y_cards = [y + top for y in y_cards]
 y_cards_interval = [0, 246, 371]
 
 ss = ['Hair', '']
-fields = ['Name', 'Rarity', 'Slot', 'Suit', 'Level', 'Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool', 'Blings', 'Threads', 'Bubbles']
+fields = ['Name', 'Rarity', 'Slot', 'Outfit', 'Level', 'Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool', 'Blings', 'Threads', 'Bubbles', 'Ability', 'Source', 'Labels']
 r = []
 rows = []
 
@@ -104,9 +104,6 @@ def get_rarity(x_mod, y_mod):
 
     return len(filtered_points)
 
-def get_img(name, x_mod, y_mod):
-    pg.screenshot(f'./python/images/clothing_item_scraper/item_img/{name}.png', region=(item_img[0]+x_mod, item_img[1]+y_mod, item_img[2], item_img[3]))
-
 def get_lvl():
     pg.screenshot(f'./python/images/clothing_item_scraper/lvl.png', region=(item_lvl[0], item_lvl[1], item_lvl[2], item_lvl[3]))
     try:
@@ -134,7 +131,6 @@ def get_item_details(x_card, y_card, last=False):
     if last:
         y_mod += 13
     name = get_name(x_mod, y_mod)
-    get_img(name, x_mod, y_mod)
     rarity = get_rarity(x_mod, y_mod)
     r.append(name)
     r.append(rarity)

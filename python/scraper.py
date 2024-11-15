@@ -58,13 +58,3 @@ with open(f, 'w', newline='') as csvfile:
 		csvwriter = csv.writer(csvfile)
 		csvwriter.writerow(fields)
 		csvwriter.writerows(rows)
-		
-'''TODO: 
-- add costs to csv
-	- based on lvl + rarity + slot, ezpz
-- add suits to csv
-	- use compendium menu
-	- go through entries outfit by outfit and make a dictionary
-		- key = item | value = outfit 
-	- go through csv row by row and search through dict for outfit and fill out csv
-'''

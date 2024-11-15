@@ -1,0 +1,10 @@
+{ "abilities": {
+    "Purification": ["Wind of Purity"],
+    "Animal Grooming": ["Bye-Bye Dust"],
+    "Bug Catching": ["Afternoon Shine"],
+    "Fishing": ["Rippling Serenity", "Tidal Shark Mirage"],
+    "Electrical Repair": ["Fully Charged"],
+    "Gliding": ["Floral Memory"],
+    "Floating": ["Bubbly Voyage"],
+    "Performance": ["Symphony of Strings"]
+}}
