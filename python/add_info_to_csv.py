@@ -1,22 +1,44 @@
 import json
 import pandas as pd
+import csv
 
-costs_data = {}
+with open('./python/json/costs.json') as f:
+    costs_data = json.load(f)
 
 def get_costs(row):
     slot, rarity, level = row['Slot'], str(row['Rarity']), str(row['Level'])
     cost_values = costs_data.get("costs", {}).get(slot, {}).get(rarity, {}).get(level, {})
-    row['blings'] = cost_values.get('blings', row['Blings'])
-    row['threads'] = cost_values.get('threads', row['Threads'])
-    row['bubbles'] = cost_values.get('bubbles', row['Bubbles'])
+    row['Blings'] = cost_values.get('blings', row['Blings'])
+    row['Threads'] = cost_values.get('threads', row['Threads'])
+    row['Bubbles'] = cost_values.get('bubbles', row['Bubbles'])
     return row
 
 def add_costs():
-    with open('./python/json/costs.json') as f:
-        costs_data = json.load(f)
     df = pd.read_csv('./python/csv/clothing_item_data.csv')
     df = df.apply(get_costs, axis=1)
-    df.to_csv("./python/csv/clothing_item_data.csv", index=False)
+    df.to_csv("./python/csv/clothing_item_data_with_costs.csv", index=False)
+
+def add_labels():
+    with open('./python/json/labels.json', 'r') as f:
+        data = json.load(f)
+    csv_file = './python/csv/clothing_item_data.csv'
+    updated_rows = []
+    with open(csv_file, 'r', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        fieldnames = reader.fieldnames
+        for row in reader:
+            for label, items in data['labels'].items():
+                if row['Name'] in items:
+                    current_labels = row['Labels'].split(', ') if row['Labels'] else []
+                    if label not in current_labels:
+                        current_labels.append(label)
+                        row['Labels'] = ', '.join(current_labels)
+            updated_rows.append(row)
+            
+    with open('./python/csv/clothing_item_data_with_labels.csv', 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(updated_rows)
 
 def add_outfits_and_recolors():
     df = pd.read_csv('./python/csv/clothing_item_data.csv')
@@ -33,17 +55,15 @@ def add_outfits_and_recolors():
                 matching_rows['Outfit'] = recolored_outfit
                 df = pd.concat([df, matching_rows], ignore_index=True)
     df.to_csv('./python/csv/clothing_item_data.csv', index=False)
-    
+
 #add_costs()
+#add_labels()
 #add_outfits_and_recolors()
 
 
 '''TODO: 
 - add source to csv
 	- also via dict {item: source}
-- labels?
-  - filter in compendium
-  - dict {label: [items]}
 - makeup
   - csv w/makeup name, slot, rarity, and source
 - code to add abilities and source, recolors come last

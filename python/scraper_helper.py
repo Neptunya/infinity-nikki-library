@@ -38,7 +38,7 @@ y_cards = [y + top for y in y_cards]
 y_cards_interval = [0, 246, 371]
 
 ss = ['Hair', '']
-fields = ['Name', 'Rarity', 'Slot', 'Outfit', 'Level', 'Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool', 'Blings', 'Threads', 'Bubbles', 'Ability', 'Source', 'Labels']
+fields = ['Name', 'Rarity', 'Slot', 'Outfit', 'Level', 'Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool', 'Blings', 'Threads', 'Bubbles', 'Ability', 'Labels', 'Source']
 r = []
 rows = []
 

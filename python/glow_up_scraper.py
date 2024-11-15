@@ -1,6 +1,7 @@
 from scraper_helper import *
 import csv
 
+# 1280x720
 in_w.activate()
 time.sleep(2)
 
