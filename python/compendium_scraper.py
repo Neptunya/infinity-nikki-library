@@ -13,6 +13,9 @@ source_offset = [60, 30, 420, 75]
 
 with open('./python/json/labels.json') as f:
     labels_data = json.load(f)
+    
+with open('./python/json/colors.json') as f:
+    colors_data = json.load(f)
 
 with open('./python/json/source.json') as f:
     source_data = json.load(f)
@@ -60,16 +63,15 @@ def scrape_imgs():
     i = 0
     while prev_name != curr_name:
         sc(f'/item_img/{curr_name}', img_box)
-        scrape_source(curr_name)
         prev_name = curr_name
         if i < 3:
             lc2(90, 395 + (i * compendium_interval))
         elif i == 3:
-            pg.moveTo(90, 791)
+            pg.moveTo(197, 781)
             pg.scroll(-400)
         else: 
-            pg.moveTo(90, 791)
-            pg.scroll(-600)
+            pg.moveTo(197, 781)
+            pg.scroll(-607)
         pg.click()
         time.sleep(0.5)
         curr_name = img_to_str(sc("name", name_box))
@@ -82,14 +84,39 @@ def scrape_labels(label):
             break
         else:
             for j in range(3):
-                pg.screenshot(f'./python/images/clothing_item_scraper/name{i}{j}.png', region=(name_card[0] + (j * card_x_interval), name_card[1] + (i * card_y_interval), name_card[2], name_card[3]))
-                name = img_to_str_mod(f'name{i}{j}')
-                if name.strip():
+                pg.screenshot('./python/images/clothing_item_scraper/name.png', region=(name_card[0] + (j * card_x_interval), name_card[1] + (i * card_y_interval), name_card[2], name_card[3]))
+                name = img_to_str_mod('name')
+                if name.strip() or ():
                     print(name)
                     add_unique_value(label, name)
+                elif i == 0 and j == 0:
+                    # in case threads of reunion blank entry
+                    print(name)
                 else:
-                    with open('./python/json/labels.json', 'w') as f:
+                    with open('./python/json/colors.json', 'w') as f:
                         json.dump(labels_data, f, indent=4)
+                    exit_loops = True
+                    break
+
+# color filter in compendium doesn't work
+def scrape_colors(color):
+    exit_loops = False
+    for i in range(4):
+        if exit_loops:
+            break
+        else:
+            for j in range(3):
+                pg.screenshot('./python/images/clothing_item_scraper/name.png', region=(name_card[0] + (j * card_x_interval), name_card[1] + (i * card_y_interval), name_card[2], name_card[3]))
+                name = img_to_str_mod('name')
+                if name.strip():
+                    print(name)
+                    add_unique_value(color, name)
+                elif i == 0 and j == 0:
+                    # in case threads of reunion blank entry
+                    print(name)
+                else:
+                    with open('./python/json/colors.json', 'w') as f:
+                        json.dump(colors_data, f, indent=4)
                     exit_loops = True
                     break
 
@@ -121,11 +148,12 @@ def scrape_sources():
         if i < 3:
             lc2(90, 395 + (i * compendium_interval))
         elif i == 3:
-            pg.moveTo(90, 791)
+            pg.moveTo(197, 781)
             pg.scroll(-400)
         else: 
-            pg.moveTo(90, 791)
-            pg.scroll(-600)
+            pg.moveTo(197, 777)
+            pg.scroll(-607)
+        
         pg.click()
         time.sleep(0.5)
         curr_name = img_to_str(sc("name", name_box))

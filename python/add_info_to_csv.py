@@ -75,6 +75,7 @@ def add_outfits_and_recolors():
                 matching_rows = df[df['Name'] == item_name].copy()
                 matching_rows['Name'] = recolor_name
                 matching_rows['Outfit'] = recolored_outfit
+                matching_rows['Source'] = f'A recolor of {item_name} from {outfit_name}.'
                 df = pd.concat([df, matching_rows], ignore_index=True)
     df.to_csv('./python/csv/clothing_item_data.csv', index=False)
 
