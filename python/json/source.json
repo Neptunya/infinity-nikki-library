@@ -1,9 +1,19 @@
-{ "source": {
-    "outfits": {
-        "outfit name": "source (gacha, etc.)",
-        "n": "s",
-        "Rebirth Wish": "Turn in dews of inspiration to Kilo the Cadenceborn",
-    }, "items": {
-        "i": "s"
-    }
-}}
+{
+    "Crybaby Vest": "A unique creation made by an independent designer.",
+    "Dawn's Radiance": "Rare treasures scattered in chests found all around the world.",
+    "Dark Night Sky": "Rare treasures scattered in chests found all around the world.",
+    "Connected Agate": "Rare treasures scattered in chests found all around the world.",
+    "Unnamed Medal": "Rare treasures scattered in chests found all around the world.",
+    "Striped Celebration": "Rare treasures scattered in chests found all around the world.",
+    "Free Will": "Rare treasures scattered in chests found all around the world.",
+    "Into Midnight": "Rare treasures scattered in chests found all around the world.",
+    "Blank Beginnings": "Resonance from the Distant Sea",
+    "Painted Scenery": "Resonance from the Distant Sea",
+    "Painting Blossoms": "Resonance from the Distant Sea",
+    "Splashed Ink": "Resonance from the Distant Sea",
+    "Imaginative Painting": "Resonance from the Distant Sea",
+    "Stained Palette": "Resonance from the Distant Sea",
+    "New Colors": "Resonance from the Distant Sea",
+    "Trace of the Pen": "Resonance from the Distant Sea",
+    "Floral Dreamscape": "Resonance from the Distant Sea"
+}

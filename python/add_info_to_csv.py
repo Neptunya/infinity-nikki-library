@@ -40,6 +40,28 @@ def add_labels():
         writer.writeheader()
         writer.writerows(updated_rows)
 
+def add_sources():
+    with open('./python/json/source.json', 'r') as f:
+        data = json.load(f)
+    csv_file = './python/csv/clothing_item_data_with_labels.csv'
+    updated_rows = []
+    with open(csv_file, 'r', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        fieldnames = reader.fieldnames
+        for row in reader:
+            item_name = row["Name"]
+            
+            if item_name in data:
+                row["Source"] = data[item_name]
+            else:
+                row["Source"] = "" 
+            updated_rows.append(row)
+            
+    with open('./python/csv/clothing_item_data_with_labels_and_sources.csv', 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(updated_rows)
+
 def add_outfits_and_recolors():
     df = pd.read_csv('./python/csv/clothing_item_data.csv')
     with open('./python/json/outfits.json') as f:
@@ -58,6 +80,7 @@ def add_outfits_and_recolors():
 
 #add_costs()
 #add_labels()
+#add_sources()
 #add_outfits_and_recolors()
 
 
