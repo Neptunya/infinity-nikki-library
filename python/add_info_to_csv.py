@@ -5,6 +5,15 @@ import csv
 with open('./python/json/costs.json') as f:
     costs_data = json.load(f)
 
+def split_csv():
+    df = pd.read_csv('./python/csv/clothing_item_data.csv')
+    t1 = df.drop(labels=['Labels', 'Source'], axis=1, inplace=False)
+    t1.to_csv('./python/csv/clothing_item_lvls.csv', index=False)
+    
+    t2 = df.drop(labels=['Level','Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool', 'Blings', 'Threads', 'Bubbles'], axis=1, inplace=False)
+    t2 = t2.drop_duplicates(subset=['Name'])
+    t2.to_csv('./python/csv/clothing_items.csv', index=False)
+
 def get_costs(row):
     slot, rarity, level = row['Slot'], str(row['Rarity']), str(row['Level'])
     cost_values = costs_data.get("costs", {}).get(slot, {}).get(rarity, {}).get(level, {})
@@ -14,14 +23,14 @@ def get_costs(row):
     return row
 
 def add_costs():
-    df = pd.read_csv('./python/csv/clothing_item_data.csv')
+    df = pd.read_csv('./python/csv/clothing_item_lvls.csv')
     df = df.apply(get_costs, axis=1)
-    df.to_csv("./python/csv/clothing_item_data_with_costs.csv", index=False)
+    df.to_csv("./python/csv/clothing_item_lvls.csv", index=False)
 
 def add_labels():
     with open('./python/json/labels.json', 'r') as f:
         data = json.load(f)
-    csv_file = './python/csv/clothing_item_data.csv'
+    csv_file = './python/csv/clothing_items.csv'
     updated_rows = []
     with open(csv_file, 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -35,7 +44,7 @@ def add_labels():
                         row['Labels'] = ', '.join(current_labels)
             updated_rows.append(row)
             
-    with open('./python/csv/clothing_item_data_with_labels.csv', 'w', newline='') as csvfile:
+    with open('./python/csv/clothing_items.csv', 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(updated_rows)
@@ -43,7 +52,7 @@ def add_labels():
 def add_sources():
     with open('./python/json/source.json', 'r') as f:
         data = json.load(f)
-    csv_file = './python/csv/clothing_item_data_with_labels.csv'
+    csv_file = './python/csv/clothing_items.csv'
     updated_rows = []
     with open(csv_file, 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -57,39 +66,43 @@ def add_sources():
                 row["Source"] = "" 
             updated_rows.append(row)
             
-    with open('./python/csv/clothing_item_data_with_labels_and_sources.csv', 'w', newline='') as csvfile:
+    with open('./python/csv/clothing_items.csv', 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(updated_rows)
 
-def add_outfits_and_recolors():
-    df = pd.read_csv('./python/csv/clothing_item_data.csv')
+def add_outfits_and_recolors(f):
+    df = pd.read_csv(f'./python/csv/{f}.csv')
     with open('./python/json/outfits.json') as f:
         outfits_data = json.load(f)
 
     for item_name, item_info in outfits_data["outfits"].items():
-        outfit_name = item_info["Outfit"]
+        outfit_name = item_info.get("Outfit", "Unknown Outfit")
         df.loc[df['Name'] == item_name, 'Outfit'] = outfit_name
-        for recolor_dict in item_info.get("Recolor"):
+
+        recolors = item_info.get("Recolor", [])
+        for recolor_dict in recolors:
             for recolor_name, recolored_outfit in recolor_dict.items():
                 matching_rows = df[df['Name'] == item_name].copy()
+
                 matching_rows['Name'] = recolor_name
                 matching_rows['Outfit'] = recolored_outfit
                 matching_rows['Source'] = f'A recolor of {item_name} from {outfit_name}.'
+
                 df = pd.concat([df, matching_rows], ignore_index=True)
-    df.to_csv('./python/csv/clothing_item_data.csv', index=False)
+    df.to_csv(f'./python/csv/{f}.csv', index=False)
 
-#add_costs()
-#add_labels()
-#add_sources()
-#add_outfits_and_recolors()
-
+# split_csv()
+# add_costs()
+# add_labels()
+# add_sources()
+# add_outfits_and_recolors()
 
 '''TODO: 
-- add source to csv
-	- also via dict {item: source}
 - makeup
   - csv w/makeup name, slot, rarity, and source
-- code to add abilities and source, recolors come last
+- turn csvs into sql
+- generate table in db page w/sql call
+- generate popup pg for items
 - sketches + materials
 '''

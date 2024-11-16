@@ -25,3 +25,4 @@ pnpm-debug.log*
 python/cursor_reader.py
 python/rarity.py
 python/cost.py
+.venv/
