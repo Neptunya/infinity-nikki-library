@@ -172,6 +172,7 @@ def get_item_details(x_card, y_card, last=False):
         r.append(lvl)
         r.extend(get_stats(new_stat))
         r.extend([0] * 3)
+        r.extend([''] * 3)
         print(r)
         rows.append(r.copy())
         r.clear()

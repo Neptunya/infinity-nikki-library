@@ -162,8 +162,7 @@ def scrape_sources():
 in_w.activate()
 pg.moveTo(90, 395)
 time.sleep(2)
-scrape_sources()
+scrape_imgs()
 pg.moveTo(0, 0)
 
 
-# scrape_labels("Simple")

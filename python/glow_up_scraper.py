@@ -54,8 +54,10 @@ def scrape_one(x, y, last=False):
 	pg.leftClick()
 	get_item_details(x, y, last)
 
-f = './python/csv/clothing_item_data.csv'
+f = './python/csv/hair_data_2.csv'
 with open(f, 'w', newline='') as csvfile:
 		csvwriter = csv.writer(csvfile)
 		csvwriter.writerow(fields)
 		csvwriter.writerows(rows)
+		
+scrape_all()
