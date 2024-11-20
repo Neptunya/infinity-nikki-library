@@ -1,0 +1,34 @@
+.item-img {
+    max-height: 200px;
+    width: auto;
+    object-fit: contain;
+	border-radius: 5px;
+	margin: 10px;
+}
+
+.item-card {
+    display: flex;
+    padding: 5px;
+    margin: 5px 10px;
+    border-radius: 10px;
+    flex: 1 1 400px;
+    overflow: hidden;
+    background-color: #353142;
+}
+
+.item-card h3 {
+    line-height: 0;
+    padding-top: 10px;
+    padding-bottom: 1px;
+}
+
+.item-card h4 {
+    color: #d3869b;
+    font-style: italic;
+    line-height: 0;
+}
+
+#item-card-container {
+    display: flex;
+    flex-flow: row wrap;
+}

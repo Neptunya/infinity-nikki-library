@@ -1,29 +1,41 @@
-function renderTable(data) {
-    const table = document.createElement('table');
-    table.classList.add('data-table');
-
-    const headerRow = document.createElement('tr');
-    const headers = Object.keys(data[0]).filter(key => key !== 'source'); 
-    headers.forEach(header => {
-        const th = document.createElement('th');
-        th.textContent = header.charAt(0).toUpperCase() + header.slice(1);
-        headerRow.appendChild(th);
-    });
-    table.appendChild(headerRow);
+function renderItems(data) {
+    const itemCardContainer = document.getElementById('item-card-container');
 
     data.forEach(item => {
-        const row = document.createElement('tr');
-        headers.forEach(header => {
-            const td = document.createElement('td');
-            td.textContent = item[header] || '';
-            row.appendChild(td);
-        });
-        table.appendChild(row);
+        const card = document.createElement('div');
+        card.classList.add('item-card');
+        card.classList.add('card-row');
+        const img = document.createElement('img');
+        img.classList.add('item-img')
+        img.src = `/images/items/${item.Name}.png`;
+        img.alt = item.Name;
+        card.appendChild(img);
+        const cardText = document.createElement('div');
+        cardText.classList.add('item-card-text');
+        card.appendChild(cardText)
+        
+        const h3 = document.createElement('h3');
+        h3.textContent = item['Name'];
+        cardText.appendChild(h3);
+        
+        if (item['Outfit']) {
+            const h4 = document.createElement('h4')
+            h4.innerHTML += item['Outfit'];
+            cardText.appendChild(h4);
+        }
+        
+        const p = document.createElement('p');
+        let stars = '';
+        const rarityValue = item['Rarity'];
+        stars = '⭐'.repeat(rarityValue);
+        p.innerHTML = stars + '<br>' + item['Slot'];
+        cardText.appendChild(p)
+        
+        if (item['Labels']) {
+            p.innerHTML += '<br><i>' + item['Labels'] + '</i>';
+        }
+        itemCardContainer.appendChild(card);
     });
-
-    const tableContainer = document.getElementById('table-container');
-    tableContainer.innerHTML = '';
-    tableContainer.appendChild(table);
 }
 
 export function getFilteredItems(rarity, slot, label) {
@@ -37,7 +49,7 @@ export function getFilteredItems(rarity, slot, label) {
     .then(response => response.json())
     .then(data => {
         console.log('Filtered items:', data);
-        renderTable(data);
+        renderItems(data);
     })
     .catch(error => {
         console.error('Error fetching filtered items:', error);
