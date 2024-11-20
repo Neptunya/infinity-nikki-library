@@ -1,3 +1,17 @@
+button {
+    margin: 5px;
+    background-color: #d3869b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+button:disabled {
+    background-color: #353142;
+    
+}
+
 .item-img {
     max-height: 200px;
     width: auto;
@@ -26,6 +40,16 @@
     color: #d3869b;
     font-style: italic;
     line-height: 0;
+}
+
+.page-input {
+    max-width: 50px;
+}
+
+.page-input::-webkit-outer-spin-button,
+.page-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 #item-card-container {
