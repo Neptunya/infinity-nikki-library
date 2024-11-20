@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import { getFilteredItems } from '../scripts/database.js';
 ---
 <html lang="en">
 	<head>
@@ -18,10 +19,12 @@ import '../styles/global.css';
 		<div class="content-container">
 			<h1>Database</h1>
 			<p>Clothing item details + stats - Placeholder page</p>
+			<div id="table-container"></div>
 		</div>
 		<Footer />
 		<script>
-			import "../scripts/resize.js";
+			import "../scripts/resize.js"
+			import "../scripts/database.js"
 		</script>
 	</body>
 </html>

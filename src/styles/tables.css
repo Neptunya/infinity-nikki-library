@@ -10,3 +10,7 @@ th {
     background-color: #353142;
     text-align: center;
 }
+
+td {
+    border-bottom: 1px solid #d3869b;
+}
