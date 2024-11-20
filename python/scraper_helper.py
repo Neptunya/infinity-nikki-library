@@ -38,7 +38,7 @@ y_cards = [y + top for y in y_cards]
 y_cards_interval = [0, 246, 371]
 
 ss = ['Hair', '']
-fields = ['Name', 'Rarity', 'Slot', 'Outfit', 'Level', 'Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool', 'Blings', 'Threads', 'Bubbles', 'Ability', 'Labels', 'Source']
+fields = ['Name', 'Rarity', 'Slot', 'Outfit', 'Level', 'Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool', 'Blings', 'Threads', 'Bubbles', 'Labels', 'Source']
 r = []
 rows = []
 
@@ -145,6 +145,7 @@ def get_item_details(x_card, y_card, last=False):
     r.append(lvl - 1)
     r.extend(get_stats(initial_stat))
     r.extend([0] * 3)
+    r.extend([''] * 2)
 
     print(r)
     rows.append(r.copy())
@@ -157,6 +158,7 @@ def get_item_details(x_card, y_card, last=False):
     r.append(lvl)
     r.extend(get_stats(new_stat))
     r.extend([0] * 3)
+    r.extend([''] * 2)
     print(r)
     rows.append(r.copy())
     r.clear()
@@ -172,7 +174,7 @@ def get_item_details(x_card, y_card, last=False):
         r.append(lvl)
         r.extend(get_stats(new_stat))
         r.extend([0] * 3)
-        r.extend([''] * 3)
+        r.extend([''] * 2)
         print(r)
         rows.append(r.copy())
         r.clear()
