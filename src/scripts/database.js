@@ -1,5 +1,15 @@
-let itemsPerPage = 15;
+let itemsPerPage = 10;
 let currentPage = 1;
+
+const toggleButtons = document.querySelectorAll('.toggle-btn');
+toggleButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        button.classList.toggle('selected');
+        currentPage = 1;
+        getFilteredItems();
+      });
+});
+
 function renderItems(data) {
     const itemCardContainer = document.getElementById('item-card-container');
     itemCardContainer.innerHTML = '';
@@ -36,8 +46,8 @@ function renderItems(data) {
         const p = document.createElement('p');
         let stars = '';
         const rarityValue = item['Rarity'];
-        stars = '⭐'.repeat(rarityValue);
-        p.innerHTML = stars + '<br>' + item['Slot'];
+        stars = '✧'.repeat(rarityValue);
+        p.innerHTML = stars;
         cardText.appendChild(p)
         
         if (item['Labels']) {
@@ -49,41 +59,44 @@ function renderItems(data) {
 }
 
 function renderPagination(totalItems) {
-    const paginationContainer = document.getElementById('pagination-container');
-    paginationContainer.innerHTML = ''
+    const paginationContainers = document.querySelectorAll('.pagination-container');
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-    // Create Back button
-    const backButton = document.createElement('button');
-    backButton.textContent = '🠘';
-    backButton.classList.add('pagination-button');
-    backButton.disabled = currentPage === 1; // Disable if we're on the first page
-    backButton.onclick = () => changePage(currentPage - 1, totalItems);
-    paginationContainer.appendChild(backButton);
+    paginationContainers.forEach(container => {
+        container.innerHTML = ''; // Clear old pagination controls
 
-    // Display current page and input
-    const pageNumberContainer = document.createElement('span');
-    pageNumberContainer.classList.add('page-number-container');
+        // Create Back button
+        const backButton = document.createElement('button');
+        backButton.textContent = '🠘';
+        backButton.classList.add('pagination-button');
+        backButton.disabled = currentPage === 1; // Disable if we're on the first page
+        backButton.onclick = () => changePage(currentPage - 1, totalItems);
+        container.appendChild(backButton);
 
-    const pageInput = document.createElement('input');
-    pageInput.type = 'number';
-    pageInput.min = 1;
-    pageInput.max = totalPages;
-    pageInput.value = currentPage;
-    pageInput.classList.add('page-input');
-    pageInput.onchange = (event) => changePage(Number(event.target.value), totalItems);
+        // Display current page and input
+        const pageNumberContainer = document.createElement('span');
+        pageNumberContainer.classList.add('page-number-container');
 
-    pageNumberContainer.appendChild(pageInput);
-    pageNumberContainer.appendChild(document.createTextNode(` of ${totalPages}`));
-    paginationContainer.appendChild(pageNumberContainer);
+        const pageInput = document.createElement('input');
+        pageInput.type = 'number';
+        pageInput.min = 1;
+        pageInput.max = totalPages;
+        pageInput.value = currentPage;
+        pageInput.classList.add('page-input');
+        pageInput.onchange = (event) => changePage(Number(event.target.value), totalItems);
 
-    // Create Next button
-    const nextButton = document.createElement('button');
-    nextButton.textContent = '🠚';
-    nextButton.classList.add('pagination-button');
-    nextButton.disabled = currentPage === totalPages; // Disable if we're on the last page
-    nextButton.onclick = () => changePage(currentPage + 1, totalItems);
-    paginationContainer.appendChild(nextButton);
+        pageNumberContainer.appendChild(pageInput);
+        pageNumberContainer.appendChild(document.createTextNode(` of ${totalPages}`));
+        container.appendChild(pageNumberContainer);
+
+        // Create Next button
+        const nextButton = document.createElement('button');
+        nextButton.textContent = '🠚';
+        nextButton.classList.add('pagination-button');
+        nextButton.disabled = currentPage === totalPages; // Disable if we're on the last page
+        nextButton.onclick = () => changePage(currentPage + 1, totalItems);
+        container.appendChild(nextButton);
+    });
 }
 
 function changePage(newPage, totalItems) {
@@ -94,17 +107,51 @@ function changePage(newPage, totalItems) {
     }
 }
 
-function getFilteredItems(rarity, slot, label) {
-    let url = 'http://127.0.0.1:5000/api/items/?'
-    if (rarity) url += `rarity=${rarity.join('&rarity=')}&`;
+function countFlexColumns() {
+    const container = document.getElementById('item-card-container');
+    const items = Array.from(container.children);
+    if (items.length === 0) return 0;
+
+    const firstItemTop = items[0].getBoundingClientRect().top;
+    let columns = 0;
+
+    for (const item of items) {
+        const itemTop = item.getBoundingClientRect().top;
+        if (itemTop === firstItemTop) {
+            columns++;
+        } else {
+            break;
+        }
+    }
+    return columns;
+}
+
+function adjustItemsPerPageAndRerender(data) {
+    const columns = countFlexColumns();
+    itemsPerPage = columns * 5;
+    renderItems(data);
+}
+
+function getFilteredItems(slot, label) {
+    let url = 'http://127.0.0.1:5000/api/items/?';
+    
+    const selectedRarityButtons = document.querySelectorAll('.toggle-btn.selected');
+    const selectedRarities = Array.from(selectedRarityButtons).map(button => button.id.replace('rarity-', ''));
+    console.log(selectedRarities);
+    
+    if (selectedRarities.length > 0) {
+        url += `rarity=${selectedRarities.join('&rarity=')}&`;
+    }
+    
     if (slot) url += `slot=${slot.join('&slot=')}&`;
     if (label) url += `label=${label.join('&label=')}&`;
     url = url.slice(0, -1);
-    
+
     fetch(url)
     .then(response => response.json())
     .then(data => {
-        renderItems(data);
+        renderItems(data); // Initial render with default itemsPerPage
+        setTimeout(() => adjustItemsPerPageAndRerender(data), 0); // Adjust after page load
     })
     .catch(error => {
         console.error('Error fetching filtered items:', error);
@@ -114,3 +161,9 @@ function getFilteredItems(rarity, slot, label) {
 window.onload = function() {
     getFilteredItems();
 };
+
+window.onresize = function() {
+    getFilteredItems();
+    currentPage = 1;
+};
+

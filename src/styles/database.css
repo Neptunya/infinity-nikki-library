@@ -5,10 +5,16 @@ button {
     border: none;
     border-radius: 5px;
     font-size: 18px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e0aab9;
 }
 
 button:disabled {
     background-color: #353142;
+    cursor: not-allowed;
     
 }
 
@@ -52,7 +58,33 @@ button:disabled {
   margin: 0;
 }
 
+.toggle-btn {
+    background-color: #7E505D;
+    width: 100px;
+    height: 25px;
+    border-radius: 5px;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.toggle-btn:hover {
+    background-color: #a86b7c;
+}
+
+.toggle-btn.selected {
+    background-color: #d3869b;
+}
+
+.toggle-btn.selected:hover {
+    background-color: #e0aab9;
+}
+
 #item-card-container {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+#rarity-filter {
     display: flex;
     flex-flow: row wrap;
 }
