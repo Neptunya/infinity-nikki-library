@@ -1,18 +1,27 @@
 import json
 import pandas as pd
 import csv
+import os
 
 with open('./python/json/costs.json') as f:
     costs_data = json.load(f)
 
+def merge_csv():
+    file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed')
+    df = pd.DataFrame()
+    for file in file_list:
+        df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/{file}')
+        df = pd.concat([df, df_temp], ignore_index=True)
+    df.to_csv('D:/Documents/infinity_nikki_library/python/csv/full_item_data.csv', index=False)
+
 def split_csv():
-    df = pd.read_csv('./python/csv/clothing_item_data.csv')
+    df = pd.read_csv('./python/csv/full_item_data.csv')
     t1 = df.drop(labels=['Labels', 'Source'], axis=1, inplace=False)
     t1.to_csv('./python/csv/clothing_item_lvls.csv', index=False)
     
     t2 = df.drop(labels=['Level','Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool', 'Blings', 'Threads', 'Bubbles'], axis=1, inplace=False)
     t2 = t2.drop_duplicates(subset=['Name'])
-    t2.to_csv('./python/csv/clothing_items.csv', index=False)
+    t2.to_csv('./python/csv/clothing_items_details.csv', index=False)
 
 def get_costs(row):
     slot, rarity, level = row['Slot'], str(row['Rarity']), str(row['Level'])
@@ -92,6 +101,7 @@ def add_outfits_and_recolors(f):
                 df = pd.concat([df, matching_rows], ignore_index=True)
     df.to_csv(f'./python/csv/{f}.csv', index=False)
 
+# merge_csv()
 # split_csv()
 # add_costs()
 # add_labels()
@@ -99,10 +109,6 @@ def add_outfits_and_recolors(f):
 # add_outfits_and_recolors()
 
 '''TODO: 
-- makeup
-  - csv w/makeup name, slot, rarity, and source
-- turn csvs into sql
-- generate table in db page w/sql call
 - generate popup pg for items
 - sketches + materials
 '''

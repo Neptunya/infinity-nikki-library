@@ -49,7 +49,7 @@
 			"9": {"blings": 99090, "threads": 1321, "bubbles": 3272},
 			"10": {"blings": 116910, "threads": 1159, "bubbles": 3912}
 		}
-	}, "Dresses": {
+	}, "Dress": {
 		"2": {
 			"0": {"blings": 0, "threads": 0, "bubbles": 0},
 			"1": {"blings": 540, "threads": 7, "bubbles": 24},
@@ -149,7 +149,7 @@
 			"9": {"blings": 41320, "threads": 551, "bubbles": 1303},
 			"10": {"blings": 48750, "threads": 650, "bubbles": 1559}
 		}
-	}, "Tops": {
+	}, "Top": {
 		"2": {
 			"0": {"blings": 0, "threads": 0, "bubbles": 0},
 			"1": {"blings": 270, "threads": 4, "bubbles": 12},
@@ -199,7 +199,7 @@
 			"9": {"blings": 0, "threads": 0, "bubbles": 0},
 			"10": {"blings": 0, "threads": 0, "bubbles": 0}
 		}
-	}, "Bottoms": {
+	}, "Bottom": {
 		"2": {
 			"0": {"blings": 0, "threads": 0, "bubbles": 0},
 			"1": {"blings": 270, "threads": 4, "bubbles": 12},
@@ -349,7 +349,7 @@
 			"9": {"blings": 49550, "threads": 660, "bubbles": 1957},
 			"10": {"blings": 58460, "threads": 779, "bubbles": 2341}
 		}
-	}, "Hair Accessories": {
+	}, "Hair Accessory": {
 		"2": {
 			"0": {"blings": 0, "threads": 0, "bubbles": 0},
 			"1": {"blings": 80, "threads": 1, "bubbles": 3},
@@ -549,7 +549,7 @@
 			"9": {"blings": 24810, "threads": 331, "bubbles": 780},
 			"10": {"blings": 29270, "threads": 390, "bubbles": 933}
 		}
-	}, "Bracelets": {
+	}, "Bracelet": {
 		"2": {
 			"0": {"blings": 0, "threads": 0, "bubbles": 0},
 			"1": {"blings": 80, "threads": 1, "bubbles": 3},
@@ -699,7 +699,7 @@
 			"9": {"blings": 24810, "threads": 331, "bubbles": 780},
 			"10": {"blings": 29270, "threads": 390, "bubbles": 933}
 		}
-	}, "Face Decorations": {
+	}, "Face Decoration": {
 		"2": {
 			"0": {"blings": 0, "threads": 0, "bubbles": 0},
 			"1": {"blings": 80, "threads": 1, "bubbles": 3},
@@ -749,7 +749,7 @@
 			"9": {"blings": 24810, "threads": 331, "bubbles": 780},
 			"10": {"blings": 29270, "threads": 390, "bubbles": 933}
 		}
-	}, "Chest Accessories": {
+	}, "Chest Accessory": {
 		"2": {
 			"0": {"blings": 0, "threads": 0, "bubbles": 0},
 			"1": {"blings": 80, "threads": 1, "bubbles": 3},
@@ -799,7 +799,7 @@
 			"9": {"blings": 24810, "threads": 331, "bubbles": 780},
 			"10": {"blings": 29270, "threads": 390, "bubbles": 933}
 		}
-	}, "Pendants": {
+	}, "Pendant": {
 		"2": {
 			"0": {"blings": 0, "threads": 0, "bubbles": 0},
 			"1": {"blings": 80, "threads": 1, "bubbles": 3},
@@ -849,7 +849,7 @@
 			"9": {"blings": 24810, "threads": 331, "bubbles": 780},
 			"10": {"blings": 29270, "threads": 390, "bubbles": 933}
 		}
-	}, "Backpieces": {
+	}, "Backpiece": {
 		"2": {
 			"0": {"blings": 0, "threads": 0, "bubbles": 0},
 			"1": {"blings": 80, "threads": 1, "bubbles": 3},
@@ -899,7 +899,7 @@
 			"9": {"blings": 24810, "threads": 331, "bubbles": 780},
 			"10": {"blings": 29270, "threads": 390, "bubbles": 933}
 		}
-	}, "Rings": {
+	}, "Ring": {
 		"2": {
 			"0": {"blings": 0, "threads": 0, "bubbles": 0},
 			"1": {"blings": 80, "threads": 1, "bubbles": 3},
@@ -949,7 +949,7 @@
 			"9": {"blings": 24810, "threads": 331, "bubbles": 780},
 			"10": {"blings": 29270, "threads": 390, "bubbles": 933}
 		}
-	}, "Handhelds": {
+	}, "Handheld": {
 		"2": {
 			"0": {"blings": 0, "threads": 0, "bubbles": 0},
 			"1": {"blings": 80, "threads": 1, "bubbles": 3},

@@ -181,4 +181,3 @@ window.onresize = function() {
     getFilteredItems();
     currentPage = 1;
 };
-
