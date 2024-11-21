@@ -133,10 +133,11 @@ def get_source(name):
         max_loc[0]+source_offset[0], max_loc[1]+source_offset[1], source_offset[2], source_offset[3]))
     source = img_to_str_mod2('source')
     data = {}
-    data[name] = source
-    source_data.update(data)
-    with open('./python/json/source.json', 'w') as f:
-        json.dump(source_data, f, indent=4)
+    if name not in source_data:
+        data[name] = source
+        source_data.update(data)
+        with open('./python/json/source.json', 'w') as f:
+            json.dump(source_data, f, indent=4)
 
 def scrape_sources():
     prev_name = ""
@@ -162,7 +163,7 @@ def scrape_sources():
 in_w.activate()
 pg.moveTo(90, 395)
 time.sleep(2)
-scrape_imgs()
+
 pg.moveTo(0, 0)
 
 

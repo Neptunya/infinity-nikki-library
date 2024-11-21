@@ -10,6 +10,21 @@ toggleButtons.forEach(button => {
       });
 });
 
+const collapsible = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < collapsible.length; i++) {
+    collapsible[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight){
+            content.style.maxHeight = null;
+        } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+        }
+    });
+}
+
 function renderItems(data) {
     const itemCardContainer = document.getElementById('item-card-container');
     itemCardContainer.innerHTML = '';
@@ -135,7 +150,7 @@ function adjustItemsPerPageAndRerender(data) {
 function getFilteredItems(slot, label) {
     let url = 'http://127.0.0.1:5000/api/items/?';
     
-    const selectedRarityButtons = document.querySelectorAll('.toggle-btn.selected');
+    const selectedRarityButtons = document.querySelectorAll('.rarity-btn.selected');
     const selectedRarities = Array.from(selectedRarityButtons).map(button => button.id.replace('rarity-', ''));
     console.log(selectedRarities);
     

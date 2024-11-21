@@ -37,7 +37,7 @@ y_cards = [224, 470, 595]
 y_cards = [y + top for y in y_cards]
 y_cards_interval = [0, 246, 371]
 
-ss = ['Hair', '']
+ss = ['Handheld', '']
 fields = ['Name', 'Rarity', 'Slot', 'Outfit', 'Level', 'Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool', 'Blings', 'Threads', 'Bubbles', 'Labels', 'Source']
 r = []
 rows = []
@@ -46,7 +46,7 @@ def img_to_str(n):
     file = f'./python/images/clothing_item_scraper/{n}.png'
     image = cv2.imread(file)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    thresh = cv2.threshold(gray, 195, 255, cv2.THRESH_BINARY)[1]
+    thresh = cv2.threshold(gray, 193, 255, cv2.THRESH_BINARY)[1]
     cv2.imwrite(f'./python/images/clothing_item_scraper/{n}_processed.png', thresh)
     text = str.strip(pytesseract.image_to_string(Image.open(f'./python/images/clothing_item_scraper/{n}_processed.png')))
     filtered_text = re.sub(r"[^a-zA-Z' -]", "", text)
@@ -165,7 +165,7 @@ def get_item_details(x_card, y_card, last=False):
     
     # subsequent lvls
     pg.moveTo(upgrade[0], upgrade[1])
-    while (lvl < 10):
+    while (lvl < 5):
         pg.click()
         r.append(name)
         r.append(rarity)

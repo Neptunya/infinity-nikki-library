@@ -18,12 +18,27 @@ import '../styles/database.css';
 		<Header />
 		<div class="content-container">
 			<h1>Database</h1>
-			<div id="rarity-filter">
-				<p>Rarity:</p>
-				<button class="toggle-btn" id="rarity-2">✧✧</button>
-				<button class="toggle-btn" id="rarity-3">✧✧✧</button>
-				<button class="toggle-btn" id="rarity-4">✧✧✧✧</button>
-				<button class="toggle-btn" id="rarity-5">✧✧✧✧✧</button>
+			<input type=text name="item-search" placeholder="Search by item name">
+			<div id="collapsible-filters">
+				<button type="button" class="collapsible">
+					<p>Filters</p>
+					<p>+</p>
+				</button>
+				<div id="filter-container">
+					<div class="filter-options" id="rarity-filter">
+						<p>Rarity:</p>
+						<button class="toggle-btn rarity-btn" id="rarity-2">✧✧</button>
+						<button class="toggle-btn rarity-btn" id="rarity-3">✧✧✧</button>
+						<button class="toggle-btn rarity-btn" id="rarity-4">✧✧✧✧</button>
+						<button class="toggle-btn rarity-btn" id="rarity-5">✧✧✧✧✧</button>
+					</div>
+					<div class="filter-options" id="source-filter">
+						<p>Source:</p>
+						<button class="toggle-btn source-btn" id="f2p">F2P</button>
+						<button class="toggle-btn source-btn" id="rng">RNG</button>
+						<button class="toggle-btn source-btn" id="gacha">Gacha</button>
+					</div>
+				</div>
 			</div>
 			<div class="pagination-container"></div>
 			<div id="item-card-container"></div>

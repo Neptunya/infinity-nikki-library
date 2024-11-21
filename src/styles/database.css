@@ -79,12 +79,51 @@ button:disabled {
     background-color: #e0aab9;
 }
 
+.source-btn {
+    font-size: 14px;
+}
+
+.collapsible {
+    width: 100%;
+    background-color: #353142;
+    padding: 0px 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0px;
+}
+
+.collapsible.active {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.collapsible:hover {
+    background-color: #494554;
+}
+
+.filter-options {
+    display: flex;
+    flex-flow: row wrap;
+}
+
 #item-card-container {
     display: flex;
     flex-flow: row wrap;
 }
 
-#rarity-filter {
-    display: flex;
-    flex-flow: row wrap;
+#filter-container {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #353142a2;
+    margin-top: 0px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-left: 5px;
+    margin-right: -5px;
+}
+
+#collapsible-filters {
+    margin-bottom: 20px;
 }

@@ -54,10 +54,64 @@ def scrape_one(x, y, last=False):
 	pg.leftClick()
 	get_item_details(x, y, last)
 
-f = './python/csv/hair_data_2.csv'
+def scrape_stats(name, rarity, slot):
+	r = []
+	rows = []
+	ss = [slot, '']
+	r.append(name)
+	r.append(rarity)
+	r.extend(ss)
+
+	# lvl 0 stats
+	lvl = get_lvl()
+	r.append(lvl - 1)
+	r.extend(get_stats(initial_stat))
+	r.extend([0] * 3)
+	r.extend([''] * 2)
+
+	print(r)
+	rows.append(r.copy())
+	r.clear()
+
+	#lvl 1 stats
+	r.append(name)
+	r.append(rarity)
+	r.extend(ss)
+	r.append(lvl)
+	r.extend(get_stats(new_stat))
+	r.extend([0] * 3)
+	r.extend([''] * 2)
+	print(r)
+	rows.append(r.copy())
+	r.clear()
+
+	# subsequent lvls
+	pg.moveTo(upgrade[0], upgrade[1])
+	while (lvl < 5):
+		pg.click()
+		r.append(name)
+		r.append(rarity)
+		r.extend(ss)
+		lvl = get_lvl()
+		r.append(lvl)
+		r.extend(get_stats(new_stat))
+		r.extend([0] * 3)
+		r.extend([''] * 2)
+		print(r)
+		rows.append(r.copy())
+		r.clear()
+	lc2(back[0], back[1])
+	f = './python/csv/pendant_data.csv'
+	with open(f, 'a', newline='') as csvfile:
+		csvwriter = csv.writer(csvfile)
+		csvwriter.writerows(rows)
+
+#scrape_stats('Azure Ripples', 4, 'Face Decoration')
+# , pendant, backpiece, ring, handheld
+
+scrape_all()
+f = './python/csv/handheld_data.csv'
 with open(f, 'w', newline='') as csvfile:
 		csvwriter = csv.writer(csvfile)
 		csvwriter.writerow(fields)
 		csvwriter.writerows(rows)
-		
-scrape_all()
