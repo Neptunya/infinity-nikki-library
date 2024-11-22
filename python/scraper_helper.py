@@ -52,6 +52,8 @@ def img_to_str(n):
     filtered_text = re.sub(r"[^a-zA-Z' -]", "", text)
     while filtered_text.startswith(" ") or filtered_text.startswith("-") or filtered_text.startswith("'"):
         filtered_text = filtered_text[1:]
+    while filtered_text.endswith(" ") or filtered_text.endswith("-") or filtered_text.endswith("'"):
+        filtered_text = filtered_text[:-1]
     return filtered_text
 
 def img_to_num(n):

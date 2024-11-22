@@ -47,6 +47,7 @@ itemFields = {
     "Outfit": fields.String,
     "Labels": fields.String,
     "Source": fields.String,
+    "Style": fields.String,
 }
 
 lvlFields = {
@@ -62,6 +63,7 @@ lvlFields = {
     "Blings": fields.Integer,
     "Threads": fields.Integer,
     "Bubbles": fields.Integer,
+    "Style": fields.String,
 }
 
 class Items(Resource):

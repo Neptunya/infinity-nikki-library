@@ -25,8 +25,9 @@ def sc(name, vals):
     return name
 
 def add_unique_value(label, value):
-    if label in labels_data["labels"] and value not in labels_data["labels"][label]:
+    if value not in labels_data["labels"][label]:
         labels_data["labels"][label].append(value)
+        print(value)
 
 def img_to_str_mod(n):
     file = f'./python/images/clothing_item_scraper/{n}.png'
@@ -39,7 +40,7 @@ def img_to_str_mod(n):
     while filtered_text.startswith(" ") or filtered_text.startswith("-") or filtered_text.startswith("'"):
         filtered_text = filtered_text[1:]
     while filtered_text.endswith(" ") or filtered_text.endswith("-") or filtered_text.endswith("'"):
-        filtered_text = filtered_text[1:]
+        filtered_text = filtered_text[:-1]
     return filtered_text
 
 def img_to_str_mod2(n):
@@ -54,7 +55,7 @@ def img_to_str_mod2(n):
     while filtered_text.startswith(" ") or filtered_text.startswith("-") or filtered_text.startswith("'"):
         filtered_text = filtered_text[1:]
     while filtered_text.endswith(" ") or filtered_text.endswith("-") or filtered_text.endswith("'"):
-        filtered_text = filtered_text[1:]
+        filtered_text = filtered_text[:-1]
     return filtered_text
 
 def scrape_imgs():
@@ -77,6 +78,9 @@ def scrape_imgs():
         curr_name = img_to_str(sc("name", name_box))
         i += 1
 
+def single_img(name):
+    sc(f'/item_img_new/{name}', img_box)
+
 def scrape_labels(label):
     exit_loops = False
     for i in range(4):
@@ -87,13 +91,12 @@ def scrape_labels(label):
                 pg.screenshot('./python/images/clothing_item_scraper/name.png', region=(name_card[0] + (j * card_x_interval), name_card[1] + (i * card_y_interval), name_card[2], name_card[3]))
                 name = img_to_str_mod('name')
                 if name.strip() or ():
-                    print(name)
                     add_unique_value(label, name)
                 elif i == 0 and j == 0:
                     # in case threads of reunion blank entry
                     print(name)
                 else:
-                    with open('./python/json/colors.json', 'w') as f:
+                    with open('./python/json/labels.json', 'w') as f:
                         json.dump(labels_data, f, indent=4)
                     exit_loops = True
                     break
@@ -132,10 +135,9 @@ def get_source(name):
     pg.screenshot('./python/images/clothing_item_scraper/source.png', region=(
         max_loc[0]+source_offset[0], max_loc[1]+source_offset[1], source_offset[2], source_offset[3]))
     source = img_to_str_mod2('source')
-    data = {}
+    print(f"{name}: {source}")
     if name not in source_data:
-        data[name] = source
-        source_data.update(data)
+        source_data.update({name: source})
         with open('./python/json/source.json', 'w') as f:
             json.dump(source_data, f, indent=4)
 
@@ -160,10 +162,10 @@ def scrape_sources():
         curr_name = img_to_str(sc("name", name_box))
         i += 1
 
-in_w.activate()
-pg.moveTo(90, 395)
+in_w.activate() 
 time.sleep(2)
-
+pg.moveTo(90, 395)
+single_img("At Night")
 pg.moveTo(0, 0)
 
 

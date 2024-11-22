@@ -37,12 +37,16 @@ button:disabled {
 }
 
 .item-card h3 {
-    line-height: 0;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    line-height: 1;
     padding-top: 10px;
     padding-bottom: 1px;
 }
 
 .item-card h4 {
+    margin-top: 10px;
+    padding-top: 5px;
     color: #d3869b;
     font-style: italic;
     line-height: 0;

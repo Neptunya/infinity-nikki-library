@@ -14,6 +14,17 @@ def merge_csv():
         df = pd.concat([df, df_temp], ignore_index=True)
     df.to_csv('D:/Documents/infinity_nikki_library/python/csv/full_item_data.csv', index=False)
 
+def get_style(row):
+    style_columns = ['Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool']
+    max_style = row[style_columns].idxmax()
+    row['Style'] = max_style
+    return row
+
+def add_style():
+    df = pd.read_csv('./python/csv/full_item_data.csv')
+    df = df.apply(get_style, axis=1)
+    df.to_csv("./python/csv/full_item_data.csv", index=False)
+
 def split_csv():
     df = pd.read_csv('./python/csv/full_item_data.csv')
     t1 = df.drop(labels=['Labels', 'Source'], axis=1, inplace=False)
@@ -39,7 +50,7 @@ def add_costs():
 def add_labels():
     with open('./python/json/labels.json', 'r') as f:
         data = json.load(f)
-    csv_file = './python/csv/clothing_items.csv'
+    csv_file = './python/csv/clothing_items_details.csv'
     updated_rows = []
     with open(csv_file, 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -53,7 +64,7 @@ def add_labels():
                         row['Labels'] = ', '.join(current_labels)
             updated_rows.append(row)
             
-    with open('./python/csv/clothing_items.csv', 'w', newline='') as csvfile:
+    with open('./python/csv/clothing_items_details.csv', 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(updated_rows)
@@ -61,7 +72,7 @@ def add_labels():
 def add_sources():
     with open('./python/json/source.json', 'r') as f:
         data = json.load(f)
-    csv_file = './python/csv/clothing_items.csv'
+    csv_file = './python/csv/clothing_items_details.csv'
     updated_rows = []
     with open(csv_file, 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -75,18 +86,24 @@ def add_sources():
                 row["Source"] = "" 
             updated_rows.append(row)
             
-    with open('./python/csv/clothing_items.csv', 'w', newline='') as csvfile:
+    with open('./python/csv/clothing_items_details.csv', 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(updated_rows)
 
-def add_outfits_and_recolors(f):
-    df = pd.read_csv(f'./python/csv/{f}.csv')
+def add_outfits_and_recolors_details():
+    df = pd.read_csv(f'./python/csv/clothing_items_details.csv')
+    df['Name'] = df['Name'].fillna('').astype(str)
+    
+    if 'Outfit' not in df.columns:
+        df['Outfit'] = '' 
+    df['Outfit'] = df['Outfit'].fillna('').astype(str)
+    
     with open('./python/json/outfits.json') as f:
         outfits_data = json.load(f)
 
     for item_name, item_info in outfits_data["outfits"].items():
-        outfit_name = item_info.get("Outfit", "Unknown Outfit")
+        outfit_name = item_info.get("Outfit","")
         df.loc[df['Name'] == item_name, 'Outfit'] = outfit_name
 
         recolors = item_info.get("Recolor", [])
@@ -99,16 +116,44 @@ def add_outfits_and_recolors(f):
                 matching_rows['Source'] = f'A recolor of {item_name} from {outfit_name}.'
 
                 df = pd.concat([df, matching_rows], ignore_index=True)
-    df.to_csv(f'./python/csv/{f}.csv', index=False)
+    df.to_csv(f'./python/csv/clothing_items_details.csv', index=False)
+
+def add_outfits_and_recolors_lvls():
+    df = pd.read_csv(f'./python/csv/clothing_item_lvls.csv')
+    df['Name'] = df['Name'].fillna('').astype(str)
+    
+    if 'Outfit' not in df.columns:
+        df['Outfit'] = '' 
+    df['Outfit'] = df['Outfit'].fillna('').astype(str)
+    with open('./python/json/outfits.json') as f:
+        outfits_data = json.load(f)
+
+    for item_name, item_info in outfits_data["outfits"].items():
+        outfit_name = item_info.get("Outfit","")
+        df.loc[df['Name'] == item_name, 'Outfit'] = outfit_name
+
+        recolors = item_info.get("Recolor", [])
+        for recolor_dict in recolors:
+            for recolor_name, recolored_outfit in recolor_dict.items():
+                matching_rows = df[df['Name'] == item_name].copy()
+
+                matching_rows['Name'] = recolor_name
+                matching_rows['Outfit'] = recolored_outfit
+
+                df = pd.concat([df, matching_rows], ignore_index=True)
+    df.to_csv(f'./python/csv/clothing_item_lvls.csv', index=False)
 
 # merge_csv()
-# split_csv()
-# add_costs()
-# add_labels()
-# add_sources()
-# add_outfits_and_recolors()
+add_style()
+split_csv()
+add_costs()
+add_labels()
+add_sources()
+add_outfits_and_recolors_details()
+add_outfits_and_recolors_lvls()
 
 '''TODO: 
 - generate popup pg for items
+- primary style func
 - sketches + materials
 '''
