@@ -25,6 +25,15 @@ def add_style():
     df = df.apply(get_style, axis=1)
     df.to_csv("./python/csv/full_item_data.csv", index=False)
 
+def add_makeup():
+    items = pd.read_csv('./python/csv/full_item_data.csv')
+    makeup = pd.read_csv('./python/csv/makeup.csv')
+    df = pd.concat([items, makeup], ignore_index=True)
+    int_cols = ['Level', 'Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool', 'Blings','Threads', 'Bubbles']
+    for c in int_cols:
+        df[c] = df[c].fillna(0).astype("int64")
+    df.to_csv("./python/csv/full_item_data.csv", index=False)
+
 def split_csv():
     df = pd.read_csv('./python/csv/full_item_data.csv')
     t1 = df.drop(labels=['Labels', 'Source'], axis=1, inplace=False)
@@ -144,16 +153,16 @@ def add_outfits_and_recolors_lvls():
     df.to_csv(f'./python/csv/clothing_item_lvls.csv', index=False)
 
 # merge_csv()
-add_style()
-split_csv()
-add_costs()
-add_labels()
-add_sources()
-add_outfits_and_recolors_details()
-add_outfits_and_recolors_lvls()
+# add_style()
+# add_makeup()
+# split_csv()
+# add_costs()
+# add_labels()
+# add_sources()
+# add_outfits_and_recolors_details()
+# add_outfits_and_recolors_lvls()
 
 '''TODO: 
 - generate popup pg for items
-- primary style func
 - sketches + materials
 '''

@@ -414,65 +414,65 @@ Field Posy,4,Chest Accessory,Afternoon Shine,3,27,29,160,19,80,2440,32,72,Sweet
 Field Posy,4,Chest Accessory,Afternoon Shine,4,33,35,194,23,97,3980,53,120,Sweet
 Field Posy,4,Chest Accessory,Afternoon Shine,5,39,42,231,28,116,5800,77,177,Sweet
 Night's Soul,3,Choker,,0,14,9,8,39,80,0,0,0,Cool
-Night's Soul,3,Choker,,1,18,0,10,49,100,0,0,0,Cool
-Night's Soul,3,Choker,,2,22,14,13,61,124,0,0,0,Cool
-Night's Soul,3,Choker,,3,27,18,16,75,152,0,0,0,Cool
-Night's Soul,3,Choker,,4,33,21,19,90,184,0,0,0,Cool
-Night's Soul,3,Choker,,5,39,25,22,108,220,0,0,0,Cool
+Night's Soul,3,Choker,,1,18,0,10,49,100,140,2,6,Cool
+Night's Soul,3,Choker,,2,22,14,13,61,124,410,6,18,Cool
+Night's Soul,3,Choker,,3,27,18,16,75,152,820,11,36,Cool
+Night's Soul,3,Choker,,4,33,21,19,90,184,1330,18,60,Cool
+Night's Soul,3,Choker,,5,39,25,22,108,220,1940,26,88,Cool
 Heartfelt Words,3,Choker,,0,8,10,79,13,39,0,0,0,Sweet
-Heartfelt Words,3,Choker,,1,10,13,99,0,49,0,0,0,Sweet
-Heartfelt Words,3,Choker,,2,13,16,123,21,61,0,0,0,Sweet
-Heartfelt Words,3,Choker,,3,16,19,151,25,75,0,0,0,Sweet
-Heartfelt Words,3,Choker,,4,19,23,182,30,90,0,0,0,Sweet
-Heartfelt Words,3,Choker,,5,22,28,218,36,108,0,0,0,Sweet
+Heartfelt Words,3,Choker,,1,10,13,99,0,49,140,2,6,Sweet
+Heartfelt Words,3,Choker,,2,13,16,123,21,61,410,6,18,Sweet
+Heartfelt Words,3,Choker,,3,16,19,151,25,75,820,11,36,Sweet
+Heartfelt Words,3,Choker,,4,19,23,182,30,90,1330,18,60,Sweet
+Heartfelt Words,3,Choker,,5,22,28,218,36,108,1940,26,88,Sweet
 Fluttering Heart,3,Choker,,0,9,9,8,41,83,0,0,0,Cool
-Fluttering Heart,3,Choker,,1,0,0,10,52,104,0,0,0,Cool
-Fluttering Heart,3,Choker,,2,14,14,13,64,129,0,0,0,Cool
-Fluttering Heart,3,Choker,,3,18,18,16,78,158,0,0,0,Cool
-Fluttering Heart,3,Choker,,4,21,21,19,95,191,0,0,0,Cool
-Fluttering Heart,3,Choker,,5,25,25,22,113,229,0,0,0,Cool
+Fluttering Heart,3,Choker,,1,0,0,10,52,104,140,2,6,Cool
+Fluttering Heart,3,Choker,,2,14,14,13,64,129,410,6,18,Cool
+Fluttering Heart,3,Choker,,3,18,18,16,78,158,820,11,36,Cool
+Fluttering Heart,3,Choker,,4,21,21,19,95,191,1330,18,60,Cool
+Fluttering Heart,3,Choker,,5,25,25,22,113,229,1940,26,88,Cool
 Swan Sonata,5,Choker,Fairytale Swan,0,138,14,18,65,20,0,0,0,Elegant
-Swan Sonata,5,Choker,Fairytale Swan,1,173,18,23,82,25,0,0,0,Elegant
-Swan Sonata,5,Choker,Fairytale Swan,2,214,22,28,101,31,0,0,0,Elegant
-Swan Sonata,5,Choker,Fairytale Swan,3,263,27,35,124,38,0,0,0,Elegant
-Swan Sonata,5,Choker,Fairytale Swan,4,318,33,42,150,46,0,0,0,Elegant
-Swan Sonata,5,Choker,Fairytale Swan,5,380,39,50,179,55,0,0,0,Elegant
+Swan Sonata,5,Choker,Fairytale Swan,1,173,18,23,82,25,680,9,19,Elegant
+Swan Sonata,5,Choker,Fairytale Swan,2,214,22,28,101,31,2030,27,57,Elegant
+Swan Sonata,5,Choker,Fairytale Swan,3,263,27,35,124,38,4060,54,114,Elegant
+Swan Sonata,5,Choker,Fairytale Swan,4,318,33,42,150,46,6630,88,190,Elegant
+Swan Sonata,5,Choker,Fairytale Swan,5,380,39,50,179,55,9670,129,282,Elegant
 Sealing Cocoon,5,Choker,Flutter Storm,0,67,24,13,131,20,0,0,0,Sexy
-Sealing Cocoon,5,Choker,Flutter Storm,1,84,30,0,164,25,0,0,0,Sexy
-Sealing Cocoon,5,Choker,Flutter Storm,2,104,38,21,204,31,0,0,0,Sexy
-Sealing Cocoon,5,Choker,Flutter Storm,3,128,46,25,249,38,0,0,0,Sexy
-Sealing Cocoon,5,Choker,Flutter Storm,4,155,56,30,302,46,0,0,0,Sexy
-Sealing Cocoon,5,Choker,Flutter Storm,5,185,66,36,361,55,0,0,0,Sexy
+Sealing Cocoon,5,Choker,Flutter Storm,1,84,30,0,164,25,680,9,19,Sexy
+Sealing Cocoon,5,Choker,Flutter Storm,2,104,38,21,204,31,2030,27,57,Sexy
+Sealing Cocoon,5,Choker,Flutter Storm,3,128,46,25,249,38,4060,54,114,Sexy
+Sealing Cocoon,5,Choker,Flutter Storm,4,155,56,30,302,46,6630,88,190,Sexy
+Sealing Cocoon,5,Choker,Flutter Storm,5,185,66,36,361,55,9670,129,282,Sexy
 Silent Whispers,3,Choker,,0,39,13,14,77,8,0,0,0,Sexy
-Silent Whispers,3,Choker,,1,49,0,18,0,10,0,0,0,Elegant
-Silent Whispers,3,Choker,,2,61,21,22,120,13,0,0,0,Sexy
-Silent Whispers,3,Choker,,3,75,25,27,147,16,0,0,0,Sexy
-Silent Whispers,3,Choker,,4,90,30,33,178,19,0,0,0,Sexy
-Silent Whispers,3,Choker,,5,108,36,39,212,22,0,0,0,Sexy
+Silent Whispers,3,Choker,,1,49,0,18,0,10,140,2,6,Elegant
+Silent Whispers,3,Choker,,2,61,21,22,120,13,410,6,18,Sexy
+Silent Whispers,3,Choker,,3,75,25,27,147,16,820,11,36,Sexy
+Silent Whispers,3,Choker,,4,90,30,33,178,19,1330,18,60,Sexy
+Silent Whispers,3,Choker,,5,108,36,39,212,22,1940,26,88,Sexy
 Rebellious Will,3,Choker,,0,7,14,12,40,77,0,0,0,Cool
-Rebellious Will,3,Choker,,1,9,18,15,50,97,0,0,0,Cool
-Rebellious Will,3,Choker,,2,0,22,19,62,120,0,0,0,Cool
-Rebellious Will,3,Choker,,3,14,27,23,76,147,0,0,0,Cool
-Rebellious Will,3,Choker,,4,0,33,28,92,178,0,0,0,Cool
-Rebellious Will,3,Choker,,5,20,39,33,110,212,0,0,0,Cool
+Rebellious Will,3,Choker,,1,9,18,15,50,97,140,2,6,Cool
+Rebellious Will,3,Choker,,2,0,22,19,62,120,410,6,18,Cool
+Rebellious Will,3,Choker,,3,14,27,23,76,147,820,11,36,Cool
+Rebellious Will,3,Choker,,4,0,33,28,92,178,1330,18,60,Cool
+Rebellious Will,3,Choker,,5,20,39,33,110,212,1940,26,88,Cool
 Past Fragrance,4,Choker,Floral Memory,0,40,85,0,14,15,0,0,0,Fresh
-Past Fragrance,4,Choker,Floral Memory,1,50,107,14,18,19,0,0,0,Fresh
-Past Fragrance,4,Choker,Floral Memory,2,62,132,18,22,24,0,0,0,Fresh
-Past Fragrance,4,Choker,Floral Memory,3,76,162,21,27,29,0,0,0,Fresh
-Past Fragrance,4,Choker,Floral Memory,4,92,196,26,33,35,0,0,0,Fresh
-Past Fragrance,4,Choker,Floral Memory,5,110,234,31,39,42,0,0,0,Fresh
+Past Fragrance,4,Choker,Floral Memory,1,50,107,14,18,19,410,5,12,Fresh
+Past Fragrance,4,Choker,Floral Memory,2,62,132,18,22,24,1220,16,36,Fresh
+Past Fragrance,4,Choker,Floral Memory,3,76,162,21,27,29,2440,32,72,Fresh
+Past Fragrance,4,Choker,Floral Memory,4,92,196,26,33,35,3980,53,120,Fresh
+Past Fragrance,4,Choker,Floral Memory,5,110,234,31,39,42,5800,77,177,Fresh
 Flowing Ripple,4,Choker,Bubbly Voyage,0,8,44,87,0,15,0,0,0,Sweet
-Flowing Ripple,4,Choker,Bubbly Voyage,1,10,55,109,14,19,0,0,0,Sweet
-Flowing Ripple,4,Choker,Bubbly Voyage,2,13,69,135,18,24,0,0,0,Sweet
-Flowing Ripple,4,Choker,Bubbly Voyage,3,16,84,166,21,29,0,0,0,Sweet
-Flowing Ripple,4,Choker,Bubbly Voyage,4,19,102,201,26,35,0,0,0,Sweet
-Flowing Ripple,4,Choker,Bubbly Voyage,5,22,121,240,31,42,0,0,0,Sweet
+Flowing Ripple,4,Choker,Bubbly Voyage,1,10,55,109,14,19,410,5,12,Sweet
+Flowing Ripple,4,Choker,Bubbly Voyage,2,13,69,135,18,24,1220,16,36,Sweet
+Flowing Ripple,4,Choker,Bubbly Voyage,3,16,84,166,21,29,2440,32,72,Sweet
+Flowing Ripple,4,Choker,Bubbly Voyage,4,19,102,201,26,35,3980,53,120,Sweet
+Flowing Ripple,4,Choker,Bubbly Voyage,5,22,121,240,31,42,5800,77,177,Sweet
 First Impression,3,Choker,,0,0,39,79,8,12,0,0,0,Sweet
-First Impression,3,Choker,,1,15,49,99,10,15,0,0,0,Sweet
-First Impression,3,Choker,,2,19,61,123,13,19,0,0,0,Sweet
-First Impression,3,Choker,,3,23,75,151,16,23,0,0,0,Sweet
-First Impression,3,Choker,,4,28,90,182,19,28,0,0,0,Sweet
-First Impression,3,Choker,,5,33,108,218,22,33,0,0,0,Sweet
+First Impression,3,Choker,,1,15,49,99,10,15,140,2,6,Sweet
+First Impression,3,Choker,,2,19,61,123,13,19,410,6,18,Sweet
+First Impression,3,Choker,,3,23,75,151,16,23,820,11,36,Sweet
+First Impression,3,Choker,,4,28,90,182,19,28,1330,18,60,Sweet
+First Impression,3,Choker,,5,33,108,218,22,33,1940,26,88,Sweet
 Fluttering Wishes,5,Dress,,0,831,441,154,0,160,0,0,0,Elegant
 Fluttering Wishes,5,Dress,,1,1039,552,193,144,200,4500,60,128,Elegant
 Fluttering Wishes,5,Dress,,2,1289,684,239,179,248,13500,180,384,Elegant
@@ -2457,6 +2457,21 @@ Purity Guardian,4,Top,Bye-Bye Dust,2,217,44,462,69,62,4050,54,120,Sweet
 Purity Guardian,4,Top,Bye-Bye Dust,3,266,54,567,84,76,8100,108,240,Sweet
 Purity Guardian,4,Top,Bye-Bye Dust,4,322,65,686,102,92,13230,176,400,Sweet
 Purity Guardian,4,Top,Bye-Bye Dust,5,385,77,820,121,110,19310,257,592,Sweet
+Mermaid's Glow,5,Base Makeup,,0,0,0,0,0,0,0,0,0,Elegant
+Spring Breeze,5,Base Makeup,,0,0,0,0,0,0,0,0,0,Elegant
+Dreamy Ripples,5,Base Makeup,,0,0,0,0,0,0,0,0,0,Elegant
+Snowy Branches,5,Eyebrows,,0,0,0,0,0,0,0,0,0,Elegant
+Warm Brown,5,Eyebrows,,0,0,0,0,0,0,0,0,0,Elegant
+Nimbus Dreams,5,Eyebrows,,0,0,0,0,0,0,0,0,0,Elegant
+Aromalily's Heart,5,Eyelashes,,0,0,0,0,0,0,0,0,0,Elegant
+Feathery Sway,5,Eyelashes,,0,0,0,0,0,0,0,0,0,Elegant
+Delicate Heartstrings,5,Eyelashes,,0,0,0,0,0,0,0,0,0,Elegant
+Snowy Sky,5,Contact Lenses,,0,0,0,0,0,0,0,0,0,Elegant
+Crystal Gaze,5,Contact Lenses,,0,0,0,0,0,0,0,0,0,Elegant
+Dainty Yellow,5,Contact Lenses,,0,0,0,0,0,0,0,0,0,Elegant
+Mermaid Icebloom,5,Lips,,0,0,0,0,0,0,0,0,0,Elegant
+Rose in Blossom,5,Lips,,0,0,0,0,0,0,0,0,0,Elegant
+Light Tangerine,5,Lips,,0,0,0,0,0,0,0,0,0,Elegant
 First Light of Dawn,4,Earrings,Rebirth Wish: Blooming,0,53,19,101,15,15,0,0,0,Sweet
 First Light of Dawn,4,Earrings,Rebirth Wish: Blooming,1,67,24,127,19,19,410,5,12,Sweet
 First Light of Dawn,4,Earrings,Rebirth Wish: Blooming,2,83,30,157,24,24,1220,16,36,Sweet
@@ -2812,11 +2827,11 @@ Remembrance of Flowers,4,Gloves,Floral Memory: Gleam,3,84,166,18,31,19,2440,32,7
 Remembrance of Flowers,4,Gloves,Floral Memory: Gleam,4,102,201,21,37,23,3980,53,120,Fresh
 Remembrance of Flowers,4,Gloves,Floral Memory: Gleam,5,121,240,25,44,28,5800,77,177,Fresh
 Hidden in Flowers,4,Choker,Floral Memory: Gleam,0,40,85,0,14,15,0,0,0,Fresh
-Hidden in Flowers,4,Choker,Floral Memory: Gleam,1,50,107,14,18,19,0,0,0,Fresh
-Hidden in Flowers,4,Choker,Floral Memory: Gleam,2,62,132,18,22,24,0,0,0,Fresh
-Hidden in Flowers,4,Choker,Floral Memory: Gleam,3,76,162,21,27,29,0,0,0,Fresh
-Hidden in Flowers,4,Choker,Floral Memory: Gleam,4,92,196,26,33,35,0,0,0,Fresh
-Hidden in Flowers,4,Choker,Floral Memory: Gleam,5,110,234,31,39,42,0,0,0,Fresh
+Hidden in Flowers,4,Choker,Floral Memory: Gleam,1,50,107,14,18,19,410,5,12,Fresh
+Hidden in Flowers,4,Choker,Floral Memory: Gleam,2,62,132,18,22,24,1220,16,36,Fresh
+Hidden in Flowers,4,Choker,Floral Memory: Gleam,3,76,162,21,27,29,2440,32,72,Fresh
+Hidden in Flowers,4,Choker,Floral Memory: Gleam,4,92,196,26,33,35,3980,53,120,Fresh
+Hidden in Flowers,4,Choker,Floral Memory: Gleam,5,110,234,31,39,42,5800,77,177,Fresh
 Flower Memory,4,Earrings,Floral Memory: Gleam,0,42,86,14,12,11,0,0,0,Fresh
 Flower Memory,4,Earrings,Floral Memory: Gleam,1,53,108,18,15,14,410,5,12,Fresh
 Flower Memory,4,Earrings,Floral Memory: Gleam,2,66,134,22,19,18,1220,16,36,Fresh
@@ -2854,11 +2869,11 @@ Springing Up,4,Shoes,Bubbly Voyage: Spring,3,48,166,344,40,33,4860,65,180,Sweet
 Springing Up,4,Shoes,Bubbly Voyage: Spring,4,58,201,417,49,40,7940,106,300,Sweet
 Springing Up,4,Shoes,Bubbly Voyage: Spring,5,69,240,498,58,47,11590,155,445,Sweet
 Emerald Flow,4,Choker,Bubbly Voyage: Spring,0,8,44,87,0,15,0,0,0,Sweet
-Emerald Flow,4,Choker,Bubbly Voyage: Spring,1,10,55,109,14,19,0,0,0,Sweet
-Emerald Flow,4,Choker,Bubbly Voyage: Spring,2,13,69,135,18,24,0,0,0,Sweet
-Emerald Flow,4,Choker,Bubbly Voyage: Spring,3,16,84,166,21,29,0,0,0,Sweet
-Emerald Flow,4,Choker,Bubbly Voyage: Spring,4,19,102,201,26,35,0,0,0,Sweet
-Emerald Flow,4,Choker,Bubbly Voyage: Spring,5,22,121,240,31,42,0,0,0,Sweet
+Emerald Flow,4,Choker,Bubbly Voyage: Spring,1,10,55,109,14,19,410,5,12,Sweet
+Emerald Flow,4,Choker,Bubbly Voyage: Spring,2,13,69,135,18,24,1220,16,36,Sweet
+Emerald Flow,4,Choker,Bubbly Voyage: Spring,3,16,84,166,21,29,2440,32,72,Sweet
+Emerald Flow,4,Choker,Bubbly Voyage: Spring,4,19,102,201,26,35,3980,53,120,Sweet
+Emerald Flow,4,Choker,Bubbly Voyage: Spring,5,22,121,240,31,42,5800,77,177,Sweet
 Thoughts of Spring,4,Hair Accessory,Bubbly Voyage: Spring,0,10,44,84,14,14,0,0,0,Sweet
 Thoughts of Spring,4,Hair Accessory,Bubbly Voyage: Spring,1,13,55,105,18,18,410,5,12,Sweet
 Thoughts of Spring,4,Hair Accessory,Bubbly Voyage: Spring,2,16,69,131,22,22,1220,16,36,Sweet
@@ -3166,23 +3181,23 @@ Butterfly's Dance,5,Earrings,Flutter Storm: Dream Chant,3,137,27,37,257,29,4060,
 Butterfly's Dance,5,Earrings,Flutter Storm: Dream Chant,4,166,33,44,311,35,6630,88,190,Sexy
 Butterfly's Dance,5,Earrings,Flutter Storm: Dream Chant,5,198,39,53,372,42,9670,129,282,Sexy
 Fated Chains,5,Choker,Flutter Storm: Flame Song,0,67,24,13,131,20,0,0,0,Sexy
-Fated Chains,5,Choker,Flutter Storm: Flame Song,1,84,30,0,164,25,0,0,0,Sexy
-Fated Chains,5,Choker,Flutter Storm: Flame Song,2,104,38,21,204,31,0,0,0,Sexy
-Fated Chains,5,Choker,Flutter Storm: Flame Song,3,128,46,25,249,38,0,0,0,Sexy
-Fated Chains,5,Choker,Flutter Storm: Flame Song,4,155,56,30,302,46,0,0,0,Sexy
-Fated Chains,5,Choker,Flutter Storm: Flame Song,5,185,66,36,361,55,0,0,0,Sexy
+Fated Chains,5,Choker,Flutter Storm: Flame Song,1,84,30,0,164,25,680,9,19,Sexy
+Fated Chains,5,Choker,Flutter Storm: Flame Song,2,104,38,21,204,31,2030,27,57,Sexy
+Fated Chains,5,Choker,Flutter Storm: Flame Song,3,128,46,25,249,38,4060,54,114,Sexy
+Fated Chains,5,Choker,Flutter Storm: Flame Song,4,155,56,30,302,46,6630,88,190,Sexy
+Fated Chains,5,Choker,Flutter Storm: Flame Song,5,185,66,36,361,55,9670,129,282,Sexy
 Green Slumber,5,Choker,Flutter Storm: Forest Song,0,67,24,13,131,20,0,0,0,Sexy
-Green Slumber,5,Choker,Flutter Storm: Forest Song,1,84,30,0,164,25,0,0,0,Sexy
-Green Slumber,5,Choker,Flutter Storm: Forest Song,2,104,38,21,204,31,0,0,0,Sexy
-Green Slumber,5,Choker,Flutter Storm: Forest Song,3,128,46,25,249,38,0,0,0,Sexy
-Green Slumber,5,Choker,Flutter Storm: Forest Song,4,155,56,30,302,46,0,0,0,Sexy
-Green Slumber,5,Choker,Flutter Storm: Forest Song,5,185,66,36,361,55,0,0,0,Sexy
+Green Slumber,5,Choker,Flutter Storm: Forest Song,1,84,30,0,164,25,680,9,19,Sexy
+Green Slumber,5,Choker,Flutter Storm: Forest Song,2,104,38,21,204,31,2030,27,57,Sexy
+Green Slumber,5,Choker,Flutter Storm: Forest Song,3,128,46,25,249,38,4060,54,114,Sexy
+Green Slumber,5,Choker,Flutter Storm: Forest Song,4,155,56,30,302,46,6630,88,190,Sexy
+Green Slumber,5,Choker,Flutter Storm: Forest Song,5,185,66,36,361,55,9670,129,282,Sexy
 Endless Gaze,5,Choker,Flutter Storm: Dream Chant,0,67,24,13,131,20,0,0,0,Sexy
-Endless Gaze,5,Choker,Flutter Storm: Dream Chant,1,84,30,0,164,25,0,0,0,Sexy
-Endless Gaze,5,Choker,Flutter Storm: Dream Chant,2,104,38,21,204,31,0,0,0,Sexy
-Endless Gaze,5,Choker,Flutter Storm: Dream Chant,3,128,46,25,249,38,0,0,0,Sexy
-Endless Gaze,5,Choker,Flutter Storm: Dream Chant,4,155,56,30,302,46,0,0,0,Sexy
-Endless Gaze,5,Choker,Flutter Storm: Dream Chant,5,185,66,36,361,55,0,0,0,Sexy
+Endless Gaze,5,Choker,Flutter Storm: Dream Chant,1,84,30,0,164,25,680,9,19,Sexy
+Endless Gaze,5,Choker,Flutter Storm: Dream Chant,2,104,38,21,204,31,2030,27,57,Sexy
+Endless Gaze,5,Choker,Flutter Storm: Dream Chant,3,128,46,25,249,38,4060,54,114,Sexy
+Endless Gaze,5,Choker,Flutter Storm: Dream Chant,4,155,56,30,302,46,6630,88,190,Sexy
+Endless Gaze,5,Choker,Flutter Storm: Dream Chant,5,185,66,36,361,55,9670,129,282,Sexy
 Land of Winds,5,Socks,Flutter Storm: Flame Song,0,88,21,18,182,31,0,0,0,Sexy
 Land of Winds,5,Socks,Flutter Storm: Flame Song,1,110,27,23,228,39,900,12,19,Sexy
 Land of Winds,5,Socks,Flutter Storm: Flame Song,2,137,33,28,283,49,2700,36,57,Sexy
@@ -3400,20 +3415,20 @@ Plumes of Aurora,5,Socks,Fairytale Swan: Truth,3,354,42,42,166,44,5400,72,114,El
 Plumes of Aurora,5,Socks,Fairytale Swan: Truth,4,428,51,51,201,53,8820,118,190,Elegant
 Plumes of Aurora,5,Socks,Fairytale Swan: Truth,5,512,61,61,240,64,12870,172,282,Elegant
 Scattered Plume,5,Choker,Fairytale Swan: Dream,0,138,14,18,65,20,0,0,0,Elegant
-Scattered Plume,5,Choker,Fairytale Swan: Dream,1,173,18,23,82,25,0,0,0,Elegant
-Scattered Plume,5,Choker,Fairytale Swan: Dream,2,214,22,28,101,31,0,0,0,Elegant
-Scattered Plume,5,Choker,Fairytale Swan: Dream,3,263,27,35,124,38,0,0,0,Elegant
-Scattered Plume,5,Choker,Fairytale Swan: Dream,4,318,33,42,150,46,0,0,0,Elegant
-Scattered Plume,5,Choker,Fairytale Swan: Dream,5,380,39,50,179,55,0,0,0,Elegant
+Scattered Plume,5,Choker,Fairytale Swan: Dream,1,173,18,23,82,25,680,9,19,Elegant
+Scattered Plume,5,Choker,Fairytale Swan: Dream,2,214,22,28,101,31,2030,27,57,Elegant
+Scattered Plume,5,Choker,Fairytale Swan: Dream,3,263,27,35,124,38,4060,54,114,Elegant
+Scattered Plume,5,Choker,Fairytale Swan: Dream,4,318,33,42,150,46,6630,88,190,Elegant
+Scattered Plume,5,Choker,Fairytale Swan: Dream,5,380,39,50,179,55,9670,129,282,Elegant
 Feathers of Passion,5,Choker,Fairytale Swan: Mystfire,0,138,14,18,65,20,0,0,0,Elegant
-Feathers of Passion,5,Choker,Fairytale Swan: Mystfire,1,173,18,23,82,25,0,0,0,Elegant
-Feathers of Passion,5,Choker,Fairytale Swan: Mystfire,2,214,22,28,101,31,0,0,0,Elegant
-Feathers of Passion,5,Choker,Fairytale Swan: Mystfire,3,263,27,35,124,38,0,0,0,Elegant
-Feathers of Passion,5,Choker,Fairytale Swan: Mystfire,4,318,33,42,150,46,0,0,0,Elegant
-Feathers of Passion,5,Choker,Fairytale Swan: Mystfire,5,380,39,50,179,55,0,0,0,Elegant
+Feathers of Passion,5,Choker,Fairytale Swan: Mystfire,1,173,18,23,82,25,680,9,19,Elegant
+Feathers of Passion,5,Choker,Fairytale Swan: Mystfire,2,214,22,28,101,31,2030,27,57,Elegant
+Feathers of Passion,5,Choker,Fairytale Swan: Mystfire,3,263,27,35,124,38,4060,54,114,Elegant
+Feathers of Passion,5,Choker,Fairytale Swan: Mystfire,4,318,33,42,150,46,6630,88,190,Elegant
+Feathers of Passion,5,Choker,Fairytale Swan: Mystfire,5,380,39,50,179,55,9670,129,282,Elegant
 Tail of Comet,5,Choker,Fairytale Swan: Truth,0,138,14,18,65,20,0,0,0,Elegant
-Tail of Comet,5,Choker,Fairytale Swan: Truth,1,173,18,23,82,25,0,0,0,Elegant
-Tail of Comet,5,Choker,Fairytale Swan: Truth,2,214,22,28,101,31,0,0,0,Elegant
-Tail of Comet,5,Choker,Fairytale Swan: Truth,3,263,27,35,124,38,0,0,0,Elegant
-Tail of Comet,5,Choker,Fairytale Swan: Truth,4,318,33,42,150,46,0,0,0,Elegant
-Tail of Comet,5,Choker,Fairytale Swan: Truth,5,380,39,50,179,55,0,0,0,Elegant
+Tail of Comet,5,Choker,Fairytale Swan: Truth,1,173,18,23,82,25,680,9,19,Elegant
+Tail of Comet,5,Choker,Fairytale Swan: Truth,2,214,22,28,101,31,2030,27,57,Elegant
+Tail of Comet,5,Choker,Fairytale Swan: Truth,3,263,27,35,124,38,4060,54,114,Elegant
+Tail of Comet,5,Choker,Fairytale Swan: Truth,4,318,33,42,150,46,6630,88,190,Elegant
+Tail of Comet,5,Choker,Fairytale Swan: Truth,5,380,39,50,179,55,9670,129,282,Elegant
