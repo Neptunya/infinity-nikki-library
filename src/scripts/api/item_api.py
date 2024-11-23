@@ -48,6 +48,7 @@ itemFields = {
     "Labels": fields.String,
     "Source": fields.String,
     "Style": fields.String,
+    "Banner": fields.String,
 }
 
 lvlFields = {

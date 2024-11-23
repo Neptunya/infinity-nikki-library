@@ -100,6 +100,37 @@ def add_sources():
         writer.writeheader()
         writer.writerows(updated_rows)
 
+def add_banners(): 
+    with open('./python/json/banners.json', 'r') as f:
+        data = json.load(f)
+
+    csv_file = './python/csv/clothing_items_details.csv'
+    updated_rows = []
+
+    with open(csv_file, 'r', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        fieldnames = reader.fieldnames
+
+        if 'Banner' not in fieldnames:
+            fieldnames.append('Banner')
+
+        for row in reader:
+            if 'Banner' not in row:
+                row['Banner'] = ''
+
+            for banner, items in data['banners'].items():
+                if row['Name'] in items:
+                    current_banner = row['Banner'].split(', ') if row['Banner'] else []
+                    if banner not in current_banner:
+                        current_banner.append(banner)
+                        row['Banner'] = ', '.join(current_banner)
+            updated_rows.append(row)
+    
+    with open(csv_file, 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(updated_rows)
+
 def add_outfits_and_recolors_details():
     df = pd.read_csv(f'./python/csv/clothing_items_details.csv')
     df['Name'] = df['Name'].fillna('').astype(str)
@@ -158,6 +189,7 @@ def add_outfits_and_recolors_lvls():
 # split_csv()
 # add_costs()
 # add_labels()
+# add_banners()
 # add_sources()
 # add_outfits_and_recolors_details()
 # add_outfits_and_recolors_lvls()
