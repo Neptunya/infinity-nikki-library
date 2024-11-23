@@ -126,8 +126,11 @@ button:disabled {
     border-bottom-right-radius: 5px;
     margin-left: 5px;
     margin-right: -5px;
+    display: flex;
+    flex-flow: row wrap;
 }
 
 #collapsible-filters {
     margin-bottom: 20px;
+    
 }
