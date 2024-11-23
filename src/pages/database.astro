@@ -4,6 +4,7 @@ import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 import '../styles/database.css';
 import MultipleSelectChipFilters from '../components/MultipleSelectChipFilters.jsx';
+import ThemedTextField from '../components/ThemedTextField.jsx'
 ---
 <html lang="en">
 	<head>
@@ -19,13 +20,14 @@ import MultipleSelectChipFilters from '../components/MultipleSelectChipFilters.j
 		<Header />
 		<div class="content-container">
 			<h1>Database</h1>
+			<ThemedTextField label="Search by item or outfit" client:load />
 			<div id="collapsible-filters">
 				<button type="button" class="collapsible">
 					<p>Filters</p>
 					<p>+</p>
 				</button>
 				<div id="filter-container">
-					<MultipleSelectChipFilters client:load />
+					<MultipleSelectChipFilters client:only />
 				</div>
 			</div>
 			<div class="pagination-container"></div>

@@ -11,17 +11,22 @@ toggleButtons.forEach(button => {
 });
 
 const collapsible = document.getElementsByClassName("collapsible");
+const collapsibleFilters = document.getElementById('collapsible-filters')
+
+
 var i;
 
 for (i = 0; i < collapsible.length; i++) {
     collapsible[i].addEventListener("click", function() {
         this.classList.toggle("active");
+        
         var content = this.nextElementSibling;
         if (content.style.maxHeight){
             content.style.maxHeight = null;
         } else {
             content.style.maxHeight = content.scrollHeight + "px";
         }
+        
     });
 }
 
@@ -147,19 +152,24 @@ function adjustItemsPerPageAndRerender(data) {
     renderItems(data);
 }
 
-function getFilteredItems(slot, label) {
+export function getSelectedRarities(rarityValues) {
+    const selectedRarities = Array.isArray(rarityValues) 
+        ? rarityValues.map(segment => segment.trim().length)
+        : [];
+    getFilteredItems({ rarity: selectedRarities });
+}
+
+export function getFilteredItems(filters) {
     let url = 'http://127.0.0.1:5000/api/items/?';
     
-    const selectedRarityButtons = document.querySelectorAll('.rarity-btn.selected');
-    const selectedRarities = Array.from(selectedRarityButtons).map(button => button.id.replace('rarity-', ''));
-    console.log(selectedRarities);
-    
-    if (selectedRarities.length > 0) {
-        url += `rarity=${selectedRarities.join('&rarity=')}&`;
+    if (filters.rarity && filters.rarity.length > 0) {
+        url += `rarity=${filters.rarity.join('&rarity=')}&`;
     }
     
-    if (slot) url += `slot=${slot.join('&slot=')}&`;
-    if (label) url += `label=${label.join('&label=')}&`;
+    if (filters.slot && filters.slot.length > 0) {
+        url += `slot=${filters.slot.join('&slot=')}&`;
+    }
+    
     url = url.slice(0, -1);
 
     fetch(url)
@@ -171,10 +181,12 @@ function getFilteredItems(slot, label) {
     .catch(error => {
         console.error('Error fetching filtered items:', error);
     });
+    
+    
 }
 
 window.onload = function() {
-    getFilteredItems();
+    getSelectedRarities([]);
 };
 
 window.onresize = function() {

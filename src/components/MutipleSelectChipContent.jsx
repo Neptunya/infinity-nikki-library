@@ -27,7 +27,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function MultipleSelectChipContent({ names = [], idPrefix = 'demo', label = 'Chip' }) {
+export default function MultipleSelectChipContent({ names = [], idPrefix = 'demo', label = 'Chip', onSelectionChange }) {
   const theme = useTheme(); // Access the theme from ThemeProvider
   
   const [personName, setPersonName] = useState([]);
@@ -36,10 +36,9 @@ export default function MultipleSelectChipContent({ names = [], idPrefix = 'demo
     const {
       target: { value },
     } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
+    const updatedValues = typeof value === 'string' ? value.split(',') : value;
+    setPersonName(updatedValues);
+    onSelectionChange(updatedValues);
   };
 
   return (
@@ -59,7 +58,7 @@ export default function MultipleSelectChipContent({ names = [], idPrefix = 'demo
           multiple
           value={personName}
           onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+          input={<OutlinedInput id={`${idPrefix}-select-multiple-chip-vals`} label="Chip" />}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (

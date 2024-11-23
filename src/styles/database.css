@@ -32,6 +32,7 @@ button:disabled {
     margin: 5px 10px;
     border-radius: 10px;
     flex: 1 1 400px;
+    max-width: 400px;
     overflow: hidden;
     background-color: #353142;
 }
@@ -113,6 +114,7 @@ button:disabled {
 #item-card-container {
     display: flex;
     flex-flow: row wrap;
+    justify-content: space-evenly;
 }
 
 #filter-container {
@@ -128,9 +130,9 @@ button:disabled {
     margin-right: -5px;
     display: flex;
     flex-flow: row wrap;
+    justify-content: space-evenly;
 }
 
 #collapsible-filters {
     margin-bottom: 20px;
-    
 }
