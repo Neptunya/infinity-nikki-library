@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
-import CssBaseline from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
 import { theme } from '../styles/theme';
 import { useState, useEffect } from "react";
 

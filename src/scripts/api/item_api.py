@@ -83,6 +83,8 @@ class Items(Resource):
             query = query.filter(ItemDetails.Labels.in_(label))
         
         items = query.all()
+        if not items:
+            return [], 200
         return items
 
 class Levels(Resource):

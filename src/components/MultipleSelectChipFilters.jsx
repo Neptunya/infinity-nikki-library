@@ -3,7 +3,7 @@ import { ThemeProvider } from '@mui/material/styles'; // Import ThemeProvider
 import CssBaseline from '@mui/material/CssBaseline'; // For global Material-UI styles
 import { theme } from '../styles/theme';
 import MultipleSelectChipContent from './MutipleSelectChipContent'
-import { getSelectedRarities } from '../scripts/database';
+import { getSelectedRarities, getSelectedSlots, getSelectedLabels } from '../scripts/database';
 
 export default function MultipleSelectChipFilters() {
     const [isClient, setIsClient] = useState(false);
@@ -54,9 +54,17 @@ export default function MultipleSelectChipFilters() {
         idPrefix="rarity"
         label="Rarity"
         onSelectionChange={getSelectedRarities} />
-      <MultipleSelectChipContent names={slots} idPrefix="slot" label="Type" />
+      <MultipleSelectChipContent
+        names={slots}
+        idPrefix="slot"
+        label="Type"
+        onSelectionChange={getSelectedSlots} />
       <MultipleSelectChipContent names={styles} idPrefix="style" label="Style" />
-      <MultipleSelectChipContent names={labels} idPrefix="label" label="Label" />
+      <MultipleSelectChipContent
+        names={labels}
+        idPrefix="label"
+        label="Label"
+        onSelectionChange={getSelectedLabels} />
       <MultipleSelectChipContent names={sources} idPrefix="source" label="Source" />
     </ThemeProvider>
   ) : null;

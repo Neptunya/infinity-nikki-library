@@ -1,18 +1,11 @@
 let itemsPerPage = 10;
 let currentPage = 1;
-
-const toggleButtons = document.querySelectorAll('.toggle-btn');
-toggleButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        button.classList.toggle('selected');
-        currentPage = 1;
-        getFilteredItems();
-      });
-});
+let selectedRarities = [];
+let selectedSlots = [];
+let selectedLabels = [];
+let totalItems = 0;
 
 const collapsible = document.getElementsByClassName("collapsible");
-const collapsibleFilters = document.getElementById('collapsible-filters')
-
 
 var i;
 
@@ -30,46 +23,83 @@ for (i = 0; i < collapsible.length; i++) {
     });
 }
 
+function adjustCollapsibleMaxHeight() {
+    // Use a delay to ensure updates are complete before recalculating
+    setTimeout(() => {
+        for (let i = 0; i < collapsible.length; i++) {
+            const content = collapsible[i].nextElementSibling;
+            if (collapsible[i].classList.contains("active")) {
+                // If the collapsible is active, recalculate maxHeight
+                content.style.maxHeight = content.scrollHeight + "px";
+            } else {
+                // Otherwise, reset maxHeight to null
+                content.style.maxHeight = null;
+            }
+        }
+    }, 100); // Delay to allow content to finish updating
+}
 function renderItems(data) {
     const itemCardContainer = document.getElementById('item-card-container');
     itemCardContainer.innerHTML = '';
-    
+
+    if (data.length === 0) {
+        const messageContainer = document.createElement('div');
+        messageContainer.classList.add('no-results-container');
+
+
+        const message = document.createElement('p');
+        message.textContent = 'No items found for the selected filters.';
+        message.classList.add('no-results-message');
+        
+        const img = document.createElement('img');
+        img.src = '/images/no_results.png'; // Update with the correct path to your image
+        img.alt = 'No results';
+        img.classList.add('no-results-image');
+
+        messageContainer.appendChild(message);
+        messageContainer.appendChild(img);
+        itemCardContainer.appendChild(messageContainer);
+
+        renderPagination(0); // Show pagination as 0 pages
+        return;
+    }
+
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const itemsToRender = data.slice(startIndex, endIndex);
-    
+
     itemsToRender.forEach(item => {
         const card = document.createElement('div');
         card.classList.add('item-card');
         card.classList.add('card-row');
-        
+
         const img = document.createElement('img');
         img.classList.add('item-img')
         img.src = `/images/items/${item.Name}.png`;
         img.alt = item.Name;
         card.appendChild(img);
-        
+
         const cardText = document.createElement('div');
         cardText.classList.add('item-card-text');
         card.appendChild(cardText)
-        
+
         const h3 = document.createElement('h3');
         h3.textContent = item['Name'];
         cardText.appendChild(h3);
-        
+
         if (item['Outfit']) {
             const h4 = document.createElement('h4')
             h4.innerHTML += item['Outfit'];
             cardText.appendChild(h4);
         }
-        
+
         const p = document.createElement('p');
         let stars = '';
         const rarityValue = item['Rarity'];
         stars = '✧'.repeat(rarityValue);
         p.innerHTML = stars;
         cardText.appendChild(p)
-        
+
         if (item['Labels']) {
             p.innerHTML += '<br><i>' + item['Labels'] + '</i>';
         }
@@ -123,7 +153,7 @@ function changePage(newPage, totalItems) {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     if (newPage >= 1 && newPage <= totalPages) {
         currentPage = newPage;
-        getFilteredItems(); // Re-fetch items for the new page
+        getFilteredItems();
     }
 }
 
@@ -153,43 +183,64 @@ function adjustItemsPerPageAndRerender(data) {
 }
 
 export function getSelectedRarities(rarityValues) {
-    const selectedRarities = Array.isArray(rarityValues) 
-        ? rarityValues.map(segment => segment.trim().length)
-        : [];
-    getFilteredItems({ rarity: selectedRarities });
+    currentPage = 1;
+    if (Array.isArray(rarityValues)) {
+        selectedRarities = rarityValues.map(segment => segment.trim().length);
+    } else {
+        selectedRarities = [];
+    }
+    getFilteredItems();
 }
 
-export function getFilteredItems(filters) {
+export function getSelectedSlots(slotValues) {
+    currentPage = 1;
+    selectedSlots = slotValues;
+    getFilteredItems();
+}
+
+export function getSelectedLabels(labelValues) {
+    currentPage = 1;
+    selectedLabels = labelValues;
+    getFilteredItems();
+}
+
+export function getFilteredItems() {
     let url = 'http://127.0.0.1:5000/api/items/?';
     
-    if (filters.rarity && filters.rarity.length > 0) {
-        url += `rarity=${filters.rarity.join('&rarity=')}&`;
+    if (selectedRarities && selectedRarities.length > 0) {
+        url += `rarity=${selectedRarities.join('&rarity=')}&`;
     }
     
-    if (filters.slot && filters.slot.length > 0) {
-        url += `slot=${filters.slot.join('&slot=')}&`;
+    if (selectedSlots && selectedSlots.length > 0) {
+        url += `slot=${selectedSlots.join('&slot=')}&`;
     }
+    
+    if (selectedLabels && selectedLabels.length > 0) {
+        url += `label=${selectedLabels.join('&label=')}&`;
+    }
+    
+    adjustCollapsibleMaxHeight();
     
     url = url.slice(0, -1);
-
     fetch(url)
     .then(response => response.json())
     .then(data => {
         renderItems(data); // Initial render with default itemsPerPage
+        totalItems = data.length;
         setTimeout(() => adjustItemsPerPageAndRerender(data), 0); // Adjust after page load
     })
     .catch(error => {
         console.error('Error fetching filtered items:', error);
     });
-    
-    
 }
 
 window.onload = function() {
-    getSelectedRarities([]);
+    getFilteredItems();
+    adjustCollapsibleMaxHeight();
 };
 
 window.onresize = function() {
     getFilteredItems();
+    adjustCollapsibleMaxHeight();
     currentPage = 1;
 };
