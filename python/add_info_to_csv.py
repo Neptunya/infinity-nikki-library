@@ -186,13 +186,13 @@ def add_outfits_and_recolors_lvls():
 # merge_csv()
 # add_style()
 # add_makeup()
-# split_csv()
-# add_costs()
-# add_labels()
-# add_banners()
-# add_sources()
-# add_outfits_and_recolors_details()
-# add_outfits_and_recolors_lvls()
+split_csv()
+add_costs()
+add_labels()
+add_sources()
+add_outfits_and_recolors_details()
+add_outfits_and_recolors_lvls()
+add_banners()
 
 '''TODO: 
 - generate popup pg for items

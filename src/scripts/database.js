@@ -3,6 +3,8 @@ let currentPage = 1;
 let selectedRarities = [];
 let selectedSlots = [];
 let selectedLabels = [];
+let selectedStyles = [];
+let selectedSources = [];
 let totalItems = 0;
 
 const collapsible = document.getElementsByClassName("collapsible");
@@ -204,6 +206,18 @@ export function getSelectedLabels(labelValues) {
     getFilteredItems();
 }
 
+export function getSelectedStyle(styleValues) {
+    currentPage = 1;
+    selectedStyles = styleValues;
+    getFilteredItems();
+}
+
+export function getSelectedSource(sourceValues) {
+    currentPage = 1;
+    selectedSources = sourceValues;
+    getFilteredItems();
+}
+
 export function getFilteredItems() {
     let url = 'http://127.0.0.1:5000/api/items/?';
     
@@ -219,8 +233,15 @@ export function getFilteredItems() {
         url += `label=${selectedLabels.join('&label=')}&`;
     }
     
-    adjustCollapsibleMaxHeight();
+    if (selectedStyles && selectedStyles.length > 0) {
+        url += `style=${selectedStyles.join('&style=')}&`;
+    }
     
+    if (selectedSources && selectedSources.length > 0) {
+        url += `source=${selectedSources.join('&source=')}&`;
+    }
+    
+    adjustCollapsibleMaxHeight();
     url = url.slice(0, -1);
     fetch(url)
     .then(response => response.json())

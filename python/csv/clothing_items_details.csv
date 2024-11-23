@@ -256,7 +256,7 @@ Silent Perch,5,Neckwear,Flutter Storm,Romance,Resonance from the Distant Sea,Sex
 Cherished Moment,2,Neckwear,,,A classic clothing piece from Marques Boutique.,Elegant,
 Dark Silverbloom,3,Neckwear,,Intellectual,A classic clothing piece from Marques Boutique.,Elegant,
 Floral Love,3,Outerwear,,Pastoral,A unique creation made by an independent designer.,Fresh,
-Red Checkered Vest,3,Outerwear,,Uniform,Resonance from the Distant Sea,Elegant,
+Red Checkered Vest,3,Outerwear,,Uniform,Resonance from the Distant Sea,Elegant,Distant Sea
 First Day Jogging,3,Outerwear,,Summer,Resonance from the Distant Sea,Sweet,Distant Sea
 Gentle Starshine,3,Outerwear,Searching for Dreams,Cute,Proof of styling prowess.,Sexy,
 Work-Life Balance,3,Outerwear,Refined Grace,Intellectual,Proof of styling prowess.,Cool,
@@ -270,14 +270,14 @@ Through the Storm,4,Outerwear,Rebirth Wish,Retro,A gift from the Cadenceborn to 
 Imaginative Painting,4,Outerwear,Flowing Colors,Playful,Resonance from the Distant Sea,Fresh,Butterfly Dream
 Puffy Sleeves,4,Outerwear,Rippling Serenity,Simple,Insights of the Heart of Infinity.,Cool,
 Blue Flower Dye,3,Pendant,,Summer,Resonance from the Distant Sea,Sweet,Distant Sea
-Whispering Breeze,4,Pendant,Tidal Shark Mirage,Playful,Resonance from the Distant Sea,Cool,
+Whispering Breeze,4,Pendant,Tidal Shark Mirage,Playful,Resonance from the Distant Sea,Cool,Distant Sea
 Windswept Plume,4,Pendant,Wind of Purity,Romance,Insights of the Heart of Infinity.,Elegant,
 Starry Guidance,5,Ring,Fairytale Swan,Formal,Resonance from the Distant Sea,Elegant,Distant Sea
 Footsteps of Love,3,Shoes,,Intellectual,A unique creation made by an independent designer.,Fresh,
 Pearly Bird,5,Shoes,,Fantasy,Treasure guarded by Esselings.,Sweet,
 Stroll and Leisure,3,Shoes,,Adventure,Rare treasures scattered in chests found all around the world.,Fresh,
 Windchaser,3,Shoes,,Adventure,Rare treasures scattered in chests found all around the world.,Cool,
-At Night,3,Shoes,,,,Cool,
+At Night,3,Shoes,,Trendy,Rare treasures scattered in chests found all around the world.,Cool,
 Cool Sprint,3,Shoes,,Simple,Rare treasures scattered in chests found all around the world.,Cool,
 Competition,3,Shoes,,Trendy,Rare treasures scattered in chests found all around the world.,Cool,
 Emerald Whirl,3,Shoes,,Trendy,Rare treasures scattered in chests found all around the world.,Cool,
@@ -409,21 +409,21 @@ Set Sail,4,Top,Tidal Shark Mirage,Playful,Resonance from the Distant Sea,Cool,Di
 Azure Waters,4,Top,Rippling Serenity,Simple,Insights of the Heart of Infinity.,Cool,
 Siesta Tunes,4,Top,Afternoon Shine,Adventure,Insights of the Heart of Infinity.,Sweet,
 Purity Guardian,4,Top,Bye-Bye Dust,Playful,Insights of the Heart of Infinity.,Sweet,
-Mermaid's Glow,5,Base Makeup,,,Resonance from the Distant Sea,Elegant,
-Spring Breeze,5,Base Makeup,,,Resonance from the Distant Sea,Elegant,
-Dreamy Ripples,5,Base Makeup,,,Resonance from the Distant Sea,Elegant,
-Snowy Branches,5,Eyebrows,,,Resonance from the Distant Sea,Elegant,
-Warm Brown,5,Eyebrows,,,Resonance from the Distant Sea,Elegant,
-Nimbus Dreams,5,Eyebrows,,,Resonance from the Distant Sea,Elegant,
-Aromalily's Heart,5,Eyelashes,,,Resonance from the Distant Sea,Elegant,
-Feathery Sway,5,Eyelashes,,,Resonance from the Distant Sea,Elegant,
-Delicate Heartstrings,5,Eyelashes,,,Resonance from the Distant Sea,Elegant,
-Snowy Sky,5,Contact Lenses,,,Resonance from the Distant Sea,Elegant,
-Crystal Gaze,5,Contact Lenses,,,Resonance from the Distant Sea,Elegant,
-Dainty Yellow,5,Contact Lenses,,,Resonance from the Distant Sea,Elegant,
-Mermaid Icebloom,5,Lips,,,Resonance from the Distant Sea,Elegant,
-Rose in Blossom,5,Lips,,,Resonance from the Distant Sea,Elegant,
-Light Tangerine,5,Lips,,,Resonance from the Distant Sea,Elegant,
+Mermaid's Glow,5,Base Makeup,,,Resonance from the Distant Sea,Elegant,Butterfly Dream
+Spring Breeze,5,Base Makeup,,,Resonance from the Distant Sea,Elegant,Distant Sea
+Dreamy Ripples,5,Base Makeup,,,Resonance from the Distant Sea,Elegant,Distant Sea
+Snowy Branches,5,Eyebrows,,,Resonance from the Distant Sea,Elegant,Butterfly Dream
+Warm Brown,5,Eyebrows,,,Resonance from the Distant Sea,Elegant,Distant Sea
+Nimbus Dreams,5,Eyebrows,,,Resonance from the Distant Sea,Elegant,Distant Sea
+Aromalily's Heart,5,Eyelashes,,,Resonance from the Distant Sea,Elegant,Butterfly Dream
+Feathery Sway,5,Eyelashes,,,Resonance from the Distant Sea,Elegant,Distant Sea
+Delicate Heartstrings,5,Eyelashes,,,Resonance from the Distant Sea,Elegant,Distant Sea
+Snowy Sky,5,Contact Lenses,,,Resonance from the Distant Sea,Elegant,Butterfly Dream
+Crystal Gaze,5,Contact Lenses,,,Resonance from the Distant Sea,Elegant,Distant Sea
+Dainty Yellow,5,Contact Lenses,,,Resonance from the Distant Sea,Elegant,Distant Sea
+Mermaid Icebloom,5,Lips,,,Resonance from the Distant Sea,Elegant,Butterfly Dream
+Rose in Blossom,5,Lips,,,Resonance from the Distant Sea,Elegant,Distant Sea
+Light Tangerine,5,Lips,,,Resonance from the Distant Sea,Elegant,Distant Sea
 First Light of Dawn,4,Earrings,Rebirth Wish: Blooming,Retro,A recolor of Weaving Spring from Rebirth Wish.,Sweet,
 Subtle Fragrance,4,Headwear,Rebirth Wish: Blooming,Retro,A recolor of Cradle of Wish from Rebirth Wish.,Sweet,
 Sea of Dreams,4,Hair Accessory,Rebirth Wish: Blooming,Retro,A recolor of A New Dawn from Rebirth Wish.,Sweet,
@@ -455,22 +455,22 @@ Immersed in Fantasy,4,Headwear,Rippling Serenity: Dream,Simple,A recolor of Chee
 Scaled Password,4,Earrings,Rippling Serenity: Dream,Simple,A recolor of Tiny Bites from Rippling Serenity.,Cool,
 Shadow of the Stars,4,Gloves,Rippling Serenity: Dream,Simple,A recolor of Splashy Gloves from Rippling Serenity.,Cool,
 Bountiful Harvest,4,Backpiece,Rippling Serenity: Dream,Simple,A recolor of Fishing Bliss from Rippling Serenity.,Cool,
-Fluffy Puff,4,Earrings,Sweet Jazz Nights: Waltz,Cute,A recolor of Bibcoon Pompoms from Sweet Jazz Nights.,Sweet,Distant Sea
-Bibcoon's Masterpiece,4,Bracelet,Sweet Jazz Nights: Waltz,Cute,A recolor of Unfulfilled Wish from Sweet Jazz Nights.,Sweet,Distant Sea
-Vibrant Note,4,Headwear,Sweet Jazz Nights: Waltz,Cute,A recolor of Sleepless Night from Sweet Jazz Nights.,Sweet,Distant Sea
-Sweet Nectar,4,Hair Accessory,Sweet Jazz Nights: Waltz,Cute,A recolor of Intermission from Sweet Jazz Nights.,Sweet,Distant Sea
-Graceful Steps,4,Shoes,Sweet Jazz Nights: Waltz,Cute,A recolor of Unending Dance from Sweet Jazz Nights.,Sweet,Distant Sea
-Graceful Spin,4,Dress,Sweet Jazz Nights: Waltz,Cute,A recolor of Chuckle Trainee from Sweet Jazz Nights.,Sweet,Distant Sea
-Glittering Night,4,Hair,Sweet Jazz Nights: Waltz,Cute,A recolor of Mellifluous Melody from Sweet Jazz Nights.,Sweet,Distant Sea
-Cotton Candy,4,Socks,Sweet Jazz Nights: Waltz,Cute,A recolor of Soft Bibcoon Socks from Sweet Jazz Nights.,Sweet,Distant Sea
-Cooling Breeze,4,Headwear,Shark Mirage: Summer,Playful,A recolor of Drifting Sharkfin from Tidal Shark Mirage.,Cool,Distant Sea
-Starsail Jelly,4,Hair Accessory,Shark Mirage: Summer,Playful,A recolor of Guiding Star from Tidal Shark Mirage.,Cool,Distant Sea
+Fluffy Puff,4,Earrings,Sweet Jazz Nights: Waltz,Cute,A recolor of Bibcoon Pompoms from Sweet Jazz Nights.,Sweet,
+Bibcoon's Masterpiece,4,Bracelet,Sweet Jazz Nights: Waltz,Cute,A recolor of Unfulfilled Wish from Sweet Jazz Nights.,Sweet,
+Vibrant Note,4,Headwear,Sweet Jazz Nights: Waltz,Cute,A recolor of Sleepless Night from Sweet Jazz Nights.,Sweet,
+Sweet Nectar,4,Hair Accessory,Sweet Jazz Nights: Waltz,Cute,A recolor of Intermission from Sweet Jazz Nights.,Sweet,
+Graceful Steps,4,Shoes,Sweet Jazz Nights: Waltz,Cute,A recolor of Unending Dance from Sweet Jazz Nights.,Sweet,
+Graceful Spin,4,Dress,Sweet Jazz Nights: Waltz,Cute,A recolor of Chuckle Trainee from Sweet Jazz Nights.,Sweet,
+Glittering Night,4,Hair,Sweet Jazz Nights: Waltz,Cute,A recolor of Mellifluous Melody from Sweet Jazz Nights.,Sweet,
+Cotton Candy,4,Socks,Sweet Jazz Nights: Waltz,Cute,A recolor of Soft Bibcoon Socks from Sweet Jazz Nights.,Sweet,
+Cooling Breeze,4,Headwear,Shark Mirage: Summer,Playful,A recolor of Drifting Sharkfin from Tidal Shark Mirage.,Cool,
+Starsail Jelly,4,Hair Accessory,Shark Mirage: Summer,Playful,A recolor of Guiding Star from Tidal Shark Mirage.,Cool,
 Summer Voyage,4,Pendant,Shark Mirage: Summer,Playful,A recolor of Whispering Breeze from Tidal Shark Mirage.,Cool,
-Seaside Siesta,4,Shoes,Shark Mirage: Summer,Playful,A recolor of Gentle Ripples from Tidal Shark Mirage.,Cool,Distant Sea
-Shallow Sea Swim,4,Gloves,Shark Mirage: Summer,Playful,A recolor of Deep Sea Adventure from Tidal Shark Mirage.,Cool,Distant Sea
-Sweet Juice,4,Bottom,Shark Mirage: Summer,Playful,A recolor of Riding the Breeze from Tidal Shark Mirage.,Cool,Distant Sea
-Fruity Bubble,4,Socks,Shark Mirage: Summer,Playful,A recolor of Shallow Reflections from Tidal Shark Mirage.,Cool,Distant Sea
-Pink Sailor,4,Top,Shark Mirage: Summer,Playful,A recolor of Set Sail from Tidal Shark Mirage.,Cool,Distant Sea
+Seaside Siesta,4,Shoes,Shark Mirage: Summer,Playful,A recolor of Gentle Ripples from Tidal Shark Mirage.,Cool,
+Shallow Sea Swim,4,Gloves,Shark Mirage: Summer,Playful,A recolor of Deep Sea Adventure from Tidal Shark Mirage.,Cool,
+Sweet Juice,4,Bottom,Shark Mirage: Summer,Playful,A recolor of Riding the Breeze from Tidal Shark Mirage.,Cool,
+Fruity Bubble,4,Socks,Shark Mirage: Summer,Playful,A recolor of Shallow Reflections from Tidal Shark Mirage.,Cool,
+Pink Sailor,4,Top,Shark Mirage: Summer,Playful,A recolor of Set Sail from Tidal Shark Mirage.,Cool,
 Colorful Gradient,4,Hair,Fully Charged: Refreshing,Uniform,A recolor of Troubleshooter from Fully Charged.,Cool,
 Crackling Electricity,4,Dress,Fully Charged: Refreshing,Uniform,A recolor of Circuit Connection from Fully Charged.,Cool,
 Emergency Deployment,4,Shoes,Fully Charged: Refreshing,Uniform,A recolor of Insulated Marks from Fully Charged.,Cool,
@@ -494,93 +494,93 @@ Emerald Flow,4,Choker,Bubbly Voyage: Spring,Summer,A recolor of Flowing Ripple f
 Thoughts of Spring,4,Hair Accessory,Bubbly Voyage: Spring,Summer,A recolor of Twinkling Refractions from Bubbly Voyage.,Sweet,
 Rhymes Echo,4,Headwear,Bubbly Voyage: Spring,Summer,A recolor of Sparkling Reverie from Bubbly Voyage.,Sweet,
 Dewy Bubbles,4,Bracelet,Bubbly Voyage: Spring,Summer,A recolor of Gentle Touch from Bubbly Voyage.,Sweet,
-Forgotten Drift,5,Earrings,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Astral Petals from Blossoming Stars.,Fresh,Distant Sea
-Star Blossom,5,Earrings,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Astral Petals from Blossoming Stars.,Fresh,Distant Sea
-Golden Blossom,5,Earrings,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Astral Petals from Blossoming Stars.,Fresh,Distant Sea
-Starlight Submersion,5,Bracelet,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Distant Twinkle from Blossoming Stars.,Fresh,Distant Sea
-Cloud Cluster,5,Bracelet,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Distant Twinkle from Blossoming Stars.,Fresh,Distant Sea
-Pure Wish,5,Bracelet,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Distant Twinkle from Blossoming Stars.,Fresh,Distant Sea
-Mist Glow,5,Hair Accessory,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Starlit Dreams from Blossoming Stars.,Fresh,Distant Sea
-Blooming Starfall,5,Hair Accessory,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Starlit Dreams from Blossoming Stars.,Fresh,Distant Sea
-Glistening Moment,5,Hair Accessory,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Starlit Dreams from Blossoming Stars.,Fresh,Distant Sea
-Dreams Lost,5,Neckwear,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Blossom Promenade from Blossoming Stars.,Fresh,Distant Sea
-Milky Way Overflow,5,Neckwear,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Blossom Promenade from Blossoming Stars.,Fresh,Distant Sea
-Dawning Light,5,Neckwear,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Blossom Promenade from Blossoming Stars.,Fresh,Distant Sea
-Floating Shore,5,Shoes,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Starry Pathway from Blossoming Stars.,Fresh,Distant Sea
-Floral Stardust,5,Shoes,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Starry Pathway from Blossoming Stars.,Fresh,Distant Sea
-Chasing Stars,5,Shoes,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Starry Pathway from Blossoming Stars.,Fresh,Distant Sea
-Ethereal Dreamland,5,Dress,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Starry Splendor from Blossoming Stars.,Fresh,Distant Sea
-Rustling Stars,5,Dress,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Starry Splendor from Blossoming Stars.,Fresh,Distant Sea
-Eternal Radiance,5,Dress,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Starry Splendor from Blossoming Stars.,Fresh,Distant Sea
-Evening Banquet,5,Hair,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Blooming Pact from Blossoming Stars.,Fresh,Distant Sea
-Silver Shimmer,5,Hair,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Blooming Pact from Blossoming Stars.,Fresh,Distant Sea
-Firefly Brilliance,5,Hair,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Blooming Pact from Blossoming Stars.,Fresh,Distant Sea
-Moon in Flowers,5,Headwear,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Bloom Together from Blossoming Stars.,Fresh,Distant Sea
-Snow on Branches,5,Headwear,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Bloom Together from Blossoming Stars.,Fresh,Distant Sea
-White Branches,5,Headwear,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Bloom Together from Blossoming Stars.,Fresh,Distant Sea
-Long Dreaming,5,Socks,Blossoming Stars: Dreamfall,Romance,A recolor of Imminent Bloom from Blossoming Stars.,Fresh,Distant Sea
-Misty Silhouette,5,Socks,Blossoming Stars: Starlight,Romance,A recolor of Imminent Bloom from Blossoming Stars.,Fresh,Distant Sea
-Starry Tread,5,Socks,Blossoming Stars: Radiance,Romance,A recolor of Imminent Bloom from Blossoming Stars.,Fresh,Distant Sea
-Path of Sorrow,5,Shoes,Flutter Storm: Flame Song,Romance,A recolor of Offshore Breeze from Flutter Storm.,Sexy,Butterfly Dream
-Echoes of the Wind,5,Shoes,Flutter Storm: Forest Song,Romance,A recolor of Offshore Breeze from Flutter Storm.,Sexy,Butterfly Dream
-Resting in the Rift,5,Shoes,Flutter Storm: Dream Chant,Romance,A recolor of Offshore Breeze from Flutter Storm.,Sexy,Butterfly Dream
-Embers of the Butterfly,5,Dress,Flutter Storm: Flame Song,Romance,A recolor of Fluttering Twist from Flutter Storm.,Sexy,Butterfly Dream
-Silent Woodland,5,Dress,Flutter Storm: Forest Song,Romance,A recolor of Fluttering Twist from Flutter Storm.,Sexy,Butterfly Dream
-Winged Illusions,5,Dress,Flutter Storm: Dream Chant,Romance,A recolor of Fluttering Twist from Flutter Storm.,Sexy,Butterfly Dream
-Fervent Longing,5,Gloves,Flutter Storm: Flame Song,Romance,A recolor of Delicate Wings from Flutter Storm.,Sexy,Butterfly Dream
-Lingering Warmth,5,Gloves,Flutter Storm: Forest Song,Romance,A recolor of Delicate Wings from Flutter Storm.,Sexy,Butterfly Dream
-Fluttering Butterfly,5,Gloves,Flutter Storm: Dream Chant,Romance,A recolor of Delicate Wings from Flutter Storm.,Sexy,Butterfly Dream
-Cursed Storm,5,Hair,Flutter Storm: Flame Song,Romance,A recolor of Fluttermist Isle from Flutter Storm.,Sexy,Butterfly Dream
-Etched by the Wind,5,Hair,Flutter Storm: Forest Song,Romance,A recolor of Fluttermist Isle from Flutter Storm.,Sexy,Butterfly Dream
-Windborne Realm,5,Hair,Flutter Storm: Dream Chant,Romance,A recolor of Fluttermist Isle from Flutter Storm.,Sexy,Butterfly Dream
-Beneath the Ashes,5,Headwear,Flutter Storm: Flame Song,Romance,A recolor of Frigid Branches from Flutter Storm.,Sexy,Butterfly Dream
-Lonely Branches,5,Headwear,Flutter Storm: Forest Song,Romance,A recolor of Frigid Branches from Flutter Storm.,Sexy,Butterfly Dream
-Dreams of the Past,5,Headwear,Flutter Storm: Dream Chant,Romance,A recolor of Frigid Branches from Flutter Storm.,Sexy,Butterfly Dream
-Amid the Storm,5,Neckwear,Flutter Storm: Flame Song,Romance,A recolor of Silent Perch from Flutter Storm.,Sexy,Butterfly Dream
-Shaded Green,5,Neckwear,Flutter Storm: Forest Song,Romance,A recolor of Silent Perch from Flutter Storm.,Sexy,Butterfly Dream
-Dreams on Wings,5,Neckwear,Flutter Storm: Dream Chant,Romance,A recolor of Silent Perch from Flutter Storm.,Sexy,Butterfly Dream
-Butterfly Elegy,5,Earrings,Flutter Storm: Flame Song,Romance,A recolor of Windhowl Tears from Flutter Storm.,Sexy,Butterfly Dream
-Isolated Melody,5,Earrings,Flutter Storm: Forest Song,Romance,A recolor of Windhowl Tears from Flutter Storm.,Sexy,Butterfly Dream
-Butterfly's Dance,5,Earrings,Flutter Storm: Dream Chant,Romance,A recolor of Windhowl Tears from Flutter Storm.,Sexy,Butterfly Dream
-Fated Chains,5,Choker,Flutter Storm: Flame Song,Romance,A recolor of Sealing Cocoon from Flutter Storm.,Sexy,Butterfly Dream
-Green Slumber,5,Choker,Flutter Storm: Forest Song,Romance,A recolor of Sealing Cocoon from Flutter Storm.,Sexy,Butterfly Dream
-Endless Gaze,5,Choker,Flutter Storm: Dream Chant,Romance,A recolor of Sealing Cocoon from Flutter Storm.,Sexy,Butterfly Dream
-Land of Winds,5,Socks,Flutter Storm: Flame Song,Romance,A recolor of Windborne Memories from Flutter Storm.,Sexy,Butterfly Dream
-Dreamwalker's Forest,5,Socks,Flutter Storm: Forest Song,Romance,A recolor of Windborne Memories from Flutter Storm.,Sexy,Butterfly Dream
-Enduring Ballad,5,Socks,Flutter Storm: Dream Chant,Romance,A recolor of Windborne Memories from Flutter Storm.,Sexy,Butterfly Dream
-Starry Dream,4,Headwear,Flowing Colors: Dreamy,Playful,A recolor of Blank Beginnings from Flowing Colors.,Fresh,Butterfly Dream
-Painting the Past,4,Earrings,Flowing Colors: Dreamy,Playful,A recolor of Painted Scenery from Flowing Colors.,Fresh,Butterfly Dream
-Solo of the Stars,4,Hair,Flowing Colors: Dreamy,Playful,A recolor of Painting Blossoms from Flowing Colors.,Fresh,Butterfly Dream
-Passing Seasons,4,Top,Flowing Colors: Dreamy,Playful,A recolor of Splashed Ink from Flowing Colors.,Fresh,Butterfly Dream
-Wandering Thoughts,4,Outerwear,Flowing Colors: Dreamy,Playful,A recolor of Imaginative Painting from Flowing Colors.,Fresh,Butterfly Dream
-Endless Tracking,4,Bottom,Flowing Colors: Dreamy,Playful,A recolor of Stained Palette from Flowing Colors.,Fresh,Butterfly Dream
-Paint-soaked Album,4,Socks,Flowing Colors: Dreamy,Playful,A recolor of New Colors from Flowing Colors.,Fresh,Butterfly Dream
-Time Stands Still,4,Shoes,Flowing Colors: Dreamy,Playful,A recolor of Trace of the Pen from Flowing Colors.,Fresh,Butterfly Dream
-Starry Poetry,4,Backpiece,Flowing Colors: Dreamy,Playful,A recolor of Floral Dreamscape from Flowing Colors.,Fresh,Butterfly Dream
-Moonlit Chords,5,Hair,Fairytale Swan: Dream,Formal,A recolor of Morning Sunlight from Fairytale Swan.,Sexy,Distant Sea
-Flame's Embers,5,Hair,Fairytale Swan: Mystfire,Formal,A recolor of Morning Sunlight from Fairytale Swan.,Sexy,Distant Sea
-Moonlit Glide,5,Hair,Fairytale Swan: Truth,Formal,A recolor of Morning Sunlight from Fairytale Swan.,Sexy,Distant Sea
-Lake of Tears,5,Dress,Fairytale Swan: Dream,Formal,A recolor of Blooming Grace from Fairytale Swan.,Elegant,Distant Sea
-Swan's Heartfire,5,Dress,Fairytale Swan: Mystfire,Formal,A recolor of Blooming Grace from Fairytale Swan.,Elegant,Distant Sea
-Beyond the Stars,5,Dress,Fairytale Swan: Truth,Formal,A recolor of Blooming Grace from Fairytale Swan.,Elegant,Distant Sea
-Feathered Waltz,5,Shoes,Fairytale Swan: Dream,Formal,A recolor of Ripple Tracker from Fairytale Swan.,Elegant,Distant Sea
-Omen of Revival,5,Shoes,Fairytale Swan: Mystfire,Formal,A recolor of Ripple Tracker from Fairytale Swan.,Elegant,Distant Sea
-Voyage of Stars,5,Shoes,Fairytale Swan: Truth,Formal,A recolor of Ripple Tracker from Fairytale Swan.,Elegant,Distant Sea
-Harmonic Wings,5,Gloves,Fairytale Swan: Dream,Formal,A recolor of Feathered Gleam from Fairytale Swan.,Elegant,Distant Sea
-Trial of Wings,5,Gloves,Fairytale Swan: Mystfire,Formal,A recolor of Feathered Gleam from Fairytale Swan.,Elegant,Distant Sea
-Glimmer of Hope,5,Gloves,Fairytale Swan: Truth,Formal,A recolor of Feathered Gleam from Fairytale Swan.,Elegant,Distant Sea
-Feather's Whisper,5,Earrings,Fairytale Swan: Dream,Formal,A recolor of Swaying Ode from Fairytale Swan.,Elegant,Distant Sea
-Nest of Dreams and Sleep,5,Earrings,Fairytale Swan: Mystfire,Formal,A recolor of Swaying Ode from Fairytale Swan.,Elegant,Distant Sea
-Sigh of Ether,5,Earrings,Fairytale Swan: Truth,Formal,A recolor of Swaying Ode from Fairytale Swan.,Elegant,Distant Sea
-Starry Night,5,Headwear,Fairytale Swan: Dream,Formal,A recolor of Fluttering Feathers from Fairytale Swan.,Elegant,Distant Sea
-Forged in Flames,5,Headwear,Fairytale Swan: Mystfire,Formal,A recolor of Fluttering Feathers from Fairytale Swan.,Elegant,Distant Sea
-Covenant of Swans,5,Headwear,Fairytale Swan: Truth,Formal,A recolor of Fluttering Feathers from Fairytale Swan.,Elegant,Distant Sea
-Lingering Dreams,5,Ring,Fairytale Swan: Dream,Formal,A recolor of Starry Guidance from Fairytale Swan.,Elegant,Distant Sea
-Burnt to Ashes,5,Ring,Fairytale Swan: Mystfire,Formal,A recolor of Starry Guidance from Fairytale Swan.,Elegant,Distant Sea
-Path of Stars,5,Ring,Fairytale Swan: Truth,Formal,A recolor of Starry Guidance from Fairytale Swan.,Elegant,Distant Sea
-Shadow Pacing,5,Socks,Fairytale Swan: Dream,Formal,A recolor of Interwoven with Love from Fairytale Swan.,Elegant,Distant Sea
-Through the Flames,5,Socks,Fairytale Swan: Mystfire,Formal,A recolor of Interwoven with Love from Fairytale Swan.,Elegant,Distant Sea
-Plumes of Aurora,5,Socks,Fairytale Swan: Truth,Formal,A recolor of Interwoven with Love from Fairytale Swan.,Elegant,Distant Sea
-Scattered Plume,5,Choker,Fairytale Swan: Dream,Formal,A recolor of Swan Sonata from Fairytale Swan.,Elegant,Distant Sea
-Feathers of Passion,5,Choker,Fairytale Swan: Mystfire,Formal,A recolor of Swan Sonata from Fairytale Swan.,Elegant,Distant Sea
-Tail of Comet,5,Choker,Fairytale Swan: Truth,Formal,A recolor of Swan Sonata from Fairytale Swan.,Elegant,Distant Sea
+Forgotten Drift,5,Earrings,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Astral Petals from Blossoming Stars.,Fresh,
+Star Blossom,5,Earrings,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Astral Petals from Blossoming Stars.,Fresh,
+Golden Blossom,5,Earrings,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Astral Petals from Blossoming Stars.,Fresh,
+Starlight Submersion,5,Bracelet,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Distant Twinkle from Blossoming Stars.,Fresh,
+Cloud Cluster,5,Bracelet,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Distant Twinkle from Blossoming Stars.,Fresh,
+Pure Wish,5,Bracelet,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Distant Twinkle from Blossoming Stars.,Fresh,
+Mist Glow,5,Hair Accessory,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Starlit Dreams from Blossoming Stars.,Fresh,
+Blooming Starfall,5,Hair Accessory,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Starlit Dreams from Blossoming Stars.,Fresh,
+Glistening Moment,5,Hair Accessory,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Starlit Dreams from Blossoming Stars.,Fresh,
+Dreams Lost,5,Neckwear,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Blossom Promenade from Blossoming Stars.,Fresh,
+Milky Way Overflow,5,Neckwear,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Blossom Promenade from Blossoming Stars.,Fresh,
+Dawning Light,5,Neckwear,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Blossom Promenade from Blossoming Stars.,Fresh,
+Floating Shore,5,Shoes,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Starry Pathway from Blossoming Stars.,Fresh,
+Floral Stardust,5,Shoes,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Starry Pathway from Blossoming Stars.,Fresh,
+Chasing Stars,5,Shoes,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Starry Pathway from Blossoming Stars.,Fresh,
+Ethereal Dreamland,5,Dress,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Starry Splendor from Blossoming Stars.,Fresh,
+Rustling Stars,5,Dress,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Starry Splendor from Blossoming Stars.,Fresh,
+Eternal Radiance,5,Dress,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Starry Splendor from Blossoming Stars.,Fresh,
+Evening Banquet,5,Hair,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Blooming Pact from Blossoming Stars.,Fresh,
+Silver Shimmer,5,Hair,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Blooming Pact from Blossoming Stars.,Fresh,
+Firefly Brilliance,5,Hair,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Blooming Pact from Blossoming Stars.,Fresh,
+Moon in Flowers,5,Headwear,Blossoming Stars: Dreamfall,"Romance, Pastoral",A recolor of Bloom Together from Blossoming Stars.,Fresh,
+Snow on Branches,5,Headwear,Blossoming Stars: Starlight,"Romance, Pastoral",A recolor of Bloom Together from Blossoming Stars.,Fresh,
+White Branches,5,Headwear,Blossoming Stars: Radiance,"Romance, Pastoral",A recolor of Bloom Together from Blossoming Stars.,Fresh,
+Long Dreaming,5,Socks,Blossoming Stars: Dreamfall,Romance,A recolor of Imminent Bloom from Blossoming Stars.,Fresh,
+Misty Silhouette,5,Socks,Blossoming Stars: Starlight,Romance,A recolor of Imminent Bloom from Blossoming Stars.,Fresh,
+Starry Tread,5,Socks,Blossoming Stars: Radiance,Romance,A recolor of Imminent Bloom from Blossoming Stars.,Fresh,
+Path of Sorrow,5,Shoes,Flutter Storm: Flame Song,Romance,A recolor of Offshore Breeze from Flutter Storm.,Sexy,
+Echoes of the Wind,5,Shoes,Flutter Storm: Forest Song,Romance,A recolor of Offshore Breeze from Flutter Storm.,Sexy,
+Resting in the Rift,5,Shoes,Flutter Storm: Dream Chant,Romance,A recolor of Offshore Breeze from Flutter Storm.,Sexy,
+Embers of the Butterfly,5,Dress,Flutter Storm: Flame Song,Romance,A recolor of Fluttering Twist from Flutter Storm.,Sexy,
+Silent Woodland,5,Dress,Flutter Storm: Forest Song,Romance,A recolor of Fluttering Twist from Flutter Storm.,Sexy,
+Winged Illusions,5,Dress,Flutter Storm: Dream Chant,Romance,A recolor of Fluttering Twist from Flutter Storm.,Sexy,
+Fervent Longing,5,Gloves,Flutter Storm: Flame Song,Romance,A recolor of Delicate Wings from Flutter Storm.,Sexy,
+Lingering Warmth,5,Gloves,Flutter Storm: Forest Song,Romance,A recolor of Delicate Wings from Flutter Storm.,Sexy,
+Fluttering Butterfly,5,Gloves,Flutter Storm: Dream Chant,Romance,A recolor of Delicate Wings from Flutter Storm.,Sexy,
+Cursed Storm,5,Hair,Flutter Storm: Flame Song,Romance,A recolor of Fluttermist Isle from Flutter Storm.,Sexy,
+Etched by the Wind,5,Hair,Flutter Storm: Forest Song,Romance,A recolor of Fluttermist Isle from Flutter Storm.,Sexy,
+Windborne Realm,5,Hair,Flutter Storm: Dream Chant,Romance,A recolor of Fluttermist Isle from Flutter Storm.,Sexy,
+Beneath the Ashes,5,Headwear,Flutter Storm: Flame Song,Romance,A recolor of Frigid Branches from Flutter Storm.,Sexy,
+Lonely Branches,5,Headwear,Flutter Storm: Forest Song,Romance,A recolor of Frigid Branches from Flutter Storm.,Sexy,
+Dreams of the Past,5,Headwear,Flutter Storm: Dream Chant,Romance,A recolor of Frigid Branches from Flutter Storm.,Sexy,
+Amid the Storm,5,Neckwear,Flutter Storm: Flame Song,Romance,A recolor of Silent Perch from Flutter Storm.,Sexy,
+Shaded Green,5,Neckwear,Flutter Storm: Forest Song,Romance,A recolor of Silent Perch from Flutter Storm.,Sexy,
+Dreams on Wings,5,Neckwear,Flutter Storm: Dream Chant,Romance,A recolor of Silent Perch from Flutter Storm.,Sexy,
+Butterfly Elegy,5,Earrings,Flutter Storm: Flame Song,Romance,A recolor of Windhowl Tears from Flutter Storm.,Sexy,
+Isolated Melody,5,Earrings,Flutter Storm: Forest Song,Romance,A recolor of Windhowl Tears from Flutter Storm.,Sexy,
+Butterfly's Dance,5,Earrings,Flutter Storm: Dream Chant,Romance,A recolor of Windhowl Tears from Flutter Storm.,Sexy,
+Fated Chains,5,Choker,Flutter Storm: Flame Song,Romance,A recolor of Sealing Cocoon from Flutter Storm.,Sexy,
+Green Slumber,5,Choker,Flutter Storm: Forest Song,Romance,A recolor of Sealing Cocoon from Flutter Storm.,Sexy,
+Endless Gaze,5,Choker,Flutter Storm: Dream Chant,Romance,A recolor of Sealing Cocoon from Flutter Storm.,Sexy,
+Land of Winds,5,Socks,Flutter Storm: Flame Song,Romance,A recolor of Windborne Memories from Flutter Storm.,Sexy,
+Dreamwalker's Forest,5,Socks,Flutter Storm: Forest Song,Romance,A recolor of Windborne Memories from Flutter Storm.,Sexy,
+Enduring Ballad,5,Socks,Flutter Storm: Dream Chant,Romance,A recolor of Windborne Memories from Flutter Storm.,Sexy,
+Starry Dream,4,Headwear,Flowing Colors: Dreamy,Playful,A recolor of Blank Beginnings from Flowing Colors.,Fresh,
+Painting the Past,4,Earrings,Flowing Colors: Dreamy,Playful,A recolor of Painted Scenery from Flowing Colors.,Fresh,
+Solo of the Stars,4,Hair,Flowing Colors: Dreamy,Playful,A recolor of Painting Blossoms from Flowing Colors.,Fresh,
+Passing Seasons,4,Top,Flowing Colors: Dreamy,Playful,A recolor of Splashed Ink from Flowing Colors.,Fresh,
+Wandering Thoughts,4,Outerwear,Flowing Colors: Dreamy,Playful,A recolor of Imaginative Painting from Flowing Colors.,Fresh,
+Endless Tracking,4,Bottom,Flowing Colors: Dreamy,Playful,A recolor of Stained Palette from Flowing Colors.,Fresh,
+Paint-soaked Album,4,Socks,Flowing Colors: Dreamy,Playful,A recolor of New Colors from Flowing Colors.,Fresh,
+Time Stands Still,4,Shoes,Flowing Colors: Dreamy,Playful,A recolor of Trace of the Pen from Flowing Colors.,Fresh,
+Starry Poetry,4,Backpiece,Flowing Colors: Dreamy,Playful,A recolor of Floral Dreamscape from Flowing Colors.,Fresh,
+Moonlit Chords,5,Hair,Fairytale Swan: Dream,Formal,A recolor of Morning Sunlight from Fairytale Swan.,Sexy,
+Flame's Embers,5,Hair,Fairytale Swan: Mystfire,Formal,A recolor of Morning Sunlight from Fairytale Swan.,Sexy,
+Moonlit Glide,5,Hair,Fairytale Swan: Truth,Formal,A recolor of Morning Sunlight from Fairytale Swan.,Sexy,
+Lake of Tears,5,Dress,Fairytale Swan: Dream,Formal,A recolor of Blooming Grace from Fairytale Swan.,Elegant,
+Swan's Heartfire,5,Dress,Fairytale Swan: Mystfire,Formal,A recolor of Blooming Grace from Fairytale Swan.,Elegant,
+Beyond the Stars,5,Dress,Fairytale Swan: Truth,Formal,A recolor of Blooming Grace from Fairytale Swan.,Elegant,
+Feathered Waltz,5,Shoes,Fairytale Swan: Dream,Formal,A recolor of Ripple Tracker from Fairytale Swan.,Elegant,
+Omen of Revival,5,Shoes,Fairytale Swan: Mystfire,Formal,A recolor of Ripple Tracker from Fairytale Swan.,Elegant,
+Voyage of Stars,5,Shoes,Fairytale Swan: Truth,Formal,A recolor of Ripple Tracker from Fairytale Swan.,Elegant,
+Harmonic Wings,5,Gloves,Fairytale Swan: Dream,Formal,A recolor of Feathered Gleam from Fairytale Swan.,Elegant,
+Trial of Wings,5,Gloves,Fairytale Swan: Mystfire,Formal,A recolor of Feathered Gleam from Fairytale Swan.,Elegant,
+Glimmer of Hope,5,Gloves,Fairytale Swan: Truth,Formal,A recolor of Feathered Gleam from Fairytale Swan.,Elegant,
+Feather's Whisper,5,Earrings,Fairytale Swan: Dream,Formal,A recolor of Swaying Ode from Fairytale Swan.,Elegant,
+Nest of Dreams and Sleep,5,Earrings,Fairytale Swan: Mystfire,Formal,A recolor of Swaying Ode from Fairytale Swan.,Elegant,
+Sigh of Ether,5,Earrings,Fairytale Swan: Truth,Formal,A recolor of Swaying Ode from Fairytale Swan.,Elegant,
+Starry Night,5,Headwear,Fairytale Swan: Dream,Formal,A recolor of Fluttering Feathers from Fairytale Swan.,Elegant,
+Forged in Flames,5,Headwear,Fairytale Swan: Mystfire,Formal,A recolor of Fluttering Feathers from Fairytale Swan.,Elegant,
+Covenant of Swans,5,Headwear,Fairytale Swan: Truth,Formal,A recolor of Fluttering Feathers from Fairytale Swan.,Elegant,
+Lingering Dreams,5,Ring,Fairytale Swan: Dream,Formal,A recolor of Starry Guidance from Fairytale Swan.,Elegant,
+Burnt to Ashes,5,Ring,Fairytale Swan: Mystfire,Formal,A recolor of Starry Guidance from Fairytale Swan.,Elegant,
+Path of Stars,5,Ring,Fairytale Swan: Truth,Formal,A recolor of Starry Guidance from Fairytale Swan.,Elegant,
+Shadow Pacing,5,Socks,Fairytale Swan: Dream,Formal,A recolor of Interwoven with Love from Fairytale Swan.,Elegant,
+Through the Flames,5,Socks,Fairytale Swan: Mystfire,Formal,A recolor of Interwoven with Love from Fairytale Swan.,Elegant,
+Plumes of Aurora,5,Socks,Fairytale Swan: Truth,Formal,A recolor of Interwoven with Love from Fairytale Swan.,Elegant,
+Scattered Plume,5,Choker,Fairytale Swan: Dream,Formal,A recolor of Swan Sonata from Fairytale Swan.,Elegant,
+Feathers of Passion,5,Choker,Fairytale Swan: Mystfire,Formal,A recolor of Swan Sonata from Fairytale Swan.,Elegant,
+Tail of Comet,5,Choker,Fairytale Swan: Truth,Formal,A recolor of Swan Sonata from Fairytale Swan.,Elegant,

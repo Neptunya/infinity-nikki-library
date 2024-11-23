@@ -3,7 +3,7 @@ import { ThemeProvider } from '@mui/material/styles'; // Import ThemeProvider
 import CssBaseline from '@mui/material/CssBaseline'; // For global Material-UI styles
 import { theme } from '../styles/theme';
 import MultipleSelectChipContent from './MutipleSelectChipContent'
-import { getSelectedRarities, getSelectedSlots, getSelectedLabels } from '../scripts/database';
+import { getSelectedRarities, getSelectedSlots, getSelectedLabels, getSelectedStyle, getSelectedSource } from '../scripts/database';
 
 export default function MultipleSelectChipFilters() {
     const [isClient, setIsClient] = useState(false);
@@ -23,9 +23,19 @@ export default function MultipleSelectChipFilters() {
     ];
     
     const sources = [
-      'F2P',
-      'RNG',
-      'Gacha',
+      'Distant Sea',
+      'Butterfly Dream',
+      'Treasure Chest',
+      'Styling Challenge',
+      'Story Quest',
+      'World Quest',
+      'Main Quest',
+      'Independent Designer Store',
+      'Marques Boutique',
+      'Surprise-O-Matic',
+      'Dews of Inspiration',
+      'Heart of Infinity',
+      'Currently Unobtainable'
     ];
     
     const styles = [
@@ -59,13 +69,21 @@ export default function MultipleSelectChipFilters() {
         idPrefix="slot"
         label="Type"
         onSelectionChange={getSelectedSlots} />
-      <MultipleSelectChipContent names={styles} idPrefix="style" label="Style" />
+      <MultipleSelectChipContent
+        names={styles}
+        idPrefix="style"
+        label="Style"
+        onSelectionChange={getSelectedStyle} />
       <MultipleSelectChipContent
         names={labels}
         idPrefix="label"
         label="Label"
         onSelectionChange={getSelectedLabels} />
-      <MultipleSelectChipContent names={sources} idPrefix="source" label="Source" />
+      <MultipleSelectChipContent
+        names={sources}
+        idPrefix="source"
+        label="Source"
+        onSelectionChange={getSelectedSource} />
     </ThemeProvider>
   ) : null;
 }

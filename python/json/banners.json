@@ -26,7 +26,7 @@
         "Guiding Star",
         "Drifting Sharkfin",
         "Deep Sea Adventure",
-        "Wispering Breeze",
+        "Whispering Breeze",
         "Mellifluous Melody",
         "Soft Bibcoon Socks",
         "Unending Dance",
@@ -38,7 +38,7 @@
         "Sunrise Runner",
         "Playful Spades",
         "First Day Jogging",
-        "Red Chickered Vest",
+        "Red Checkered Vest",
         "Operation Summer",
         "Radiant Heat",
         "Diving Teaser",
@@ -64,7 +64,17 @@
         "Guardian Pendant",
         "Trusted Protection",
         "Star Seeker",
-        "Blessing Nebula"
+        "Blessing Nebula",
+        "Spring Breeze",
+        "Dreamy Ripples",
+        "Warm Brown",
+        "Nimbus Dreams",
+        "Feathery Sway",
+        "Delicate Heartstrings",
+        "Crystal Gaze",
+        "Dainty Yellow",
+        "Rose in Blossom",
+        "Light Tangerine"
     ],
     "Butterfly Dream": [
         "Offshore Breeze",
@@ -84,6 +94,11 @@
         "Stained Palette",
         "New Colors",
         "Trace of the Pen",
-        "Floral Dreamscape"
+        "Floral Dreamscape",
+        "Mermaid's Glow",
+        "Snowy Branches",
+        "Aromalily's Heart",
+        "Snowy Sky",
+        "Mermaid Icebloom"
     ]
 }}
