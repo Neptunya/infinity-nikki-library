@@ -26,4 +26,5 @@ python/cursor_reader.py
 python/images/
 python/csv/
 python/json/
+src/scripts/api/item_dump.sql
 .venv/

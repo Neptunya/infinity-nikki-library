@@ -298,7 +298,7 @@ function applySearchFilter() {
     const typeOrder = [
         'Hair','Dress','Outerwear','Top','Bottom','Socks','Shoes',
         'Hair Accessory','Headwear','Earrings','Neckwear','Bracelet','Choker','Gloves',
-        'Face Decoration','Chest Accessory','Pendant','Backpiece','Ring','Handheld',
+        'Face Decoration','Chest Accessory','Pendant','Backpiece','Ring', 'Arm Decoration', 'Handheld',
         'Base Makeup','Eyebrows','Eyelashes','Contact Lenses','Lips'
       ];
     

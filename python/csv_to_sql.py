@@ -3,7 +3,7 @@ import pandas as pd
 
 details = pd.read_csv('./python/csv/clothing_items_details.csv')
 levels = pd.read_csv('./python/csv/clothing_item_lvls.csv')
-engine = create_engine('postgresql://postgres:password@localhost:1234/infinity_nikki_items')
+engine = create_engine('postgresql://postgres:password@localhost:5432/infinity_nikki_items')
 metadata = MetaData()
 
 def infer_sqlalchemy_type(dtype):

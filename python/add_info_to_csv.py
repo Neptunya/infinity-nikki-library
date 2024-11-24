@@ -34,6 +34,15 @@ def add_makeup():
         df[c] = df[c].fillna(0).astype("int64")
     df.to_csv("./python/csv/full_item_data.csv", index=False)
 
+def add_missing_items():
+    items = pd.read_csv('./python/csv/full_item_data.csv')
+    missing = pd.read_csv('./python/csv/missing_items.csv')
+    df = pd.concat([items, missing], ignore_index=True)
+    int_cols = ['Level', 'Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool', 'Blings','Threads', 'Bubbles']
+    for c in int_cols:
+        df[c] = df[c].fillna(0).astype("int64")
+    df.to_csv("./python/csv/full_item_data.csv", index=False)
+
 def split_csv():
     df = pd.read_csv('./python/csv/full_item_data.csv')
     t1 = df.drop(labels=['Labels', 'Source'], axis=1, inplace=False)
@@ -197,13 +206,14 @@ def sort_details():
 # merge_csv()
 # add_style()
 # add_makeup()
-# split_csv()
-# add_costs()
-# add_labels()
-# add_sources()
-# add_banners()
-# add_outfits_and_recolors_details()
-# add_outfits_and_recolors_lvls()
+# add_missing_items()
+split_csv()
+add_costs()
+add_labels()
+add_sources()
+add_banners()
+add_outfits_and_recolors_details()
+add_outfits_and_recolors_lvls()
 sort_details()
 
 '''TODO: 
