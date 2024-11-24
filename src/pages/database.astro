@@ -3,7 +3,8 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 import '../styles/database.css';
-import ThemedTextField from '../components/ThemedTextField.jsx'
+import ThemedTextField from '../components/ThemedTextField.jsx';
+import DropdownSortSelect from '../components/DropdownSortSelect.jsx';
 import MultipleSelectChipFilters from '../components/MultipleSelectChipFilters.jsx';
 ---
 <html lang="en">
@@ -20,7 +21,16 @@ import MultipleSelectChipFilters from '../components/MultipleSelectChipFilters.j
 		<Header />
 		<div class="content-container">
 			<h1>Database</h1>
-			<ThemedTextField label="Search by item or outfit" client:only />
+			<div id="search-and-sort">
+				<ThemedTextField label="Search by item or outfit" client:only />
+				<div id="sort">
+					<button type="button" id="sort-btn">
+						<img src="/images/descending_icon.png" class="btn-img" />
+						<img src="/images/ascending_icon.png" class="btn-img show" />
+					</button>
+					<DropdownSortSelect client:only />
+				</div>
+			</div>
 			<div id="collapsible-filters">
 				<button type="button" class="collapsible">
 					<p>Filters</p>

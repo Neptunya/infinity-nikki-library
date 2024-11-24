@@ -16,7 +16,7 @@ export default function MultipleSelectChipFilters() {
     ];
     
     const slots = [
-      'Hair','Dress','Top','Bottom','Socks','Shoes',
+      'Hair','Dress','Outerwear','Top','Bottom','Socks','Shoes',
       'Hair Accessory','Headwear','Earrings','Neckwear','Bracelet','Choker','Gloves',
       'Face Decoration','Chest Accessory','Pendant','Backpiece','Ring','Handheld',
       'Base Makeup','Eyebrows','Eyelashes','Contact Lenses','Lips'

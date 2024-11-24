@@ -27,8 +27,9 @@ export default function ThemedTextField({label="Text"}) {
             onChange={handleSearchChange}
             sx={{
                 width:{
-                    sm: '100%',
-                    md: '80%'
+                    xs: '100%',
+                    sm: '65%',
+                    md: '75%'
                 },
                 ml: '5px',
                 mb: '16px'

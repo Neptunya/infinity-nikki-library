@@ -6,8 +6,9 @@ let selectedLabels = [];
 let selectedStyles = [];
 let selectedSources = [];
 let searchQuery = "";
-let sortBy = "";
-let descending = true;
+let selectedSort = "";
+let descending = false;
+
 let allItems = [];
 let totalItems = 0;
 
@@ -28,6 +29,16 @@ for (i = 0; i < collapsible.length; i++) {
         
     });
 }
+
+const sortBtn = document.getElementById("sort-btn");
+sortBtn.addEventListener("click", function () {
+    descending = !descending;
+    const icons = sortBtn.getElementsByClassName("btn-img");
+    for (let i = 0; i < icons.length; i++) {
+        icons[i].classList.toggle("show");
+    }
+    applySearchFilter();
+});
 
 function adjustCollapsibleMaxHeight() {
     // Use a delay to ensure updates are complete before recalculating
@@ -54,7 +65,7 @@ function renderItems(data) {
 
 
         const message = document.createElement('p');
-        message.textContent = 'No items found for the selected filters.';
+        message.textContent = 'No items found';
         message.classList.add('no-results-message');
         
         const img = document.createElement('img');
@@ -266,21 +277,74 @@ export function updateSearchQuery(query) {
 
 export function updateSort(sortBy) {
     currentPage = 1;
+    selectedSort = sortBy
     applySearchFilter();
 }
 
 function applySearchFilter() {
     let filteredItems = [...allItems]; // Start with all items
-
+    
     // Apply search filter
-    console.log(searchQuery);
     if (searchQuery) {
         filteredItems = filteredItems.filter(item => 
             item.Name?.toLowerCase()?.includes(searchQuery) ||
             item.Outfit?.toLowerCase()?.includes(searchQuery)
         );
     }
-    renderItems(filteredItems); // Initial render with default itemsPerPage
+
+    // Sorting
+    const sortMapping = {
+        "name": "Name",
+        "type": "Slot", 
+        "rarity": "Rarity",
+    };
+    
+    const typeOrder = [
+        'Hair','Dress','Outerwear','Top','Bottom','Socks','Shoes',
+        'Hair Accessory','Headwear','Earrings','Neckwear','Bracelet','Choker','Gloves',
+        'Face Decoration','Chest Accessory','Pendant','Backpiece','Ring','Handheld',
+        'Base Makeup','Eyebrows','Eyelashes','Contact Lenses','Lips'
+      ];
+    
+    const numericColumns = ["Rarity"]; // Columns that should be sorted numerically
+
+    if (selectedSort) {
+        const actualSortKey = sortMapping[selectedSort.toLowerCase()]; // Match dropdown value to mapping
+        if (!actualSortKey) {
+            console.error("Invalid sort key:", selectedSort);
+            return; // Exit if sort key is invalid
+        }
+
+        console.log("Sorting by:", actualSortKey);
+
+        if (numericColumns.includes(actualSortKey)) {
+            // Numeric sorting for fields like "Rarity"
+            filteredItems.sort((a, b) => 
+                descending 
+                    ? b[actualSortKey] - a[actualSortKey] 
+                    : a[actualSortKey] - b[actualSortKey]
+            );
+        } else if (actualSortKey === "Slot") {
+            // Custom sorting for "Slot" based on predefined order
+            filteredItems.sort((a, b) => {
+                const indexA = typeOrder.indexOf(a[actualSortKey]);
+                const indexB = typeOrder.indexOf(b[actualSortKey]);
+                return descending 
+                    ? indexB - indexA // Sort in descending order
+                    : indexA - indexB; // Sort in ascending order
+            });
+        } else {
+            // String sorting for other fields like "Name"
+            filteredItems.sort((a, b) => 
+                descending 
+                    ? b[actualSortKey]?.localeCompare(a[actualSortKey]) || 0 
+                    : a[actualSortKey]?.localeCompare(b[actualSortKey]) || 0
+            );
+        }
+    }
+
+    // Rendering
+    renderItems(filteredItems); 
     totalItems = filteredItems.length;
     setTimeout(() => adjustItemsPerPageAndRerender(filteredItems), 0);
 }

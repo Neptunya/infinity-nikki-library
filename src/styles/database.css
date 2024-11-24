@@ -1,6 +1,6 @@
 button {
     margin: 5px;
-    background-color: #d3869b;
+    background-color: #353142;
     color: white;
     border: none;
     border-radius: 5px;
@@ -9,7 +9,7 @@ button {
 }
 
 button:hover {
-    background-color: #e0aab9;
+    background-color: #494554;
 }
 
 button:disabled {
@@ -63,9 +63,17 @@ button:disabled {
   margin: 0;
 }
 
+.pagination-button:not([disabled]) {
+    background-color: #d3869b;
+}
+
+.pagination-button:not([disabled]):hover {
+    background-color: #e0aab9;
+}
+
+
 .collapsible {
     width: 100%;
-    background-color: #353142;
     padding: 0px 20px;
     display: flex;
     justify-content: space-between;
@@ -75,10 +83,6 @@ button:disabled {
 .collapsible.active {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-}
-
-.collapsible:hover {
-    background-color: #494554;
 }
 
 .filter-options {
@@ -96,6 +100,39 @@ button:disabled {
     max-width: 300px;
     height: auto;
     margin-top: 8px;
+}
+
+.btn-img {
+    height: 32px;
+    width: auto;
+    padding: 4px;
+    display: none;
+}
+
+.btn-img.show {
+    display:inline;
+}
+
+#search-and-sort {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+#sort {
+    display: flex;
+    flex-flow: row wrap;
+    flex-grow: 1;
+}
+
+#sort-btn {
+    height: auto;
+    width: auto;
+    margin-top: 0px;
+    margin-bottom: 16px;
+    margin-left: 8px;
+    margin-right: 8px;
+    outline: solid rgba(255, 255, 255, 0.253)  1px;
 }
 
 #item-card-container {
