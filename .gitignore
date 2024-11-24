@@ -23,6 +23,7 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 python/cursor_reader.py
-python/rarity.py
-python/cost.py
+python/images/
+python/csv/
+python/json/
 .venv/

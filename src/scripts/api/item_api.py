@@ -105,43 +105,46 @@ class Items(Resource):
             rng= 'An unexpected surprise from the Surprise-O-Matic.'
             reso = 'Resonance from the Distant Sea'
             
-            conditions = []
+            source_map = {
+                'Independent Designer Store': [ItemDetails.Source == designer],
+                'Marques Boutique': [ItemDetails.Source == boutique],
+                'Dews of Inspiration': [ItemDetails.Source == dew],
+                'Heart of Infinity': [ItemDetails.Source == heart],
+                'Treasure Chest': [
+                    ItemDetails.Source == treasure,
+                    ItemDetails.Source == esseling_treasure
+                ],
+                'Main Quest': [ItemDetails.Source == main],
+                'World Quest': [ItemDetails.Source == quest],
+                'Story Quest': [ItemDetails.Source == journey_anecdote],
+                'Styling Challenge': [ItemDetails.Source == styling_challenge],
+                'Surprise-O-Matic': [ItemDetails.Source == rng],
+                'Resonance: Distant Sea': [ItemDetails.Banner == 'Distant Sea'],
+                'Resonance: Butterfly Dream': [ItemDetails.Banner == 'Butterfly Dream']
+            }
+            
+            matched_conditions = set() 
             for s in source:
-                if s == 'Independent Designer Store':
-                    conditions.append(ItemDetails.Source == designer)
-                if s == 'Marques Boutique':
-                    conditions.append(ItemDetails.Source == boutique)
-                if s == 'Dews of Inspiration':
-                    conditions.append(ItemDetails.Source == dew)
-                if s == 'Heart of Infinity':
-                    conditions.append(ItemDetails.Source == heart)
-                if s == 'Treasure Chest':
-                    conditions.append(ItemDetails.Source == treasure)
-                    conditions.append(ItemDetails.Source == esseling_treasure)
-                if s == 'Main Quest':
-                    conditions.append(ItemDetails.Source == main)
-                if s == 'World Quest':
-                    conditions.append(ItemDetails.Source == quest)
-                if s == 'Story Quest':
-                    conditions.append(ItemDetails.Source == journey_anecdote)
-                if s == 'Styling Challenge':
-                    conditions.append(ItemDetails.Source == styling_challenge)
-                if s == 'Surprise-O-Matic':
-                    conditions.append(ItemDetails.Source == rng)
-                if s == 'Resonance: Distant Sea':
-                    conditions.append(ItemDetails.Banner == 'Distant Sea')
-                if s == 'Resonance: Butterfly Dream':
-                    conditions.append(ItemDetails.Banner == 'Butterfly Dream')
-                if s == 'Currently Unobtainable':
-                    conditions.append(and_(
-                        ItemDetails.Source == reso,
-                        ItemDetails.Banner.is_(None)  # Checks for NULL
-                    ))
+                if s in source_map:
+                    matched_conditions.update(source_map[s])
+            
+            conditions = []
+            if not matched_conditions:
+                conditions.append(and_(
+                    ItemDetails.Source.isnot(None),
+                    ItemDetails.Source.notin_([
+                        designer, boutique, dew, heart, treasure, esseling_treasure, 
+                        main, quest, journey_anecdote, styling_challenge, rng, reso
+                    ]),
+                    ItemDetails.Banner.notin_(['Distant Sea', 'Butterfly Dream']),
+                    ItemDetails.Banner.is_(None)  # Ensures Banner is NULL if not listed
+                ))
+            else:
+                conditions.extend(matched_conditions)
+            
             if conditions:
                 query = query.filter(or_(*conditions))
-                    
-            query = query
-        
+            
         items = query.all()
         if not items:
             return [], 200

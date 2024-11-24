@@ -115,7 +115,7 @@ function renderItems(data) {
         cardText.appendChild(p)
         
         if (item['Style']) {
-            p.innerHTML += '<br><i>' + item['Style'] + '</i>';
+            p.innerHTML += '<br>' + item['Style'];
         }
         
         if (item['Labels']) {
