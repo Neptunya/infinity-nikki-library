@@ -16,6 +16,11 @@ export default function BasicSelect() {
     setSort(event.target.value);
     updateSort(event.target.value);
   };
+  
+  const handleReset = () => {
+    setSort('');
+    updateSort('');
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -36,6 +41,7 @@ export default function BasicSelect() {
             <MenuItem value={'Name'}>Name</MenuItem>
             <MenuItem value={'Rarity'}>Rarity</MenuItem>
             <MenuItem value={'Type'}>Type</MenuItem>
+            <MenuItem value="" onClick={handleReset}>None</MenuItem>
           </Select>
         </FormControl>
       </Box>
