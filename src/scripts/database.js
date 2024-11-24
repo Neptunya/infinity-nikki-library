@@ -5,6 +5,10 @@ let selectedSlots = [];
 let selectedLabels = [];
 let selectedStyles = [];
 let selectedSources = [];
+let searchQuery = "";
+let sortBy = "";
+let descending = true;
+let allItems = [];
 let totalItems = 0;
 
 const collapsible = document.getElementsByClassName("collapsible");
@@ -246,13 +250,39 @@ export function getFilteredItems() {
     fetch(url)
     .then(response => response.json())
     .then(data => {
-        renderItems(data); // Initial render with default itemsPerPage
-        totalItems = data.length;
-        setTimeout(() => adjustItemsPerPageAndRerender(data), 0); // Adjust after page load
+        allItems = data;
+        applySearchFilter();
     })
     .catch(error => {
         console.error('Error fetching filtered items:', error);
     });
+}
+
+export function updateSearchQuery(query) {
+    currentPage = 1; // Reset to the first page
+    searchQuery = query.trim();
+    applySearchFilter();
+}
+
+export function updateSort(sortBy) {
+    currentPage = 1;
+    applySearchFilter();
+}
+
+function applySearchFilter() {
+    let filteredItems = [...allItems]; // Start with all items
+
+    // Apply search filter
+    console.log(searchQuery);
+    if (searchQuery) {
+        filteredItems = filteredItems.filter(item => 
+            item.Name?.toLowerCase()?.includes(searchQuery) ||
+            item.Outfit?.toLowerCase()?.includes(searchQuery)
+        );
+    }
+    renderItems(filteredItems); // Initial render with default itemsPerPage
+    totalItems = filteredItems.length;
+    setTimeout(() => adjustItemsPerPageAndRerender(filteredItems), 0);
 }
 
 window.onload = function() {

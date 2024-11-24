@@ -128,9 +128,9 @@ class Items(Resource):
                     conditions.append(ItemDetails.Source == styling_challenge)
                 if s == 'Surprise-O-Matic':
                     conditions.append(ItemDetails.Source == rng)
-                if s == 'Distant Sea':
+                if s == 'Resonance: Distant Sea':
                     conditions.append(ItemDetails.Banner == 'Distant Sea')
-                if s == 'Butterfly Dream':
+                if s == 'Resonance: Butterfly Dream':
                     conditions.append(ItemDetails.Banner == 'Butterfly Dream')
                 if s == 'Currently Unobtainable':
                     conditions.append(and_(

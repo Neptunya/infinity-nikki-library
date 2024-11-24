@@ -23,8 +23,8 @@ export default function MultipleSelectChipFilters() {
     ];
     
     const sources = [
-      'Distant Sea',
-      'Butterfly Dream',
+      'Resonance: Distant Sea',
+      'Resonance: Butterfly Dream',
       'Treasure Chest',
       'Styling Challenge',
       'Story Quest',

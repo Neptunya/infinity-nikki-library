@@ -153,7 +153,6 @@ def add_outfits_and_recolors_details():
 
                 matching_rows['Name'] = recolor_name
                 matching_rows['Outfit'] = recolored_outfit
-                matching_rows['Source'] = f'A recolor of {item_name} from {outfit_name}.'
 
                 df = pd.concat([df, matching_rows], ignore_index=True)
     df.to_csv(f'./python/csv/clothing_items_details.csv', index=False)
@@ -190,9 +189,9 @@ split_csv()
 add_costs()
 add_labels()
 add_sources()
+add_banners()
 add_outfits_and_recolors_details()
 add_outfits_and_recolors_lvls()
-add_banners()
 
 '''TODO: 
 - generate popup pg for items
