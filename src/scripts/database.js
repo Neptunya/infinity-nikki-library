@@ -41,19 +41,16 @@ sortBtn.addEventListener("click", function () {
 });
 
 function adjustCollapsibleMaxHeight() {
-    // Use a delay to ensure updates are complete before recalculating
     setTimeout(() => {
         for (let i = 0; i < collapsible.length; i++) {
             const content = collapsible[i].nextElementSibling;
             if (collapsible[i].classList.contains("active")) {
-                // If the collapsible is active, recalculate maxHeight
                 content.style.maxHeight = content.scrollHeight + "px";
             } else {
-                // Otherwise, reset maxHeight to null
                 content.style.maxHeight = null;
             }
         }
-    }, 100); // Delay to allow content to finish updating
+    }, 100);
 }
 function renderItems(data) {
     const itemCardContainer = document.getElementById('item-card-container');
@@ -69,7 +66,7 @@ function renderItems(data) {
         message.classList.add('no-results-message');
         
         const img = document.createElement('img');
-        img.src = '/images/no_results.png'; // Update with the correct path to your image
+        img.src = '/images/no_results.png';
         img.alt = 'No results';
         img.classList.add('no-results-image');
 
@@ -77,7 +74,7 @@ function renderItems(data) {
         messageContainer.appendChild(img);
         itemCardContainer.appendChild(messageContainer);
 
-        renderPagination(0); // Show pagination as 0 pages
+        renderPagination(0);
         return;
     }
 
@@ -130,17 +127,15 @@ function renderPagination(totalItems) {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     paginationContainers.forEach(container => {
-        container.innerHTML = ''; // Clear old pagination controls
+        container.innerHTML = '';
 
-        // Create Back button
         const backButton = document.createElement('button');
         backButton.textContent = '🠘';
         backButton.classList.add('pagination-button');
-        backButton.disabled = currentPage === 1; // Disable if we're on the first page
+        backButton.disabled = currentPage === 1; 
         backButton.onclick = () => changePage(currentPage - 1, totalItems);
         container.appendChild(backButton);
 
-        // Display current page and input
         const pageNumberContainer = document.createElement('span');
         pageNumberContainer.classList.add('page-number-container');
 
@@ -156,11 +151,10 @@ function renderPagination(totalItems) {
         pageNumberContainer.appendChild(document.createTextNode(` of ${totalPages}`));
         container.appendChild(pageNumberContainer);
 
-        // Create Next button
         const nextButton = document.createElement('button');
         nextButton.textContent = '🠚';
         nextButton.classList.add('pagination-button');
-        nextButton.disabled = currentPage === totalPages; // Disable if we're on the last page
+        nextButton.disabled = currentPage === totalPages; 
         nextButton.onclick = () => changePage(currentPage + 1, totalItems);
         container.appendChild(nextButton);
     });
@@ -270,7 +264,7 @@ export function getFilteredItems() {
 }
 
 export function updateSearchQuery(query) {
-    currentPage = 1; // Reset to the first page
+    currentPage = 1;
     searchQuery = query.trim();
     applySearchFilter();
 }
@@ -282,9 +276,8 @@ export function updateSort(sortBy) {
 }
 
 function applySearchFilter() {
-    let filteredItems = [...allItems]; // Start with all items
+    let filteredItems = [...allItems];
     
-    // Apply search filter
     if (searchQuery) {
         filteredItems = filteredItems.filter(item => 
             item.Name?.toLowerCase()?.includes(searchQuery) ||
@@ -292,7 +285,6 @@ function applySearchFilter() {
         );
     }
 
-    // Sorting
     const sortMapping = {
         "name": "Name",
         "type": "Slot", 
@@ -306,35 +298,32 @@ function applySearchFilter() {
         'Base Makeup','Eyebrows','Eyelashes','Contact Lenses','Lips'
       ];
     
-    const numericColumns = ["Rarity"]; // Columns that should be sorted numerically
+    const numericColumns = ["Rarity"];
 
     if (selectedSort) {
-        const actualSortKey = sortMapping[selectedSort.toLowerCase()]; // Match dropdown value to mapping
+        const actualSortKey = sortMapping[selectedSort.toLowerCase()];
         if (!actualSortKey) {
             console.error("Invalid sort key:", selectedSort);
-            return; // Exit if sort key is invalid
+            return;
         }
 
         console.log("Sorting by:", actualSortKey);
 
         if (numericColumns.includes(actualSortKey)) {
-            // Numeric sorting for fields like "Rarity"
             filteredItems.sort((a, b) => 
                 descending 
                     ? b[actualSortKey] - a[actualSortKey] 
                     : a[actualSortKey] - b[actualSortKey]
             );
         } else if (actualSortKey === "Slot") {
-            // Custom sorting for "Slot" based on predefined order
             filteredItems.sort((a, b) => {
                 const indexA = typeOrder.indexOf(a[actualSortKey]);
                 const indexB = typeOrder.indexOf(b[actualSortKey]);
                 return descending 
-                    ? indexB - indexA // Sort in descending order
-                    : indexA - indexB; // Sort in ascending order
+                    ? indexB - indexA
+                    : indexA - indexB;
             });
         } else {
-            // String sorting for other fields like "Name"
             filteredItems.sort((a, b) => 
                 descending 
                     ? b[actualSortKey]?.localeCompare(a[actualSortKey]) || 0 
@@ -343,7 +332,6 @@ function applySearchFilter() {
         }
     }
 
-    // Rendering
     renderItems(filteredItems); 
     totalItems = filteredItems.length;
     setTimeout(() => adjustItemsPerPageAndRerender(filteredItems), 0);

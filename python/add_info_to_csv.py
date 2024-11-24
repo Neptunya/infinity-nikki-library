@@ -182,16 +182,29 @@ def add_outfits_and_recolors_lvls():
                 df = pd.concat([df, matching_rows], ignore_index=True)
     df.to_csv(f'./python/csv/clothing_item_lvls.csv', index=False)
 
+def sort_details():
+    df = pd.read_csv(f'./python/csv/clothing_items_details.csv')
+    slot_order = [
+        'Hair','Dress','Outerwear','Top','Bottom','Socks','Shoes',
+        'Hair Accessory','Headwear','Earrings','Neckwear','Bracelet','Choker','Gloves',
+        'Face Decoration','Chest Accessory','Pendant','Backpiece','Ring','Handheld',
+        'Base Makeup','Eyebrows','Eyelashes','Contact Lenses','Lips'
+      ]
+    df['Slot'] = pd.Categorical(df['Slot'], categories=slot_order, ordered=True)
+    df_sorted = df.sort_values(by=['Rarity', 'Slot', 'Outfit'], ascending=[False, True, True])
+    df_sorted.to_csv(f'./python/csv/clothing_items_details.csv', index=False)
+
 # merge_csv()
 # add_style()
 # add_makeup()
-split_csv()
-add_costs()
-add_labels()
-add_sources()
-add_banners()
-add_outfits_and_recolors_details()
-add_outfits_and_recolors_lvls()
+# split_csv()
+# add_costs()
+# add_labels()
+# add_sources()
+# add_banners()
+# add_outfits_and_recolors_details()
+# add_outfits_and_recolors_lvls()
+sort_details()
 
 '''TODO: 
 - generate popup pg for items
