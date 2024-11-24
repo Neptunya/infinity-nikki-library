@@ -113,7 +113,11 @@ function renderItems(data) {
         stars = '✧'.repeat(rarityValue);
         p.innerHTML = stars;
         cardText.appendChild(p)
-
+        
+        if (item['Style']) {
+            p.innerHTML += '<br><i>' + item['Style'] + '</i>';
+        }
+        
         if (item['Labels']) {
             p.innerHTML += '<br><i>' + item['Labels'] + '</i>';
         }
