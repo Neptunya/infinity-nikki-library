@@ -38,7 +38,7 @@ window.addEventListener('resize', () => {
     });
   }
   
-  if (window.innerWidth > 1000) {
+  if (window.innerWidth > 1100) {
     content.style.padding = "1rem 5rem";
     header.style.padding = "1rem 5rem";
   } else {

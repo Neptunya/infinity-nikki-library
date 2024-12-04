@@ -196,7 +196,14 @@ function countFlexColumns() {
 
 function adjustItemsPerPageAndRerender(data) {
     const columns = countFlexColumns();
-    itemsPerPage = columns * 5;
+    if (columns == 1) {
+        itemsPerPage = 10;
+    } else {
+        itemsPerPage = columns * 5;
+    }
+    
+    itemsPerPage = (columns == 1) ? 10 : columns*5;
+    
     renderItems(data);
 }
 

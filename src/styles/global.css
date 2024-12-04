@@ -10,7 +10,7 @@ html {
 
 body {
 	margin: 0;
-	padding: 0;	
+	padding: 0;
 }
 
 html, body {
@@ -82,7 +82,7 @@ input[type=text] {
 .content-container {
 	margin: 0 auto;
 	line-height: 1.5;
-	min-height: calc(88vh - 100px);
+	min-height: calc(86vh - 50px);
 	padding-bottom: 50px;
 }
 
