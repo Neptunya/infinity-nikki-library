@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, Response, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from sqlalchemy import PrimaryKeyConstraint, and_, or_
@@ -20,7 +20,7 @@ class ItemDetails(db.Model):
     Source = db.Column(db.String(255), nullable=True)
     Style = db.Column(db.String(255), nullable=True)
     Banner = db.Column(db.String(255), nullable=True)
-    
+
     levels = db.relationship('LevelDetails', backref='item', lazy=True)
 
 class LevelDetails(db.Model):
@@ -38,7 +38,7 @@ class LevelDetails(db.Model):
     Threads = db.Column(db.Integer, nullable=True)
     Bubbles = db.Column(db.Integer, nullable=True)
     Style = db.Column(db.String(255), nullable=True)
-    
+
     __table_args__ = (
         PrimaryKeyConstraint('Name', 'Level'),
     )
@@ -81,7 +81,7 @@ class Items(Resource):
         source = request.args.getlist('source')
 
         query = ItemDetails.query
-        
+
         if rarity:
             query = query.filter(ItemDetails.Rarity.in_(rarity))
         if slot:
@@ -90,7 +90,7 @@ class Items(Resource):
             query = query.filter(ItemDetails.Labels.in_(label))
         if style:
             query = query.filter(ItemDetails.Style.in_(style))
-        
+
         if source:
             designer = 'A unique creation made by an independent designer.'
             boutique = 'A classic clothing piece from Marques Boutique.'
@@ -104,7 +104,7 @@ class Items(Resource):
             styling_challenge = 'Proof of styling prowess.'
             rng= 'An unexpected surprise from the Surprise-O-Matic.'
             reso = 'Resonance from the Distant Sea'
-            
+
             source_map = {
                 'Independent Designer Store': [ItemDetails.Source == designer],
                 'Marques Boutique': [ItemDetails.Source == boutique],
@@ -119,21 +119,22 @@ class Items(Resource):
                 'Story Quest': [ItemDetails.Source == journey_anecdote],
                 'Styling Challenge': [ItemDetails.Source == styling_challenge],
                 'Surprise-O-Matic': [ItemDetails.Source == rng],
-                'Resonance: Distant Sea': [ItemDetails.Banner == 'Distant Sea'],
-                'Resonance: Butterfly Dream': [ItemDetails.Banner == 'Butterfly Dream']
+                'Resonance: Butterfly Dream': [ItemDetails.Banner == 'Butterfly Dream'],
+                'Resonance: Blooming Fantasy': [ItemDetails.Banner == 'Blooming Fantasy'],
+                'Resonance: Distant Sea': [ItemDetails.Banner == 'Distant Sea']
             }
-            
-            matched_conditions = set() 
+
+            matched_conditions = set()
             for s in source:
                 if s in source_map:
                     matched_conditions.update(source_map[s])
-            
+
             conditions = []
             if not matched_conditions:
                 conditions.append(and_(
                     ItemDetails.Source.isnot(None),
                     ItemDetails.Source.notin_([
-                        designer, boutique, dew, heart, treasure, esseling_treasure, 
+                        designer, boutique, dew, heart, treasure, esseling_treasure,
                         main, quest, journey_anecdote, styling_challenge, rng, reso
                     ]),
                     ItemDetails.Banner.notin_(['Distant Sea', 'Butterfly Dream']),
@@ -141,14 +142,21 @@ class Items(Resource):
                 ))
             else:
                 conditions.extend(matched_conditions)
-            
+
             if conditions:
                 query = query.filter(or_(*conditions))
-            
+
         items = query.all()
         if not items:
             return [], 200
         return items
+
+    def options(self):
+        response = Response()
+        response.headers['Access-Control-Allow-Origin'] = '*'  # Allow any origin
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'  # Allow these methods
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'  # Allow specific headers
+        return response, 200
 
 class Levels(Resource):
     @marshal_with(lvlFields)
@@ -166,4 +174,6 @@ def index():
     return '<h1>Infinity Nikki Flask REST API</h1>'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    from waitress import serve
+    serve(app, host='0.0.0.0', port=5000)
+    # app.run(debug=True)

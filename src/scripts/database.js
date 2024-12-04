@@ -136,7 +136,7 @@ function renderPagination(totalItems) {
         container.innerHTML = '';
 
         const backButton = document.createElement('button');
-        backButton.textContent = '🠘';
+        backButton.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18L9 12L15 6" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         backButton.classList.add('pagination-button');
         backButton.disabled = currentPage === 1; 
         backButton.onclick = () => changePage(currentPage - 1, totalItems);
@@ -158,7 +158,7 @@ function renderPagination(totalItems) {
         container.appendChild(pageNumberContainer);
 
         const nextButton = document.createElement('button');
-        nextButton.textContent = '🠚';
+        nextButton.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         nextButton.classList.add('pagination-button');
         nextButton.disabled = currentPage === totalPages; 
         nextButton.onclick = () => changePage(currentPage + 1, totalItems);
@@ -231,6 +231,16 @@ export function getSelectedSource(sourceValues) {
     currentPage = 1;
     selectedSources = sourceValues;
     getFilteredItems();
+}
+
+function initializePreselectedSource() {
+    const params = new URLSearchParams(window.location.search);
+    const preselectedSources = params.getAll('source');
+    if (preselectedSources.length > 0) {
+        getSelectedSource(preselectedSources);
+    } else {
+        getFilteredItems();
+    }
 }
 
 export function getFilteredItems() {
@@ -345,7 +355,7 @@ function applySearchFilter() {
 }
 
 window.onload = function() {
-    getFilteredItems();
+    initializePreselectedSource();
     adjustCollapsibleMaxHeight();
 };
 

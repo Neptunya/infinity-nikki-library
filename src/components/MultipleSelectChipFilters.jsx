@@ -7,6 +7,7 @@ import { getSelectedRarities, getSelectedSlots, getSelectedLabels, getSelectedSt
 
 export default function MultipleSelectChipFilters() {
     const [isClient, setIsClient] = useState(false);
+    const [selectedSources, setSelectedSources] = useState([]);
     
     const rarities = [
       '✧✧',
@@ -23,8 +24,9 @@ export default function MultipleSelectChipFilters() {
     ];
     
     const sources = [
-      'Resonance: Distant Sea',
       'Resonance: Butterfly Dream',
+      'Resonance: Blooming Fantasy',
+      'Resonance: Distant Sea',
       'Treasure Chest',
       'Styling Challenge',
       'Story Quest',
@@ -54,8 +56,15 @@ export default function MultipleSelectChipFilters() {
     ]
     
     useEffect(() => {
-        setIsClient(true);
-      }, []);
+      setIsClient(true);
+
+      const params = new URLSearchParams(window.location.search);
+      const sourceParam = params.get('source');
+
+      if (sourceParam) {
+          setSelectedSources(sourceParam.split(','));
+      }
+  }, []);
     return isClient ? (
     <ThemeProvider theme={theme}>
       <CssBaseline /> {}
@@ -63,27 +72,32 @@ export default function MultipleSelectChipFilters() {
         names={rarities}
         idPrefix="rarity"
         label="Rarity"
-        onSelectionChange={getSelectedRarities} />
+        onSelectionChange={getSelectedRarities}
+        selected={[]} />
       <MultipleSelectChipContent
         names={slots}
         idPrefix="slot"
         label="Type"
-        onSelectionChange={getSelectedSlots} />
+        onSelectionChange={getSelectedSlots}
+        selected={[]} />
       <MultipleSelectChipContent
         names={styles}
         idPrefix="style"
         label="Style"
-        onSelectionChange={getSelectedStyle} />
+        onSelectionChange={getSelectedStyle}
+        selected={[]} />
       <MultipleSelectChipContent
         names={labels}
         idPrefix="label"
         label="Label"
-        onSelectionChange={getSelectedLabels} />
+        onSelectionChange={getSelectedLabels}
+        selected={[]} />
       <MultipleSelectChipContent
         names={sources}
         idPrefix="source"
         label="Source"
-        onSelectionChange={getSelectedSource} />
+        onSelectionChange={getSelectedSource}
+        selected={selectedSources} />
     </ThemeProvider>
   ) : null;
 }

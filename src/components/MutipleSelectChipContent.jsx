@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -27,11 +27,11 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function MultipleSelectChipContent({ names = [], idPrefix = 'demo', label = 'Chip', onSelectionChange }) {
-  const theme = useTheme(); // Access the theme from ThemeProvider
+export default function MultipleSelectChipContent({ names = [], idPrefix = 'demo', label = 'Chip', onSelectionChange, selected = [] }) {
+  const theme = useTheme();
   
-  const [personName, setPersonName] = useState([]);
-
+  const [personName, setPersonName] = useState(selected);
+  
   const handleChange = (event) => {
     const {
       target: { value },
