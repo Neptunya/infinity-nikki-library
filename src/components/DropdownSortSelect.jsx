@@ -41,6 +41,11 @@ export default function BasicSelect() {
             <MenuItem value={'Name'}>Name</MenuItem>
             <MenuItem value={'Rarity'}>Rarity</MenuItem>
             <MenuItem value={'Type'}>Type</MenuItem>
+            <MenuItem value={'Elegant'}>Elegant</MenuItem>
+            <MenuItem value={'Fresh'}>Fresh</MenuItem>
+            <MenuItem value={'Sweet'}>Sweet</MenuItem>
+            <MenuItem value={'Sexy'}>Sexy</MenuItem>
+            <MenuItem value={'Cool'}>Cool</MenuItem>
             <MenuItem value="" onClick={handleReset}>None</MenuItem>
           </Select>
         </FormControl>

@@ -22,12 +22,15 @@ import MultipleSelectChipFilters from '../components/MultipleSelectChipFilters.j
 		<div class="content-container">
 			<h1>Database</h1>
 			<h2><strong>Status: CBT items up, new items from official release WIP</strong></h2>
+			<div id="loadingSpinner" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+				<div class="spinner"></div>
+			</div>
 			<div id="search-and-sort">
 				<ThemedTextField label="Search by item or outfit" client:only />
 				<div id="sort">
 					<button type="button" id="sort-btn">
-						<img src="/images/descending_icon.png" class="btn-img" />
-						<img src="/images/ascending_icon.png" class="btn-img show" />
+						<img src="/images/descending_icon.png" class="btn-img show" />
+						<img src="/images/ascending_icon.png" class="btn-img" />
 					</button>
 					<DropdownSortSelect client:only />
 				</div>

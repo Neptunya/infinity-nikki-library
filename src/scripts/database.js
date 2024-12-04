@@ -7,7 +7,7 @@ let selectedStyles = [];
 let selectedSources = [];
 let searchQuery = "";
 let selectedSort = "";
-let descending = false;
+let descending = true;
 
 let allItems = [];
 let totalItems = 0;
@@ -244,8 +244,9 @@ function initializePreselectedSource() {
 }
 
 export function getFilteredItems() {
-    let url = 'http://127.0.0.1:5000/api/items/?'
-    // let url = '/api/items/?';
+    // change when building
+    let url = '/api/items/?';
+    // let url = 'http://127.0.0.1:5000/api/items/?'
     
     if (selectedRarities && selectedRarities.length > 0) {
         url += `rarity=${selectedRarities.join('&rarity=')}&`;
@@ -292,6 +293,21 @@ export function updateSort(sortBy) {
     applySearchFilter();
 }
 
+function calculateScore(item, style) {
+    const elegant = item['Elegant'] || 0;
+    const fresh = item['Fresh'] || 0;
+    const sweet = item['Sweet'] || 0;
+    const sexy = item['Sexy'] || 0;
+    const cool = item['Cool'] || 0;
+
+    let score = (elegant * (style === "Elegant" ? 3.7 : 0.336)) + 
+                (fresh * (style === "Fresh" ? 3.7 : 0.336)) + 
+                (sweet * (style === "Sweet" ? 3.7 : 0.336)) + 
+                (sexy * (style === "Sexy" ? 3.7 : 0.336)) + 
+                (cool * (style === "Cool" ? 3.7 : 0.336));
+    return score;
+}
+
 function applySearchFilter() {
     let filteredItems = [...allItems];
     
@@ -306,16 +322,22 @@ function applySearchFilter() {
         "name": "Name",
         "type": "Slot", 
         "rarity": "Rarity",
+        "elegant": "Elegant",
+        "fresh": "Fresh",
+        "sweet": "Sweet",
+        "sexy": "Sexy",
+        "cool": "Cool",
     };
     
     const typeOrder = [
         'Hair','Dress','Outerwear','Top','Bottom','Socks','Shoes',
         'Hair Accessory','Headwear','Earrings','Neckwear','Bracelet','Choker','Gloves',
         'Face Decoration','Chest Accessory','Pendant','Backpiece','Ring', 'Arm Decoration', 'Handheld',
-        'Base Makeup','Eyebrows','Eyelashes','Contact Lenses','Lips'
-      ];
+        'Base Makeup','Eyebrows','Eyelashes','Contact Lenses','Lips', null
+    ];
     
     const numericColumns = ["Rarity"];
+    const style = ["Elegant", "Fresh", "Sweet", "Sexy", "Cool"];
 
     if (selectedSort) {
         const actualSortKey = sortMapping[selectedSort.toLowerCase()];
@@ -324,35 +346,64 @@ function applySearchFilter() {
             return;
         }
 
-        console.log("Sorting by:", actualSortKey);
+        document.getElementById("loadingSpinner").style.display = "block";
 
-        if (numericColumns.includes(actualSortKey)) {
-            filteredItems.sort((a, b) => 
-                descending 
-                    ? b[actualSortKey] - a[actualSortKey] 
-                    : a[actualSortKey] - b[actualSortKey]
-            );
-        } else if (actualSortKey === "Slot") {
-            filteredItems.sort((a, b) => {
-                const indexA = typeOrder.indexOf(a[actualSortKey]);
-                const indexB = typeOrder.indexOf(b[actualSortKey]);
-                return descending 
-                    ? indexB - indexA
-                    : indexA - indexB;
+        if (style.includes(actualSortKey)) {
+            Promise.all(filteredItems.map(async item => {
+                // change when building
+                const response = await fetch(`/api/items/${encodeURIComponent(item.Name)}`);
+                // const response = await fetch(`https://infinitynikkilibrary.com/api/items/${encodeURIComponent(item.Name)}`);
+                const data = await response.json();
+                const level5Data = data.find(d => d.Level === 5);
+                if (level5Data) {
+                    item[actualSortKey] = level5Data[actualSortKey];
+                }
+            })).then(() => {
+                filteredItems.sort((a, b) => {
+                    const scoreA = calculateScore(a, actualSortKey);
+                    const scoreB = calculateScore(b, actualSortKey);
+                    return descending ? scoreB - scoreA : scoreA - scoreB;
+                });
+
+                document.getElementById("loadingSpinner").style.display = "none";
+                
+                renderItems(filteredItems);
+            }).catch(error => {
+                console.error("Error fetching level 5 data for sorting:", error);
+                document.getElementById("loadingSpinner").style.display = "none";
             });
         } else {
-            filteredItems.sort((a, b) => 
-                descending 
-                    ? b[actualSortKey]?.localeCompare(a[actualSortKey]) || 0 
-                    : a[actualSortKey]?.localeCompare(b[actualSortKey]) || 0
-            );
+            if (numericColumns.includes(actualSortKey)) {
+                filteredItems.sort((a, b) => 
+                    descending 
+                        ? b[actualSortKey] - a[actualSortKey] 
+                        : a[actualSortKey] - b[actualSortKey]
+                );
+            } else if (actualSortKey === "Slot") {
+                filteredItems.sort((a, b) => {
+                    const indexA = typeOrder.indexOf(a[actualSortKey]);
+                    const indexB = typeOrder.indexOf(b[actualSortKey]);
+                    return descending 
+                        ? indexA - indexB
+                        : indexB - indexA;
+                });
+            } else {
+                filteredItems.sort((a, b) => 
+                    descending 
+                        ? a[actualSortKey]?.localeCompare(b[actualSortKey]) || 0 
+                        : b[actualSortKey]?.localeCompare(a[actualSortKey]) || 0
+                );
+            }
+
+            document.getElementById("loadingSpinner").style.display = "none";
+            renderItems(filteredItems);
         }
     }
-
-    renderItems(filteredItems); 
+    renderItems(filteredItems);
     totalItems = filteredItems.length;
     setTimeout(() => adjustItemsPerPageAndRerender(filteredItems), 0);
 }
+
 
 window.onload = function() {
     initializePreselectedSource();
