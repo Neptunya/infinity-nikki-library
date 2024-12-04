@@ -104,9 +104,10 @@ function renderItems(data) {
         cardText.appendChild(h3);
 
         if (item['Outfit']) {
-            const h4 = document.createElement('h4')
-            h4.innerHTML += item['Outfit'];
-            cardText.appendChild(h4);
+            const outfit = document.createElement('p')
+            outfit.innerHTML += "<strong><i>" + item['Outfit'] + "</i></strong>";
+            outfit.style.textWrap = 'wrap';
+            cardText.appendChild(outfit);
         }
 
         const p = document.createElement('p');

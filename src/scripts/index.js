@@ -38,17 +38,18 @@ function getTimeRemaining(targetDate) {
     const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
   
-    return `${days}:${hours}:${minutes}:${seconds}`;
+    return `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
   }
 
 countdown.innerHTML = "Ending " + endDate;
 const remaining = document.createElement('p');
 remaining.style.textAlign = 'center';
 remaining.style.marginTop = '5px';
+remaining.style.fontSize = '1.5rem';
 remaining.innerHTML = getTimeRemaining(eventDate);
 
 countdown.parentNode.insertBefore(remaining, countdown.nextSibling);
 
 setInterval(() => {
-    remaining.innerHTML = getTimeRemaining(eventDate);
+    remaining.innerHTML = "in " + getTimeRemaining(eventDate);
 }, 1000);

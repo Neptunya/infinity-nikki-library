@@ -136,6 +136,7 @@ input[type=text] {
 .resonance {
 	width: 900px;
 	margin: 10px auto;
+	max-width: 95%;
 }
 
 .resonance-header {
