@@ -62,7 +62,9 @@ function renderItems(data) {
 
 
         const message = document.createElement('p');
-        message.textContent = 'No items found';
+        message.innerHTML = "No items found.<br>Currently this database only has items from CBT.<br>I'm working hard to get the new items from the official release added!";
+        message.style.textAlign = 'center';
+        message.style.whiteSpace = 'pre-line';
         message.classList.add('no-results-message');
         
         const img = document.createElement('img');

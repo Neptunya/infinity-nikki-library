@@ -2,8 +2,8 @@
 layout: ../../layouts/MarkdownGuideLayout.astro
 title: 'Styling Challenge Scoring'
 id: 'styling-challenge-scoring'
-createDate: 11/07/2024
-lastUpdated: 11/09/2024
+createDate: 12/04/2024
+lastUpdated: 12/04/2024
 description: 'A breakdown on how styling challenges are scored'
 author: 'Neptunya'
 image: '/images/text-guides/styling-challenge-scoring/styling_challenge_scoring_banner.png'
