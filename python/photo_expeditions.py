@@ -35,12 +35,12 @@ def generate_photo_expeditions_cards():
                 <div class="card" id="loc-{row['#']}">
                     <h2>{row['#']}. {row['Name']}</h2>
                     <p>Contributed By: {row['Contributor']}<br>{row['Teleport']}, {row['Area']}</p>
-                    <img src="../{save_loc}" />
+                    <img src="/{save_loc}" />
                     <img src="/images/photo-expeditions/{row['#']}_pic.jpeg" />
                 </div>"""
         photo_expedition_cards.append(str(card))
 
-    with open('src/pages/resources/photo-expeditions.astro', 'w') as f:
+    with open('D:/Documents/infinity_nikki_library/src/pages/resources/photo-expeditions.astro', 'w') as f:
         f.write(f"""---
     import PhotoExpeditionsLayout from '../../layouts/PhotoExpeditionsLayout.astro';
     import '../../styles/global.css';
