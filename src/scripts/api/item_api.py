@@ -87,7 +87,8 @@ class Items(Resource):
         if slot:
             query = query.filter(ItemDetails.Slot.in_(slot))
         if label:
-            query = query.filter(ItemDetails.Labels.in_(label))
+            label_conditions = [ItemDetails.Labels.contains(lbl) for lbl in label]
+            query = query.filter(or_(*label_conditions))
         if style:
             query = query.filter(ItemDetails.Style.in_(style))
 
@@ -103,7 +104,11 @@ class Items(Resource):
             journey_anecdote = 'A piece of journey anecdote.'
             styling_challenge = 'Proof of styling prowess.'
             rng= 'An unexpected surprise from the Surprise-O-Matic.'
-            reso = 'Resonance from the Distant Sea'
+            dist_sea = 'Resonance from the Distant Sea'
+            limited_reso = 'Limited-Time Resonance'
+            heartfelt_wish = 'Obtained from Heartfelt Wish event.'
+            premium = "Pear-Pal premium item highly recommended by the Stylist's Guild."
+            pre_reg = 'Pre-Reg Milestone Outfit'
 
             source_map = {
                 'Independent Designer Store': [ItemDetails.Source == designer],
@@ -119,9 +124,12 @@ class Items(Resource):
                 'Story Quest': [ItemDetails.Source == journey_anecdote],
                 'Styling Challenge': [ItemDetails.Source == styling_challenge],
                 'Surprise-O-Matic': [ItemDetails.Source == rng],
-                'Resonance: Butterfly Dream': [ItemDetails.Banner == 'Butterfly Dream'],
-                'Resonance: Blooming Fantasy': [ItemDetails.Banner == 'Blooming Fantasy'],
-                'Resonance: Distant Sea': [ItemDetails.Banner == 'Distant Sea']
+                'Resonance: Butterfly Dream': [ItemDetails.Banner.contains('Butterfly Dream')],
+                'Resonance: Blooming Fantasy': [ItemDetails.Banner.contains('Blooming Fantasy')],
+                'Resonance: Distant Sea': [ItemDetails.Banner.contains('Distant Sea')],
+                'Event: Heartfelt Wish': [ItemDetails.Source == heartfelt_wish],
+                'Premium Items': [ItemDetails.Source == premium],
+                'Currently Unobtainable': [ItemDetails.Source == pre_reg]
             }
 
             matched_conditions = set()
@@ -135,10 +143,11 @@ class Items(Resource):
                     ItemDetails.Source.isnot(None),
                     ItemDetails.Source.notin_([
                         designer, boutique, dew, heart, treasure, esseling_treasure,
-                        main, quest, journey_anecdote, styling_challenge, rng, reso
+                        main, quest, journey_anecdote, styling_challenge, rng, dist_sea,
+                        limited_reso, heartfelt_wish, premium
                     ]),
                     ItemDetails.Banner.notin_(['Distant Sea', 'Butterfly Dream']),
-                    ItemDetails.Banner.is_(None)  # Ensures Banner is NULL if not listed
+                    ItemDetails.Banner.is_(None)
                 ))
             else:
                 conditions.extend(matched_conditions)

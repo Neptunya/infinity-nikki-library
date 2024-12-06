@@ -19,7 +19,7 @@ export default function MultipleSelectChipFilters() {
     const slots = [
       'Hair','Dress','Outerwear','Top','Bottom','Socks','Shoes',
       'Hair Accessory','Headwear','Earrings','Neckwear','Bracelet','Choker','Gloves',
-      'Face Decoration','Chest Accessory','Pendant','Backpiece','Ring', 'Arm Decoration', 'Handheld',
+      'Face Decoration','Chest Accessory','Pendant','Backpiece','Ring','Arm Decoration','Handheld',
       'Base Makeup','Eyebrows','Eyelashes','Contact Lenses','Lips'
     ];
     
@@ -27,6 +27,7 @@ export default function MultipleSelectChipFilters() {
       'Resonance: Butterfly Dream',
       'Resonance: Blooming Fantasy',
       'Resonance: Distant Sea',
+      'Event: Heartfelt Wish',
       'Treasure Chest',
       'Styling Challenge',
       'Story Quest',
@@ -37,6 +38,7 @@ export default function MultipleSelectChipFilters() {
       'Surprise-O-Matic',
       'Dews of Inspiration',
       'Heart of Infinity',
+      'Premium Items',
       'Currently Unobtainable'
     ];
     

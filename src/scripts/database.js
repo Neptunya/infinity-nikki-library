@@ -253,8 +253,8 @@ function initializePreselectedSource() {
 
 export function getFilteredItems() {
     // change when building
-    let url = '/api/items/?';
-    // let url = 'http://127.0.0.1:5000/api/items/?'
+    // let url = '/api/items/?';
+    let url = 'http://127.0.0.1:5000/api/items/?'
     
     if (selectedRarities && selectedRarities.length > 0) {
         url += `rarity=${selectedRarities.join('&rarity=')}&`;
@@ -291,7 +291,7 @@ export function getFilteredItems() {
 
 export function updateSearchQuery(query) {
     currentPage = 1;
-    searchQuery = query.trim();
+    searchQuery = query.trim().toLowerCase().replace(/\s+/g, '[- ]');
     applySearchFilter();
 }
 
@@ -320,9 +320,11 @@ function applySearchFilter() {
     let filteredItems = [...allItems];
     
     if (searchQuery) {
+        const regex = new RegExp(searchQuery, 'i'); // Case-insensitive regex for matching
+    
         filteredItems = filteredItems.filter(item => 
-            item.Name?.toLowerCase()?.includes(searchQuery) ||
-            item.Outfit?.toLowerCase()?.includes(searchQuery)
+            regex.test(item.Name?.toLowerCase() || '') ||  // Check against item.Name
+            regex.test(item.Outfit?.toLowerCase() || '')  // Check against item.Outfit
         );
     }
 
@@ -340,7 +342,7 @@ function applySearchFilter() {
     const typeOrder = [
         'Hair','Dress','Outerwear','Top','Bottom','Socks','Shoes',
         'Hair Accessory','Headwear','Earrings','Neckwear','Bracelet','Choker','Gloves',
-        'Face Decoration','Chest Accessory','Pendant','Backpiece','Ring', 'Arm Decoration', 'Handheld',
+        'Face Decoration','Chest Accessory','Pendant','Backpiece','Ring','Arm Decoration','Handheld',
         'Base Makeup','Eyebrows','Eyelashes','Contact Lenses','Lips', null
     ];
     
@@ -359,8 +361,8 @@ function applySearchFilter() {
         if (style.includes(actualSortKey)) {
             Promise.all(filteredItems.map(async item => {
                 // change when building
-                const response = await fetch(`/api/items/${encodeURIComponent(item.Name)}`);
-                // const response = await fetch(`https://infinitynikkilibrary.com/api/items/${encodeURIComponent(item.Name)}`);
+                // const response = await fetch(`/api/items/${encodeURIComponent(item.Name)}`);
+                const response = await fetch(`https://127.0.0.1/api/items/${encodeURIComponent(item.Name)}`);
                 const data = await response.json();
                 const level5Data = data.find(d => d.Level === 5);
                 if (level5Data) {

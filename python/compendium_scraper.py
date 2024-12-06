@@ -1,5 +1,6 @@
 from scraper_helper import *
 import json
+import csv
 
 # 1920x1080
 img_box = [647, 214, 311, 434]
@@ -78,7 +79,7 @@ def scrape_imgs():
         i += 1
 
 def single_img(name):
-    sc(f'/item_img_new/{name}', img_box)
+    sc(f'../../../public/images/items/{name}', img_box)
 
 def scrape_labels(label):
     for i in range(4):
@@ -145,21 +146,33 @@ def extract_unique_vals(data):
 
     return unique_values
 
-file_path = './python/json/source.json'
-with open(file_path, 'r') as file:
-    json_data = json.load(file)
+def print_unique_vals():
+    file_path = './python/json/source.json'
+    with open(file_path, 'r') as file:
+        json_data = json.load(file)
 
-# Get unique values
-unique_values = extract_unique_vals(json_data)
+    unique_values = extract_unique_vals(json_data)
+    print('Unique Values in JSON:')
+    for value in unique_values:
+        print(value)
 
-# Print unique values
-print('Unique Values in JSON:')
-for value in unique_values:
-    print(value)
+def print_no_source():
+    file_path = './python/csv/clothing_items_details.csv'
+    with open(file_path, "r", encoding="utf-8") as csvfile:
+        reader = csv.DictReader(csvfile)  # Read as a dictionary for column-based access
+    
+        print("Rows where 'Source' is empty or null:")
+        for row in reader:
+            # Check if 'Source' is empty or null
+            if not row['Source']:  # Handles empty strings or None
+                print(row)
 
-# in_w.activate() 
-# time.sleep(2)
-# pg.moveTo(90, 395)
-# pg.moveTo(10, 10)
+
+
+in_w.activate() 
+time.sleep(2)
+pg.moveTo(90, 395)
+single_img("Love and Wishes")
+pg.moveTo(10, 10)
 
 

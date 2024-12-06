@@ -196,7 +196,7 @@ def sort_details():
     slot_order = [
         'Hair','Dress','Outerwear','Top','Bottom','Socks','Shoes',
         'Hair Accessory','Headwear','Earrings','Neckwear','Bracelet','Choker','Gloves',
-        'Face Decoration','Chest Accessory','Pendant','Backpiece','Ring','Handheld',
+        'Face Decoration','Chest Accessory','Pendant','Backpiece','Ring','Arm Decoration','Handheld',
         'Base Makeup','Eyebrows','Eyelashes','Contact Lenses','Lips'
       ]
     df['Slot'] = pd.Categorical(df['Slot'], categories=slot_order, ordered=True)

@@ -26,6 +26,5 @@ python/cursor_reader.py
 python/images/
 python/csv/
 python/json/
-src/scripts/api/item_dump_anna.sql
-src/scripts/api/item_api_server.py
+src/scripts/api/dump/
 .venv/
