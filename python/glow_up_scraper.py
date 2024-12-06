@@ -1,9 +1,44 @@
 from scraper_helper import *
 import csv
+import os
+import enchant
 
 # 1280x720
 in_w.activate()
 time.sleep(2)
+
+def is_non_english_word(word):
+    dictionary = enchant.Dict("en_US")
+    return not dictionary.check(word)
+
+def spell_check_names(file_path):
+    with open(file_path, mode='r', newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        
+        for row in reader:
+            if int(row['Level']) == 10:
+                original_name = row['Name']
+                words = original_name.split()
+                
+                non_english_words = [word for word in words if is_non_english_word(word)]
+                
+                if non_english_words:
+                    corrected_words = [enchant.Dict("en_US").suggest(word)[0] if enchant.Dict("en_US").suggest(word) else word for word in non_english_words]
+                    corrected_name = " ".join(corrected_words)
+                    print(f"Level: {row['Level']}, Original Name: {original_name} -> Corrected Words: {corrected_words}")
+
+def check_zeros(file_path):
+    with open(file_path, mode='r', newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        
+        for row in reader:
+            # Check if Level is 10 and any of the specified columns have a value of 0
+            if int(row['Level']) == 10:
+                zero_columns = [col for col in ['Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool'] if int(row[col]) == 0]
+                
+                if zero_columns:
+                    zero_columns_str = ", ".join(zero_columns)
+                    print(f"Name: {row['Name']}, Level: {row['Level']}, Columns with 0: {zero_columns_str}")
 
 def scrape_all():
 	# intial 2 rows
@@ -54,7 +89,7 @@ def scrape_one(x, y, last=False):
 	pg.leftClick()
 	get_item_details(x, y, last)
 
-def scrape_stats(name, rarity, slot):
+def scrape_stats(name, rarity, slot, file):
 	r = []
 	rows = []
 	ss = [slot, '']
@@ -87,7 +122,7 @@ def scrape_stats(name, rarity, slot):
 
 	# subsequent lvls
 	pg.moveTo(upgrade[0], upgrade[1])
-	while (lvl < 5):
+	while (lvl < 10):
 		pg.click()
 		r.append(name)
 		r.append(rarity)
@@ -101,17 +136,23 @@ def scrape_stats(name, rarity, slot):
 		rows.append(r.copy())
 		r.clear()
 	lc2(back[0], back[1])
-	f = './python/csv/pendant_data.csv'
+	f = f'./python/csv/unprocessed/{file}_data.csv'
 	with open(f, 'a', newline='') as csvfile:
 		csvwriter = csv.writer(csvfile)
 		csvwriter.writerows(rows)
 
-#scrape_stats('Azure Ripples', 4, 'Face Decoration')
+# scrape_stats("Crimson Snowstorm", 4, 'Top', 'top')
 # , pendant, backpiece, ring, handheld
 
-scrape_all()
-f = './python/csv/handheld_data.csv'
-with open(f, 'w', newline='') as csvfile:
-		csvwriter = csv.writer(csvfile)
-		csvwriter.writerow(fields)
-		csvwriter.writerows(rows)
+file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/vals/')
+for file in file_list:
+	print(file)
+	# check_zeros(f'./python/csv/unprocessed/{file}')
+	spell_check_names(f'./python/csv/unprocessed/vals/{file}')
+
+# scrape_all()
+# f = './python/csv/unprocessed/handheld_data.csv'
+# with open(f, 'a', newline='') as csvfile:
+# 		csvwriter = csv.writer(csvfile)
+# 		csvwriter.writerow(fields)
+# 		csvwriter.writerows(rows)

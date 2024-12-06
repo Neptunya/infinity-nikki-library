@@ -2,7 +2,7 @@ from scraper_helper import *
 import json
 
 # 1920x1080
-img_box = [657, 214, 311, 434]
+img_box = [647, 214, 311, 434]
 name_box = [1340, 125, 427, 46]
 compendium_interval = 166
 name_card = [579, 215, 250, 38]
@@ -14,9 +14,6 @@ source_offset = [60, 30, 420, 75]
 with open('./python/json/labels.json') as f:
     labels_data = json.load(f)
     
-with open('./python/json/colors.json') as f:
-    colors_data = json.load(f)
-
 with open('./python/json/source.json') as f:
     source_data = json.load(f)
     
@@ -28,6 +25,8 @@ def add_unique_value(label, value):
     if value not in labels_data["labels"][label]:
         labels_data["labels"][label].append(value)
         print(value)
+        with open('./python/json/labels.json', 'w') as f:
+            json.dump(labels_data, f, indent=4)
 
 def img_to_str_mod(n):
     file = f'./python/images/clothing_item_scraper/{n}.png'
@@ -63,7 +62,7 @@ def scrape_imgs():
     curr_name = img_to_str(sc("name", name_box))
     i = 0
     while prev_name != curr_name:
-        sc(f'/item_img/{curr_name}', img_box)
+        sc(f'../../../public/images/items/{curr_name}', img_box)
         prev_name = curr_name
         if i < 3:
             lc2(90, 395 + (i * compendium_interval))
@@ -82,46 +81,16 @@ def single_img(name):
     sc(f'/item_img_new/{name}', img_box)
 
 def scrape_labels(label):
-    exit_loops = False
     for i in range(4):
-        if exit_loops:
-            break
-        else:
-            for j in range(3):
-                pg.screenshot('./python/images/clothing_item_scraper/name.png', region=(name_card[0] + (j * card_x_interval), name_card[1] + (i * card_y_interval), name_card[2], name_card[3]))
-                name = img_to_str_mod('name')
-                if name.strip() or ():
-                    add_unique_value(label, name)
-                elif i == 0 and j == 0:
-                    # in case threads of reunion blank entry
-                    print(name)
-                else:
-                    with open('./python/json/labels.json', 'w') as f:
-                        json.dump(labels_data, f, indent=4)
-                    exit_loops = True
-                    break
-
-# color filter in compendium doesn't work
-def scrape_colors(color):
-    exit_loops = False
-    for i in range(4):
-        if exit_loops:
-            break
-        else:
-            for j in range(3):
-                pg.screenshot('./python/images/clothing_item_scraper/name.png', region=(name_card[0] + (j * card_x_interval), name_card[1] + (i * card_y_interval), name_card[2], name_card[3]))
-                name = img_to_str_mod('name')
-                if name.strip():
-                    print(name)
-                    add_unique_value(color, name)
-                elif i == 0 and j == 0:
-                    # in case threads of reunion blank entry
-                    print(name)
-                else:
-                    with open('./python/json/colors.json', 'w') as f:
-                        json.dump(colors_data, f, indent=4)
-                    exit_loops = True
-                    break
+        for j in range(3):
+            pg.screenshot('./python/images/clothing_item_scraper/name.png', region=(name_card[0] + (j * card_x_interval), name_card[1] + (i * card_y_interval), name_card[2], name_card[3]))
+            name = img_to_str_mod('name')
+            if name.strip():
+                add_unique_value(label, name)
+            else:
+                with open('./python/json/labels.json', 'w') as f:
+                    json.dump(labels_data, f, indent=4)
+                return 
 
 def get_source(name):
     needle_img = './python/images/clothing_item_scraper/divider.png'
@@ -162,10 +131,35 @@ def scrape_sources():
         curr_name = img_to_str(sc("name", name_box))
         i += 1
 
-in_w.activate() 
-time.sleep(2)
-pg.moveTo(90, 395)
-single_img("At Night")
-pg.moveTo(0, 0)
+def extract_unique_vals(data):
+    unique_values = set()
+
+    if isinstance(data, dict):
+        for value in data.values():
+            unique_values.update(extract_unique_vals(value))
+    elif isinstance(data, list):
+        for item in data:
+            unique_values.update(extract_unique_vals(item))
+    else:
+        unique_values.add(data)
+
+    return unique_values
+
+file_path = './python/json/source.json'
+with open(file_path, 'r') as file:
+    json_data = json.load(file)
+
+# Get unique values
+unique_values = extract_unique_vals(json_data)
+
+# Print unique values
+print('Unique Values in JSON:')
+for value in unique_values:
+    print(value)
+
+# in_w.activate() 
+# time.sleep(2)
+# pg.moveTo(90, 395)
+# pg.moveTo(10, 10)
 
 

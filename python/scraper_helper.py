@@ -10,12 +10,13 @@ import re
 pytesseract.pytesseract.tesseract_cmd = r'C:/Program Files/Tesseract-OCR/tesseract'
 pg.FAILSAFE = True
 pg.PAUSE = 0.5
-in_w = gw.getWindowsWithTitle('无限暖暖')[0]
+in_w = gw.getWindowsWithTitle('Infinity Nikki')[0]
 
 
 # lots of vars
 left = in_w.left
 top = in_w.top
+
 
 back = [57+left, 70+top]
 upgrade = [1052+left, 402+top]
@@ -26,7 +27,7 @@ item_img = [191+left, 151+top, 125, 114]
 item_lvl = [922+left, 386+top, 105, 22]
 initial_stat = [910+left, 175+top, 55, 22]
 stat_interval = 38
-new_stat = [1108+left, 175+top, 55, 22]
+new_stat = [1088+left, 175+top, 65, 22]
 cost = [821+left, 434+top, 318, 32]
 rarity = [245+left, 303+top, 86, 23]
 
@@ -125,6 +126,18 @@ def get_stats(s):
             stats.append(0)
     return stats
 
+def testMouse():
+    pg.moveTo(0, 0)
+    time.sleep(1)
+    pg.moveTo(x_cards[0], y_cards[0])
+    time.sleep(1)
+    pg.moveTo(x_cards[0], y_cards[1])
+    time.sleep(1)
+    pg.moveTo(x_cards[0], y_cards[0])
+    time.sleep(1)
+    pg.click()
+    
+
 def get_item_details(x_card, y_card, last=False):
     r.clear()
     # grab item name
@@ -167,7 +180,7 @@ def get_item_details(x_card, y_card, last=False):
     
     # subsequent lvls
     pg.moveTo(upgrade[0], upgrade[1])
-    while (lvl < 5):
+    while (lvl < 10):
         pg.click()
         r.append(name)
         r.append(rarity)

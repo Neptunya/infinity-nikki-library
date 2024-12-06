@@ -203,10 +203,9 @@ def sort_details():
     df_sorted = df.sort_values(by=['Rarity', 'Slot', 'Outfit'], ascending=[False, True, True])
     df_sorted.to_csv(f'./python/csv/clothing_items_details.csv', index=False)
 
-# merge_csv()
-# add_style()
-# add_makeup()
-# add_missing_items()
+merge_csv()
+add_style()
+add_makeup()
 split_csv()
 add_costs()
 add_labels()
