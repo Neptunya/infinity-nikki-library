@@ -1,8 +1,8 @@
-from flask import Flask, Response, request
+from flask import Flask, Response, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
-from sqlalchemy import PrimaryKeyConstraint, and_, or_
-from flask_cors import CORS
+from sqlalchemy import PrimaryKeyConstraint, and_, or_, case, func
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 CORS(app)
@@ -79,6 +79,8 @@ class Items(Resource):
         label = request.args.getlist('label')
         style = request.args.getlist('style')
         source = request.args.getlist('source')
+        styleSort = request.args.get('style-sort')
+        sortOrder = request.args.get('sort-order')
 
         query = ItemDetails.query
 
@@ -155,16 +157,52 @@ class Items(Resource):
             if conditions:
                 query = query.filter(or_(*conditions))
 
-        items = query.all()
-        if not items:
+        filtered_items = query.all()
+        if not filtered_items:
             return [], 200
-        return items
+        if not styleSort:
+            return filtered_items
+        
+        filtered_item_names = [item.Name for item in filtered_items]
+        allowed_styles = ["Elegant", "Fresh", "Sweet", "Sexy", "Cool"]
+        if styleSort not in allowed_styles:
+            return {"message": f"Invalid styleSort: {styleSort}"}, 400
+        
+        style_query = LevelDetails.query.filter(
+            LevelDetails.Name.in_(filtered_item_names),
+            LevelDetails.Level == 10
+        )
+        sorted_styles = style_query.all()
+        
+        def score(item, styleSort):
+            selected_style_value = getattr(item, styleSort) * 3.7
+            score = selected_style_value
+            
+            for style in allowed_styles:
+                if style != styleSort:  # Don't multiply the selected style
+                    score += getattr(item, style) * 0.336
+            return score
+        
+        sortOrder = sortOrder == 'true'
+        sorted_items = sorted(
+            sorted_styles,
+            key=lambda item: score(item, styleSort),
+            reverse=sortOrder
+        )
+        
+        sorted_item_names = [item.Name for item in sorted_items]
+        sorted_items = sorted(
+            filtered_items,
+            key=lambda item: sorted_item_names.index(item.Name) if item.Name in sorted_item_names else float('inf')
+        )
+        return sorted_items
 
-    def options(self):
+    @app.route('/api/items/', methods=['OPTIONS'])
+    def options():
         response = Response()
-        response.headers['Access-Control-Allow-Origin'] = '*'  # Allow any origin
-        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'  # Allow these methods
-        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'  # Allow specific headers
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, style-sort'  # Add custom headers
         return response, 200
 
 class Levels(Resource):

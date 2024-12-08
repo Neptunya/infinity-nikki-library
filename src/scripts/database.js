@@ -5,10 +5,12 @@ let selectedSlots = [];
 let selectedLabels = [];
 let selectedStyles = [];
 let selectedSources = [];
+let selectedStyleSort = [];
 let searchQuery = "";
 let selectedSort = "";
 let descending = true;
 let lastColCount = countFlexColumns();
+const styles = ["Elegant", "Fresh", "Sweet", "Sexy", "Cool"];
 
 let allItems = [];
 let totalItems = 0;
@@ -34,10 +36,12 @@ for (i = 0; i < collapsible.length; i++) {
 const sortBtn = document.getElementById("sort-btn");
 sortBtn.addEventListener("click", function () {
     descending = !descending;
+    console.log(descending);
     const icons = sortBtn.getElementsByClassName("btn-img");
     for (let i = 0; i < icons.length; i++) {
         icons[i].classList.toggle("show");
     }
+    getFilteredItems();
     applySearchFilter();
 });
 
@@ -276,6 +280,11 @@ export function getFilteredItems() {
         url += `source=${selectedSources.join('&source=')}&`;
     }
     
+    if (selectedStyleSort.length > 0 && styles.includes(selectedStyleSort)) {
+        url += `style-sort=${selectedStyleSort}&`;
+        url += `sort-order=${descending}&`
+    }
+    
     adjustCollapsibleMaxHeight();
     url = url.slice(0, -1);
     fetch(url)
@@ -298,7 +307,12 @@ export function updateSearchQuery(query) {
 export function updateSort(sortBy) {
     currentPage = 1;
     selectedSort = sortBy
-    applySearchFilter();
+    if (styles.includes(sortBy)) {
+        selectedStyleSort = sortBy;
+        getFilteredItems();
+    } else {
+        applySearchFilter();
+    }
 }
 
 function calculateScore(item, style) {
@@ -347,7 +361,6 @@ function applySearchFilter() {
     ];
     
     const numericColumns = ["Rarity"];
-    const style = ["Elegant", "Fresh", "Sweet", "Sexy", "Cool"];
 
     if (selectedSort) {
         const actualSortKey = sortMapping[selectedSort.toLowerCase()];
@@ -355,55 +368,27 @@ function applySearchFilter() {
             console.error("Invalid sort key:", selectedSort);
             return;
         }
-
-        document.getElementById("loadingSpinner").style.display = "block";
-
-        if (style.includes(actualSortKey)) {
-            Promise.all(filteredItems.map(async item => {
-                // change when building
-                // const response = await fetch(`/api/items/${encodeURIComponent(item.Name)}`);
-                const response = await fetch(`https://127.0.0.1/api/items/${encodeURIComponent(item.Name)}`);
-                const data = await response.json();
-                const level5Data = data.find(d => d.Level === 5);
-                if (level5Data) {
-                    item[actualSortKey] = level5Data[actualSortKey];
-                }
-            })).then(() => {
-                filteredItems.sort((a, b) => {
-                    const scoreA = calculateScore(a, actualSortKey);
-                    const scoreB = calculateScore(b, actualSortKey);
-                    return descending ? scoreB - scoreA : scoreA - scoreB;
-                });
-
-                document.getElementById("loadingSpinner").style.display = "none";
-            }).catch(error => {
-                console.error("Error fetching level 5 data for sorting:", error);
-                document.getElementById("loadingSpinner").style.display = "none";
+            
+        if (numericColumns.includes(actualSortKey)) {
+            filteredItems.sort((a, b) => 
+                descending 
+                    ? b[actualSortKey] - a[actualSortKey] 
+                    : a[actualSortKey] - b[actualSortKey]
+            );
+        } else if (actualSortKey === "Slot") {
+            filteredItems.sort((a, b) => {
+                const indexA = typeOrder.indexOf(a[actualSortKey]);
+                const indexB = typeOrder.indexOf(b[actualSortKey]);
+                return descending 
+                    ? indexA - indexB
+                    : indexB - indexA;
             });
         } else {
-            if (numericColumns.includes(actualSortKey)) {
-                filteredItems.sort((a, b) => 
-                    descending 
-                        ? b[actualSortKey] - a[actualSortKey] 
-                        : a[actualSortKey] - b[actualSortKey]
-                );
-            } else if (actualSortKey === "Slot") {
-                filteredItems.sort((a, b) => {
-                    const indexA = typeOrder.indexOf(a[actualSortKey]);
-                    const indexB = typeOrder.indexOf(b[actualSortKey]);
-                    return descending 
-                        ? indexA - indexB
-                        : indexB - indexA;
-                });
-            } else {
-                filteredItems.sort((a, b) => 
-                    descending 
-                        ? a[actualSortKey]?.localeCompare(b[actualSortKey]) || 0 
-                        : b[actualSortKey]?.localeCompare(a[actualSortKey]) || 0
-                );
-            }
-
-            document.getElementById("loadingSpinner").style.display = "none";
+            filteredItems.sort((a, b) => 
+                descending 
+                    ? a[actualSortKey]?.localeCompare(b[actualSortKey]) || 0 
+                    : b[actualSortKey]?.localeCompare(a[actualSortKey]) || 0
+            );
         }
     }
     renderItems(filteredItems);
