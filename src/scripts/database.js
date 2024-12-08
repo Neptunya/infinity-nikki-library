@@ -8,6 +8,7 @@ let selectedSources = [];
 let searchQuery = "";
 let selectedSort = "";
 let descending = true;
+let lastColCount = countFlexColumns();
 
 let allItems = [];
 let totalItems = 0;
@@ -62,7 +63,7 @@ function renderItems(data) {
 
 
         const message = document.createElement('p');
-        message.innerHTML = "No items found.<br>Currently this database only has items from CBT.<br>I'm working hard to get the new items from the official release added!";
+        message.innerHTML = "No items found.";
         message.style.textAlign = 'center';
         message.style.whiteSpace = 'pre-line';
         message.classList.add('no-results-message');
@@ -161,7 +162,7 @@ function renderPagination(totalItems) {
         const nextButton = document.createElement('button');
         nextButton.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         nextButton.classList.add('pagination-button');
-        nextButton.disabled = currentPage === totalPages; 
+        nextButton.disabled = currentPage >= totalPages; 
         nextButton.onclick = () => changePage(currentPage + 1, totalItems);
         container.appendChild(nextButton);
     });
@@ -203,7 +204,6 @@ function adjustItemsPerPageAndRerender(data) {
     }
     
     itemsPerPage = (columns == 1) ? 10 : columns*5;
-    
     renderItems(data);
 }
 
@@ -376,8 +376,6 @@ function applySearchFilter() {
                 });
 
                 document.getElementById("loadingSpinner").style.display = "none";
-                
-                renderItems(filteredItems);
             }).catch(error => {
                 console.error("Error fetching level 5 data for sorting:", error);
                 document.getElementById("loadingSpinner").style.display = "none";
@@ -406,7 +404,6 @@ function applySearchFilter() {
             }
 
             document.getElementById("loadingSpinner").style.display = "none";
-            renderItems(filteredItems);
         }
     }
     renderItems(filteredItems);
@@ -421,7 +418,11 @@ window.onload = function() {
 };
 
 window.onresize = function() {
-    getFilteredItems();
+    let currentColCount = countFlexColumns();
+    if (currentColCount != lastColCount) {
+        currentPage = 1;
+        getFilteredItems();
+    }
+    lastColCount = currentColCount;
     adjustCollapsibleMaxHeight();
-    currentPage = 1;
 };
