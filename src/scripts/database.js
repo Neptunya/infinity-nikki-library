@@ -177,6 +177,14 @@ function changePage(newPage, totalItems) {
     if (newPage >= 1 && newPage <= totalPages) {
         currentPage = newPage;
         getFilteredItems();
+    } 
+    
+    let currentColCount = countFlexColumns();
+    if (currentColCount != lastColCount) {
+        currentPage = 1;
+        console.log('reset!');
+        lastColCount = currentColCount;
+        getFilteredItems();
     }
 }
 
@@ -201,6 +209,7 @@ function countFlexColumns() {
 
 function adjustItemsPerPageAndRerender(data) {
     const columns = countFlexColumns();
+    lastColCount = columns;
     if (columns == 1) {
         itemsPerPage = 10;
     } else {
@@ -257,7 +266,7 @@ function initializePreselectedSource() {
 
 export function getFilteredItems() {
     // change when building
-    // let url = '/api/items/?';
+    //let url = '/api/items/?';
     let url = 'http://127.0.0.1:5000/api/items/?'
     
     if (selectedRarities && selectedRarities.length > 0) {
@@ -313,21 +322,6 @@ export function updateSort(sortBy) {
     } else {
         applySearchFilter();
     }
-}
-
-function calculateScore(item, style) {
-    const elegant = item['Elegant'] || 0;
-    const fresh = item['Fresh'] || 0;
-    const sweet = item['Sweet'] || 0;
-    const sexy = item['Sexy'] || 0;
-    const cool = item['Cool'] || 0;
-
-    let score = (elegant * (style === "Elegant" ? 3.7 : 0.336)) + 
-                (fresh * (style === "Fresh" ? 3.7 : 0.336)) + 
-                (sweet * (style === "Sweet" ? 3.7 : 0.336)) + 
-                (sexy * (style === "Sexy" ? 3.7 : 0.336)) + 
-                (cool * (style === "Cool" ? 3.7 : 0.336));
-    return score;
 }
 
 function applySearchFilter() {
@@ -403,11 +397,6 @@ window.onload = function() {
 };
 
 window.onresize = function() {
-    let currentColCount = countFlexColumns();
-    if (currentColCount != lastColCount) {
-        currentPage = 1;
-        getFilteredItems();
-    }
-    lastColCount = currentColCount;
+    changePage(currentPage, totalItems);
     adjustCollapsibleMaxHeight();
 };

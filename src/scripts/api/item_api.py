@@ -110,8 +110,8 @@ class Items(Resource):
             limited_reso = 'Limited-Time Resonance'
             heartfelt_wish = 'Obtained from Heartfelt Wish event.'
             premium = "Pear-Pal premium item highly recommended by the Stylist's Guild."
-            pre_reg = 'Pre-Reg Milestone Outfit'
-
+            starting = "One of the initial items acquired upon arrival in Miraland."
+            
             source_map = {
                 'Independent Designer Store': [ItemDetails.Source == designer],
                 'Marques Boutique': [ItemDetails.Source == boutique],
@@ -131,7 +131,15 @@ class Items(Resource):
                 'Resonance: Distant Sea': [ItemDetails.Banner.contains('Distant Sea')],
                 'Event: Heartfelt Wish': [ItemDetails.Source == heartfelt_wish],
                 'Premium Items': [ItemDetails.Source == premium],
-                'Currently Unobtainable': [ItemDetails.Source == pre_reg]
+                'Currently Unobtainable': [
+                    and_(
+                        ItemDetails.Source.notin_([
+                            designer, boutique, dew, heart, treasure, esseling_treasure, main, quest,
+                            journey_anecdote, styling_challenge, rng, heartfelt_wish, premium, starting
+                        ]),
+                        ItemDetails.Banner.is_(None)
+                    )
+                ]
             }
 
             matched_conditions = set()
@@ -140,21 +148,8 @@ class Items(Resource):
                     matched_conditions.update(source_map[s])
 
             conditions = []
-            if not matched_conditions:
-                conditions.append(and_(
-                    ItemDetails.Source.isnot(None),
-                    ItemDetails.Source.notin_([
-                        designer, boutique, dew, heart, treasure, esseling_treasure,
-                        main, quest, journey_anecdote, styling_challenge, rng, dist_sea,
-                        limited_reso, heartfelt_wish, premium
-                    ]),
-                    ItemDetails.Banner.notin_(['Distant Sea', 'Butterfly Dream']),
-                    ItemDetails.Banner.is_(None)
-                ))
-            else:
+            if matched_conditions:
                 conditions.extend(matched_conditions)
-
-            if conditions:
                 query = query.filter(or_(*conditions))
 
         filtered_items = query.all()
@@ -179,7 +174,7 @@ class Items(Resource):
             score = selected_style_value
             
             for style in allowed_styles:
-                if style != styleSort:  # Don't multiply the selected style
+                if style != styleSort:
                     score += getattr(item, style) * 0.336
             return score
         
@@ -202,7 +197,7 @@ class Items(Resource):
         response = Response()
         response.headers['Access-Control-Allow-Origin'] = '*'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
-        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, style-sort'  # Add custom headers
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, style-sort'
         return response, 200
 
 class Levels(Resource):
