@@ -111,6 +111,7 @@ class Items(Resource):
             heartfelt_wish = 'Obtained from Heartfelt Wish event.'
             premium = "Pear-Pal premium item highly recommended by the Stylist's Guild."
             starting = "One of the initial items acquired upon arrival in Miraland."
+            pre_reg = "Pre-Reg Milestone Outfit"
             
             source_map = {
                 'Independent Designer Store': [ItemDetails.Source == designer],
@@ -121,7 +122,11 @@ class Items(Resource):
                     ItemDetails.Source == treasure,
                     ItemDetails.Source == esseling_treasure
                 ],
-                'Main Quest': [ItemDetails.Source == main],
+                'Main Quest': [
+                    ItemDetails.Source == main,
+                    ItemDetails.Source == starting,
+                    ItemDetails.Source == pre_reg,
+                ],
                 'World Quest': [ItemDetails.Source == quest],
                 'Story Quest': [ItemDetails.Source == journey_anecdote],
                 'Styling Challenge': [ItemDetails.Source == styling_challenge],
@@ -135,7 +140,7 @@ class Items(Resource):
                     and_(
                         ItemDetails.Source.notin_([
                             designer, boutique, dew, heart, treasure, esseling_treasure, main, quest,
-                            journey_anecdote, styling_challenge, rng, heartfelt_wish, premium, starting
+                            journey_anecdote, styling_challenge, rng, heartfelt_wish, premium, starting, pre_reg
                         ]),
                         ItemDetails.Banner.is_(None)
                     )
