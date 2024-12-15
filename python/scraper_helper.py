@@ -12,31 +12,20 @@ pg.FAILSAFE = True
 pg.PAUSE = 0.5
 in_w = gw.getWindowsWithTitle('Infinity Nikki')[0]
 
+back = [76, 59]
+upgrade = [1555, 551]
+item_name = [268, 452, 197, 28]
+item_lvl = [1370, 529, 158, 35]
+initial_stat = [1350, 215, 95, 33]
+stat_interval = 57
+new_stat = [1612, 215, 115, 33]
+rarity = [352, 404, 129, 34]
 
-# lots of vars
-left = in_w.left
-top = in_w.top
-
-
-back = [57+left, 70+top]
-upgrade = [1052+left, 402+top]
-outfit = [95+left, 167+top]
-hair = [95+left, 241+top]
-item_name = [182+left, 333+top, 150, 20]
-item_img = [191+left, 151+top, 125, 114]
-item_lvl = [922+left, 386+top, 105, 22]
-initial_stat = [910+left, 175+top, 55, 22]
-stat_interval = 38
-new_stat = [1088+left, 175+top, 65, 22]
-cost = [821+left, 434+top, 318, 32]
-rarity = [245+left, 303+top, 86, 23]
-
-x_cards = [251, 427, 603, 779, 954, 1130]
-x_cards = [x + left for x in x_cards]
-x_cards_interval = 176
-y_cards = [224, 470, 595]
-y_cards = [y + top for y in y_cards]
-y_cards_interval = [0, 246, 371]
+x_cards = [358, 625, 887, 1151, 1416, 1682]
+x_cards_interval = 265
+y_cards = [284, 653, 860]
+y_cards_interval = [0, 369, 554]
+# 576 is last row
 
 ss = ['Handheld', '']
 fields = ['Name', 'Rarity', 'Slot', 'Outfit', 'Level', 'Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool', 'Blings', 'Threads', 'Bubbles', 'Labels', 'Source']
@@ -47,7 +36,7 @@ def img_to_str(n):
     file = f'./python/images/clothing_item_scraper/{n}.png'
     image = cv2.imread(file)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    thresh = cv2.threshold(gray, 193, 255, cv2.THRESH_BINARY)[1]
+    thresh = cv2.threshold(gray, 197, 255, cv2.THRESH_BINARY)[1]
     cv2.imwrite(f'./python/images/clothing_item_scraper/{n}_processed.png', thresh)
     text = str.strip(pytesseract.image_to_string(Image.open(f'./python/images/clothing_item_scraper/{n}_processed.png')))
     filtered_text = re.sub(r"[^a-zA-Z' -]", "", text)
@@ -74,8 +63,11 @@ def lc2(x, y):
     pg.moveTo(x, y)
     pg.click()
 
-def get_name(x_mod, y_mod):
-    pg.screenshot(f'./python/images/clothing_item_scraper/name.png', region=(item_name[0]+x_mod, item_name[1]+y_mod, item_name[2], item_name[3]))
+def get_name(x_mod, y_mod, last=False):
+    if last: 
+        pg.screenshot(f'./python/images/clothing_item_scraper/name.png', region=(item_name[0]+x_mod, item_name[1]+576, item_name[2], item_name[3]))
+    else:
+        pg.screenshot(f'./python/images/clothing_item_scraper/name.png', region=(item_name[0]+x_mod, item_name[1]+y_mod, item_name[2], item_name[3]))
     return img_to_str('name')
 
 star_icon = './python/images/clothing_item_scraper/star.png'
@@ -144,15 +136,15 @@ def get_item_details(x_card, y_card, last=False):
     x_mod = x_card * x_cards_interval
     y_mod = y_cards_interval[y_card]
     if last:
-        y_mod += 13
-    name = get_name(x_mod, y_mod)
+        y_mod = 576
+    name = get_name(x_mod, y_mod, last)
     rarity = get_rarity(x_mod, y_mod)
     r.append(name)
     r.append(rarity)
     r.extend(ss)
     time.sleep(1.5)
     lc2(x_cards[x_card], y_cards[y_card])
-    pg.moveTo(100+left, 100+top)
+    pg.moveTo(100, 100)
     time.sleep(2)
 
     # lvl 0 stats

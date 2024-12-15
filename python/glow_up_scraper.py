@@ -3,7 +3,6 @@ import csv
 import os
 import enchant
 
-# 1280x720
 in_w.activate()
 time.sleep(2)
 
@@ -67,7 +66,7 @@ def scrape_all():
 			if name.strip():
 				get_item_details(i, 2)
 			else:
-				name = get_name(x_mod, y_mod+13)
+				name = get_name(x_mod, 576)
 				if name.strip():
 					get_item_details(i, 2, True)
 				else:
@@ -144,15 +143,15 @@ def scrape_stats(name, rarity, slot, file):
 # scrape_stats("Crimson Snowstorm", 4, 'Top', 'top')
 # , pendant, backpiece, ring, handheld
 
-file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/vals/')
-for file in file_list:
-	print(file)
-	# check_zeros(f'./python/csv/unprocessed/{file}')
-	spell_check_names(f'./python/csv/unprocessed/vals/{file}')
+# file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/')
+# for file in file_list:
+# 	print(file)
+# 	check_zeros(f'./python/csv/unprocessed/{file}')
+# 	spell_check_names(f'./python/csv/unprocessed/{file}')
 
-# scrape_all()
-# f = './python/csv/unprocessed/handheld_data.csv'
-# with open(f, 'a', newline='') as csvfile:
-# 		csvwriter = csv.writer(csvfile)
-# 		csvwriter.writerow(fields)
-# 		csvwriter.writerows(rows)
+scrape_all()
+f = './python/csv/unprocessed/handheld.csv'
+with open(f, 'w', newline='') as csvfile:
+		csvwriter = csv.writer(csvfile)
+		csvwriter.writerow(fields)
+		csvwriter.writerows(rows)
