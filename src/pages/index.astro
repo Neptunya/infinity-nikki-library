@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Carousel from '../components/carousel/Carousel.jsx'
 import '../styles/global.css';
 ---
 
@@ -24,19 +25,7 @@ import '../styles/global.css';
 			<h1>Infinity Nikki Library</h1>
 			<p>A compendium of information and guides for Infinity Nikki, curated by your fellow stylists in Miraland.</p>
 			
-			<h2>Banners</h2>
-			<h3 class="resonance-header" id="resonance-countdown">Ending December 18th 19:00 (UTC-7)</h3>
-			<p class="resonance-header">Click to see banner items!</p>
-			<a href="/database?source=Resonance%3A%20Butterfly%20Dream">
-				<img class=resonance src="/images/reso/reso_ButterflyDream.png">
-			</a>
-			<a href="/database?source=Resonance%3A%20Blooming%20Fantasy">
-				<img class=resonance src="/images/reso/reso_BloomingFantasy.png">
-			</a>
-			<h3 class="resonance-header" id="resonance-countdown">Permanent</h3>
-			<a href="/database?source=Resonance%3A%20Distant%20Sea">
-				<img class=resonance src="/images/reso/reso_DistantSea.png">
-			</a>
+			<Carousel client:load />
 			
 			<h2>Recently Updated Guides!</h2>
 			<a href="resources/styling-challenge-scoring" class="guide-card-link">
@@ -55,7 +44,6 @@ import '../styles/global.css';
 		<Footer />
 		<script>
 			import "../scripts/resize.js";
-			import "../scripts/index.js";
 		</script>
 	</body>
 </html>

@@ -14,6 +14,7 @@
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
     "@mui/base": "^5.0.0-beta.61",
+    "@mui/icons-material": "^6.2.0",
     "@mui/material": "^6.1.8",
     "@mui/styles": "^6.1.8",
     "@types/react": "^18.3.12",
@@ -21,6 +22,7 @@
     "astro": "^4.16.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-material-ui-carousel": "^3.4.2",
     "vite": "^5.4.11"
   }
 }

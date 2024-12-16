@@ -3,9 +3,6 @@ import csv
 import os
 import enchant
 
-in_w.activate()
-time.sleep(2)
-
 def is_non_english_word(word):
     dictionary = enchant.Dict("en_US")
     return not dictionary.check(word)
@@ -27,17 +24,33 @@ def spell_check_names(file_path):
                     print(f"Level: {row['Level']}, Original Name: {original_name} -> Corrected Words: {corrected_words}")
 
 def check_zeros(file_path):
-    with open(file_path, mode='r', newline='', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        
-        for row in reader:
-            # Check if Level is 10 and any of the specified columns have a value of 0
-            if int(row['Level']) == 10:
-                zero_columns = [col for col in ['Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool'] if int(row[col]) == 0]
-                
-                if zero_columns:
-                    zero_columns_str = ", ".join(zero_columns)
-                    print(f"Name: {row['Name']}, Level: {row['Level']}, Columns with 0: {zero_columns_str}")
+	with open(file_path, mode='r', newline='', encoding='utf-8') as file:
+		reader = csv.DictReader(file)
+		
+		for row in reader:
+			zero_columns = [col for col in ['Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool'] if int(row[col]) == 0]
+			
+			if zero_columns:
+				zero_columns_str = ", ".join(zero_columns)
+				print(f"Name: {row['Name']}, Level: {row['Level']}, Columns with 0: {zero_columns_str}")
+
+def check_incr(file_path):
+	with open(file_path, mode='r', newline='', encoding='utf-8') as file:
+		reader = csv.DictReader(file)
+		prev_row = None
+		for row in reader:
+			current_level = int(row['Level'])
+			if prev_row is not None:
+				prev_level = int(prev_row['Level'])
+				if current_level > prev_level:
+					decreasing_columns = [
+						col for col in ['Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool']
+						if int(row[col]) <= int(prev_row[col])
+					]
+					if decreasing_columns:
+						decreasing_columns_str = ", ".join(decreasing_columns)
+						print(f"Name: {row['Name']}, Level: {row['Level']} - Columns not increasing: {decreasing_columns_str}")
+			prev_row = row
 
 def scrape_all():
 	# intial 2 rows
@@ -135,23 +148,26 @@ def scrape_stats(name, rarity, slot, file):
 		rows.append(r.copy())
 		r.clear()
 	lc2(back[0], back[1])
-	f = f'./python/csv/unprocessed/{file}_data.csv'
+	f = f'./python/csv/unprocessed/{file}.csv'
 	with open(f, 'a', newline='') as csvfile:
 		csvwriter = csv.writer(csvfile)
 		csvwriter.writerows(rows)
 
-# scrape_stats("Crimson Snowstorm", 4, 'Top', 'top')
+# scrape_stats("Distant Gaze", 3, 'Top', 'top')
 # , pendant, backpiece, ring, handheld
 
-# file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/')
-# for file in file_list:
-# 	print(file)
-# 	check_zeros(f'./python/csv/unprocessed/{file}')
+# in_w.activate()
+time.sleep(2)
+file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/')
+for file in file_list:
+	print(file)
+	#check_zeros(f'./python/csv/unprocessed/{file}')
+	check_incr(f'./python/csv/unprocessed/{file}')
 # 	spell_check_names(f'./python/csv/unprocessed/{file}')
 
-scrape_all()
-f = './python/csv/unprocessed/handheld.csv'
-with open(f, 'w', newline='') as csvfile:
-		csvwriter = csv.writer(csvfile)
-		csvwriter.writerow(fields)
-		csvwriter.writerows(rows)
+# scrape_all()
+# f = './python/csv/unprocessed/handheld.csv'
+# with open(f, 'w', newline='') as csvfile:
+# 		csvwriter = csv.writer(csvfile)
+# 		csvwriter.writerow(fields)
+# 		csvwriter.writerows(rows)
