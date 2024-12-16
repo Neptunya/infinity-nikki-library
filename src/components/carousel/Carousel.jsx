@@ -105,7 +105,7 @@ function Item(props) {
 					<h3 style={{marginBottom: 0, marginTop: 12}}>Permanent</h3>
 					<p style={{fontSize: '1.25rem', marginTop: 0}}>No End Date</p>
 				</div>
-				<img src={props.item.img}/>
+				<img style={{maxHeight: 300}} src={props.item.img}/>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
 					<Button href={props.item.link} variant="outlined" style=
 						{{marginTop: 12}}>
@@ -123,7 +123,7 @@ function Item(props) {
 					<h3 style={{marginBottom: 0, marginTop: 12}}>{`Ending ${endDate}`}</h3>
 					<p style={{fontSize: '1.25rem', marginTop: 0}}>{`in ${timeRemaining}`}</p>
 				</div>
-				<img src={props.item.img}/>
+				<img style={{maxHeight: 300}} src={props.item.img}/>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
 					<Button href={props.item.link} variant="outlined" style=
 						{{marginTop: 12}}>
