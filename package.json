@@ -13,16 +13,22 @@
     "@astrojs/react": "^3.6.3",
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
-    "@mui/base": "^5.0.0-beta.61",
-    "@mui/icons-material": "^6.2.0",
-    "@mui/material": "^6.1.8",
-    "@mui/styles": "^6.1.8",
+    "@mui/base": "^5.0.0-beta.66",
+    "@mui/icons-material": "^5.16.11",
+    "@mui/material": "^5.16.11",
+    "@mui/styles": "^6.2.0",
+    "@mui/utils": "^5.16.8",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "astro": "^4.16.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-material-ui-carousel": "^3.4.2",
+    "react-slick": "^0.30.2",
+    "slick-carousel": "^1.8.1",
     "vite": "^5.4.11"
+  },
+  "devDependencies": {
+    "@types/react-slick": "^0.23.13"
   }
 }

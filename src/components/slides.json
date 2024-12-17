@@ -1,0 +1,48 @@
+[
+    {
+        "img": "/images/carousel/reso_ButterflyDream_2x.png",
+        "start": "December 4, 2024 19:00 UTC-7",
+        "end": "December 18, 2024 19:00 UTC-7",
+        "link": "/database?source=Resonance%3A%20Butterfly%20Dream"
+        
+    },
+    {
+        "img": "/images/carousel/reso_BloomingFantasy_2x.png",
+        "start": "December 4, 2024 19:00 UTC-7",
+        "end": "December 18, 2024 19:00 UTC-7",
+        "link": "/database?source=Resonance%3A%20Blooming%20Fantasy"
+    },
+    {
+        "img": "images/carousel/reso_frog.png",
+        "start": "December 18, 2024 19:00 UTC-7",
+        "end": "December 29, 2024 12:50 UTC-7",
+        "link": null
+    },
+    {
+        "img": "images/carousel/reso_bubb.png",
+        "start": "December 18, 2024 19:00 UTC-7",
+        "end": "December 29, 2024 12:50 UTC-7",
+        "link": null
+    },
+    {
+        "img": "images/carousel/shop_1.png",
+        "start": "December 4, 2024 19:00 UTC-7",
+        "end": "December 18, 2024 19:00 UTC-7",
+        "link": "/database?source=Premium%20Items",
+        "shop": true
+    },
+    {
+        "img": "images/carousel/shop_2.png",
+        "start": "December 18, 2024 19:00 UTC-7",
+        "end": "December 29, 2024 12:50 UTC-7",
+        "link": null,
+        "shop": true
+    },
+    {
+        "img": "/images/carousel/reso_DistantSea_2x.png",
+        "start": "December 4, 2024 19:00 UTC-7",
+        "end": null,
+        "link": "/database?source=Resonance%3A%20Distant%20Sea"
+    }
+    
+]

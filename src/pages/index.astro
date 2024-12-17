@@ -1,8 +1,10 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Carousel from '../components/carousel/Carousel.jsx'
+import SimpleSlider from '../components/SlickCarousel';
 import '../styles/global.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 ---
 
 <html lang="en">
@@ -25,7 +27,7 @@ import '../styles/global.css';
 			<h1>Infinity Nikki Library</h1>
 			<p>A compendium of information and guides for Infinity Nikki, curated by your fellow stylists in Miraland.</p>
 			
-			<Carousel client:load />
+			<SimpleSlider client:load />
 			
 			<h2>Recently Updated Guides!</h2>
 			<a href="resources/styling-challenge-scoring" class="guide-card-link">

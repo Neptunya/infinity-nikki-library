@@ -1,49 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import Carousel from 'react-material-ui-carousel'
-import { Paper, Button } from '@mui/material'
+import Slider from "react-slick";
 import items from './slides.json'
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { theme } from '../../styles/theme';
+import { Button } from '@mui/material'
 
-export default function Example(props) {
+const styles = {
+	button: {
+		backgroundColor: '#353142',
+		color: '#b38aca',
+		marginTop: 12,
+		fontFamily: 'PT Sans',
+		borderColor: '#b38aca',
+		borderWidth: 2,
+		textTransform: 'none',
+	},
+};
+
+export default function SimpleSlider() {
 	const [isClient, setIsClient] = useState(false);
 	useEffect(() => {
 			setIsClient(true);
 	})
-
+	
 	const validSlides = items.filter(slide => 
 		new Date(slide.start) <= new Date() && 
 		(!slide.end || new Date(slide.end) >= new Date())
 	);
 	
+	var settings = {
+		dots: true,
+		infinite: true,
+		speed: 1300,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		autoplay: true,
+		autoplaySpeed: 5000,
+		centerMode: true,
+	};
 	return isClient ? (
-		<Carousel 
-			interval={5000}
-			duration={1000}
-			navButtonsAlwaysVisible={true}
-			fullHeightHover={false}
-			indicatorIconButtonProps={{
-				style: {
-					color: '#494554'
-				}
-			}}
-			activeIndicatorIconButtonProps={{
-				style: {
-					backgroundColor: '#b38aca'
-				}
-			}}
-			navButtonsProps={{
-				style: {
-					backgroundColor: '#494554',
-					color: 'white',
-					
-				}
-			}}>
-			{
-				validSlides.map( (validSlides, i) => <Item key={i} item={validSlides} /> )
-			}
-		</Carousel>
+		<Slider {...settings}>
+			{validSlides.map((slide, i) => (
+          		<Item key={i} item={slide} />
+        	))}
+		</Slider>
 	): null;
 }
 
@@ -96,11 +94,9 @@ function Item(props) {
 	
 		return () => clearInterval(intervalId);
 	}, [eventDate]);
-	
 	if (!props.item.end) {
 		return (
-			<ThemeProvider theme={theme}>
-				<CssBaseline /> {}
+			<div>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
 					<h3 style={{marginBottom: 0, marginTop: 12}}>Permanent</h3>
 					<p style={{fontSize: '1.25rem', marginTop: 0}}>No End Date</p>
@@ -108,17 +104,60 @@ function Item(props) {
 				<img style={{maxHeight: 300}} src={props.item.img}/>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
 					<Button href={props.item.link} variant="outlined" style=
-						{{marginTop: 12}}>
+						{styles.button}>
 						Check Out Banner Items
+					</Button>
+				</div>
+			</div>
+		)
+	} else if (props.item.shop && props.item.link !== null) {
+		return (
+			<div>
+				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+					<h3 style={{marginBottom: 0, marginTop: 12}}>{`Shop Update on ${endDate}`}</h3>
+					<p style={{fontSize: '1.25rem', marginTop: 0}}>{`in ${timeRemaining}`}</p>
+				</div>
+				<img style={{maxHeight: 300}} src={props.item.img}/>
+				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+					<Button href={props.item.link} variant="outlined" style=
+						{styles.button}>
+						Check Out Shop Items
 					</Button>
 					
 				</div>
-			</ThemeProvider>
+			</div>
+		)
+	} else if (props.item.shop && !props.item.link) {
+		return (
+			<div>
+				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+					<h3 style={{marginBottom: 0, marginTop: 12}}>{`Shop Update on ${endDate}`}</h3>
+					<p style={{fontSize: '1.25rem', marginTop: 0}}>{`in ${timeRemaining}`}</p>
+				</div>
+				<img style={{maxHeight: 300}} src={props.item.img}/>
+				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+					<p>Database not yet ready</p>
+					
+				</div>
+			</div>
+		)
+	} else if (!props.item.link) {
+		return (
+			<div>
+				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+					<h3 style={{marginBottom: 0, marginTop: 12}}>{`Ending ${endDate}`}</h3>
+					<p style={{fontSize: '1.25rem', marginTop: 0}}>{`in ${timeRemaining}`}</p>
+				</div>
+				<img style={{maxHeight: 300}} src={props.item.img}/>
+				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+					<p>Database not yet ready</p>
+					
+				</div>
+			</div>
 		)
 	} else {
 		return (
-			<ThemeProvider theme={theme}>
-				<CssBaseline /> {}
+			<div>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
 					<h3 style={{marginBottom: 0, marginTop: 12}}>{`Ending ${endDate}`}</h3>
 					<p style={{fontSize: '1.25rem', marginTop: 0}}>{`in ${timeRemaining}`}</p>
@@ -126,11 +165,11 @@ function Item(props) {
 				<img style={{maxHeight: 300}} src={props.item.img}/>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
 					<Button href={props.item.link} variant="outlined" style=
-						{{marginTop: 12}}>
+						{styles.button}>
 						Check Out Banner Items
 					</Button>
 				</div>
-			</ThemeProvider>
+			</div>
 		)
 	}
 }
