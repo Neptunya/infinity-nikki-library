@@ -35,6 +35,7 @@ export default function SimpleSlider() {
 		autoplay: true,
 		autoplaySpeed: 5000,
 		centerMode: true,
+		centerPadding: '0px',
 	};
 	return isClient ? (
 		<Slider {...settings}>
@@ -98,8 +99,8 @@ function Item(props) {
 		return (
 			<div>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-					<h3 style={{marginBottom: 0, marginTop: 12}}>Permanent</h3>
-					<p style={{fontSize: '1.25rem', marginTop: 0}}>No End Date</p>
+					<h3 class="end-date">Permanent</h3>
+					<p class="time-remaining">No End Date</p>
 				</div>
 				<img style={{maxHeight: 300}} src={props.item.img}/>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
@@ -114,8 +115,8 @@ function Item(props) {
 		return (
 			<div>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-					<h3 style={{marginBottom: 0, marginTop: 12}}>{`Shop Update on ${endDate}`}</h3>
-					<p style={{fontSize: '1.25rem', marginTop: 0}}>{`in ${timeRemaining}`}</p>
+					<h3 class="end-date">{`Shop Update on ${endDate}`}</h3>
+					<p class="time-remaining">{`in ${timeRemaining}`}</p>
 				</div>
 				<img style={{maxHeight: 300}} src={props.item.img}/>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
@@ -131,8 +132,8 @@ function Item(props) {
 		return (
 			<div>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-					<h3 style={{marginBottom: 0, marginTop: 12}}>{`Shop Update on ${endDate}`}</h3>
-					<p style={{fontSize: '1.25rem', marginTop: 0}}>{`in ${timeRemaining}`}</p>
+					<h3 class="end-date">{`Shop Update on ${endDate}`}</h3>
+					<p class="time-remaining">{`in ${timeRemaining}`}</p>
 				</div>
 				<img style={{maxHeight: 300}} src={props.item.img}/>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
@@ -145,8 +146,8 @@ function Item(props) {
 		return (
 			<div>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-					<h3 style={{marginBottom: 0, marginTop: 12}}>{`Ending ${endDate}`}</h3>
-					<p style={{fontSize: '1.25rem', marginTop: 0}}>{`in ${timeRemaining}`}</p>
+					<h3 class="end-date">{`Ending ${endDate}`}</h3>
+					<p class="time-remaining">{`in ${timeRemaining}`}</p>
 				</div>
 				<img style={{maxHeight: 300}} src={props.item.img}/>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
@@ -159,8 +160,8 @@ function Item(props) {
 		return (
 			<div>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-					<h3 style={{marginBottom: 0, marginTop: 12}}>{`Ending ${endDate}`}</h3>
-					<p style={{fontSize: '1.25rem', marginTop: 0}}>{`in ${timeRemaining}`}</p>
+					<h3 class="end-date">{`Ending ${endDate}`}</h3>
+					<p class="time-remaining">{`in ${timeRemaining}`}</p>
 				</div>
 				<img style={{maxHeight: 300}} src={props.item.img}/>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
