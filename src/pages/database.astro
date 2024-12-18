@@ -27,18 +27,18 @@ import ItemDialog from '../components/ItemDialog.jsx';
 			<h1>Database</h1>
 			<p>A full list of clothing items available in Infinity Nikki.</p>
 			<p><b>Status: </b>Up to date as of December 17th. Click on item cards for stats!<p>
-			<ItemDialog client:only />
+			<ItemDialog client:only="react" />
 			<div id="loadingSpinner" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
 				<div class="spinner"></div>
 			</div>
 			<div id="search-and-sort">
-				<ThemedTextField label="Search by item or outfit" client:only />
+				<ThemedTextField label="Search by item or outfit" client:only="react" />
 				<div id="sort">
 					<button type="button" id="sort-btn">
 						<img src="/images/descending_icon.png" class="btn-img show" />
 						<img src="/images/ascending_icon.png" class="btn-img" />
 					</button>
-					<DropdownSortSelect client:only />
+					<DropdownSortSelect client:only="react" />
 				</div>
 			</div>
 			<div id="collapsible-filters">
@@ -47,7 +47,7 @@ import ItemDialog from '../components/ItemDialog.jsx';
 					<p>+</p>
 				</button>
 				<div id="filter-container">
-					<MultipleSelectChipFilters client:only />
+					<MultipleSelectChipFilters client:only="react" />
 				</div>
 			</div>
 			<div class="pagination-container"></div>

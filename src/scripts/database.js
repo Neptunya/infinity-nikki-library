@@ -178,17 +178,17 @@ function renderPagination(totalItems) {
 
 function changePage(newPage, totalItems) {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
+    let filteredItems = [...allItems];
     if (newPage >= 1 && newPage <= totalPages) {
         currentPage = newPage;
-        getFilteredItems();
+        renderItems(filteredItems);
     } 
     
     let currentColCount = countFlexColumns();
     if (currentColCount != lastColCount) {
         currentPage = 1;
-        console.log('reset!');
         lastColCount = currentColCount;
-        getFilteredItems();
+        renderItems(filteredItems);
     }
 }
 
