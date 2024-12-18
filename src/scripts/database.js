@@ -90,9 +90,13 @@ function renderItems(data) {
     const itemsToRender = data.slice(startIndex, endIndex);
 
     itemsToRender.forEach(item => {
-        const card = document.createElement('div');
+        const card = document.createElement('a');
+        card.classList.add('item-card-link')
         card.classList.add('item-card');
         card.classList.add('card-row');
+        const link = `#${item['Name']}`;
+        card.href = link;
+        
 
         const img = document.createElement('img');
         img.classList.add('item-img')

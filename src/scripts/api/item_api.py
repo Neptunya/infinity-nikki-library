@@ -213,8 +213,17 @@ class Levels(Resource):
             abort(404, f"No levels found for {name}")
         return item_lvls
 
+class ItemInfo(Resource):
+    @marshal_with(itemFields)
+    def get(self, name):
+        info = ItemDetails.query.filter_by(Name=name).all()
+        if not info:
+            abort(404, f"No info found for {name}")
+        return info
+
 api.add_resource(Items, '/api/items/')
 api.add_resource(Levels, '/api/items/<string:name>')
+api.add_resource(ItemInfo, '/api/items/<string:name>/info')
 
 @app.route('/')
 def index():
@@ -222,5 +231,5 @@ def index():
 
 if __name__ == '__main__':
     from waitress import serve
-    # serve(app, host='0.0.0.0', port=5000)
-    app.run(debug=True)
+    serve(app, host='0.0.0.0', port=5000)
+    #app.run(debug=True)

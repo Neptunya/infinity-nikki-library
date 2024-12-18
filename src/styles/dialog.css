@@ -1,0 +1,76 @@
+th {
+    padding: 5px;
+}
+
+td {
+    padding: 6px;
+}
+
+.custom-dialog .MuiDialog-paper {
+    width: 80%;
+}
+
+#basic-info {
+    display: flex;
+    margin: 16px;
+    flex-direction: column;
+}
+
+#basic-info img {
+    max-width: 60%;
+    height: auto;
+    max-height: 50%;
+    margin: 16px;
+}
+
+#basic-info-text {
+    margin: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+#basic-info-text h3 {
+    font-size: 2rem;
+    margin: 8px 0;
+}
+
+#rarity {
+    font-size: 1.25rem;
+}
+
+@media (min-width: 600px) {
+    #basic-info img {
+        max-width: 50%;
+        max-height: 280px;
+        margin: 16px;
+    }
+    
+    #basic-info {
+        margin: 8px;
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+.info-batch p {
+    margin: 2px 0;
+}
+
+.info-batch {
+    margin: 4px 0;
+}
+
+#outfit {
+    font-style: italic;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    font-style: italic;
+    font-size: 1.1rem;
+}
+
+#stats-table {
+    padding: 0px 16px;
+    padding-bottom: 16px;
+    overflow-x: auto;
+    overflow-y: auto;
+}

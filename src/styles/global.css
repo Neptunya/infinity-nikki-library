@@ -82,7 +82,7 @@ input[type=text] {
 .content-container {
 	margin: 0 auto;
 	line-height: 1.5;
-	min-height: calc(86vh - 50px);
+	min-height: calc(86vh - 70px);
 	padding-bottom: 50px;
 }
 
@@ -93,6 +93,10 @@ input[type=text] {
     margin: 10px 20px;
     border-radius: 10px;
 	overflow: hidden;
+}
+
+.guide-card:hover {
+    background-color: #494554;
 }
 
 .card-row {

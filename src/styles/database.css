@@ -53,6 +53,19 @@ button:disabled {
     line-height: 0;
 }
 
+.item-card-link {
+    text-decoration: none;
+    color: white;
+}
+
+.item-card-link h3, .item-card-link p {
+	color: white;
+}
+
+.item-card:hover {
+    background-color: #494554;
+}
+
 .page-input {
     max-width: 50px;
 }
