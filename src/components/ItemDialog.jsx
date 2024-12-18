@@ -81,7 +81,7 @@ export default function ItemDialog() {
 						<div className='info-batch'>
 							<p id='rarity'>{'✧'.repeat(infoData[0].Rarity)}</p>
 							<p>{infoData[0].Style}</p>
-							<p>{infoData[0].Labels}</p>
+							<p><i>{infoData[0].Labels}</i></p>
 						</div>
 						<div className='info-batch'>
 							<p><b>Slot:</b> {infoData[0].Slot}</p>
