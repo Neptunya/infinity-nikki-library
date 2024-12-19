@@ -88,7 +88,7 @@ export default function ItemDialog() {
 							<p>
 								<b>Source: </b> 
 								{infoData[0].Source} 
-								{infoData[0].Banner && infoData[0].Banner !== "Distant Sea" ? ` (${infoData[0].Banner})` : ''}
+								{infoData[0].Banner && infoData[0].Banner !== "Distant Sea" && infoData[0].Banner !== "a" ? ` (${infoData[0].Banner})` : ''}
 							</p>
 						</div>
 						

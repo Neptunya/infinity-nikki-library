@@ -24,10 +24,9 @@ export default function MultipleSelectChipFilters() {
     ];
     
     const sources = [
-      'Resonance: Butterfly Dream',
-      'Resonance: Blooming Fantasy',
+      "Resonance: Croaker's Whisper",
+      'Resonance: Bubbling Affections',
       'Resonance: Distant Sea',
-      'Event: Heartfelt Wish',
       'Treasure Chest',
       'Styling Challenge',
       'Story Quest',

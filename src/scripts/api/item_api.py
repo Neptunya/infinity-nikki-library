@@ -108,7 +108,6 @@ class Items(Resource):
             rng= 'An unexpected surprise from the Surprise-O-Matic.'
             dist_sea = 'Resonance from the Distant Sea'
             limited_reso = 'Limited-Time Resonance'
-            heartfelt_wish = 'Obtained from Heartfelt Wish event.'
             premium = "Pear-Pal premium item highly recommended by the Stylist's Guild."
             starting = "One of the initial items acquired upon arrival in Miraland."
             pre_reg = "Pre-Reg Milestone Outfit"
@@ -131,16 +130,15 @@ class Items(Resource):
                 'Story Quest': [ItemDetails.Source == journey_anecdote],
                 'Styling Challenge': [ItemDetails.Source == styling_challenge],
                 'Surprise-O-Matic': [ItemDetails.Source == rng],
-                'Resonance: Butterfly Dream': [ItemDetails.Banner.contains('Butterfly Dream')],
-                'Resonance: Blooming Fantasy': [ItemDetails.Banner.contains('Blooming Fantasy')],
+                "Resonance: Croaker's Whisper": [ItemDetails.Banner.contains("Croaker's Whisper")],
+                'Resonance: Bubbling Affections': [ItemDetails.Banner.contains('Bubbling Affections')],
                 'Resonance: Distant Sea': [ItemDetails.Banner.contains('Distant Sea')],
-                'Event: Heartfelt Wish': [ItemDetails.Source == heartfelt_wish],
-                'Premium Items': [ItemDetails.Source == premium],
+                'Premium Items': [ItemDetails.Source == premium and ItemDetails.Banner == "a"],
                 'Currently Unobtainable': [
                     and_(
                         ItemDetails.Source.notin_([
                             designer, boutique, dew, heart, treasure, esseling_treasure, main, quest,
-                            journey_anecdote, styling_challenge, rng, heartfelt_wish, premium, starting, pre_reg
+                            journey_anecdote, styling_challenge, rng, starting, pre_reg
                         ]),
                         ItemDetails.Banner.is_(None)
                     )

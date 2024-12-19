@@ -67,7 +67,7 @@ function renderItems(data) {
 
 
         const message = document.createElement('p');
-        message.innerHTML = "No items found.";
+        message.innerHTML = "No items found.<br>I'm working hard to get the new items added!";
         message.style.textAlign = 'center';
         message.style.whiteSpace = 'pre-line';
         message.classList.add('no-results-message');
