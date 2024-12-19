@@ -99,7 +99,7 @@ function Item(props) {
 		return (
 			<div>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-					<h3 class="end-date">Permanent</h3>
+					<h3 class="end-date">Permanent Banner</h3>
 					<p class="time-remaining">No End Date</p>
 				</div>
 				<img style={{maxHeight: 300}} src={props.item.img}/>

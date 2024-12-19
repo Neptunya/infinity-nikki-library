@@ -140,6 +140,21 @@ button:disabled {
     100% { transform: rotate(360deg); }
 }
 
+@media (max-width: 600px) {
+    .item-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .item-card p {
+        margin-top: 8px;
+        margin-bottom: 4px;
+    }
+    
+    .item-img {
+        max-width: 40%;
+    }
+}
+
 #search-and-sort {
     display: flex;
     flex-flow: row wrap;

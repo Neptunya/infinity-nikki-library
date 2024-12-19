@@ -11,7 +11,7 @@ import "slick-carousel/slick/slick-theme.css";
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/png" href="/images/pearfect_pal_logo.png" />
+		<link rel="icon" type="image/png" href="/images/nikki_logo.png" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -19,7 +19,21 @@ import "slick-carousel/slick/slick-theme.css";
 		<meta name="generator" content={Astro.generator} />
 		<meta name="keywords" content="Infinity, Nikki, IN, Library, Information, Guides, Compendium, Resources">
 		<meta name="description" content="A compendium of information and guides for Infinity Nikki, curated by your fellow stylists in Miraland.">
-		<title>Infinity Nikki Library </title>
+		
+		<meta property="og:title" content="Infinity Nikki Library">
+		<meta property="og:description" content="A compendium of information and guides for Infinity Nikki, curated by your fellow stylists in Miraland.">
+		<meta property="og:image" content="https://infinitynikkilibrary.com/images/nikki_embed.png">
+		<meta property="og:image:url" content="https://infinitynikkilibrary.com/images/nikki_embed.png">
+		<meta property="og:image:type" content="image/png" />
+		<meta property="og:url" content="https://infinitynikkilibrary.com/">
+		<meta property="og:type" content="website">
+		
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content="Infinity Nikki Library">
+		<meta name="twitter:description" content="A compendium of information and guides for Infinity Nikki, curated by your fellow stylists in Miraland.">
+		<meta name="twitter:image" content="https://infinitynikkilibrary.com/images/nikki_embed.png">
+		
+		<title>Infinity Nikki Library</title>
 	</head>
 	<body>
 		<Header />
@@ -27,7 +41,6 @@ import "slick-carousel/slick/slick-theme.css";
 		<div class="content-container">
 			<h1>Infinity Nikki Library</h1>
 			<p>A compendium of information and guides for Infinity Nikki, curated by your fellow stylists in Miraland.</p>
-			
 			<SimpleSlider client:load />
 			
 			<h2>Recently Updated Guides!</h2>

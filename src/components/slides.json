@@ -13,7 +13,14 @@
     },
     {
         "img": "images/carousel/shop_2.png",
-        "start": "December 18, 2024 19:00 UTC-7",
+        "start": "December 18, 2024 17:00 UTC-7",
+        "end": "December 19, 2024 10:00 UTC-7",
+        "link": "/database?source=Premium%20Items",
+        "shop": true
+    },
+    {
+        "img": "images/carousel/shop_2.png",
+        "start": "December 19, 2024 10:00 UTC-7",
         "end": "December 29, 2024 12:50 UTC-7",
         "link": "/database?source=Premium%20Items",
         "shop": true
