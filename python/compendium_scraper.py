@@ -59,7 +59,7 @@ def img_to_str_mod2(n):
         filtered_text = filtered_text[:-1]
     return filtered_text
 
-scale = 2
+scale = 3
 def img_to_num_mod(n):
     file = f'./python/images/clothing_item_scraper/{n}.png'
     image = cv2.imread(file)
@@ -67,10 +67,7 @@ def img_to_num_mod(n):
     w = int(gray.shape[1] * scale)
     h = int(gray.shape[0] * scale)
     upscaled = cv2.resize(gray, (w, h), interpolation=cv2.INTER_LANCZOS4)
-    u2 = cv2.resize(gray, (w, h), interpolation=cv2.INTER_CUBIC)
-    cv2.imwrite('upscaled_processed.png', upscaled)
-    cv2.imwrite('upscaled_processed2.png', u2)
-    thresh = cv2.threshold(upscaled, 197, 255, cv2.THRESH_BINARY)[1]
+    thresh = cv2.threshold(upscaled, 195, 255, cv2.THRESH_BINARY)[1]
     cv2.imwrite(f'./python/images/clothing_item_scraper/{n}_processed.png', thresh)
     out = pytesseract.image_to_string(Image.open(f'./python/images/clothing_item_scraper/{n}_processed.png'),
                                       config='--psm 7 -c tessedit_char_whitelist=0123456789')
@@ -154,7 +151,7 @@ def scrape_sources():
 stat_window = [1513, 228, 50, 19]
 stat_y_interval = 53
 stat_x_interval = 246
-gu_data = './python/csv/unprocessed/glow_up.csv'
+gu_data = './python/csv/glow_up.csv'
 def get_glow_up_stats(n):
     r = [n, 11]
     n = 'gu_stat'
@@ -237,8 +234,8 @@ def get_gu_and_img():
 in_w.activate() 
 time.sleep(2)
 pg.moveTo(90, 395)
-#scrape_glow_up_stats()
-get_glow_up_stats("upscale test") 
+# scrape_glow_up_stats()
+#get_glow_up_stats("upscale test") 
 pg.moveTo(10, 10)
 
 

@@ -84,6 +84,55 @@ class Items(Resource):
 
         query = ItemDetails.query
 
+        designer = 'A unique creation made by an independent designer.'
+        boutique = 'A classic clothing piece from Marques Boutique.'
+        dew = 'A gift from the Cadenceborn to those who offer the Dew of Inspiration.'
+        heart = 'Insights of the Heart of Infinity.'
+        treasure = 'Rare treasures scattered in chests found all around the world.'
+        esseling_treasure = 'Treasure guarded by Esselings.'
+        main = 'A reward from an adventure.'
+        quest = 'World travel mementos.'
+        journey_anecdote = 'A piece of journey anecdote.'
+        styling_challenge = 'Proof of styling prowess.'
+        rng= 'An unexpected surprise from the Surprise-O-Matic.'
+        dist_sea = 'Resonance from the Distant Sea'
+        limited_reso = 'Limited-Time Resonance'
+        premium = "Pear-Pal premium item highly recommended by the Stylist's Guild."
+        starting = "One of the initial items acquired upon arrival in Miraland."
+        pre_reg = "Pre-Reg Milestone Outfit"
+        limited_time = ["Croaker's Whisper", "Bubbling Affections", "Distant Sea", "In Shop"]
+        
+        source_map = {
+            'Independent Designer Store': [ItemDetails.Source == designer],
+            'Marques Boutique': [ItemDetails.Source == boutique],
+            'Dews of Inspiration': [ItemDetails.Source == dew],
+            'Heart of Infinity': [ItemDetails.Source == heart],
+            'Treasure Chest': [ItemDetails.Source == treasure],
+            'Main Quest': [
+                ItemDetails.Source == main,
+                ItemDetails.Source == starting,
+                ItemDetails.Source == pre_reg,
+                ItemDetails.Source == esseling_treasure,
+            ],
+            'World Quest': [ItemDetails.Source == quest],
+            'Story Quest': [ItemDetails.Source == journey_anecdote],
+            'Styling Challenge': [ItemDetails.Source == styling_challenge],
+            'Surprise-O-Matic': [ItemDetails.Source == rng],
+            "Resonance: Croaker's Whisper": [ItemDetails.Banner.contains("Croaker's Whisper")],
+            'Resonance: Bubbling Affections': [ItemDetails.Banner.contains('Bubbling Affections')],
+            'Resonance: Distant Sea': [ItemDetails.Banner.contains('Distant Sea')],
+            'Premium Items': [ItemDetails.Source == premium and ItemDetails.Banner == 'In Shop'],
+            'Currently Unobtainable': [
+                and_(
+                    ItemDetails.Source.notin_([
+                        designer, boutique, dew, heart, treasure, esseling_treasure, main, quest,
+                        journey_anecdote, styling_challenge, rng, starting, pre_reg
+                    ]),
+                    ~or_(*[ItemDetails.Banner.like(f"%{banner}%") for banner in limited_time])
+                )
+            ]
+        }
+
         if rarity:
             query = query.filter(ItemDetails.Rarity.in_(rarity))
         if slot:
@@ -95,56 +144,6 @@ class Items(Resource):
             query = query.filter(ItemDetails.Style.in_(style))
 
         if source:
-            designer = 'A unique creation made by an independent designer.'
-            boutique = 'A classic clothing piece from Marques Boutique.'
-            dew = 'A gift from the Cadenceborn to those who offer the Dew of Inspiration.'
-            heart = 'Insights of the Heart of Infinity.'
-            treasure = 'Rare treasures scattered in chests found all around the world.'
-            esseling_treasure = 'Treasure guarded by Esselings.'
-            main = 'A reward from an adventure.'
-            quest = 'World travel mementos.'
-            journey_anecdote = 'A piece of journey anecdote.'
-            styling_challenge = 'Proof of styling prowess.'
-            rng= 'An unexpected surprise from the Surprise-O-Matic.'
-            dist_sea = 'Resonance from the Distant Sea'
-            limited_reso = 'Limited-Time Resonance'
-            premium = "Pear-Pal premium item highly recommended by the Stylist's Guild."
-            starting = "One of the initial items acquired upon arrival in Miraland."
-            pre_reg = "Pre-Reg Milestone Outfit"
-            
-            source_map = {
-                'Independent Designer Store': [ItemDetails.Source == designer],
-                'Marques Boutique': [ItemDetails.Source == boutique],
-                'Dews of Inspiration': [ItemDetails.Source == dew],
-                'Heart of Infinity': [ItemDetails.Source == heart],
-                'Treasure Chest': [
-                    ItemDetails.Source == treasure,
-                    ItemDetails.Source == esseling_treasure
-                ],
-                'Main Quest': [
-                    ItemDetails.Source == main,
-                    ItemDetails.Source == starting,
-                    ItemDetails.Source == pre_reg,
-                ],
-                'World Quest': [ItemDetails.Source == quest],
-                'Story Quest': [ItemDetails.Source == journey_anecdote],
-                'Styling Challenge': [ItemDetails.Source == styling_challenge],
-                'Surprise-O-Matic': [ItemDetails.Source == rng],
-                "Resonance: Croaker's Whisper": [ItemDetails.Banner.contains("Croaker's Whisper")],
-                'Resonance: Bubbling Affections': [ItemDetails.Banner.contains('Bubbling Affections')],
-                'Resonance: Distant Sea': [ItemDetails.Banner.contains('Distant Sea')],
-                'Premium Items': [ItemDetails.Source == premium and ItemDetails.Banner == "a"],
-                'Currently Unobtainable': [
-                    and_(
-                        ItemDetails.Source.notin_([
-                            designer, boutique, dew, heart, treasure, esseling_treasure, main, quest,
-                            journey_anecdote, styling_challenge, rng, starting, pre_reg
-                        ]),
-                        ItemDetails.Banner.is_(None)
-                    )
-                ]
-            }
-
             matched_conditions = set()
             for s in source:
                 if s in source_map:
@@ -153,7 +152,15 @@ class Items(Resource):
             conditions = []
             if matched_conditions:
                 conditions.extend(matched_conditions)
+
+            if "Currently Unobtainable" not in source:
+                currently_unobtainable_condition = source_map['Currently Unobtainable'][0]
+                query = query.filter(or_(*conditions)).filter(~currently_unobtainable_condition)
+            else:
                 query = query.filter(or_(*conditions))
+        else:
+            currently_unobtainable_condition = source_map['Currently Unobtainable'][0]
+            query = query.filter(~currently_unobtainable_condition)
 
         filtered_items = query.all()
         if not filtered_items:
