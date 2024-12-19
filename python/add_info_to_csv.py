@@ -14,6 +14,12 @@ def merge_csv():
         df = pd.concat([df, df_temp], ignore_index=True)
     df.to_csv('D:/Documents/infinity_nikki_library/python/csv/full_item_data.csv', index=False)
 
+def add_new():
+    df_1 = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/clothing_item_lvls.csv')
+    df_2 = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/new.csv')
+    df = pd.concat([df_1, df_2], ignore_index=True)
+    df.to_csv('D:/Documents/infinity_nikki_library/python/csv/clothing_item_lvls.csv', index=False)
+
 def get_style(row):
     style_columns = ['Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool']
     max_style = row[style_columns].idxmax()
@@ -42,6 +48,45 @@ def add_missing_items():
     for c in int_cols:
         df[c] = df[c].fillna(0).astype("int64")
     df.to_csv("./python/csv/full_item_data.csv", index=False)
+
+def add_glow_up():
+    glow_up_file = './python/csv/glow_up.csv'
+    clothing_item_file = './python/csv/clothing_item_lvls.csv'
+    glow_up_data = {}
+    
+    with open(glow_up_file, mode='r') as glow_up_csv:
+        reader = csv.DictReader(glow_up_csv)
+        for row in reader:
+            glow_up_data[row['Name']] = {
+                'Level': row['Level'],
+                'Elegant': row['Elegant'],
+                'Fresh': row['Fresh'],
+                'Sweet': row['Sweet'],
+                'Sexy': row['Sexy'],
+                'Cool': row['Cool']
+            }
+    
+    updated_items = []
+    with open(clothing_item_file, mode='r') as clothing_csv:
+        reader = csv.DictReader(clothing_csv)
+        for row in reader:
+            item_name = row['Name']
+            item_level = int(row['Level'])
+
+            if item_level == 10 and item_name in glow_up_data:
+                updated_row = row.copy()
+                updated_row['Level'] = '11'
+                updated_row['Elegant'] = glow_up_data[item_name]['Elegant']
+                updated_row['Fresh'] = glow_up_data[item_name]['Fresh']
+                updated_row['Sweet'] = glow_up_data[item_name]['Sweet']
+                updated_row['Sexy'] = glow_up_data[item_name]['Sexy']
+                updated_row['Cool'] = glow_up_data[item_name]['Cool']
+                updated_items.append(updated_row)
+
+    with open(clothing_item_file, mode='a', newline='') as output_csv:
+        fieldnames = reader.fieldnames
+        writer = csv.DictWriter(output_csv, fieldnames=fieldnames)
+        writer.writerows(updated_items)
 
 def split_csv():
     df = pd.read_csv('./python/csv/full_item_data.csv')
@@ -207,6 +252,7 @@ merge_csv()
 add_style()
 add_makeup()
 split_csv()
+add_glow_up()
 add_costs()
 add_labels()
 add_sources()

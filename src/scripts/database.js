@@ -67,7 +67,7 @@ function renderItems(data) {
 
 
         const message = document.createElement('p');
-        message.innerHTML = "No items found.<br>I'm working hard to get the new items added!";
+        message.innerHTML = "No items found.";
         message.style.textAlign = 'center';
         message.style.whiteSpace = 'pre-line';
         message.classList.add('no-results-message');
@@ -331,11 +331,11 @@ function applySearchFilter() {
     let filteredItems = [...allItems];
     
     if (searchQuery) {
-        const regex = new RegExp(searchQuery, 'i'); // Case-insensitive regex for matching
+        const regex = new RegExp(searchQuery, 'i');
     
         filteredItems = filteredItems.filter(item => 
-            regex.test(item.Name?.toLowerCase() || '') ||  // Check against item.Name
-            regex.test(item.Outfit?.toLowerCase() || '')  // Check against item.Outfit
+            regex.test(item.Name?.toLowerCase() || '') ||
+            regex.test(item.Outfit?.toLowerCase() || '') 
         );
     }
 

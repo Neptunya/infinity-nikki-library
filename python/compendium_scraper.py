@@ -173,6 +173,31 @@ def get_glow_up_stats(n):
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(r)
 
+new_data = './python/csv/unprocessed/new.csv'
+def glow_up_stats_to_new(n, rarity):
+    r = [n, rarity, None, None, 11]
+    
+    for i in range(3):
+        pg.screenshot(f'./python/images/clothing_item_scraper/{n}.png', region=(
+            stat_window[0],  stat_window[1]+(stat_y_interval * i),  stat_window[2],  stat_window[3]))
+        try:
+            r.append(img_to_num_mod(n))
+        except ValueError:
+            r.append(0)
+    for i in range(2):
+        pg.screenshot(f'./python/images/clothing_item_scraper/{n}.png', region=(
+            stat_window[0]+stat_x_interval,  stat_window[1]+(stat_y_interval * i),  stat_window[2],  stat_window[3]))
+        try:
+            r.append(img_to_num_mod(n))
+        except ValueError:
+            r.append(0)
+    
+    r.extend([0, 0, 0, None, None])
+    
+    with open(new_data, 'a', newline='') as csvfile:
+        csvwriter = csv.writer(csvfile)
+        csvwriter.writerow(r)
+
 def scrape_glow_up_stats():
     prev_name = ""
     curr_name = img_to_str(sc("name", name_box))
@@ -228,14 +253,33 @@ def print_no_source():
             if not row['Source']: 
                 print(row)
 
-def get_gu_and_img():
-    return
+def scrape_new_item(r):
+    prev_name = ""
+    curr_name = img_to_str(sc("name", name_box))
+    i = 0
+    while prev_name != curr_name:
+        glow_up_stats_to_new(curr_name, r)
+        get_source(curr_name)
+        sc(f'../../../public/images/items/{curr_name}', img_box)
+        prev_name = curr_name
+        if i < 3:
+            lc2(90, 395 + (i * compendium_interval))
+        elif i == 3:
+            pg.moveTo(197, 781)
+            pg.scroll(-400)
+        else: 
+            pg.moveTo(197, 777)
+            pg.scroll(-607)
+        
+        pg.click()
+        time.sleep(0.5)
+        curr_name = img_to_str(sc("name", name_box))
+        i += 1
 
 in_w.activate() 
 time.sleep(2)
 pg.moveTo(90, 395)
-# scrape_glow_up_stats()
-#get_glow_up_stats("upscale test") 
+scrape_glow_up_stats()
 pg.moveTo(10, 10)
 
 

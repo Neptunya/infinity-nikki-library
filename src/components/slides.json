@@ -3,19 +3,19 @@
         "img": "images/carousel/reso_frog.png",
         "start": "December 18, 2024 19:00 UTC-7",
         "end": "December 29, 2024 12:50 UTC-7",
-        "link": null
+        "link": "/database?source=Resonance%3A%20Croaker%27s%20Whisper"
     },
     {
         "img": "images/carousel/reso_bubb.png",
         "start": "December 18, 2024 19:00 UTC-7",
         "end": "December 29, 2024 12:50 UTC-7",
-        "link": null
+        "link": "/database?source=Resonance%3A%20Bubbling%20Affections"
     },
     {
         "img": "images/carousel/shop_2.png",
         "start": "December 18, 2024 19:00 UTC-7",
         "end": "December 29, 2024 12:50 UTC-7",
-        "link": null,
+        "link": "/database?source=Premium%20Items",
         "shop": true
     },
     {

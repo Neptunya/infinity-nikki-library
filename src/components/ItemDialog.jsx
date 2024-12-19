@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogTitle, IconButton, CssBaseline, ThemeProvider } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close'; // Material-UI close icon
+import CloseIcon from '@mui/icons-material/Close';
 import { theme } from '../styles/theme';
 
 export default function ItemDialog() {
@@ -107,37 +107,59 @@ export default function ItemDialog() {
 						<th>Threads</th>
 						<th>Bubbles</th>
 					</tr></thead>
-					<tbody><tr>
-						<td>{levelData[0].Level}</td>
-						<td>{levelData[0].Elegant}</td>
-						<td>{levelData[0].Fresh}</td>
-						<td>{levelData[0].Sweet}</td>
-						<td>{levelData[0].Sexy}</td>
-						<td>{levelData[0].Cool}</td>
-						<td>{levelData[0].Blings}</td>
-						<td>{levelData[0].Threads}</td>
-						<td>{levelData[0].Bubbles}</td>
-					</tr>
-					{levelData.slice(1).map((data, index) => {
-						const previousData = levelData[index];
-						const blingsDiff = data.Blings - previousData.Blings;
-						const threadsDiff = data.Threads - previousData.Threads;
-						const bubblesDiff = data.Bubbles - previousData.Bubbles;
-						return (
-							<tr key={index}>
-								<td>{data.Level}</td>
-								<td>{data.Elegant}</td>
-								<td>{data.Fresh}</td>
-								<td>{data.Sweet}</td>
-								<td>{data.Sexy}</td>
-								<td>{data.Cool}</td>
-								<td>{blingsDiff}</td>
-								<td>{threadsDiff}</td>
-								<td>{bubblesDiff}</td>
-							</tr>
-						);
+					<tbody>
+					{levelData.map((data, index) => {
+						if (data.Level === 0) {
+							// First row block
+							return (
+								<tr key={data.Level}>
+									<td>{data.Level}</td>
+									<td>{data.Elegant}</td>
+									<td>{data.Fresh}</td>
+									<td>{data.Sweet}</td>
+									<td>{data.Sexy}</td>
+									<td>{data.Cool}</td>
+									<td>{data.Blings}</td>
+									<td>{data.Threads}</td>
+									<td>{data.Bubbles}</td>
+								</tr>
+							);
+						} else if (data.Level === 11) {
+							// Last row block
+							return (
+								<tr key={data.Level}>
+									<td>{data.Level}</td>
+									<td>{data.Elegant}</td>
+									<td>{data.Fresh}</td>
+									<td>{data.Sweet}</td>
+									<td>{data.Sexy}</td>
+									<td>{data.Cool}</td>
+									<td>{data.Blings === 0 ? '-' : data.Blings}</td>
+									<td>{data.Threads === 0 ? '-' : data.Threads}</td>
+									<td>{data.Bubbles === 0 ? '-' : data.Bubbles}</td>
+								</tr>
+							);
+						} else {
+							const previousData = levelData[index - 1];
+							const blingsDiff = data.Blings - previousData.Blings;
+							const threadsDiff = data.Threads - previousData.Threads;
+							const bubblesDiff = data.Bubbles - previousData.Bubbles;
+							return (
+								<tr key={data.Level}>
+									<td>{data.Level}</td>
+									<td>{data.Elegant}</td>
+									<td>{data.Fresh}</td>
+									<td>{data.Sweet}</td>
+									<td>{data.Sexy}</td>
+									<td>{data.Cool}</td>
+									<td>{blingsDiff}</td>
+									<td>{threadsDiff}</td>
+									<td>{bubblesDiff}</td>
+								</tr>
+							);
+						}
 					})}
-					</tbody>
+				</tbody>
 				</table>
 				</div>
 			</div>
