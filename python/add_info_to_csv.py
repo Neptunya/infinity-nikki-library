@@ -260,8 +260,3 @@ add_banners()
 add_outfits_and_recolors_details()
 add_outfits_and_recolors_lvls()
 sort_details()
-
-'''TODO: 
-- generate popup pg for items
-- sketches + materials
-'''

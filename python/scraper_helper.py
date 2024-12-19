@@ -27,7 +27,7 @@ y_cards = [284, 653, 860]
 y_cards_interval = [0, 369, 554]
 # 576 is last row
 
-ss = ['Handheld', '']
+ss = ['Neckwear', '']
 fields = ['Name', 'Rarity', 'Slot', 'Outfit', 'Level', 'Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool', 'Blings', 'Threads', 'Bubbles', 'Labels', 'Source']
 r = []
 rows = []

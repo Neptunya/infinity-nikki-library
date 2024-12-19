@@ -153,11 +153,13 @@ def scrape_stats(name, rarity, slot, file):
 		csvwriter = csv.writer(csvfile)
 		csvwriter.writerows(rows)
 
-# scrape_stats("Distant Gaze", 3, 'Top', 'top')
+# in_w.activate()
+# time.sleep(2)
+# scrape_stats("Aqua Stride", 4, 'Shoes', 'shoes')
 # , pendant, backpiece, ring, handheld
 
-# in_w.activate()
-time.sleep(2)
+
+# time.sleep(2)
 file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/')
 for file in file_list:
 	print(file)

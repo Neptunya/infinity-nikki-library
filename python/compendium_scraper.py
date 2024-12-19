@@ -156,17 +156,17 @@ def get_glow_up_stats(n):
     r = [n, 11]
     n = 'gu_stat'
     for i in range(3):
-        pg.screenshot(f'./python/images/clothing_item_scraper/{n}.png', region=(
+        pg.screenshot(f'./python/images/clothing_item_scraper/s.png', region=(
             stat_window[0],  stat_window[1]+(stat_y_interval * i),  stat_window[2],  stat_window[3]))
         try:
-            r.append(img_to_num_mod(n))
+            r.append(img_to_num_mod("s"))
         except ValueError:
             r.append(0)
     for i in range(2):
-        pg.screenshot(f'./python/images/clothing_item_scraper/{n}.png', region=(
+        pg.screenshot(f'./python/images/clothing_item_scraper/s.png', region=(
             stat_window[0]+stat_x_interval,  stat_window[1]+(stat_y_interval * i),  stat_window[2],  stat_window[3]))
         try:
-            r.append(img_to_num_mod(n))
+            r.append(img_to_num_mod("s"))
         except ValueError:
             r.append(0)
     with open(gu_data, 'a', newline='') as csvfile:
@@ -279,7 +279,7 @@ def scrape_new_item(r):
 in_w.activate() 
 time.sleep(2)
 pg.moveTo(90, 395)
-scrape_glow_up_stats()
+scrape_imgs()
 pg.moveTo(10, 10)
 
 
