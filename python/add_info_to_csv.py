@@ -100,9 +100,21 @@ def split_csv():
 def get_costs(row):
     slot, rarity, level = row['Slot'], str(row['Rarity']), str(row['Level'])
     cost_values = costs_data.get("costs", {}).get(slot, {}).get(rarity, {}).get(level, {})
-    row['Blings'] = cost_values.get('blings', row['Blings'])
-    row['Threads'] = cost_values.get('threads', row['Threads'])
-    row['Bubbles'] = cost_values.get('bubbles', row['Bubbles'])
+    if (row['Level'] == 0):
+        row['Blings'] = cost_values.get('blings', row['Blings'])
+        row['Threads'] = cost_values.get('threads', row['Threads'])
+        row['Bubbles'] = cost_values.get('bubbles', row['Bubbles'])
+    elif (row['Level'] == 11):
+        cost_values_9 = costs_data.get("costs", {}).get(slot, {}).get(rarity, {}).get(str(9), {})
+        cost_values_10 = costs_data.get("costs", {}).get(slot, {}).get(rarity, {}).get(str(10), {})
+        row['Blings'] = cost_values_10.get('blings', row['Blings']) - cost_values_9.get('blings', row['Blings'])
+        row['Threads'] = cost_values_10.get('threads', row['Threads']) - cost_values_9.get('threads', row['Threads'])
+        row['Bubbles'] = cost_values.get('bubbles', row['Bubbles'])
+    else:
+        cost_values_prev = costs_data.get("costs", {}).get(slot, {}).get(rarity, {}).get(str(row['Level'] - 1), {})
+        row['Blings'] = cost_values.get('blings', row['Blings']) - cost_values_prev.get('blings', row['Blings'])
+        row['Threads'] = cost_values.get('threads', row['Threads']) - cost_values_prev.get('threads', row['Threads'])
+        row['Bubbles'] = cost_values.get('bubbles', row['Bubbles']) - cost_values_prev.get('bubbles', row['Bubbles'])
     return row
 
 def add_costs():

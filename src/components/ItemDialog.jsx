@@ -109,9 +109,9 @@ export default function ItemDialog() {
 					</tr></thead>
 					<tbody>
 					{levelData
-						.slice() 
-						.sort((a, b) => a.Level - b.Level)
-						.map((data, index) => {
+					.slice()
+					.sort((a, b) => a.Level - b.Level)
+					.map((data, index) => {
 						if (data.Level === 0) {
 							return (
 							<tr key={data.Level}>
@@ -125,8 +125,8 @@ export default function ItemDialog() {
 								<td>{data.Threads}</td>
 								<td>{data.Bubbles}</td>
 							</tr>
-							);
-						} else if (data.Level === 11) {
+						);
+						} else {
 							return (
 							<tr key={data.Level}>
 								<td>{data.Level}</td>
@@ -135,31 +135,13 @@ export default function ItemDialog() {
 								<td>{data.Sweet}</td>
 								<td>{data.Sexy}</td>
 								<td>{data.Cool}</td>
-								<td>{data.Blings === 0 ? '?' : data.Blings}</td>
-								<td>{data.Threads === 0 ? '?' : data.Threads}</td>
+								<td>{data.Blings}</td>
+								<td>{data.Threads}</td>
 								<td>{data.Bubbles === 0 ? '?' : data.Bubbles}</td>
 							</tr>
 							);
-						} else {
-							const previousData = levelData[index - 1];
-							const blingsDiff = data.Blings - previousData.Blings;
-							const threadsDiff = data.Threads - previousData.Threads;
-							const bubblesDiff = data.Bubbles - previousData.Bubbles;
-							return (
-							<tr key={data.Level}>
-								<td>{data.Level}</td>
-								<td>{data.Elegant}</td>
-								<td>{data.Fresh}</td>
-								<td>{data.Sweet}</td>
-								<td>{data.Sexy}</td>
-								<td>{data.Cool}</td>
-								<td>{blingsDiff}</td>
-								<td>{threadsDiff}</td>
-								<td>{bubblesDiff}</td>
-							</tr>
-							);
 						}
-						})}
+					})}
 					</tbody>
 				</table>
 				</div>

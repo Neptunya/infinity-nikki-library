@@ -101,10 +101,11 @@ def scrape_one(x, y, last=False):
 	pg.leftClick()
 	get_item_details(x, y, last)
 
-def scrape_stats(name, rarity, slot, file):
+def scrape_stats(name, rarity, slot):
 	r = []
 	rows = []
 	ss = [slot, '']
+	file = slot.lower()
 	r.append(name)
 	r.append(rarity)
 	r.extend(ss)
@@ -153,18 +154,18 @@ def scrape_stats(name, rarity, slot, file):
 		csvwriter = csv.writer(csvfile)
 		csvwriter.writerows(rows)
 
-# in_w.activate()
-# time.sleep(2)
-# scrape_stats("Aqua Stride", 4, 'Shoes', 'shoes')
+in_w.activate()
+time.sleep(2)
+scrape_stats("Timeless Step", 3, 'Shoes')
 # , pendant, backpiece, ring, handheld
 
 
 # time.sleep(2)
-file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/')
-for file in file_list:
-	print(file)
-	#check_zeros(f'./python/csv/unprocessed/{file}')
-	check_incr(f'./python/csv/unprocessed/{file}')
+# file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/')
+# for file in file_list:
+# 	print(file)
+# 	#check_zeros(f'./python/csv/unprocessed/{file}')
+# 	check_incr(f'./python/csv/unprocessed/{file}')
 # 	spell_check_names(f'./python/csv/unprocessed/{file}')
 
 # scrape_all()
