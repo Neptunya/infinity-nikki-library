@@ -27,6 +27,9 @@ export default function MultipleSelectChipFilters() {
       "Resonance: Croaker's Whisper",
       'Resonance: Bubbling Affections',
       'Resonance: Distant Sea',
+      'Limited-Time Resonance',
+      'Premium Items',
+      'Event Items',
       'Treasure Chest',
       'Styling Challenge',
       'Story Quest',
@@ -37,7 +40,6 @@ export default function MultipleSelectChipFilters() {
       'Surprise-O-Matic',
       'Dews of Inspiration',
       'Heart of Infinity',
-      'Premium Items',
       'Currently Unobtainable'
     ];
     

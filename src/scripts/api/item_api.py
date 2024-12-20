@@ -84,50 +84,49 @@ class Items(Resource):
 
         query = ItemDetails.query
 
-        designer = 'A unique creation made by an independent designer.'
-        boutique = 'A classic clothing piece from Marques Boutique.'
-        dew = 'A gift from the Cadenceborn to those who offer the Dew of Inspiration.'
-        heart = 'Insights of the Heart of Infinity.'
-        treasure = 'Rare treasures scattered in chests found all around the world.'
-        esseling_treasure = 'Treasure guarded by Esselings.'
-        main = 'A reward from an adventure.'
-        quest = 'World travel mementos.'
-        journey_anecdote = 'A piece of journey anecdote.'
-        styling_challenge = 'Proof of styling prowess.'
-        rng= 'An unexpected surprise from the Surprise-O-Matic.'
-        dist_sea = 'Resonance from the Distant Sea'
-        limited_reso = 'Limited-Time Resonance'
-        premium = "Pear-Pal premium item highly recommended by the Stylist's Guild."
-        starting = "One of the initial items acquired upon arrival in Miraland."
-        pre_reg = "Pre-Reg Milestone Outfit"
+        always_avail = {"designer": "A unique creation made by an independent designer.",
+                        "boutique": "A classic clothing piece from Marques Boutique.",
+                        "dew": "A gift from the Cadenceborn to those who offer the Dew of Inspiration.",
+                        "heart": "Insights of the Heart of Infinity.",
+                        "treasure": "Rare treasures scattered in chests found all around the world.",
+                        "esseling_treasure": "Treasure guarded by Esselings.",
+                        "main": "A reward from an adventure.",
+                        "quest": "World travel mementos.",
+                        "journey_anecdote": "A piece of journey anecdote.",
+                        "styling_challenge": "Proof of styling prowess.",
+                        "rng": "An unexpected surprise from the Surprise-O-Matic.",
+                        "starting": "One of the initial items acquired upon arrival in Miraland.",
+                        "pre_reg": "Pre-Reg Milestone Outfit"}
+        always_avail_vals = list(always_avail.values())
         limited_time = ["Croaker's Whisper", "Bubbling Affections", "Distant Sea", "In Shop"]
+        lim_reso = "Limited-Time Resonance"
+        premium = "Pear-Pal premium item highly recommended by the Stylist's Guild."
         
         source_map = {
-            'Independent Designer Store': [ItemDetails.Source == designer],
-            'Marques Boutique': [ItemDetails.Source == boutique],
-            'Dews of Inspiration': [ItemDetails.Source == dew],
-            'Heart of Infinity': [ItemDetails.Source == heart],
-            'Treasure Chest': [ItemDetails.Source == treasure],
+            'Independent Designer Store': [ItemDetails.Source == always_avail["designer"]],
+            'Marques Boutique': [ItemDetails.Source == always_avail["boutique"]],
+            'Dews of Inspiration': [ItemDetails.Source == always_avail["dew"]],
+            'Heart of Infinity': [ItemDetails.Source == always_avail["heart"]],
+            'Treasure Chest': [ItemDetails.Source == always_avail["treasure"]],
             'Main Quest': [
-                ItemDetails.Source == main,
-                ItemDetails.Source == starting,
-                ItemDetails.Source == pre_reg,
-                ItemDetails.Source == esseling_treasure,
+                ItemDetails.Source == always_avail["main"],
+                ItemDetails.Source == always_avail["starting"],
+                ItemDetails.Source == always_avail["pre_reg"],
+                ItemDetails.Source == always_avail["esseling_treasure"],
             ],
-            'World Quest': [ItemDetails.Source == quest],
-            'Story Quest': [ItemDetails.Source == journey_anecdote],
-            'Styling Challenge': [ItemDetails.Source == styling_challenge],
-            'Surprise-O-Matic': [ItemDetails.Source == rng],
+            'World Quest': [ItemDetails.Source == always_avail["quest"]],
+            'Story Quest': [ItemDetails.Source == always_avail["journey_anecdote"]],
+            'Styling Challenge': [ItemDetails.Source == always_avail["styling_challenge"]],
+            'Surprise-O-Matic': [ItemDetails.Source == always_avail["rng"]],
             "Resonance: Croaker's Whisper": [ItemDetails.Banner.contains("Croaker's Whisper")],
             'Resonance: Bubbling Affections': [ItemDetails.Banner.contains('Bubbling Affections')],
             'Resonance: Distant Sea': [ItemDetails.Banner.contains('Distant Sea')],
             'Premium Items': [ItemDetails.Source == premium],
+            'Limited-Time Resonance': [ItemDetails.Source == lim_reso],
+            'Event Items': [ItemDetails.Source.contains("event")],
             'Currently Unobtainable': [
                 and_(
-                    ItemDetails.Source.notin_([
-                        designer, boutique, dew, heart, treasure, esseling_treasure, main, quest,
-                        journey_anecdote, styling_challenge, rng, starting, pre_reg
-                    ]),
+                    ItemDetails.Source.notin_(always_avail_vals),
                     ItemDetails.Banner.is_(None)
                 ),
                 ~or_(*[ItemDetails.Banner.like(f"%{banner}%") for banner in limited_time])
@@ -145,10 +144,7 @@ class Items(Resource):
             query = query.filter(ItemDetails.Style.in_(style))
         
         unobtainable_query = ~and_(
-                                ItemDetails.Source.notin_([
-                                    designer, boutique, dew, heart, treasure, esseling_treasure, main, quest,
-                                    journey_anecdote, styling_challenge, rng, starting, pre_reg
-                                ]), ~or_(*[ItemDetails.Banner.like(f"%{banner}%") for banner in limited_time]))
+                                ItemDetails.Source.notin_(always_avail_vals), ~or_(*[ItemDetails.Banner.like(f"%{banner}%") for banner in limited_time]))
         
         if source:
             matched_conditions = set()
@@ -242,5 +238,5 @@ def index():
 
 if __name__ == '__main__':
     from waitress import serve
-    serve(app, host='0.0.0.0', port=5000)
-    #app.run(debug=True)
+    #serve(app, host='0.0.0.0', port=5000)
+    app.run(debug=True)
