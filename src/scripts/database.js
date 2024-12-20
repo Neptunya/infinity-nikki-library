@@ -6,6 +6,7 @@ let selectedLabels = [];
 let selectedStyles = [];
 let selectedSources = [];
 let selectedStyleSort = [];
+let unobtainable = false;
 let searchQuery = "";
 let selectedSort = "";
 let descending = true;
@@ -36,7 +37,6 @@ for (i = 0; i < collapsible.length; i++) {
 const sortBtn = document.getElementById("sort-btn");
 sortBtn.addEventListener("click", function () {
     descending = !descending;
-    console.log(descending);
     const icons = sortBtn.getElementsByClassName("btn-img");
     for (let i = 0; i < icons.length; i++) {
         icons[i].classList.toggle("show");
@@ -257,6 +257,12 @@ export function getSelectedSource(sourceValues) {
     getFilteredItems();
 }
 
+export function toggleUnobtainable() {
+    currentPage = 1;
+    unobtainable = !unobtainable;
+    getFilteredItems();
+}
+
 function initializePreselectedSource() {
     const params = new URLSearchParams(window.location.search);
     const preselectedSources = params.getAll('source');
@@ -290,6 +296,10 @@ export function getFilteredItems() {
     
     if (selectedSources && selectedSources.length > 0) {
         url += `source=${selectedSources.join('&source=')}&`;
+    }
+    
+    if (unobtainable) {
+        url += 'source=Currently%20Unobtainable2&';
     }
     
     if (selectedStyleSort.length > 0 && styles.includes(selectedStyleSort)) {

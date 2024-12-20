@@ -121,7 +121,7 @@ class Items(Resource):
             "Resonance: Croaker's Whisper": [ItemDetails.Banner.contains("Croaker's Whisper")],
             'Resonance: Bubbling Affections': [ItemDetails.Banner.contains('Bubbling Affections')],
             'Resonance: Distant Sea': [ItemDetails.Banner.contains('Distant Sea')],
-            'Premium Items': [ItemDetails.Banner == 'In Shop'],
+            'Premium Items': [ItemDetails.Source == premium],
             'Currently Unobtainable': [
                 and_(
                     ItemDetails.Source.notin_([
@@ -143,7 +143,13 @@ class Items(Resource):
             query = query.filter(or_(*label_conditions))
         if style:
             query = query.filter(ItemDetails.Style.in_(style))
-
+        
+        unobtainable_query = ~and_(
+                                ItemDetails.Source.notin_([
+                                    designer, boutique, dew, heart, treasure, esseling_treasure, main, quest,
+                                    journey_anecdote, styling_challenge, rng, starting, pre_reg
+                                ]), ~or_(*[ItemDetails.Banner.like(f"%{banner}%") for banner in limited_time]))
+        
         if source:
             matched_conditions = set()
             for s in source:
@@ -153,15 +159,14 @@ class Items(Resource):
             conditions = []
             if matched_conditions:
                 conditions.extend(matched_conditions)
-                query = query.filter(or_(*conditions))
+                q = or_(*conditions)
+                
+                if "Currently Unobtainable2" in source or "Currently Unobtainable" in source:
+                    query = query.filter(q)
+                else:
+                    query = query.filter(and_(q, unobtainable_query))
         else:
-            query = query.filter(~and_(
-                    ItemDetails.Source.notin_([
-                        designer, boutique, dew, heart, treasure, esseling_treasure, main, quest,
-                        journey_anecdote, styling_challenge, rng, starting, pre_reg
-                    ]),
-                    ~or_(*[ItemDetails.Banner.like(f"%{banner}%") for banner in limited_time])
-                ))
+            query = query.filter(unobtainable_query)
 
         filtered_items = query.all()
         if not filtered_items:

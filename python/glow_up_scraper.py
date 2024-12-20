@@ -154,18 +154,17 @@ def scrape_stats(name, rarity, slot):
 		csvwriter = csv.writer(csvfile)
 		csvwriter.writerows(rows)
 
-in_w.activate()
-time.sleep(2)
-scrape_stats("Timeless Step", 3, 'Shoes')
-# , pendant, backpiece, ring, handheld
-
-
+# in_w.activate()
 # time.sleep(2)
-# file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/')
-# for file in file_list:
-# 	print(file)
-# 	#check_zeros(f'./python/csv/unprocessed/{file}')
-# 	check_incr(f'./python/csv/unprocessed/{file}')
+# scrape_stats("Timeless Step", 3, 'Shoes')
+
+
+time.sleep(2)
+file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/')
+for file in file_list:
+	print(file)
+	#check_zeros(f'./python/csv/unprocessed/{file}')
+	check_incr(f'./python/csv/unprocessed/{file}')
 # 	spell_check_names(f'./python/csv/unprocessed/{file}')
 
 # scrape_all()

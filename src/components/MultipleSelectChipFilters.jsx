@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { ThemeProvider } from '@mui/material/styles'; // Import ThemeProvider
-import CssBaseline from '@mui/material/CssBaseline'; // For global Material-UI styles
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import { theme } from '../styles/theme';
 import MultipleSelectChipContent from './MutipleSelectChipContent'
 import { getSelectedRarities, getSelectedSlots, getSelectedLabels, getSelectedStyle, getSelectedSource } from '../scripts/database';
@@ -99,6 +99,7 @@ export default function MultipleSelectChipFilters() {
         label="Source"
         onSelectionChange={getSelectedSource}
         selected={selectedSources} />
+      
     </ThemeProvider>
   ) : null;
 }

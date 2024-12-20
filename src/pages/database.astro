@@ -8,6 +8,7 @@ import ThemedTextField from '../components/ThemedTextField.jsx';
 import DropdownSortSelect from '../components/DropdownSortSelect.jsx';
 import MultipleSelectChipFilters from '../components/MultipleSelectChipFilters.jsx';
 import ItemDialog from '../components/ItemDialog.jsx';
+import ToggleGroup from '../components/ToggleGroup.jsx'
 ---
 <html lang="en">
 	<head>
@@ -40,7 +41,7 @@ import ItemDialog from '../components/ItemDialog.jsx';
 		<div class="content-container">
 			<h1>Database</h1>
 			<p>A full list of clothing items available in Infinity Nikki.</p>
-			<p><b>Status: </b>Up to date as of December 18th. Basic info on new items up! Working on getting brightened images and level stats.<p>
+			<p><b>Status: </b>Up to date as of December 18th, just missing brightened images and full stats for Timeless Echo.<p>
 			<ItemDialog client:only="react" />
 			<div id="loadingSpinner" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
 				<div class="spinner"></div>
@@ -60,8 +61,11 @@ import ItemDialog from '../components/ItemDialog.jsx';
 					<p>Filters</p>
 					<p>+</p>
 				</button>
-				<div id="filter-container">
-					<MultipleSelectChipFilters client:only="react" />
+				<div id = "filter-container">
+					<div id="filter-dropdowns">
+						<MultipleSelectChipFilters client:only="react" />
+					</div>
+					<ToggleGroup client:only="react" />
 				</div>
 			</div>
 			<div class="pagination-container"></div>
