@@ -6,7 +6,8 @@ let selectedLabels = [];
 let selectedStyles = [];
 let selectedSources = [];
 let selectedStyleSort = [];
-let unobtainable = false;
+let hideUnobtainable = true;
+let hideRecolor = true;
 let searchQuery = "";
 let selectedSort = "";
 let descending = true;
@@ -259,7 +260,13 @@ export function getSelectedSource(sourceValues) {
 
 export function toggleUnobtainable() {
     currentPage = 1;
-    unobtainable = !unobtainable;
+    hideUnobtainable = !hideUnobtainable;
+    getFilteredItems();
+}
+
+export function toggleRecolor() {
+    currentPage = 1;
+    hideRecolor = !hideRecolor;
     getFilteredItems();
 }
 
@@ -298,8 +305,12 @@ export function getFilteredItems() {
         url += `source=${selectedSources.join('&source=')}&`;
     }
     
-    if (unobtainable) {
+    if (hideUnobtainable) {
         url += 'source=Currently%20Unobtainable2&';
+    }
+    
+    if (hideRecolor) {
+        url += 'source=Recolors';
     }
     
     if (selectedStyleSort.length > 0 && styles.includes(selectedStyleSort)) {

@@ -206,3 +206,10 @@ button:disabled {
 #collapsible-filters {
     margin-bottom: 20px;
 }
+
+#toggle-group {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}

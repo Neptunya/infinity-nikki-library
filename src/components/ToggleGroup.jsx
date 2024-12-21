@@ -1,31 +1,52 @@
 import React, { useState } from 'react';
 import { ThemeProvider, CssBaseline, FormControlLabel, Switch } from '@mui/material';
 import { theme } from '../styles/theme';
-import { toggleUnobtainable } from '../scripts/database';
+import { toggleUnobtainable, toggleRecolor } from '../scripts/database';
 
 export default function ToggleGroup() {
-  const [checked, setChecked] = useState(false);
-  const handleToggleChange = (event) => {
-    setChecked(event.target.checked); // Update the local state
-    toggleUnobtainable(); // Call the toggleUnobtainable function
+  const [unobtainableChecked, setUnobtainableChecked] = useState(false);
+  const [recolorChecked, setRecolorChecked] = useState(false);
+  const handleUnobtainableToggleChange = (event) => {
+    setUnobtainableChecked(event.target.checked);
+    toggleUnobtainable();
+  };
+  const handleRecolorToggleChange = (event) => {
+    setRecolorChecked(event.target.checked);
+    toggleRecolor();
   };
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> {}
-      <FormControlLabel
-        value="enable-unobtainable"
-        control={
-          <Switch
-            checked={checked}
-            onChange={handleToggleChange} // Attach the handler here
-         />
-        }
-        label="Show Unobtainable"
-        labelPlacement="bottom"
-        sx = {{
-          margin: '8px',
-          alignSelf: 'center'
-        }} />
+      <div id="toggle-group">
+        <FormControlLabel
+          value="enable-unobtainable"
+          control={
+            <Switch
+              checked={unobtainableChecked}
+              onChange={handleUnobtainableToggleChange}
+          />
+          }
+          label="Show Unobtainable"
+          labelPlacement="bottom"
+          sx = {{
+            margin: '8px',
+            alignSelf: 'center'
+          }} />
+          <FormControlLabel 
+            value="enable-recolors"
+            control={
+              <Switch
+                checked={recolorChecked}
+                onChange={handleRecolorToggleChange}
+            />
+            }
+            label="Show Recolors"
+            labelPlacement="bottom"
+            sx = {{
+              margin: '8px',
+              alignSelf: 'center'
+            }} />
+        </div>
     </ThemeProvider>
   );
 }

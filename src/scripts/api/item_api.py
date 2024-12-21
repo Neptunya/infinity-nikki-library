@@ -130,6 +130,15 @@ class Items(Resource):
                     ItemDetails.Banner.is_(None)
                 ),
                 ~or_(*[ItemDetails.Banner.like(f"%{banner}%") for banner in limited_time])
+            ],
+            'Currently Unobtainable2': [
+                ~and_(ItemDetails.Source.notin_(always_avail_vals),
+                ~or_(*[ItemDetails.Banner.like(f"%{banner}%") for banner in limited_time]))
+            ],
+            'Recolor': [
+                or_(
+                ~ItemDetails.Outfit.contains(":"),
+                ItemDetails.Outfit == None)
             ]
         }
 
@@ -143,27 +152,27 @@ class Items(Resource):
         if style:
             query = query.filter(ItemDetails.Style.in_(style))
         
-        unobtainable_query = ~and_(
-                                ItemDetails.Source.notin_(always_avail_vals), ~or_(*[ItemDetails.Banner.like(f"%{banner}%") for banner in limited_time]))
-        
-        if source:
-            matched_conditions = set()
-            for s in source:
-                if s in source_map:
-                    matched_conditions.update(source_map[s])
+        matched_conditions = set()
+        for s in source:
+            if s in source_map and s != "Currently Unobtainable2" and s != "Recolor":
+                matched_conditions.update(source_map[s])
 
-            conditions = []
-            if matched_conditions:
-                conditions.extend(matched_conditions)
-                q = or_(*conditions)
-                
-                if "Currently Unobtainable2" in source or "Currently Unobtainable" in source:
-                    query = query.filter(q)
-                else:
-                    query = query.filter(and_(q, unobtainable_query))
-        else:
-            query = query.filter(unobtainable_query)
-
+        conditions = []
+        if matched_conditions:
+            conditions.extend(matched_conditions)
+            q = or_(*conditions)
+            if "Currently Unobtainable2" in source:
+                q = and_(q, *source_map["Currently Unobtainable2"])
+            if "Recolor" in source:
+                q = and_(q, *source_map["Recolor"])
+        else: 
+            if "Currently Unobtainable2" in source and "Recolor" in source:
+                q = and_(*source_map["Currently Unobtainable2"], *source_map["Recolor"])
+            elif "Currently Unobtainable2" in source:
+                q = and_(*source_map["Currently Unobtainable2"])
+            elif "Recolor" in source:
+                q = and_(*source_map["Recolor"])
+        query = query.filter(q)
         filtered_items = query.all()
         if not filtered_items:
             return [], 200
@@ -238,5 +247,5 @@ def index():
 
 if __name__ == '__main__':
     from waitress import serve
-    #serve(app, host='0.0.0.0', port=5000)
-    app.run(debug=True)
+    serve(app, host='0.0.0.0', port=5000)
+    #app.run(debug=True)
