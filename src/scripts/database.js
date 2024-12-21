@@ -117,6 +117,7 @@ function renderItems(data) {
             const outfit = document.createElement('p')
             outfit.innerHTML += "<strong><i>" + item['Outfit'] + "</i></strong>";
             outfit.style.textWrap = 'wrap';
+            outfit.style.marginTop = '4px';
             cardText.appendChild(outfit);
         }
 

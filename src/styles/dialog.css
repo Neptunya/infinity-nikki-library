@@ -31,7 +31,7 @@ td {
 
 #basic-info-text h3 {
     font-size: 2rem;
-    margin: 8px 0;
+    margin: 0px 0;
 }
 
 #rarity {
@@ -57,13 +57,13 @@ td {
 }
 
 .info-batch {
-    margin: 4px 0;
+    margin: 2px 0;
 }
 
 #outfit {
     font-style: italic;
-    margin-top: 4px;
-    margin-bottom: 8px;
+    margin-top: 0px;
+    margin-bottom: 2px;
     font-style: italic;
     font-size: 1.1rem;
 }

@@ -2,6 +2,7 @@ from flask import Flask, Response, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from sqlalchemy import PrimaryKeyConstraint, and_, or_, case, func
+from sqlalchemy.sql import expression
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
@@ -158,6 +159,7 @@ class Items(Resource):
                 matched_conditions.update(source_map[s])
 
         conditions = []
+        q = expression.true()
         if matched_conditions:
             conditions.extend(matched_conditions)
             q = or_(*conditions)

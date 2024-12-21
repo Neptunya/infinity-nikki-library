@@ -140,16 +140,15 @@ button:disabled {
     100% { transform: rotate(360deg); }
 }
 
+.item-card p {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
 @media (max-width: 600px) {
     .item-card h3 {
         font-size: 1.2rem;
     }
-    
-    .item-card p {
-        margin-top: 8px;
-        margin-bottom: 4px;
-    }
-    
     .item-img {
         max-width: 40%;
     }
