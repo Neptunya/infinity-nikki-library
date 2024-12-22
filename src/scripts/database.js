@@ -282,9 +282,7 @@ function initializePreselectedSource() {
 }
 
 export function getFilteredItems() {
-    // change when building
-    let url = '/api/items/?';
-    //let url = 'http://127.0.0.1:5000/api/items/?'
+    let url = `${import.meta.env.PUBLIC_BASE_URL}?`;
     
     if (selectedRarities && selectedRarities.length > 0) {
         url += `rarity=${selectedRarities.join('&rarity=')}&`;

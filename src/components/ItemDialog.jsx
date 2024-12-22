@@ -26,11 +26,8 @@ export default function ItemDialog() {
 	
 	const fetchApiData = async (name) => {
 		try {
-			// change when building
-			const levelResponse = await fetch(`/api/items/${name}`);
-			const infoResponse = await fetch(`/api/items/${name}/info`);
-			// const levelResponse = await fetch(`http://127.0.0.1:5000/api/items/${name}`)
-			// const infoResponse = await fetch(`http://127.0.0.1:5000/api/items/${name}/info`)
+			const levelResponse = await fetch(`${import.meta.env.PUBLIC_BASE_URL}${name}`);
+			const infoResponse = await fetch(`${import.meta.env.PUBLIC_BASE_URL}${name}/info`);
 			const levelData = await levelResponse.json();
 			const infoData = await infoResponse.json();
 			setLevelData(levelData);

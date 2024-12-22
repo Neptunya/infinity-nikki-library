@@ -7,7 +7,7 @@ from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost:5432/infinity_nikki_items'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:password@localhost:5432/infinity_nikki_items'
 db = SQLAlchemy(app)
 api = Api(app)
 
@@ -163,17 +163,11 @@ class Items(Resource):
         if matched_conditions:
             conditions.extend(matched_conditions)
             q = or_(*conditions)
-            if "Currently Unobtainable2" in source:
-                q = and_(q, *source_map["Currently Unobtainable2"])
-            if "Recolor" in source:
-                q = and_(q, *source_map["Recolor"])
-        else: 
-            if "Currently Unobtainable2" in source and "Recolor" in source:
-                q = and_(*source_map["Currently Unobtainable2"], *source_map["Recolor"])
-            elif "Currently Unobtainable2" in source:
-                q = and_(*source_map["Currently Unobtainable2"])
-            elif "Recolor" in source:
-                q = and_(*source_map["Recolor"])
+        if "Currently Unobtainable2" in source:
+            q = and_(q, *source_map["Currently Unobtainable2"])
+        if "Recolor" in source:
+            q = and_(q, *source_map["Recolor"])
+
         query = query.filter(q)
         filtered_items = query.all()
         if not filtered_items:
