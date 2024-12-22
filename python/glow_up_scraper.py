@@ -45,7 +45,7 @@ def check_incr(file_path):
 				if current_level > prev_level:
 					decreasing_columns = [
 						col for col in ['Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool']
-						if int(row[col]) <= int(prev_row[col])
+						if int(row[col]) <= int(prev_row[col]) and int(prev_row[col]) <= int(row[col]) * 1.12
 					]
 					if decreasing_columns:
 						decreasing_columns_str = ", ".join(decreasing_columns)
@@ -89,17 +89,30 @@ def scrape_all():
 		pg.scroll(-1725)
 		time.sleep(1)
 
-def scrape_one(x, y, last=False):
-	pg.moveTo(x_cards[x], y_cards[2 if y > 2 else y])
-	if y > 2:
-		while (y-2 > 0):
-			pg.scroll(-1725)
-			y -= 1
-	elif y == 2:
-		pg.scroll(-850)
-	time.sleep(1)
-	pg.leftClick()
-	get_item_details(x, y, last)
+def scrape_one_lvl(name, rarity, slot, zero=False):
+	r = []
+	ss = [slot, '']
+	file = slot.lower()
+	r.append(name)
+	r.append(rarity)
+	r.extend(ss)
+	
+	if zero:
+		r.append(0)
+		r.extend(get_stats(initial_stat))
+		r.extend([0] * 3)
+		r.extend([''] * 2)
+	else:
+		r.append(get_lvl())
+		r.extend(get_stats(new_stat))
+		r.extend([0] * 3)
+		r.extend([''] * 2)
+	print(r)
+	f = f'./python/csv/unprocessed/{file}.csv'
+	with open(f, 'a', newline='') as csvfile:
+		csvwriter = csv.writer(csvfile)
+		csvwriter.writerow(r)
+	r.clear()
 
 def scrape_stats(name, rarity, slot):
 	r = []
@@ -154,18 +167,23 @@ def scrape_stats(name, rarity, slot):
 		csvwriter = csv.writer(csvfile)
 		csvwriter.writerows(rows)
 
+# vid = gw.getWindowsWithTitle('')[0]
+# vid.activate()
+# time.sleep(1)
+# scrape_one_lvl("Old Tale", 4, 'Handheld')
+# pg.moveTo(100, 100)
+
+
 # in_w.activate()
 # time.sleep(2)
-# scrape_stats("Timeless Step", 3, 'Shoes')
+# scrape_stats("Lotus Umbrella", 4, 'Handheld')
 
 
 time.sleep(2)
 file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/')
 for file in file_list:
 	print(file)
-	#check_zeros(f'./python/csv/unprocessed/{file}')
 	check_incr(f'./python/csv/unprocessed/{file}')
-# 	spell_check_names(f'./python/csv/unprocessed/{file}')
 
 # scrape_all()
 # f = './python/csv/unprocessed/handheld.csv'

@@ -279,7 +279,7 @@ def scrape_new_item(r):
 in_w.activate() 
 time.sleep(2)
 pg.moveTo(90, 395)
-scrape_imgs()
+sc(f'../../../public/images/items/Lotus Umbrella', img_box)
 pg.moveTo(10, 10)
 
 

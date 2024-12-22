@@ -72,9 +72,14 @@ def add_glow_up():
         for row in reader:
             item_name = row['Name']
             item_level = int(row['Level'])
-
+            
             if item_level == 10 and item_name in glow_up_data:
                 updated_row = row.copy()
+                for key in ['Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool']:
+                    glow_value = glow_up_data[item_name][key]
+                    updated_value = updated_row[key]
+                    if not (float(updated_value) < float(glow_value) < 1.12 * float(updated_value)):
+                        print(f"Validation failed for {item_name} {key}: {updated_value} vs {glow_value}")
                 updated_row['Level'] = '11'
                 updated_row['Elegant'] = glow_up_data[item_name]['Elegant']
                 updated_row['Fresh'] = glow_up_data[item_name]['Fresh']
