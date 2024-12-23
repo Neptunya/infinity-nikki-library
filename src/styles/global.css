@@ -84,6 +84,7 @@ input[type=text] {
 	line-height: 1.5;
 	min-height: calc(86vh - 70px);
 	padding-bottom: 50px;
+	max-width: 2000px;
 }
 
 .guide-card {
