@@ -4,6 +4,7 @@ from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from sqlalchemy import PrimaryKeyConstraint, and_, or_, case, func
 from sqlalchemy.sql import expression
 from flask_cors import CORS, cross_origin
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 CORS(app)
@@ -44,6 +45,15 @@ class LevelDetails(db.Model):
         PrimaryKeyConstraint('Name', 'Level'),
     )
 
+class UserDetails(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.String(255), primary_key=True)
+    username = db.Column(db.String(255), nullable=False)
+    access_token = db.Column(db.String(255), nullable=False)
+    refresh_token = db.Column(db.String(255), nullable=False)
+    expires_at = db.Column(db.DateTime, nullable=False)
+    avatar = db.Column(db.String(255), nullable=False)
+
 itemFields = {
     "Name": fields.String,
     "Rarity": fields.Integer,
@@ -69,6 +79,15 @@ lvlFields = {
     "Threads": fields.Integer,
     "Bubbles": fields.Integer,
     "Style": fields.String,
+}
+
+userFields = {
+    "id": fields.String,
+    "username": fields.String,
+    "access_token": fields.String,
+    "refresh_token": fields.String,
+    "expires_at": fields.DateTime,
+    "avatar": fields.String
 }
 
 class Items(Resource):
@@ -233,9 +252,47 @@ class ItemInfo(Resource):
             abort(404, f"No info found for {name}")
         return info
 
+class Users(Resource):
+    @marshal_with(userFields)
+    def post(self):
+        data = request.get_json()
+        required_fields = ["id", "username", "access_token", "refresh_token", "expires_at", "avatar"]
+        if not all(field in data for field in required_fields):
+            return {"error": "Missing required fields."}, 400
+        try:
+            expires_at = datetime.fromisoformat(data["expires_at"])
+        except ValueError:
+            return {"error": "Invalid datetime format for 'expires_at'."}, 400
+        
+        user = UserDetails.query.get(data["id"])
+        if user:
+            user.username = data["username"]
+            user.access_token = data["access_token"]
+            user.refresh_token = data["refresh_token"]
+            user.expires_at = expires_at
+            user.avatar = data["avatar"]
+        else:
+            user = UserDetails(
+                id=data["id"],
+                username=data["username"],
+                access_token=data["access_token"],
+                refresh_token=data["refresh_token"],
+                expires_at=expires_at,
+                avatar=data["avatar"]
+            )
+            db.session.add(user)
+
+        try:
+            db.session.commit()
+            return user, 201
+        except Exception as e:
+            db.session.rollback()
+            return {"error": "Database error: " + str(e)}, 500
+
 api.add_resource(Items, '/api/items/')
 api.add_resource(Levels, '/api/items/<string:name>')
 api.add_resource(ItemInfo, '/api/items/<string:name>/info')
+api.add_resource(Users, '/api/users')
 
 @app.route('/')
 def index():
@@ -243,5 +300,5 @@ def index():
 
 if __name__ == '__main__':
     from waitress import serve
-    serve(app, host='0.0.0.0', port=5000)
-    #app.run(debug=True)
+    #serve(app, host='0.0.0.0', port=5000)
+    app.run(debug=True)

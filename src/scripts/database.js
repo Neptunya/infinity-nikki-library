@@ -282,7 +282,7 @@ function initializePreselectedSource() {
 }
 
 export function getFilteredItems() {
-    let url = `${import.meta.env.PUBLIC_BASE_URL}?`;
+    let url = `${import.meta.env.PUBLIC_BASE_URL}/items/?`;
     
     if (selectedRarities && selectedRarities.length > 0) {
         url += `rarity=${selectedRarities.join('&rarity=')}&`;
