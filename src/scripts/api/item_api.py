@@ -191,7 +191,7 @@ class Items(Resource):
         if matched_conditions:
             conditions.extend(matched_conditions)
             q = or_(*conditions)
-        if "Currently Unobtainable2" in source:
+        if "Currently Unobtainable2" in source and "Currently Unobtainable" not in source:
             q = and_(q, *source_map["Currently Unobtainable2"])
         if "Recolor" in source:
             q = and_(q, *source_map["Recolor"])
