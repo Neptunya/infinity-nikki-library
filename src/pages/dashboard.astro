@@ -1,7 +1,6 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import '../styles/dashboard.css';
 ---
 <html lang="en">
 	<head>
@@ -14,13 +13,12 @@ import '../styles/global.css';
         <title>Dashboard | INL</title>
     </head>
     <body>
-        <div class="flex items-center justify-center h-screen bg-discord-gray text-white flex-col">
-            <div class="text-2xl">Welcome to the dashboard,</div>
-            <div class="text-4xl mt-3 flex items-center font-medium" >
-                <img src='' id="avatar" class="rounded-full w-12 h-12 mr-3"/>
-                <div id="name"></div>
-            </div>
-            <a href="/" class="text-sm mt-5">Logout</a>
+        <div class="content-container">
+            <div id="loadingSpinner" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+				<div class="spinner"></div>
+			</div>
+            <p class="login-info">Logging you in, you will be automatically redirected if log in is successful.</p>
+            <a id="home-link" href="/">Back to Homepage</a>
         </div>
     </body>
     <script>
