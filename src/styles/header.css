@@ -32,6 +32,10 @@ header {
 	cursor: pointer;
 }
 
+.hidden {
+	display: none;
+}
+
 .hamburger .line {
 	display: block;
 	width: 40px;
@@ -131,11 +135,7 @@ header {
 		justify-content: flex-start;
 	}
 	
-	#home-link {
-		display: none;
-	}
-	
-	#l-vert {
+	#login-vert, #logout-vert {
 		display: none;
 	}
 }
@@ -146,7 +146,7 @@ header {
 	text-align: right;
 }
 
-#l-hori {
+#login-hori, #logout-hori {
 	padding: 15px 20px;
 	text-decoration: none;
 	font-size: 1rem;
@@ -154,8 +154,10 @@ header {
 	text-transform: uppercase;
 }
 
-#l-hori:hover,
-#l-hori:focus {
+#login-hori:hover,
+#login-hori:focus,
+#logout-hori:hover,
+#logout-hori:focus {
 	background-color: #6c657d;
 	border-radius: 10px;
 }
