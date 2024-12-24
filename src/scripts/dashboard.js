@@ -1,52 +1,33 @@
 window.onload = () => {
     const fragment = new URLSearchParams(window.location.hash.slice(1));
-    const [accessToken, tokenType, expiresIn] = [
-        fragment.get('access_token'),
-        fragment.get('token_type'),
-        fragment.get('expires_in')
-    ];
-    
+    const accessToken = fragment.get('access_token');
+    const tokenType = fragment.get('token_type');
+    const expiresIn = parseInt(fragment.get('expires_in'), 10);
+
     if (!accessToken) {
-        window.location.href('/')
+        window.location.href = '/';
+        return;
     }
-    
-    fetch('https://discord.com/api/users/@me', {
+
+    fetch(`${import.meta.env.PUBLIC_BASE_URL}login`, {
+        method: 'POST',
         headers: {
-            authorization: `${tokenType} ${accessToken}`,
+            'Content-Type': 'application/json',
         },
-    })
-    .then(result => result.json())
-    .then(response => {
-        const { username, avatar, id} = response;
-        document.getElementById('name').innerText = ` ${username}`;
-        document.getElementById("avatar").src = `https://cdn.discordapp.com/avatars/${id}/${avatar}.jpg`;
-        const expiresAt = new Date(Date.now() + parseInt(expiresIn, 10) * 1000).toISOString();
-        const userData = {
-            id: id,
-            username: username,
+        body: JSON.stringify({
             access_token: accessToken,
-            refresh_token: "temp_refresh_token",
-            expires_at: expiresAt,
-            avatar: avatar
-        };
-        
-        fetch(`${import.meta.env.PUBLIC_BASE_URL}/users`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(userData),
-        })
-        .then(postReponse => {
-            if (!postReponse.ok) {
-                throw new Error('Failed to save user data.')
-            }
-            return postReponse.json();
-        })
-        .then(data =>{
-            console.log('User data saved:', data)
-        })
-        .catch(error => console.error('Error saving user data:', error));
+            token_type: tokenType,
+            expires_in: expiresIn,
+        }),
     })
-    .catch(console.error);
+    .then(response => response.json())
+    .then(data => {
+        if (data.access_token && data.refresh_token) {
+            localStorage.setItem('access_token', data.access_token);
+            localStorage.setItem('refresh_token', data.refresh_token);
+        } else {
+            console.error('Failed to retrieve JWT tokens');
+        }
+    })
+    .catch(error => console.error('Error during login:', error));
 };
