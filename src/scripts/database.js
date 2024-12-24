@@ -414,12 +414,12 @@ function applySearchFilter() {
 }
 
 
-window.onload = function() {
+window.addEventListener('load', function() {
     initializePreselectedSource();
     adjustCollapsibleMaxHeight();
-};
+});
 
-window.onresize = function() {
+window.addEventListener('resize', function() {
     changePage(currentPage, totalItems);
     adjustCollapsibleMaxHeight();
-};
+});

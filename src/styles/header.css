@@ -32,6 +32,10 @@ header {
 	cursor: pointer;
 }
 
+.hidden {
+	display: none;
+}
+
 .hamburger .line {
 	display: block;
 	width: 40px;
@@ -41,7 +45,7 @@ header {
 }
 
 .no-transition .nav-links {
-    transition: none; /* Disable transition */
+    transition: none;
 }
 
 .nav-links {
@@ -52,9 +56,9 @@ header {
     padding: 0;
     border-radius: 0 0 10px 10px;
     position: relative;
-    overflow: hidden; /* Ensures content is clipped when hidden */
-    max-height: 0; /* Initially hidden */
-    transition: max-height 0.3s ease; /* Smooth dropdown animation */
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
 }
 
 .nav-links a {
@@ -76,7 +80,7 @@ header {
 .expanded {
 	display: unset;
 	flex-basis: 100%;
-	max-height: 130px;
+	max-height: 180px;
 }
 
 .break {
@@ -106,7 +110,8 @@ header {
 @media screen and (min-width: 600px) {
 	.nav-links {
 		margin-left: 5em;
-		display: block;
+		display: flex;
+		flex-direction: row;
 		position: static;
 		width: auto;
 		background: none;
@@ -126,10 +131,45 @@ header {
 		display: none;
 	}
 	
+	.header-block {
+		justify-content: flex-start;
+	}
+	
+	#login-vert, #logout-vert {
+		display: none;
+	}
+}
+
+.user-links {
+	display: inline-block;
+	flex-grow: 1;
+	text-align: right;
+}
+
+#login-hori, #logout-hori {
+	padding: 15px 20px;
+	text-decoration: none;
+	font-size: 1rem;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+#login-hori:hover,
+#login-hori:focus,
+#logout-hori:hover,
+#logout-hori:focus {
+	background-color: #6c657d;
+	border-radius: 10px;
+}
+
+@media screen and (max-width: 600px) {
+	.user-links {
+		display: none;
+	}
 }
 
 #header-expanded {
-	margin-top: 8vh;
+	margin-top: 7vh;
 	transition: margin-top 0.3s ease;
 }
 

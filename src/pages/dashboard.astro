@@ -1,0 +1,27 @@
+---
+import '../styles/global.css';
+import '../styles/dashboard.css';
+---
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/png" href="/images/nikki_logo.png" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+		<meta name="viewport" content="width=device-width" />
+        <title>Dashboard | INL</title>
+    </head>
+    <body>
+        <div class="content-container">
+            <div id="loadingSpinner" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+				<div class="spinner"></div>
+			</div>
+            <p class="login-info">Logging you in, you will be automatically redirected if log in is successful.</p>
+            <a id="home-link" href="/">Back to Homepage</a>
+        </div>
+    </body>
+    <script>
+        import "../scripts/dashboard.js"
+    </script>
+</html>

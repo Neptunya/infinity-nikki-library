@@ -4,10 +4,21 @@ from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from sqlalchemy import PrimaryKeyConstraint, and_, or_, case, func
 from sqlalchemy.sql import expression
 from flask_cors import CORS, cross_origin
+from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, get_jwt_identity
+from datetime import datetime, timedelta, timezone
+from dotenv import load_dotenv
+import os
+import requests
+
+load_dotenv()
+db_password = os.getenv("DB_PASSWORD")
+jwt_key = os.getenv("JWT_KEY")
 
 app = Flask(__name__)
+app.config["JWT_SECRET_KEY"] = jwt_key
+jwt = JWTManager(app)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:password@localhost:5432/infinity_nikki_items'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:{db_password}@localhost:5432/infinity_nikki_items'
 db = SQLAlchemy(app)
 api = Api(app)
 
@@ -44,6 +55,15 @@ class LevelDetails(db.Model):
         PrimaryKeyConstraint('Name', 'Level'),
     )
 
+class UserDetails(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.String(255), primary_key=True)
+    username = db.Column(db.String(255), nullable=False)
+    access_token = db.Column(db.String(255), nullable=False)
+    refresh_token = db.Column(db.String(255), nullable=False)
+    expires_at = db.Column(db.DateTime(timezone=True), nullable=False)
+    avatar = db.Column(db.String(255), nullable=False)
+
 itemFields = {
     "Name": fields.String,
     "Rarity": fields.Integer,
@@ -71,10 +91,18 @@ lvlFields = {
     "Style": fields.String,
 }
 
+userFields = {
+    "id": fields.String,
+    "username": fields.String,
+    "access_token": fields.String,
+    "refresh_token": fields.String,
+    "expires_at": fields.DateTime,
+    "avatar": fields.String
+}
+
 class Items(Resource):
     @marshal_with(itemFields)
     def get(self):
-         # Extract query parameters
         rarity = request.args.getlist('rarity')
         slot = request.args.getlist('slot')
         label = request.args.getlist('label')
@@ -237,11 +265,71 @@ api.add_resource(Items, '/api/items/')
 api.add_resource(Levels, '/api/items/<string:name>')
 api.add_resource(ItemInfo, '/api/items/<string:name>/info')
 
-@app.route('/')
+@app.route('/api')
 def index():
     return '<h1>Infinity Nikki Flask REST API</h1>'
 
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    discord_access_token = data.get('access_token')
+    token_type = data.get('token_type', 'Bearer')
+
+    discord_response = requests.get('https://discord.com/api/users/@me', headers={
+        'Authorization': f'{token_type} {discord_access_token}',
+    })
+
+    if discord_response.status_code != 200:
+        return jsonify({"error": "Invalid Discord access token"}), 401
+
+    user_data = discord_response.json()
+    user_id = user_data.get('id')
+    username = user_data.get('username')
+    avatar = user_data.get('avatar')
+
+    expires_in = data.get('expires_in', 3600)
+    expires_at = datetime.now(timezone.utc)+ timedelta(seconds=expires_in)
+    with db.session.begin():
+        user = db.session.get(UserDetails, user_id) 
+
+        if user:
+            user.username = username
+            user.access_token = discord_access_token
+            user.expires_at = expires_at
+            user.avatar = avatar
+        else:
+            user = UserDetails(
+                id=user_id,
+                username=username,
+                access_token=discord_access_token,
+                refresh_token='placeholder_refresh_token',
+                expires_at=expires_at,
+                avatar=avatar,
+            )
+            db.session.add(user)
+
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"error": f"Database error: {str(e)}"}), 500
+
+    access_jwt_token = create_access_token(identity=user_id)
+    refresh_jwt_token = create_refresh_token(identity=user_id)
+
+    return jsonify({
+        "access_token": access_jwt_token,
+        "refresh_token": refresh_jwt_token,
+    })
+
+@app.route('/refresh', methods=['POST'])
+@jwt_required(refresh=True)
+def refresh():
+    current_user = get_jwt_identity()
+    new_access_token = create_access_token(identity=current_user)
+    return jsonify({'access_token': new_access_token})
+
 if __name__ == '__main__':
     from waitress import serve
-    serve(app, host='0.0.0.0', port=5000)
-    #app.run(debug=True)
+    #serve(app, host='0.0.0.0', port=5000)
+    app.run(debug=True)
