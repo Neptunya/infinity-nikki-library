@@ -1,5 +1,5 @@
 let accessToken;
-window.onload = () => {
+window.addEventListener('load', () => {
     accessToken = localStorage.getItem('access_token');
     const logoutLinks = document.querySelectorAll('.logout');
     logoutLinks.forEach(link => {
@@ -9,11 +9,11 @@ window.onload = () => {
         });
     });
     updateNavLinks();
-};
+});
 
-window.onresize = () => {
+window.addEventListener('resize', () => {
     updateNavLinks();
-};
+});
 
 const updateNavLinks = () => {
     const loginHori = document.getElementById('login-hori');
