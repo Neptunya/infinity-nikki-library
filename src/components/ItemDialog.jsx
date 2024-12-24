@@ -26,8 +26,8 @@ export default function ItemDialog() {
 	
 	const fetchApiData = async (name) => {
 		try {
-			const levelResponse = await fetch(`${import.meta.env.PUBLIC_BASE_URL}${name}`);
-			const infoResponse = await fetch(`${import.meta.env.PUBLIC_BASE_URL}${name}/info`);
+			const levelResponse = await fetch(`${import.meta.env.PUBLIC_BASE_URL}api/items/${name}`);
+			const infoResponse = await fetch(`${import.meta.env.PUBLIC_BASE_URL}api/items/${name}/info`);
 			const levelData = await levelResponse.json();
 			const infoData = await infoResponse.json();
 			setLevelData(levelData);
@@ -85,7 +85,7 @@ export default function ItemDialog() {
 							<p>
 								<b>Source: </b> 
 								{infoData[0].Source} 
-								{infoData[0].Banner && infoData[0].Banner !== "Distant Sea" && infoData[0].Banner !== "a" ? ` (${infoData[0].Banner})` : ''}
+								{infoData[0].Banner && infoData[0].Banner !== "Distant Sea" && infoData[0].Banner !== "In Shop" ? ` (${infoData[0].Banner})` : ''}
 							</p>
 						</div>
 						
