@@ -174,16 +174,16 @@ def scrape_stats(name, rarity, slot):
 # pg.moveTo(100, 100)
 
 
-# in_w.activate()
-# time.sleep(2)
-# scrape_stats("Lotus Umbrella", 4, 'Handheld')
-
-
+in_w.activate()
 time.sleep(2)
-file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/')
-for file in file_list:
-	print(file)
-	check_incr(f'./python/csv/unprocessed/{file}')
+scrape_stats("Cocoa Dream", 3, 'Hair')
+
+
+# time.sleep(2)
+# file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/')
+# for file in file_list:
+# 	print(file)
+# 	check_incr(f'./python/csv/unprocessed/{file}')
 
 # scrape_all()
 # f = './python/csv/unprocessed/handheld.csv'
