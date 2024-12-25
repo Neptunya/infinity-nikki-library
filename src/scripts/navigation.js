@@ -91,7 +91,6 @@ const refresh = (expirationTime, userId) => {
     const diffDays = diffTime / (1000 * 3600 * 24);
 
     if (diffDays <= 6) {
-        console.log('Token is about to expire, refreshing...');
 
         fetch(`${import.meta.env.PUBLIC_BASE_URL}refresh-discord`, {
             method: 'POST',
@@ -105,7 +104,6 @@ const refresh = (expirationTime, userId) => {
         .then(discordResponse => discordResponse.json())
         .then(discordData => {
             if (discordData.message === "Discord token refreshed successfully.") {
-                console.log('Discord token refreshed successfully.');
 
                 fetch(`${import.meta.env.PUBLIC_BASE_URL}refresh_jwt`, {
                     method: 'GET',
@@ -116,7 +114,6 @@ const refresh = (expirationTime, userId) => {
                 .then(jwtResponse => jwtResponse.json())
                 .then(jwtData => {
                     if (jwtData.access_token && jwtData.refresh_token) {
-                        console.log('JWT tokens refreshed successfully.');
                         localStorage.setItem('access_token', jwtData.access_token);
                         localStorage.setItem('refresh_token', jwtData.refresh_token);
                     } else {
