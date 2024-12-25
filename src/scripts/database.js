@@ -13,6 +13,7 @@ let selectedSort = "";
 let descending = true;
 let lastColCount = countFlexColumns();
 const styles = ["Elegant", "Fresh", "Sweet", "Sexy", "Cool"];
+const nonStyleSorts = ["Name", "Rarity", "Type"];
 
 let allItems = [];
 let totalItems = 0;
@@ -282,7 +283,7 @@ function initializePreselectedSource() {
 }
 
 export function getFilteredItems() {
-    let url = `${import.meta.env.PUBLIC_BASE_URL}?`;
+    let url = `${import.meta.env.PUBLIC_BASE_URL}api/items/?`;
     
     if (selectedRarities && selectedRarities.length > 0) {
         url += `rarity=${selectedRarities.join('&rarity=')}&`;
@@ -309,7 +310,7 @@ export function getFilteredItems() {
     }
     
     if (hideRecolor) {
-        url += 'source=Recolors';
+        url += 'source=Recolor&';
     }
     
     if (selectedStyleSort.length > 0 && styles.includes(selectedStyleSort)) {
@@ -339,11 +340,16 @@ export function updateSearchQuery(query) {
 export function updateSort(sortBy) {
     currentPage = 1;
     selectedSort = sortBy
+    
     if (styles.includes(sortBy)) {
         selectedStyleSort = sortBy;
         getFilteredItems();
-    } else {
+    } else if (nonStyleSorts.includes(sortBy)) {
+        selectedStyleSort = [];
         applySearchFilter();
+    } else {
+        selectedStyleSort = [];
+        getFilteredItems();
     }
 }
 

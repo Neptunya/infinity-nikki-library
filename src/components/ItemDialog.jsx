@@ -7,6 +7,7 @@ export default function ItemDialog() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [levelData, setLevelData] = useState(null);
 	const [infoData, setInfoData] = useState(null);
+	const makeup = ["Base Makeup", "Eyebrows", "Eyelashes", "Contact Lenses", "Lips"];
 	
 	const handleHashChange = () => {
 		if (window.location.hash) {
@@ -26,8 +27,8 @@ export default function ItemDialog() {
 	
 	const fetchApiData = async (name) => {
 		try {
-			const levelResponse = await fetch(`${import.meta.env.PUBLIC_BASE_URL}${name}`);
-			const infoResponse = await fetch(`${import.meta.env.PUBLIC_BASE_URL}${name}/info`);
+			const levelResponse = await fetch(`${import.meta.env.PUBLIC_BASE_URL}api/items/${name}`);
+			const infoResponse = await fetch(`${import.meta.env.PUBLIC_BASE_URL}api/items/${name}/info`);
 			const levelData = await levelResponse.json();
 			const infoData = await infoResponse.json();
 			setLevelData(levelData);
@@ -85,12 +86,13 @@ export default function ItemDialog() {
 							<p>
 								<b>Source: </b> 
 								{infoData[0].Source} 
-								{infoData[0].Banner && infoData[0].Banner !== "Distant Sea" && infoData[0].Banner !== "a" ? ` (${infoData[0].Banner})` : ''}
+								{infoData[0].Banner && infoData[0].Banner !== "Distant Sea" && infoData[0].Banner !== "In Shop" ? ` (${infoData[0].Banner})` : ''}
 							</p>
 						</div>
 						
 					</div>
 				</div>
+				{!makeup.includes(infoData[0]?.Slot) && (
 				<div id='stats-table'>
 				<table>
 					<thead><tr>
@@ -142,6 +144,7 @@ export default function ItemDialog() {
 					</tbody>
 				</table>
 				</div>
+				)}
 			</div>
 			</Dialog>
 		</ThemeProvider>
