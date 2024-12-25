@@ -4,7 +4,8 @@ from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from sqlalchemy import PrimaryKeyConstraint, and_, or_, case, func
 from sqlalchemy.sql import expression
 from flask_cors import CORS, cross_origin
-from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, get_jwt_identity, decode_token
+from jwt.exceptions import ExpiredSignatureError, DecodeError
 from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 import os
@@ -16,6 +17,8 @@ jwt_key = os.getenv("JWT_KEY")
 
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = jwt_key
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=5)
+app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=7)
 jwt = JWTManager(app)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:{db_password}@localhost:5432/infinity_nikki_items'
@@ -63,6 +66,7 @@ class UserDetails(db.Model):
     refresh_token = db.Column(db.String(255), nullable=False)
     expires_at = db.Column(db.DateTime(timezone=True), nullable=False)
     avatar = db.Column(db.String(255), nullable=False)
+    source = db.Column(db.String(255), nullable=False)
 
 itemFields = {
     "Name": fields.String,
@@ -97,7 +101,8 @@ userFields = {
     "access_token": fields.String,
     "refresh_token": fields.String,
     "expires_at": fields.DateTime,
-    "avatar": fields.String
+    "avatar": fields.String,
+    "source": fields.String
 }
 
 class Items(Resource):
@@ -272,47 +277,70 @@ def index():
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    discord_access_token = data.get('access_token')
-    token_type = data.get('token_type', 'Bearer')
+    code = data.get('code')
+    if not code:
+        return jsonify({'error': 'Missing authorization code'}), 400
 
-    discord_response = requests.get('https://discord.com/api/users/@me', headers={
-        'Authorization': f'{token_type} {discord_access_token}',
+    token_url = 'https://discord.com/api/oauth2/token'
+    payload = {
+        'client_id': os.getenv("DISCORD_CLIENT_ID"),
+        'client_secret': os.getenv("DISCORD_CLIENT_SECRET"),
+        'code': code,
+        'grant_type': 'authorization_code',
+        'redirect_uri': os.getenv("REDIRECT_URI"),
+        'scope': 'identify',
+    }
+
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    response = requests.post(token_url, data=payload, headers=headers)
+    tokens = response.json()
+
+    access_token = tokens.get('access_token')
+    refresh_token = tokens.get('refresh_token')
+    expires_in = tokens.get('expires_in', 604800)
+    expires_at = datetime.now(timezone.utc) + timedelta(seconds=expires_in)
+
+    if not access_token or not refresh_token:
+        return jsonify({'error': 'Failed to get tokens'}), 500
+
+    discord_api_url = 'https://discord.com/api/users/@me'
+    discord_response = requests.get(discord_api_url, headers={
+        'Authorization': f'Bearer {access_token}',
     })
 
     if discord_response.status_code != 200:
-        return jsonify({"error": "Invalid Discord access token"}), 401
+        return jsonify({"error": "Failed to fetch user data from Discord"}), 500
 
     user_data = discord_response.json()
     user_id = user_data.get('id')
     username = user_data.get('username')
     avatar = user_data.get('avatar')
 
-    expires_in = data.get('expires_in', 3600)
-    expires_at = datetime.now(timezone.utc)+ timedelta(seconds=expires_in)
-    with db.session.begin():
-        user = db.session.get(UserDetails, user_id) 
-
+    try:
+        user = db.session.query(UserDetails).filter_by(id=user_id).first()
         if user:
             user.username = username
-            user.access_token = discord_access_token
+            user.access_token = access_token
+            user.refresh_token = refresh_token
             user.expires_at = expires_at
             user.avatar = avatar
+            user.source = "discord"
         else:
             user = UserDetails(
                 id=user_id,
                 username=username,
-                access_token=discord_access_token,
-                refresh_token='placeholder_refresh_token',
+                access_token=access_token,
+                refresh_token=refresh_token,
                 expires_at=expires_at,
                 avatar=avatar,
+                source="discord"
             )
             db.session.add(user)
 
-        try:
-            db.session.commit()
-        except Exception as e:
-            db.session.rollback()
-            return jsonify({"error": f"Database error: {str(e)}"}), 500
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Database error: {str(e)}"}), 500
 
     access_jwt_token = create_access_token(identity=user_id)
     refresh_jwt_token = create_refresh_token(identity=user_id)
@@ -322,12 +350,94 @@ def login():
         "refresh_token": refresh_jwt_token,
     })
 
-@app.route('/refresh', methods=['POST'])
+
+@app.route('/refresh_jwt', methods=['GET'])
 @jwt_required(refresh=True)
-def refresh():
+def refresh_jwt():
     current_user = get_jwt_identity()
     new_access_token = create_access_token(identity=current_user)
-    return jsonify({'access_token': new_access_token})
+    new_refresh_token = create_refresh_token(identity=current_user)
+    return jsonify({
+        'access_token': new_access_token,
+        'refresh_token': new_refresh_token,
+    })
+
+@app.route('/refresh-discord', methods=['POST'])
+def refresh_discord():
+    data = request.get_json()
+    user_id = data.get('user_id')
+
+    if not user_id:
+        return jsonify({"error": "User ID is required"}), 400
+    
+    user = db.session.query(UserDetails).filter_by(id=user_id).first()
+    if not user:
+        return jsonify({"error": "Invalid user"}), 401
+    
+    token_url = 'https://discord.com/api/oauth2/token'
+    client_id = os.getenv("DISCORD_CLIENT_ID")
+    client_secret = os.getenv("DISCORD_CLIENT_SECRET")
+    
+    payload = {
+        'client_id': client_id,
+        'client_secret': client_secret,
+        'grant_type': 'refresh_token',
+        'refresh_token': user.refresh_token,
+    }
+
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+
+    discord_response = requests.post(token_url, data=payload, headers=headers)
+
+    if discord_response.status_code != 200:
+        error_response = discord_response.json()
+        
+        if error_response.get('error') == 'invalid_grant':
+            return jsonify({
+                "error": "Refresh token is expired or invalid. Please log in again."
+            }), 401
+        
+        return jsonify({"error": "Failed to refresh token from Discord", "response": error_response}), 401
+
+    refreshed_tokens = discord_response.json()
+    new_access_token = refreshed_tokens.get('access_token')
+    new_refresh_token = refreshed_tokens.get('refresh_token')
+    expires_in = refreshed_tokens.get('expires_in', 604800)
+
+    if not new_access_token or not new_refresh_token:
+        return jsonify({"error": "Discord did not return new tokens"}), 500
+
+    try:
+        user.access_token = new_access_token
+        user.refresh_token = new_refresh_token
+        user.expires_at = datetime.now(timezone.utc) + timedelta(seconds=expires_in)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Database error: {str(e)}"}), 500
+    return jsonify({"message": "Discord token refreshed successfully."})
+
+@app.route('/get-expiration', methods=['GET'])
+def get_expiration():
+    refresh_token = request.args.get('refresh_token')
+
+    if not refresh_token:
+        return jsonify({'error': 'Missing refresh token'}), 400
+
+    try:
+        decoded_token = decode_token(refresh_token)
+        user_id = decoded_token['sub'] 
+        user = UserDetails.query.filter_by(id=user_id).first()
+        
+        if user:
+            return jsonify(
+                {'expires_at': user.expires_at.isoformat(),
+                 'user_id': user_id}
+            )
+        else:
+            return jsonify({'error': 'User not found'}), 404
+    except Exception as e:
+        return jsonify({'error': 'Invalid or expired refresh token'}), 401
 
 if __name__ == '__main__':
     from waitress import serve

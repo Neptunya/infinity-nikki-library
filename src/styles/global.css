@@ -93,6 +93,7 @@ input[type=text] {
     padding: 15px;
     margin: 10px 20px;
     border-radius: 10px;
+	min-height: 170px;
 	overflow: hidden;
 }
 
