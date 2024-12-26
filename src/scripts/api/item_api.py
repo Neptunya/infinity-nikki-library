@@ -431,8 +431,7 @@ def get_expiration():
         
         if user:
             return jsonify(
-                {'expires_at': user.expires_at.isoformat(),
-                 'user_id': user_id}
+                {'expires_at': user.expires_at.isoformat()}
             )
         else:
             return jsonify({'error': 'User not found'}), 404
