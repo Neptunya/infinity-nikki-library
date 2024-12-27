@@ -2,6 +2,48 @@ from scraper_helper import *
 import csv
 import os
 import enchant
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv
+import json
+
+pg.FAILSAFE = True
+pg.PAUSE = 0.5
+
+ignore = dict.fromkeys(["Noir Creed",
+						"Homeward Path",
+						"Back on Top",
+						"Cool Summer",
+						"Chilling Breeze",
+						"Continuation of Vows",
+						"New Trial",
+						"Prophecies of Coming Days",
+						"Forging Legends",
+						"Universe's Offspring",
+						"Dominating Realms",
+						"Dancing Along Star Trails",
+						"Pink  Blue",
+						"Sweet  Cool"])
+
+app = Flask(__name__)
+load_dotenv()
+db_password = os.getenv("DB_PASSWORD")
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:{db_password}@localhost:5432/infinity_nikki_items'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+class ItemDetails(db.Model):
+    __tablename__ = 'item_details'
+    Name = db.Column(db.String(255), primary_key=True)
+    Rarity = db.Column(db.Integer, nullable=True)
+    Slot = db.Column(db.String(255), nullable=True)
+    Outfit = db.Column(db.String(255), nullable=True)
+    Labels = db.Column(db.String(255), nullable=True)
+    Source = db.Column(db.String(255), nullable=True)
+    Style = db.Column(db.String(255), nullable=True)
+    Banner = db.Column(db.String(255), nullable=True)
+
+    levels = db.relationship('LevelDetails', backref='item')
 
 def is_non_english_word(word):
     dictionary = enchant.Dict("en_US")
@@ -89,6 +131,109 @@ def scrape_all():
 		pg.scroll(-1725)
 		time.sleep(1)
 
+def scrape_new(slot):
+	with app.app_context():
+		for y in range(1, 2):
+			for x in range(6):
+				x_mod = x * x_cards_interval
+				y_mod = y_cards_interval[y]
+				name = get_name(x_mod, y_mod)
+				if name.strip():
+					exists = db.session.query(
+								db.exists().where(ItemDetails.Name == name.strip())
+							).scalar()
+					if not exists and name not in ignore.keys():
+						print(name)
+						get_item_details_mod(x, y, slot)
+				else:
+					break
+		prev_item_name = get_name(0, y_cards_interval[1])
+		pg.moveTo(x_cards[0], y_cards[2])
+		pg.scroll(-850)
+		time.sleep(2)
+
+		while (prev_item_name != get_name(0, y_cards_interval[2])):
+			prev_item_name = get_name(0, y_cards_interval[2])
+			for i in range(6):
+				x_mod = i * x_cards_interval
+				y_mod = y_cards_interval[2]
+				name = get_name(x_mod, y_mod)
+				
+				if name.strip():
+					exists = db.session.query(
+								db.exists().where(ItemDetails.Name == name.strip())
+							).scalar()
+					if not exists and name not in ignore.keys():
+						print(name)
+						get_item_details_mod(i, 2, slot)
+				else:
+					name = get_name(x_mod, 576)
+					if name.strip():
+						exists = db.session.query(
+									db.exists().where(ItemDetails.Name == name.strip())
+								).scalar()
+						if not exists and name not in ignore.keys():
+							print(name)
+							get_item_details_mod(i, 3, slot)
+					else:
+						break
+
+			pg.moveTo(x_cards[0], y_cards[2])
+			pg.scroll(-1725)
+			time.sleep(2)
+
+with open('./python/json/outfits.json', 'r') as file:
+    outfits_data = json.load(file)
+
+def name_exists(name):
+	for outfit_key, outfit_value in outfits_data["outfits"].items():
+		if name.strip() == outfit_value["Outfit"]:
+			return True
+	return False
+
+def check_outfits():
+	for y in range(1, 2):
+		for x in range(6):
+			x_mod = x * x_cards_interval
+			y_mod = y_cards_interval[y]
+			name = get_name(x_mod, y_mod)
+			if name.strip():
+				exists = exists = name_exists(name)
+				if not exists:
+					with open("./python/txt/new_outfits.txt", "a") as file:
+						file.write(f"{name}\n")
+			else:
+				break
+	prev_item_name = get_name(0, y_cards_interval[1])
+	pg.moveTo(x_cards[0], y_cards[2])
+	pg.scroll(-850)
+	time.sleep(2)
+
+	while (prev_item_name != get_name(0, y_cards_interval[2])):
+		prev_item_name = get_name(0, y_cards_interval[2])
+		for i in range(6):
+			x_mod = i * x_cards_interval
+			y_mod = y_cards_interval[2]
+			name = get_name(x_mod, y_mod)
+			
+			if name.strip():
+				exists = exists = name_exists(name)
+				if not exists:
+					with open("./python/txt/new_outfits.txt", "a") as file:
+						file.write(f"{name}\n")
+			else:
+				name = get_name(x_mod, 576)
+				if name.strip():
+					exists = exists = name_exists(name)
+					if not exists:
+						with open("./python/txt/new_outfits.txt", "a") as file:
+							file.write(f"{name}\n")
+				else:
+					break
+		pg.moveTo(x_cards[0], y_cards[2])
+		pg.scroll(-1725)
+		time.sleep(2)
+
 def scrape_one_lvl(name, rarity, slot, zero=False):
 	r = []
 	ss = [slot, '']
@@ -149,7 +294,7 @@ def scrape_stats(name, rarity, slot):
 	# subsequent lvls
 	pg.moveTo(upgrade[0], upgrade[1])
 	while (lvl < 10):
-		pg.click()
+		pdi.click()
 		r.append(name)
 		r.append(rarity)
 		r.extend(ss)
@@ -167,17 +312,55 @@ def scrape_stats(name, rarity, slot):
 		csvwriter = csv.writer(csvfile)
 		csvwriter.writerows(rows)
 
-# vid = gw.getWindowsWithTitle('')[0]
-# vid.activate()
-# time.sleep(1)
-# scrape_one_lvl("Old Tale", 4, 'Handheld')
-# pg.moveTo(100, 100)
-
-
-in_w.activate()
-time.sleep(2)
-scrape_stats("Cocoa Dream", 3, 'Hair')
-
+def glow_up_macro():
+	#check_outfits()
+	
+	slots = [
+		'Hair','Dress','Outerwear','Top','Bottom','Socks','Shoes',
+		'Hair Accessory','Headwear','Earrings','Neckwear','Bracelet','Choker','Gloves',
+		'Face Decoration','Chest Accessory','Pendant','Backpiece','Ring','Arm Decoration','Handheld'
+	]
+	
+	buttons = [
+		[131, 321],  #0: hair
+		[131, 438],  #dress
+		[131, 556],  #outerwear
+		[131, 674],  #top
+		[131, 787],  #bottom
+		[131, 910],  #socks
+		[131, 1010], #shoes/accessory tab
+		[131, 1010], #7: dummy val/hair acc
+		[131, 731],  #headwear
+		[131, 843],  #earrings
+		[131, 944],  #neckwear
+		[131, 1007], #the rest
+	]
+	
+	for i in range(7):
+		lc(buttons[i])
+		#scrape_new(slots[i])
+	
+	pg.moveTo(buttons[6][0], buttons[6][1])
+	pg.scroll(-500)
+	pg.click(buttons[6])
+	#scrape_new(slots[i])
+	
+	for i in range(8, 11):
+		lc(buttons[i])
+		#scrape_new(slots[i])
+	
+	pg.moveTo([131, 1007])	
+	pg.scroll(-200)
+	time.sleep(1.5)
+	lc([131, 1007])
+	#scrape_new(slots[11])
+	
+	for i in range(12, len(slots)):
+		time.sleep(1)
+		pg.scroll(-400)
+		time.sleep(1.5)
+		lc([131, 1007])
+		#scrape_new(slots[i])
 
 # time.sleep(2)
 # file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/')
@@ -185,9 +368,10 @@ scrape_stats("Cocoa Dream", 3, 'Hair')
 # 	print(file)
 # 	check_incr(f'./python/csv/unprocessed/{file}')
 
-# scrape_all()
-# f = './python/csv/unprocessed/handheld.csv'
-# with open(f, 'w', newline='') as csvfile:
+in_w.activate() 
+time.sleep(1)
+glow_up_macro()
+# f = './python/csv/unprocessed/1-1a.csv'
+# with open(f, 'a', newline='') as csvfile:
 # 		csvwriter = csv.writer(csvfile)
-# 		csvwriter.writerow(fields)
 # 		csvwriter.writerows(rows)
