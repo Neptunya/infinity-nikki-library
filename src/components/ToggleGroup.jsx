@@ -4,7 +4,7 @@ import { theme } from '../styles/theme';
 import { toggleUnobtainable, toggleRecolor } from '../scripts/database';
 
 export default function ToggleGroup() {
-  const [unobtainableChecked, setUnobtainableChecked] = useState(false);
+  const [unobtainableChecked, setUnobtainableChecked] = useState(true);
   const [recolorChecked, setRecolorChecked] = useState(false);
   const handleUnobtainableToggleChange = (event) => {
     setUnobtainableChecked(event.target.checked);

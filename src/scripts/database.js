@@ -6,7 +6,7 @@ let selectedLabels = [];
 let selectedStyles = [];
 let selectedSources = [];
 let selectedStyleSort = [];
-let hideUnobtainable = true;
+let hideUnobtainable = false;
 let hideRecolor = true;
 let searchQuery = "";
 let selectedSort = "";
@@ -135,6 +135,20 @@ function renderItems(data) {
         
         if (item['Labels']) {
             p.innerHTML += '<br><i>' + item['Labels'] + '</i>';
+        }
+        
+        if (item['Banner']) {
+            if (item['Banner'].includes("Past Content")) {
+                const unobMsg = document.createElement('p');
+                unobMsg.innerHTML += 'Past Content';
+                unobMsg.classList.add('unobtainable-msg');
+                cardText.appendChild(unobMsg)
+            } else if (item['Banner'].includes("Future Content")) {
+                const unobMsg = document.createElement('p');
+                unobMsg.innerHTML += 'Future Content';
+                unobMsg.classList.add('unobtainable-msg');
+                cardText.appendChild(unobMsg)
+            }
         }
         itemCardContainer.appendChild(card);
     });
