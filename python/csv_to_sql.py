@@ -38,13 +38,15 @@ for _, row in details.iterrows():
     row = row.where(pd.notna(row), None)
     with engine.connect() as conn:
         stmt = update(details_table).where(details_table.c.Name == row['Name']).values(**row.to_dict())
-        result = conn.execute(stmt)
+        conn.execute(stmt)
         conn.commit()
 
-# for _, row in levels.iterrows():
-#     with engine.connect() as conn:
-#         stmt = update(levels_table).where(
-#             levels_table.c.Name == row['Name'],
-#             levels_table.c.Level == row['Level']
-#         ).values(**row.to_dict())
-#         conn.execute(stmt)
+for _, row in levels.iterrows():
+    row = row.where(pd.notna(row), None)
+    with engine.connect() as conn:
+        stmt = update(levels_table).where(
+            levels_table.c.Name == row['Name'],
+            levels_table.c.Level == row['Level']
+        ).values(**row.to_dict())
+        conn.execute(stmt)
+        conn.commit()

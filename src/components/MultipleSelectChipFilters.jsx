@@ -24,11 +24,11 @@ export default function MultipleSelectChipFilters() {
     ];
     
     const sources = [
-      "Resonance: Croaker's Whisper",
-      'Resonance: Bubbling Affections',
+      "Resonance: Celestial Wishes",
       'Resonance: Distant Sea',
       'Limited-Time Resonance',
       'Premium Items',
+      'Event: Into a Starry Night',
       'Event Items',
       'Treasure Chest',
       'Styling Challenge',

@@ -239,8 +239,9 @@ def print_unique_vals():
         json_data = json.load(file)
 
     unique_values = extract_unique_vals(json_data)
+    sorted_values = sorted(unique_values)
     print('Unique Values in JSON:')
-    for value in unique_values:
+    for value in sorted_values:
         print(value)
 
 def print_no_source():
@@ -276,10 +277,12 @@ def scrape_new_item(r):
         curr_name = img_to_str(sc("name", name_box))
         i += 1
 
-in_w.activate() 
-time.sleep(2)
-pg.moveTo(90, 395)
-sc(f'../../../public/images/items/Lotus Umbrella', img_box)
-pg.moveTo(10, 10)
+print_unique_vals()
+
+# in_w.activate() 
+# time.sleep(2)
+# pg.moveTo(90, 395)
+
+# pg.moveTo(10, 10)
 
 

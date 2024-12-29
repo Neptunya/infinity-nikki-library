@@ -2,22 +2,6 @@ import requests
 import json
 
 future = [
-    "Batwing Pulse",
-    "Hexbreaker",
-    "Violet Phantom",
-    "Golden Petal Drift",
-    "Golden Vines",
-    "Golden Dance",
-    "Golden Dawn",
-    "Golden Kiss",
-    "Fluffy Warmth",
-    "Pink Sheep",
-    "Journey with Daisy",
-    "Twilight Hour",
-    "Top View",
-    "Oceanic Hero",
-    "Azure Canvas",
-    "Fruit Candy"
 ]
 
 def get_unobtainable_items():

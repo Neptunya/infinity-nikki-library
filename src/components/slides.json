@@ -1,28 +1,10 @@
 [
     {
-        "img": "images/carousel/reso_frog.png",
-        "text": "Ending",
-        "start": "December 18, 2024 19:00 UTC-7",
-        "end": "December 29, 2024 12:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Croaker%27s%20Whisper",
-        "button": "Check Out Banner Items",
-        "alt": "Croaker's Whisper banner"
-    },
-    {
-        "img": "images/carousel/reso_bubb.png",
-        "text": "Ending",
-        "start": "December 18, 2024 19:00 UTC-7",
-        "end": "December 29, 2024 12:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Bubbling%20Affections",
-        "button": "Check Out Banner Items",
-        "alt": "Bubbling Affections banner"
-    },
-    {
         "img": "images/carousel/reso.png",
         "text": "Ending",
         "start": "December 29, 2024 12:50 UTC-7",
         "end": "January 23, 2025 12:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Celestial%20Wishes",
+        "link": null,
         "button": "Check Out Banner Items",
         "shop": true,
         "alt": "Shop banner"
@@ -32,18 +14,8 @@
         "text": "Ending",
         "start": "December 29, 2024 12:50 UTC-7",
         "end": "January 23, 2025 12:50 UTC-7",
-        "link": "/database?source=Event%20Items",
+        "link": null,
         "button": "Check Out Event Items",
-        "shop": true,
-        "alt": "Shop banner"
-    },
-    {
-        "img": "images/carousel/shop_2.png",
-        "text": "Shop Update on",
-        "start": "December 19, 2024 10:00 UTC-7",
-        "end": "December 29, 2024 12:50 UTC-7",
-        "link": "/database?source=Premium%20Items",
-        "button": "Check Out Shop Items",
         "shop": true,
         "alt": "Shop banner"
     },
@@ -52,7 +24,7 @@
         "text": "Shop Update on",
         "start": "December 29, 2024 12:50 UTC-7",
         "end": "January 23, 2025 12:50 UTC-7",
-        "link": "/database?source=Premium%20Items",
+        "link": null,
         "button": "Check Out Shop Items",
         "shop": true,
         "alt": "Shop banner"

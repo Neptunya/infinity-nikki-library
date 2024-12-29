@@ -106,7 +106,6 @@ function Item(props) {
 				<img style={{maxHeight: 300}} src={props.item.img}/>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
 					<p>Database not yet ready</p>
-					
 				</div>
 			</div>
 		)
