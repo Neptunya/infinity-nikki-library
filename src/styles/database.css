@@ -35,11 +35,12 @@ button:disabled {
     flex: 1 1 400px;
     overflow: hidden;
     background-color: #353142;
+    position: relative;
 }
 
 .item-card h3 {
     margin-top: 5px;
-    margin-bottom: 0px;
+    margin-bottom: 4px;
     line-height: 1;
     padding-top: 10px;
     padding-bottom: 1px;
@@ -60,6 +61,18 @@ button:disabled {
 
 .item-card-link h3, .item-card-link p {
 	color: white;
+}
+
+.heart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
 }
 
 .item-card:hover {
