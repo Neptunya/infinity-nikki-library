@@ -91,7 +91,10 @@ export default function ItemDialog() {
 								&& infoData[0].Banner !== "In Shop"
 								&& infoData[0].Banner !== "Past Content"
 								&& infoData[0].Banner !== "Future Content"
-								? ` (${infoData[0].Banner})` : ''}
+								&& (infoData[0].Banner.split(',').length - 1 <= 1)
+								? ` (${infoData[0].Banner.includes('Content') 
+									? infoData[0].Banner.substring(infoData[0].Banner.indexOf(',') + 1).trim() 
+									: infoData[0].Banner})` : ''}
 							</p>
 						</div>
 						<div>
