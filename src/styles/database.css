@@ -28,7 +28,7 @@ button:disabled {
 
 .item-card {
     display: flex;
-    min-height: 175px;
+    min-height: 190px;
     padding: 5px;
     margin: 5px 10px;
     border-radius: 10px;
