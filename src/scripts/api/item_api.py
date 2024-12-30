@@ -123,7 +123,7 @@ class Items(Resource):
             'Resonance: Distant Sea': [ItemDetails.Banner.contains('Distant Sea')],
             'Premium Items': [ItemDetails.Source == premium],
             'Limited-Time Resonance': [ItemDetails.Source == lim_reso],
-            'Event: Into a Starry Night': [ItemDetails.Banner.contains('Into a Starry Night')],
+            'Event: Into a Starry Night': [ItemDetails.Source.contains('Into a Starry Night')],
             'Event Items': [ItemDetails.Source.contains("event")],
             'Currently Unobtainable': [
                 and_(

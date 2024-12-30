@@ -10,7 +10,7 @@ import re
 pytesseract.pytesseract.tesseract_cmd = r'C:/Program Files/Tesseract-OCR/tesseract'
 pg.FAILSAFE = True
 pg.PAUSE = 0.5
-#in_w = gw.getWindowsWithTitle('Infinity Nikki')[0]
+in_w = gw.getWindowsWithTitle('Infinity Nikki')[0]
 
 back = [76, 59]
 upgrade = [1555, 551]
