@@ -8,6 +8,7 @@ let selectedSources = [];
 let selectedStyleSort = [];
 let hideUnobtainable = false;
 let hideRecolor = true;
+let newOnly = false;
 let searchQuery = "";
 let selectedSort = "";
 let descending = true;
@@ -148,6 +149,11 @@ function renderItems(data) {
                 unobMsg.innerHTML += 'Future Content';
                 unobMsg.classList.add('unobtainable-msg');
                 cardText.appendChild(unobMsg)
+            } else if (item['Banner'].includes("New!")) {
+                const unobMsg = document.createElement('p');
+                unobMsg.innerHTML += 'New!';
+                unobMsg.classList.add('unobtainable-msg');
+                cardText.appendChild(unobMsg)
             }
         }
         itemCardContainer.appendChild(card);
@@ -286,6 +292,12 @@ export function toggleRecolor() {
     getFilteredItems();
 }
 
+export function toggleNew() {
+    currentPage = 1;
+    newOnly = !newOnly;
+    getFilteredItems();
+}
+
 function initializePreselectedSource() {
     const params = new URLSearchParams(window.location.search);
     const preselectedSources = params.getAll('source');
@@ -325,6 +337,10 @@ export function getFilteredItems() {
     
     if (hideRecolor) {
         url += 'source=Recolor&';
+    }
+    
+    if (newOnly) {
+        url += 'source=New%20Only&'
     }
     
     if (selectedStyleSort.length > 0 && styles.includes(selectedStyleSort)) {

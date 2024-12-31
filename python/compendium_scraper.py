@@ -244,6 +244,16 @@ def print_unique_vals():
     for value in sorted_values:
         print(value)
 
+def print_items_csv(name):
+    f = f'./python/csv/unprocessed/{name}'
+    unique_names = set()
+    with open(f, mode='r', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            unique_names.add(row['Name'])
+    for unique_name in unique_names:
+        print(f'"{unique_name}",')
+
 def print_no_source():
     file_path = './python/csv/clothing_items_details.csv'
     with open(file_path, "r", encoding="utf-8") as csvfile:
@@ -290,9 +300,11 @@ def print_new_makeup():
             if name and name not in makeup:
                 print(name)
 
-time.sleep(1)
-pg.moveTo(90, 395)
-scrape_new_item(3)
-pg.moveTo(10, 10)
+print_items_csv("new.csv")
+
+# time.sleep(1)
+# pg.moveTo(90, 395)
+
+# pg.moveTo(10, 10)
 
 

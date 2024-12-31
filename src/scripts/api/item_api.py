@@ -130,7 +130,8 @@ class Items(Resource):
                     ItemDetails.Source.notin_(always_avail_vals),
                     ItemDetails.Banner.is_(None)
                 ),
-                ~or_(*[ItemDetails.Banner.like(f"%{banner}%") for banner in limited_time])
+                ~or_(*[ItemDetails.Banner.like(f"%{banner}%") for banner in limited_time],
+                     ItemDetails.Source.contains('Into a Starry Night'))
             ],
             'Currently Unobtainable2': [
                 ~and_(ItemDetails.Source.notin_(always_avail_vals),
@@ -140,7 +141,8 @@ class Items(Resource):
                 or_(
                 ~ItemDetails.Outfit.contains(":"),
                 ItemDetails.Outfit == None)
-            ]
+            ],
+            'New Only': [ItemDetails.Banner.contains('New')]
         }
 
         if rarity:
@@ -155,7 +157,7 @@ class Items(Resource):
         
         matched_conditions = set()
         for s in source:
-            if s in source_map and s != "Currently Unobtainable2" and s != "Recolor":
+            if s in source_map and s != "Currently Unobtainable2" and s != "Recolor" and s != "New Only":
                 matched_conditions.update(source_map[s])
 
         conditions = []
@@ -167,6 +169,8 @@ class Items(Resource):
             q = and_(q, *source_map["Currently Unobtainable2"])
         if "Recolor" in source:
             q = and_(q, *source_map["Recolor"])
+        if "New Only" in source:
+            q = and_(q, ItemDetails.Banner.contains('New'))
 
         query = query.filter(q)
         filtered_items = query.all()
