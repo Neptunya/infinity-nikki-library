@@ -63,19 +63,7 @@ button:disabled {
 	color: white;
 }
 
-.heart {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 0;
-    z-index: 10;
-}
-
-.item-card:hover {
+.item-card.item-card-link:hover {
     background-color: #494554;
 }
 

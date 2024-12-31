@@ -1,3 +1,6 @@
+import ReactDOM from 'react-dom/client';
+import ItemCard from '../components/ItemCard.jsx'
+
 let itemsPerPage = 10;
 let currentPage = 1;
 let selectedRarities = [];
@@ -16,6 +19,9 @@ const styles = ["Elegant", "Fresh", "Sweet", "Sexy", "Cool"];
 
 let allItems = [];
 let totalItems = 0;
+
+const itemCardContainer = document.getElementById('item-card-container');
+const root = ReactDOM.createRoot(itemCardContainer);
 
 const collapsible = document.getElementsByClassName("collapsible");
 
@@ -58,8 +64,8 @@ function adjustCollapsibleMaxHeight() {
         }
     }, 100);
 }
+
 function renderItems(data) {
-    const itemCardContainer = document.getElementById('item-card-container');
     itemCardContainer.innerHTML = '';
 
     if (data.length === 0) {
@@ -90,102 +96,12 @@ function renderItems(data) {
     const endIndex = startIndex + itemsPerPage;
     const itemsToRender = data.slice(startIndex, endIndex);
 
-    itemsToRender.forEach(item => {
-        const card = document.createElement('a');
-        card.classList.add('item-card-link')
-        card.classList.add('item-card');
-        card.classList.add('card-row');
-        const link = `#${item['Name']}`;
-        card.href = link;
-        
-
-        const img = document.createElement('img');
-        img.classList.add('item-img')
-        img.src = `/images/items/${item.Name}.png`;
-        img.alt = item.Name;
-        card.appendChild(img);
-
-        
-        
-        const cardText = document.createElement('div');
-        cardText.classList.add('item-card-text');
-        card.appendChild(cardText)
-
-        const h3 = document.createElement('h3');
-        h3.textContent = item['Name'];
-        cardText.appendChild(h3);
-        
-        if (item['Outfit']) {
-            const outfit = document.createElement('p')
-            outfit.innerHTML += "<strong><i>" + item['Outfit'] + "</i></strong>";
-            outfit.style.textWrap = 'wrap';
-            outfit.style.marginTop = '4px';
-            cardText.appendChild(outfit);
-        }
-        
-        const itemNameOwned = `${item['Name']}-owned`;
-        const checkboxOwned = document.createElement('input');
-        checkboxOwned.type = 'checkbox';
-        checkboxOwned.id = itemNameOwned;
-        checkboxOwned.name = itemNameOwned;
-        checkboxOwned.value = itemNameOwned;
-        checkboxOwned.style.marginTop = '4px';
-        cardText.appendChild(checkboxOwned);
-        
-        const labelOwned = document.createElement('label');
-        labelOwned.for = itemNameOwned;
-        labelOwned.innerHTML = "Owned<br>";
-        cardText.appendChild(labelOwned);
-        
-        const itemNameWish = `${item['Name']}-wished`;
-        const checkboxWish = document.createElement('input');
-        checkboxWish.type = 'checkbox';
-        checkboxWish.id = itemNameWish;
-        checkboxWish.name = itemNameWish;
-        checkboxWish.value = itemNameWish;
-        cardText.appendChild(checkboxWish);
-        
-        const labelWish = document.createElement('label');
-        labelWish.for = itemNameWish;
-        labelWish.innerHTML = "Wishlist<br>";
-        cardText.appendChild(labelWish);
-        
-        const itemNameLvl = `${item['Name']}-level`;
-        const labelLevel = document.createElement('label');
-        labelLevel.for = itemNameLvl;
-        labelLevel.innerHTML = "Level:"
-        cardText.appendChild(labelLevel);
-        
-        const levelInput = document.createElement('input');
-        levelInput.type = 'number';
-        levelInput.id = itemNameLvl;
-        levelInput.name = itemNameLvl;
-        levelInput.min = 0;
-        levelInput.max = 11;
-        cardText.appendChild(levelInput);
-        
-        const lineBreak = document.createElement('br');
-        cardText.appendChild(lineBreak);
-        
-        const detailsButton = document.createElement('button');
-        detailsButton.innerHTML = "More Details"
-        cardText.appendChild(detailsButton);
-        
-        const heartButton = document.createElement('button');
-        heartButton.className = 'heart';
-        heartButton.innerText = '❤';
-        heartButton.title = 'Add to favorites';
-        heartButton.setAttribute('aria-pressed', 'false');
     
-        heartButton.addEventListener('click', () => {
-            const isFavorited = heartButton.classList.toggle('favorited');
-            heartButton.setAttribute('aria-pressed', isFavorited.toString());
-            heartButton.title = isFavorited ? 'Remove from favorites' : 'Add to favorites';
-        });
-        card.appendChild(heartButton);
-        
-        itemCardContainer.appendChild(card);
-    });
+    root.render(
+        itemsToRender.map((item) => (
+            <ItemCard key={item.Name} item={item} />
+        ))
+    );
     renderPagination(data.length);
 }
 
