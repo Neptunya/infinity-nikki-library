@@ -161,7 +161,7 @@ def scrape_stats(name, rarity, slot):
 		print(r)
 		rows.append(r.copy())
 		r.clear()
-	lc2(back[0], back[1])
+	pg.moveTo(back[0], back[1])
 	f = f'./python/csv/unprocessed/{file}.csv'
 	with open(f, 'a', newline='') as csvfile:
 		csvwriter = csv.writer(csvfile)
@@ -174,16 +174,16 @@ def scrape_stats(name, rarity, slot):
 # pg.moveTo(100, 100)
 
 
-# in_w.activate()
+#in_w.activate()
+time.sleep(1)
+scrape_stats("Stardust Tonight", 3, 'Arm Decoration')
+
+
 # time.sleep(2)
-# scrape_stats("Lotus Umbrella", 4, 'Handheld')
-
-
-time.sleep(2)
-file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/')
-for file in file_list:
-	print(file)
-	check_incr(f'./python/csv/unprocessed/{file}')
+# file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/')
+# for file in file_list:
+# 	print(file)
+# 	check_incr(f'./python/csv/unprocessed/{file}')
 
 # scrape_all()
 # f = './python/csv/unprocessed/handheld.csv'

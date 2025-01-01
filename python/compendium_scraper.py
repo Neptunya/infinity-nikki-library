@@ -269,7 +269,7 @@ def scrape_new_item(r):
     curr_name = img_to_str(sc("name", name_box))
     i = 0
     while prev_name != curr_name:
-        glow_up_stats_to_new(curr_name, r)
+        #glow_up_stats_to_new(curr_name, r)
         #get_source()
         sc(f'../../../public/images/items/{curr_name}', img_box)
         prev_name = curr_name
@@ -300,11 +300,11 @@ def print_new_makeup():
             if name and name not in makeup:
                 print(name)
 
-print_items_csv("new.csv")
+#print_items_csv("new.csv")
 
-# time.sleep(1)
-# pg.moveTo(90, 395)
-
-# pg.moveTo(10, 10)
+time.sleep(1)
+pg.moveTo(90, 395)
+scrape_new_item(4)
+pg.moveTo(10, 10)
 
 
