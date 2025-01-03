@@ -6,6 +6,7 @@ import '../styles/database.css';
 import '../styles/dialog.css';
 import ThemedTextField from '../components/ThemedTextField.jsx';
 import DropdownSortSelect from '../components/DropdownSortSelect.jsx';
+import DropdownModeSelect from '../components/DropdownModeSelect.jsx';
 import MultipleSelectChipFilters from '../components/MultipleSelectChipFilters.jsx';
 import ItemDialog from '../components/ItemDialog.jsx';
 import ToggleGroup from '../components/ToggleGroup.jsx'
@@ -39,7 +40,10 @@ import ToggleGroup from '../components/ToggleGroup.jsx'
 	<body>
 		<Header />
 		<div class="content-container">
-			<h1>Database</h1>
+		<div style="display: flex; flex-wrap: wrap; justify-content: space-between, gap: 16px;">
+			<h1 style="flex-grow: 1;" id="title">Database</h1>
+			<DropdownModeSelect client:only="react" />
+		</div>
 			<p>A full list of clothing items available in Infinity Nikki.</p>
 			<p><b>Status: </b>Up to date as of December 18th, just missing brightened images for Timeless Echo.<p>
 			<ItemDialog client:only="react" />

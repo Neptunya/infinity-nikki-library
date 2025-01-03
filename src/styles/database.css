@@ -75,7 +75,7 @@ button:disabled {
     z-index: 10;
 }
 
-.item-card:hover {
+.item-card-link:hover {
     background-color: #494554;
 }
 

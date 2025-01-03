@@ -1,3 +1,5 @@
+import { render } from "astro/runtime/server/index.js";
+
 let itemsPerPage = 10;
 let currentPage = 1;
 let selectedRarities = [];
@@ -6,6 +8,7 @@ let selectedLabels = [];
 let selectedStyles = [];
 let selectedSources = [];
 let selectedStyleSort = [];
+let selectedMode = 'db';
 let hideUnobtainable = true;
 let hideRecolor = true;
 let searchQuery = "";
@@ -91,53 +94,151 @@ function renderItems(data) {
     const itemsToRender = data.slice(startIndex, endIndex);
 
     itemsToRender.forEach(item => {
-        const card = document.createElement('a');
-        card.classList.add('item-card-link')
-        card.classList.add('item-card');
-        card.classList.add('card-row');
-        const link = `#${item['Name']}`;
-        card.href = link;
-        
-
-        const img = document.createElement('img');
-        img.classList.add('item-img')
-        img.src = `/images/items/${item.Name}.png`;
-        img.alt = item.Name;
-        card.appendChild(img);
-
-        const cardText = document.createElement('div');
-        cardText.classList.add('item-card-text');
-        card.appendChild(cardText)
-
-        const h3 = document.createElement('h3');
-        h3.textContent = item['Name'];
-        cardText.appendChild(h3);
-
-        if (item['Outfit']) {
-            const outfit = document.createElement('p')
-            outfit.innerHTML += "<strong><i>" + item['Outfit'] + "</i></strong>";
-            outfit.style.textWrap = 'wrap';
-            outfit.style.marginTop = '4px';
-            cardText.appendChild(outfit);
-        }
-
-        const p = document.createElement('p');
-        let stars = '';
-        const rarityValue = item['Rarity'];
-        stars = '✧'.repeat(rarityValue);
-        p.innerHTML = stars;
-        cardText.appendChild(p)
-        
-        if (item['Style']) {
-            p.innerHTML += '<br>' + item['Style'];
-        }
-        
-        if (item['Labels']) {
-            p.innerHTML += '<br><i>' + item['Labels'] + '</i>';
-        }
-        itemCardContainer.appendChild(card);
+        selectedMode == 'db' ?
+            renderDatabaseCard(item) :
+            renderTrackerCard(item);
     });
     renderPagination(data.length);
+}
+
+function renderDatabaseCard(item) {
+    const itemCardContainer = document.getElementById('item-card-container');
+    const card = document.createElement('a');
+    card.classList.add('item-card-link')
+    card.classList.add('item-card');
+    card.classList.add('card-row');
+    const link = `#${item['Name']}`;
+    card.href = link;
+
+    const img = document.createElement('img');
+    img.classList.add('item-img')
+    img.src = `/images/items/${item.Name}.png`;
+    img.alt = item.Name;
+    card.appendChild(img);
+
+    const cardText = document.createElement('div');
+    cardText.classList.add('item-card-text');
+    card.appendChild(cardText)
+
+    const h3 = document.createElement('h3');
+    h3.textContent = item['Name'];
+    cardText.appendChild(h3);
+
+    if (item['Outfit']) {
+        const outfit = document.createElement('p')
+        outfit.innerHTML += "<strong><i>" + item['Outfit'] + "</i></strong>";
+        outfit.style.textWrap = 'wrap';
+        outfit.style.marginTop = '4px';
+        cardText.appendChild(outfit);
+    }
+
+    const p = document.createElement('p');
+    let stars = '';
+    const rarityValue = item['Rarity'];
+    stars = '✧'.repeat(rarityValue);
+    p.innerHTML = stars;
+    cardText.appendChild(p)
+    
+    if (item['Style']) {
+        p.innerHTML += '<br>' + item['Style'];
+    }
+    
+    if (item['Labels']) {
+        p.innerHTML += '<br><i>' + item['Labels'] + '</i>';
+    }
+    itemCardContainer.appendChild(card);
+}
+
+function renderTrackerCard(item) {
+    const itemCardContainer = document.getElementById('item-card-container');
+    const card = document.createElement('div');
+    card.classList.add('item-card');
+    card.classList.add('card-row');
+
+    const img = document.createElement('img');
+    img.classList.add('item-img')
+    img.src = `/images/items/${item.Name}.png`;
+    img.alt = item.Name;
+    card.appendChild(img);
+    
+    const cardText = document.createElement('div');
+    cardText.classList.add('item-card-text');
+    card.appendChild(cardText)
+
+    const h3 = document.createElement('h3');
+    h3.textContent = item['Name'];
+    cardText.appendChild(h3);
+    
+    if (item['Outfit']) {
+        const outfit = document.createElement('p')
+        outfit.innerHTML += "<strong><i>" + item['Outfit'] + "</i></strong>";
+        outfit.style.textWrap = 'wrap';
+        outfit.style.marginTop = '4px';
+        cardText.appendChild(outfit);
+    }
+    
+    const itemNameOwned = `${item['Name']}-owned`;
+    const checkboxOwned = document.createElement('input');
+    checkboxOwned.type = 'checkbox';
+    checkboxOwned.id = itemNameOwned;
+    checkboxOwned.name = itemNameOwned;
+    checkboxOwned.value = itemNameOwned;
+    checkboxOwned.style.marginTop = '4px';
+    cardText.appendChild(checkboxOwned);
+    
+    const labelOwned = document.createElement('label');
+    labelOwned.for = itemNameOwned;
+    labelOwned.innerHTML = "Owned<br>";
+    cardText.appendChild(labelOwned);
+    
+    const itemNameWish = `${item['Name']}-wished`;
+    const checkboxWish = document.createElement('input');
+    checkboxWish.type = 'checkbox';
+    checkboxWish.id = itemNameWish;
+    checkboxWish.name = itemNameWish;
+    checkboxWish.value = itemNameWish;
+    cardText.appendChild(checkboxWish);
+    
+    const labelWish = document.createElement('label');
+    labelWish.for = itemNameWish;
+    labelWish.innerHTML = "Wishlist<br>";
+    cardText.appendChild(labelWish);
+    
+    const itemNameLvl = `${item['Name']}-level`;
+    const labelLevel = document.createElement('label');
+    labelLevel.for = itemNameLvl;
+    labelLevel.innerHTML = "Level:"
+    cardText.appendChild(labelLevel);
+    
+    const levelInput = document.createElement('input');
+    levelInput.type = 'number';
+    levelInput.id = itemNameLvl;
+    levelInput.name = itemNameLvl;
+    levelInput.min = 0;
+    levelInput.max = 11;
+    cardText.appendChild(levelInput);
+    
+    const lineBreak = document.createElement('br');
+    cardText.appendChild(lineBreak);
+    
+    const detailsButton = document.createElement('button');
+    detailsButton.innerHTML = "More Details"
+    cardText.appendChild(detailsButton);
+    
+    const heartButton = document.createElement('button');
+    heartButton.className = 'heart';
+    heartButton.innerText = '❤';
+    heartButton.title = 'Add to favorites';
+    heartButton.setAttribute('aria-pressed', 'false');
+
+    heartButton.addEventListener('click', () => {
+        const isFavorited = heartButton.classList.toggle('favorited');
+        heartButton.setAttribute('aria-pressed', isFavorited.toString());
+        heartButton.title = isFavorited ? 'Remove from favorites' : 'Add to favorites';
+    });
+    card.appendChild(heartButton);
+    
+    itemCardContainer.appendChild(card);
 }
 
 function renderPagination(totalItems) {
@@ -223,6 +324,13 @@ function adjustItemsPerPageAndRerender(data) {
     
     itemsPerPage = (columns == 1) ? 10 : columns*5;
     renderItems(data);
+}
+
+export function updateMode(mode) {
+    selectedMode = mode;
+    const title = document.getElementById('title');
+    title.innerHTML = selectedMode == 'db' ? "Database" : "Item Tracker"
+    applySearchFilter();
 }
 
 export function getSelectedRarities(rarityValues) {

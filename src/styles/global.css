@@ -55,6 +55,10 @@ a:visited {
 	color: #b38aca;
 }
 
+a:not([href]) {
+    color: #b38aca;
+}
+
 strong {
 	color: #edb1bd;
 }

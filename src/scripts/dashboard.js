@@ -32,7 +32,11 @@ window.onload = () => {
         if (data.access_token && data.refresh_token) {
             localStorage.setItem('access_token', data.access_token);
             localStorage.setItem('refresh_token', data.refresh_token);
-            window.location.href = '/';
+            if (history.length > 2) {
+                history.go(-2);
+            } else {
+                window.location.href = '/';
+            }
         } else {
             loginInfo.innerHTML = "Login failed: Missing tokens from the server. Please try again.<br>If error persists, contact Neptunya.";
             homeLink.style.display = 'block';
