@@ -8,7 +8,7 @@ let selectedLabels = [];
 let selectedStyles = [];
 let selectedSources = [];
 let selectedStyleSort = [];
-let selectedMode = 'db';
+let selectedMode = 'tracker';
 let hideUnobtainable = true;
 let hideRecolor = true;
 let searchQuery = "";
@@ -176,33 +176,40 @@ function renderTrackerCard(item) {
         outfit.style.marginTop = '4px';
         cardText.appendChild(outfit);
     }
-    
+
     const itemNameOwned = `${item['Name']}-owned`;
+    const labelOwned = document.createElement('label');
+    labelOwned.for = itemNameOwned;
+    labelOwned.innerHTML = "Owned";
+    labelOwned.classList.add('checkbox-container');
+    cardText.appendChild(labelOwned);
+
     const checkboxOwned = document.createElement('input');
     checkboxOwned.type = 'checkbox';
     checkboxOwned.id = itemNameOwned;
-    checkboxOwned.name = itemNameOwned;
-    checkboxOwned.value = itemNameOwned;
-    checkboxOwned.style.marginTop = '4px';
-    cardText.appendChild(checkboxOwned);
+    labelOwned.appendChild(checkboxOwned);
     
-    const labelOwned = document.createElement('label');
-    labelOwned.for = itemNameOwned;
-    labelOwned.innerHTML = "Owned<br>";
-    cardText.appendChild(labelOwned);
+    const checkmarkOwned = document.createElement('span');
+    checkmarkOwned.classList.add('checkmark');
+    labelOwned.appendChild(checkmarkOwned);
+    
+    
     
     const itemNameWish = `${item['Name']}-wished`;
-    const checkboxWish = document.createElement('input');
-    checkboxWish.type = 'checkbox';
-    checkboxWish.id = itemNameWish;
-    checkboxWish.name = itemNameWish;
-    checkboxWish.value = itemNameWish;
-    cardText.appendChild(checkboxWish);
+    const labelWished = document.createElement('label');
+    labelWished.for = itemNameWish;
+    labelWished.innerHTML = "Wishlist";
+    labelWished.classList.add('checkbox-container');
+    cardText.appendChild(labelWished);
+
+    const checkboxWished = document.createElement('input');
+    checkboxWished.type = 'checkbox';
+    checkboxWished.id = itemNameWish;
+    labelWished.appendChild(checkboxWished);
     
-    const labelWish = document.createElement('label');
-    labelWish.for = itemNameWish;
-    labelWish.innerHTML = "Wishlist<br>";
-    cardText.appendChild(labelWish);
+    const checkmarkWished = document.createElement('span');
+    checkmarkWished.classList.add('checkmark');
+    labelWished.appendChild(checkmarkWished);
     
     const itemNameLvl = `${item['Name']}-level`;
     const labelLevel = document.createElement('label');
@@ -221,23 +228,27 @@ function renderTrackerCard(item) {
     const lineBreak = document.createElement('br');
     cardText.appendChild(lineBreak);
     
+    const detailsLink = document.createElement('a');
     const detailsButton = document.createElement('button');
+    detailsButton.classList.add('more-details-btn')
     detailsButton.innerHTML = "More Details"
-    cardText.appendChild(detailsButton);
+    detailsLink.href = `#${item['Name']}`;
+    detailsLink.appendChild(detailsButton);
+    cardText.appendChild(detailsLink);
     
     const heartButton = document.createElement('button');
     heartButton.className = 'heart';
-    heartButton.innerText = '❤';
+    heartButton.innerHTML = '<i class="fa-regular fa-heart"></i>';
     heartButton.title = 'Add to favorites';
-    heartButton.setAttribute('aria-pressed', 'false');
 
     heartButton.addEventListener('click', () => {
-        const isFavorited = heartButton.classList.toggle('favorited');
-        heartButton.setAttribute('aria-pressed', isFavorited.toString());
+        const icon = heartButton.querySelector('i');
+        const isFavorited = icon.classList.toggle('fa-solid');
+        icon.classList.toggle('fa-regular', !isFavorited);
+        icon.style.color = isFavorited ? '#edb1bd' : 'white';
         heartButton.title = isFavorited ? 'Remove from favorites' : 'Add to favorites';
     });
     card.appendChild(heartButton);
-    
     itemCardContainer.appendChild(card);
 }
 
