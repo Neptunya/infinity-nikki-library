@@ -95,7 +95,21 @@ function Item(props) {
 	
 		return () => clearInterval(intervalId);
 	}, [eventDate]);
-	if (!props.item.end) {
+	
+	if (!props.item.link) {
+		return (
+			<div>
+				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+					<h3 className="end-date">{`${props.item.text} ${endDate}`}</h3>
+					<p className="time-remaining">{`in ${timeRemaining}`}</p>
+				</div>
+				<img style={{maxHeight: 300}} src={props.item.img}/>
+				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+					<p>Database not yet ready</p>
+				</div>
+			</div>
+		)
+	} else if (!props.item.end) {
 		return (
 			<div>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
@@ -106,53 +120,8 @@ function Item(props) {
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
 					<Button href={props.item.link} variant="outlined" style=
 						{styles.button}>
-						Check Out Banner Items
+						{props.item.button}
 					</Button>
-				</div>
-			</div>
-		)
-	} else if (props.item.shop && props.item.link !== null) {
-		return (
-			<div>
-				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-					<h3 className="end-date">{`Shop Update on ${endDate}`}</h3>
-					<p className="time-remaining">{`in ${timeRemaining}`}</p>
-				</div>
-				<img style={{maxHeight: 300}} src={props.item.img}/>
-				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-					<Button href={props.item.link} variant="outlined" style=
-						{styles.button}>
-						Check Out Shop Items
-					</Button>
-					
-				</div>
-			</div>
-		)
-	} else if (props.item.shop && !props.item.link) {
-		return (
-			<div>
-				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-					<h3 className="end-date">{`Shop Update on ${endDate}`}</h3>
-					<p className="time-remaining">{`in ${timeRemaining}`}</p>
-				</div>
-				<img style={{maxHeight: 300}} src={props.item.img}/>
-				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-					<p>Database not yet ready</p>
-					
-				</div>
-			</div>
-		)
-	} else if (!props.item.link) {
-		return (
-			<div>
-				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-					<h3 className="end-date">{`Ending ${endDate}`}</h3>
-					<p className="time-remaining">{`in ${timeRemaining}`}</p>
-				</div>
-				<img style={{maxHeight: 300}} src={props.item.img}/>
-				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-					<p>Database not yet ready</p>
-					
 				</div>
 			</div>
 		)
@@ -160,17 +129,18 @@ function Item(props) {
 		return (
 			<div>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-					<h3 className="end-date">{`Ending ${endDate}`}</h3>
+					<h3 className="end-date">{`${props.item.text} ${endDate}`}</h3>
 					<p className="time-remaining">{`in ${timeRemaining}`}</p>
 				</div>
 				<img style={{maxHeight: 300}} src={props.item.img}/>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
 					<Button href={props.item.link} variant="outlined" style=
 						{styles.button}>
-						Check Out Banner Items
+						{props.item.button}
 					</Button>
+					
 				</div>
 			</div>
 		)
-	}
+	} 
 }

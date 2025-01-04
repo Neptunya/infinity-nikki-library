@@ -136,6 +136,14 @@ button:disabled {
     animation: spin 1s linear infinite;
 }
 
+.unobtainable-msg {
+    display: inline-block;
+    margin-top: 8px;
+    background-color: #676373;
+    padding: 0 10px;
+    border-radius: 12px;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }

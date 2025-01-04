@@ -9,13 +9,15 @@ let selectedStyles = [];
 let selectedSources = [];
 let selectedStyleSort = [];
 let selectedMode = 'tracker';
-let hideUnobtainable = true;
+let hideUnobtainable = false;
 let hideRecolor = true;
+let newOnly = false;
 let searchQuery = "";
 let selectedSort = "";
 let descending = true;
 let lastColCount = countFlexColumns();
 const styles = ["Elegant", "Fresh", "Sweet", "Sexy", "Cool"];
+const nonStyleSorts = ["Name", "Rarity", "Type"];
 
 let allItems = [];
 let totalItems = 0;
@@ -390,6 +392,12 @@ export function toggleRecolor() {
     getFilteredItems();
 }
 
+export function toggleNew() {
+    currentPage = 1;
+    newOnly = !newOnly;
+    getFilteredItems();
+}
+
 function initializePreselectedSource() {
     const params = new URLSearchParams(window.location.search);
     const preselectedSources = params.getAll('source');
@@ -428,7 +436,11 @@ export function getFilteredItems() {
     }
     
     if (hideRecolor) {
-        url += 'source=Recolors';
+        url += 'source=Recolor&';
+    }
+    
+    if (newOnly) {
+        url += 'source=New%20Only&'
     }
     
     if (selectedStyleSort.length > 0 && styles.includes(selectedStyleSort)) {
@@ -458,11 +470,16 @@ export function updateSearchQuery(query) {
 export function updateSort(sortBy) {
     currentPage = 1;
     selectedSort = sortBy
+    
     if (styles.includes(sortBy)) {
         selectedStyleSort = sortBy;
         getFilteredItems();
-    } else {
+    } else if (nonStyleSorts.includes(sortBy)) {
+        selectedStyleSort = [];
         applySearchFilter();
+    } else {
+        selectedStyleSort = [];
+        getFilteredItems();
     }
 }
 

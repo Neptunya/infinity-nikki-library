@@ -132,7 +132,7 @@ class Items(Resource):
                         "starting": "One of the initial items acquired upon arrival in Miraland.",
                         "pre_reg": "Pre-Reg Milestone Outfit"}
         always_avail_vals = list(always_avail.values())
-        limited_time = ["Croaker's Whisper", "Bubbling Affections", "Distant Sea", "In Shop"]
+        limited_time = ["Celestial Wishes", "Into a Starry Night", "Distant Sea", "In Shop"]
         lim_reso = "Limited-Time Resonance"
         premium = "Pear-Pal premium item highly recommended by the Stylist's Guild."
         
@@ -152,18 +152,19 @@ class Items(Resource):
             'Story Quest': [ItemDetails.Source == always_avail["journey_anecdote"]],
             'Styling Challenge': [ItemDetails.Source == always_avail["styling_challenge"]],
             'Surprise-O-Matic': [ItemDetails.Source == always_avail["rng"]],
-            "Resonance: Croaker's Whisper": [ItemDetails.Banner.contains("Croaker's Whisper")],
-            'Resonance: Bubbling Affections': [ItemDetails.Banner.contains('Bubbling Affections')],
+            "Resonance: Celestial Wishes": [ItemDetails.Banner.contains("Celestial Wishes")],
             'Resonance: Distant Sea': [ItemDetails.Banner.contains('Distant Sea')],
             'Premium Items': [ItemDetails.Source == premium],
             'Limited-Time Resonance': [ItemDetails.Source == lim_reso],
+            'Event: Into a Starry Night': [ItemDetails.Source.contains('Into a Starry Night')],
             'Event Items': [ItemDetails.Source.contains("event")],
             'Currently Unobtainable': [
                 and_(
                     ItemDetails.Source.notin_(always_avail_vals),
                     ItemDetails.Banner.is_(None)
                 ),
-                ~or_(*[ItemDetails.Banner.like(f"%{banner}%") for banner in limited_time])
+                ~or_(*[ItemDetails.Banner.like(f"%{banner}%") for banner in limited_time],
+                     ItemDetails.Source.contains('Into a Starry Night'))
             ],
             'Currently Unobtainable2': [
                 ~and_(ItemDetails.Source.notin_(always_avail_vals),
@@ -173,7 +174,8 @@ class Items(Resource):
                 or_(
                 ~ItemDetails.Outfit.contains(":"),
                 ItemDetails.Outfit == None)
-            ]
+            ],
+            'New Only': [ItemDetails.Banner.contains('New')]
         }
 
         if rarity:
@@ -188,7 +190,7 @@ class Items(Resource):
         
         matched_conditions = set()
         for s in source:
-            if s in source_map and s != "Currently Unobtainable2" and s != "Recolor":
+            if s in source_map and s != "Currently Unobtainable2" and s != "Recolor" and s != "New Only":
                 matched_conditions.update(source_map[s])
 
         conditions = []
@@ -200,6 +202,8 @@ class Items(Resource):
             q = and_(q, *source_map["Currently Unobtainable2"])
         if "Recolor" in source:
             q = and_(q, *source_map["Recolor"])
+        if "New Only" in source:
+            q = and_(q, ItemDetails.Banner.contains('New'))
 
         query = query.filter(q)
         filtered_items = query.all()

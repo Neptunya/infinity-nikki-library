@@ -239,9 +239,20 @@ def print_unique_vals():
         json_data = json.load(file)
 
     unique_values = extract_unique_vals(json_data)
+    sorted_values = sorted(unique_values)
     print('Unique Values in JSON:')
-    for value in unique_values:
+    for value in sorted_values:
         print(value)
+
+def print_items_csv(name):
+    f = f'./python/csv/unprocessed/{name}'
+    unique_names = set()
+    with open(f, mode='r', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            unique_names.add(row['Name'])
+    for unique_name in unique_names:
+        print(f'"{unique_name}",')
 
 def print_no_source():
     file_path = './python/csv/clothing_items_details.csv'
@@ -258,8 +269,8 @@ def scrape_new_item(r):
     curr_name = img_to_str(sc("name", name_box))
     i = 0
     while prev_name != curr_name:
-        glow_up_stats_to_new(curr_name, r)
-        get_source(curr_name)
+        #glow_up_stats_to_new(curr_name, r)
+        #get_source()
         sc(f'../../../public/images/items/{curr_name}', img_box)
         prev_name = curr_name
         if i < 3:
@@ -268,7 +279,7 @@ def scrape_new_item(r):
             pg.moveTo(197, 781)
             pg.scroll(-400)
         else: 
-            pg.moveTo(197, 777)
+            pg.moveTo(197, 830)
             pg.scroll(-607)
         
         pg.click()
@@ -276,10 +287,24 @@ def scrape_new_item(r):
         curr_name = img_to_str(sc("name", name_box))
         i += 1
 
-in_w.activate() 
-time.sleep(2)
+def print_new_makeup():
+    makeup = set()
+    with open('./python/csv/makeup.csv', mode='r', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            makeup.add(row['Name'])
+    for i in range(4):
+        for j in range(3):
+            pg.screenshot('./python/images/clothing_item_scraper/name.png', region=(name_card[0] + (j * card_x_interval), name_card[1] + (i * card_y_interval), name_card[2], name_card[3]))
+            name = img_to_str_mod('name').strip()
+            if name and name not in makeup:
+                print(name)
+
+#print_items_csv("new.csv")
+
+time.sleep(1)
 pg.moveTo(90, 395)
-sc(f'../../../public/images/items/Lotus Umbrella', img_box)
+scrape_new_item(4)
 pg.moveTo(10, 10)
 
 

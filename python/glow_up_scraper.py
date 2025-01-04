@@ -306,7 +306,7 @@ def scrape_stats(name, rarity, slot):
 		print(r)
 		rows.append(r.copy())
 		r.clear()
-	lc2(back[0], back[1])
+	pg.moveTo(back[0], back[1])
 	f = f'./python/csv/unprocessed/{file}.csv'
 	with open(f, 'a', newline='') as csvfile:
 		csvwriter = csv.writer(csvfile)

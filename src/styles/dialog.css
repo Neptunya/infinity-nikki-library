@@ -10,6 +10,14 @@ td {
     width: 80%;
 }
 
+.unobtainable-msg-dialog {
+    display: inline-block;
+    margin-top: 8px;
+    background-color: #767281;
+    padding: 0 10px;
+    border-radius: 12px;
+}
+
 #basic-info {
     display: flex;
     margin: 16px;

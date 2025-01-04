@@ -86,10 +86,32 @@ export default function ItemDialog() {
 							<p>
 								<b>Source: </b> 
 								{infoData[0].Source} 
-								{infoData[0].Banner && infoData[0].Banner !== "Distant Sea" && infoData[0].Banner !== "In Shop" ? ` (${infoData[0].Banner})` : ''}
+								{infoData[0].Banner
+								&& infoData[0].Banner !== "Distant Sea"
+								&& infoData[0].Banner !== "In Shop"
+								&& infoData[0].Banner !== "Past Content"
+								&& infoData[0].Banner !== "Future Content"
+								&& infoData[0].Banner !== "New!"
+								&& (infoData[0].Banner.split(',').length - 1 <= 1)
+								? ` (${infoData[0].Banner.includes('Content') || infoData[0].Banner.includes('New')
+									? infoData[0].Banner.substring(infoData[0].Banner.indexOf(',') + 1).trim() 
+									: infoData[0].Banner})` : ''}
 							</p>
 						</div>
-						
+						<div>
+							{infoData[0].Banner
+							&& infoData[0].Banner.includes("Past Content") ?
+							<p className='unobtainable-msg-dialog'>Past Content</p>
+							: ''}
+							{infoData[0].Banner
+							&& infoData[0].Banner.includes("Future Content") ?
+							<p className='unobtainable-msg-dialog'>Future Content</p>
+							: ''}
+							{infoData[0].Banner
+							&& infoData[0].Banner.includes("New!") ?
+							<p className='unobtainable-msg-dialog'>New!</p>
+							: ''}
+						</div>
 					</div>
 				</div>
 				{!makeup.includes(infoData[0]?.Slot) && (
