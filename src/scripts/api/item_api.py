@@ -68,6 +68,10 @@ class UserDetails(db.Model):
     avatar = db.Column(db.String(255), nullable=False)
     source = db.Column(db.String(255), nullable=False)
 
+class OwnedItems(db.Model):
+    user_id = db.Column(db.String(255), db.ForeignKey('users.id'), primary_key=True, nullable=False)
+    item_name = db.Column(db.String(255), db.ForeignKey('item_details."Name"'), primary_key=True, nullable=False)
+
 itemFields = {
     "Name": fields.String,
     "Rarity": fields.Integer,
@@ -104,6 +108,7 @@ userFields = {
     "avatar": fields.String,
     "source": fields.String
 }
+
 
 class Items(Resource):
     @marshal_with(itemFields)
@@ -354,7 +359,6 @@ def login():
         "refresh_token": refresh_jwt_token,
     })
 
-
 @app.route('/refresh_jwt', methods=['GET'])
 @jwt_required(refresh=True)
 def refresh_jwt():
@@ -435,12 +439,20 @@ def get_expiration():
         
         if user:
             return jsonify(
-                {'expires_at': user.expires_at.isoformat()}
+                {'expires_at': user.expires_at.isoformat(),
+                 'user_id': user_id}
             )
         else:
             return jsonify({'error': 'User not found'}), 404
     except Exception as e:
         return jsonify({'error': 'Invalid or expired refresh token'}), 401
+
+@app.route('/owned', methods=['POST'])
+def owned():
+    data = request.get_json()
+    item_name = data.get('name')
+    user_token = data.get('user')
+    owned = data.get('isChecked')
 
 if __name__ == '__main__':
     from waitress import serve

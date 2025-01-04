@@ -109,6 +109,7 @@ function renderDatabaseCard(item) {
     card.classList.add('item-card-link')
     card.classList.add('item-card');
     card.classList.add('card-row');
+    card.style.minHeight = '190px';
     const link = `#${item['Name']}`;
     card.href = link;
 
@@ -148,6 +149,26 @@ function renderDatabaseCard(item) {
     if (item['Labels']) {
         p.innerHTML += '<br><i>' + item['Labels'] + '</i>';
     }
+    
+    if (item['Banner']) {
+        if (item['Banner'].includes("Past Content")) {
+            const unobMsg = document.createElement('p');
+            unobMsg.innerHTML += 'Past Content';
+            unobMsg.classList.add('unobtainable-msg');
+            cardText.appendChild(unobMsg)
+        } else if (item['Banner'].includes("Future Content")) {
+            const unobMsg = document.createElement('p');
+            unobMsg.innerHTML += 'Future Content';
+            unobMsg.classList.add('unobtainable-msg');
+            cardText.appendChild(unobMsg)
+        } else if (item['Banner'].includes("New!")) {
+            const unobMsg = document.createElement('p');
+            unobMsg.innerHTML += 'New!';
+            unobMsg.classList.add('unobtainable-msg');
+            cardText.appendChild(unobMsg)
+        }
+    }
+    
     itemCardContainer.appendChild(card);
 }
 
@@ -156,6 +177,7 @@ function renderTrackerCard(item) {
     const card = document.createElement('div');
     card.classList.add('item-card');
     card.classList.add('card-row');
+    card.style.minHeight = '260px';
 
     const img = document.createElement('img');
     img.classList.add('item-img')
@@ -195,7 +217,19 @@ function renderTrackerCard(item) {
     checkmarkOwned.classList.add('checkmark');
     labelOwned.appendChild(checkmarkOwned);
     
-    
+    let debounceTimer;
+    checkboxOwned.addEventListener('click', () => {
+        const isChecked = checkboxOwned.checked;
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            console.log('Checkbox checked:', isChecked);
+            const payload = {
+                name: item['Name'],
+                user: localStorage.getItem('refresh_token'),
+                isChecked: isChecked
+            };
+        }, 500);
+    });
     
     const itemNameWish = `${item['Name']}-wished`;
     const labelWished = document.createElement('label');
@@ -227,8 +261,8 @@ function renderTrackerCard(item) {
     levelInput.max = 11;
     cardText.appendChild(levelInput);
     
-    const lineBreak = document.createElement('br');
-    cardText.appendChild(lineBreak);
+    const br1 = document.createElement('br');
+    cardText.appendChild(br1);
     
     const detailsLink = document.createElement('a');
     const detailsButton = document.createElement('button');
@@ -237,6 +271,29 @@ function renderTrackerCard(item) {
     detailsLink.href = `#${item['Name']}`;
     detailsLink.appendChild(detailsButton);
     cardText.appendChild(detailsLink);
+    
+    if (item['Banner']) {
+        const br2 = document.createElement('br');
+        if (item['Banner'].includes("Past Content")) {
+            cardText.appendChild(br2);
+            const unobMsg = document.createElement('p');
+            unobMsg.innerHTML += 'Past Content';
+            unobMsg.classList.add('unobtainable-msg');
+            cardText.appendChild(unobMsg)
+        } else if (item['Banner'].includes("Future Content")) {
+            cardText.appendChild(br2);
+            const unobMsg = document.createElement('p');
+            unobMsg.innerHTML += 'Future Content';
+            unobMsg.classList.add('unobtainable-msg');
+            cardText.appendChild(unobMsg)
+        } else if (item['Banner'].includes("New!")) {
+            cardText.appendChild(br2);
+            const unobMsg = document.createElement('p');
+            unobMsg.innerHTML += 'New!';
+            unobMsg.classList.add('unobtainable-msg');
+            cardText.appendChild(unobMsg)
+        }
+    }
     
     const heartButton = document.createElement('button');
     heartButton.className = 'heart';
@@ -251,6 +308,7 @@ function renderTrackerCard(item) {
         heartButton.title = isFavorited ? 'Remove from favorites' : 'Add to favorites';
     });
     card.appendChild(heartButton);
+    
     itemCardContainer.appendChild(card);
 }
 
