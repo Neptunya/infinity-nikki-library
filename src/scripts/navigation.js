@@ -1,4 +1,5 @@
 let refreshToken;
+let uid;
 window.addEventListener('load', () => {
     check_exp();
     refreshToken = localStorage.getItem('refresh_token');
@@ -54,8 +55,11 @@ const updateNavLinks = () => {
 
 const check_exp = () => {
     refreshToken = localStorage.getItem('refresh_token'); 
+    uid = sessionStorage.getItem('uid');
 
-    if (refreshToken) {
+    if (uid) {
+        return;
+    } else if (refreshToken) {
         fetch(`${import.meta.env.PUBLIC_BASE_URL}get-expiration?refresh_token=${encodeURIComponent(refreshToken)}`, {
             method: 'GET',
             headers: {
@@ -73,6 +77,7 @@ const check_exp = () => {
                     localStorage.removeItem('access_token');
                     updateNavLinks();
                 } else {
+                    sessionStorage.setItem('uid', data.user_id);
                     refresh(expirationTime, data.user_id);
                 }
             } else if (data.error) {
@@ -108,7 +113,7 @@ const refresh = (expirationTime, userId) => {
                 fetch(`${import.meta.env.PUBLIC_BASE_URL}refresh_jwt`, {
                     method: 'GET',
                     headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('refresh_token')}`, // Use the current refresh token
+                        'Authorization': `Bearer ${localStorage.getItem('refresh_token')}`,
                     }
                 })
                 .then(jwtResponse => jwtResponse.json())

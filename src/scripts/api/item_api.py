@@ -69,8 +69,19 @@ class UserDetails(db.Model):
     source = db.Column(db.String(255), nullable=False)
 
 class OwnedItems(db.Model):
+    __tablename__ = 'owned_items'
     user_id = db.Column(db.String(255), db.ForeignKey('users.id'), primary_key=True, nullable=False)
-    item_name = db.Column(db.String(255), db.ForeignKey('item_details."Name"'), primary_key=True, nullable=False)
+    item_name = db.Column(db.String(255), db.ForeignKey('item_details.Name'), primary_key=True, nullable=False)
+
+class WishlistedItems(db.Model):
+    __tablename__ = 'wishlisted_items'
+    user_id = db.Column(db.String(255), db.ForeignKey('users.id'), primary_key=True, nullable=False)
+    item_name = db.Column(db.String(255), db.ForeignKey('item_details.Name'), primary_key=True, nullable=False)
+
+class FavoritedItems(db.Model):
+    __tablename__ = 'favorited_items'
+    user_id = db.Column(db.String(255), db.ForeignKey('users.id'), primary_key=True, nullable=False)
+    item_name = db.Column(db.String(255), db.ForeignKey('item_details.Name'), primary_key=True, nullable=False)
 
 itemFields = {
     "Name": fields.String,
@@ -450,9 +461,146 @@ def get_expiration():
 @app.route('/owned', methods=['POST'])
 def owned():
     data = request.get_json()
-    item_name = data.get('name')
-    user_token = data.get('user')
+    name = data.get('name')
+    uid = data.get('uid')
     owned = data.get('isChecked')
+    
+    exists = db.session.query(
+        db.session.query(OwnedItems)
+        .filter(OwnedItems.user_id == uid, OwnedItems.item_name == name)
+        .exists()
+    ).scalar()
+    if not exists and owned:
+        try:
+            new_item = OwnedItems(user_id=uid, item_name=name)
+            db.session.add(new_item)
+            db.session.commit()
+            return jsonify({'message': 'Item added successfully'}), 201
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while adding the item'}), 500
+    elif exists and not owned:
+        try:
+            item_to_delete = db.session.query(OwnedItems).filter_by(user_id=uid, item_name=name).first()
+            if not item_to_delete:
+                return jsonify({'error': 'Item not found'}), 404
+            db.session.delete(item_to_delete)
+            db.session.commit()
+            return jsonify({'message': 'Item removed successfully'}), 200
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while removing the item'}), 500
+    return jsonify({'message': 'No changes to database needed'}), 200
+
+@app.route('/wishlist', methods=['POST'])
+def wishlist():
+    data = request.get_json()
+    name = data.get('name')
+    uid = data.get('uid')
+    checked = data.get('isChecked')
+    
+    exists = db.session.query(
+        db.session.query(WishlistedItems)
+        .filter(WishlistedItems.user_id == uid, WishlistedItems.item_name == name)
+        .exists()
+    ).scalar()
+    if not exists and checked:
+        try:
+            new_item = WishlistedItems(user_id=uid, item_name=name)
+            db.session.add(new_item)
+            db.session.commit()
+            return jsonify({'message': 'Item added successfully'}), 201
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while adding the item'}), 500
+    elif exists and not checked:
+        try:
+            item_to_delete = db.session.query(WishlistedItems).filter_by(user_id=uid, item_name=name).first()
+            if not item_to_delete:
+                return jsonify({'error': 'Item not found'}), 404
+            db.session.delete(item_to_delete)
+            db.session.commit()
+            return jsonify({'message': 'Item removed successfully'}), 200
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while removing the item'}), 500
+    return jsonify({'message': 'No changes to database needed'}), 200
+
+@app.route('/favorite', methods=['POST'])
+def favorite():
+    data = request.get_json()
+    name = data.get('name')
+    uid = data.get('uid')
+    checked = data.get('isChecked')
+    
+    exists = db.session.query(
+        db.session.query(FavoritedItems)
+        .filter(FavoritedItems.user_id == uid, FavoritedItems.item_name == name)
+        .exists()
+    ).scalar()
+    if not exists and checked:
+        try:
+            new_item = FavoritedItems(user_id=uid, item_name=name)
+            db.session.add(new_item)
+            db.session.commit()
+            return jsonify({'message': 'Item added successfully'}), 201
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while adding the item'}), 500
+    elif exists and not checked:
+        try:
+            item_to_delete = db.session.query(FavoritedItems).filter_by(user_id=uid, item_name=name).first()
+            if not item_to_delete:
+                return jsonify({'error': 'Item not found'}), 404
+            db.session.delete(item_to_delete)
+            db.session.commit()
+            return jsonify({'message': 'Item removed successfully'}), 200
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while removing the item'}), 500
+    return jsonify({'message': 'No changes to database needed'}), 200
+
+@app.route('/check-item-status', methods=['POST'])
+def checkItemStatus():
+    data = request.get_json()
+    name = data.get('name')
+    uid = data.get('uid')
+    
+    ownedExists = db.session.query(
+        db.session.query(OwnedItems)
+        .filter(OwnedItems.user_id == uid, OwnedItems.item_name == name)
+        .exists()
+    ).scalar()
+    
+    wishlistExists = db.session.query(
+        db.session.query(WishlistedItems)
+        .filter(WishlistedItems.user_id == uid, WishlistedItems.item_name == name)
+        .exists()
+    ).scalar()
+    
+    favoriteExists = db.session.query(
+        db.session.query(FavoritedItems)
+        .filter(FavoritedItems.user_id == uid, FavoritedItems.item_name == name)
+        .exists()
+    ).scalar()
+    
+    return jsonify({
+        'owned': ownedExists,
+        'wishlisted': wishlistExists,
+        'favorited': favoriteExists
+    }), 200
 
 if __name__ == '__main__':
     from waitress import serve

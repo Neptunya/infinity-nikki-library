@@ -138,9 +138,10 @@ button:disabled {
 .unobtainable-msg {
     display: inline-block;
     margin-top: 8px;
-    background-color: #676373;
+    border: 2px solid #d3869b;
     padding: 0 10px;
-    border-radius: 12px;
+    border-radius: 120px;
+    color: #d3869b;
 }
 
 @keyframes spin {

@@ -200,115 +200,193 @@ function renderTrackerCard(item) {
         outfit.style.marginTop = '4px';
         cardText.appendChild(outfit);
     }
+    
+    let owned;
+    let wishlisted;
+    let favorited;
+    fetch(`${import.meta.env.PUBLIC_BASE_URL}check-item-status`, {
+        method: 'POST',
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        },
+        body: JSON.stringify({
+            name: item['Name'],
+            uid: sessionStorage.getItem('uid')
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        owned = data.owned;
+        wishlisted = data.wishlisted;
+        favorited = data.favorited;
 
-    const itemNameOwned = `${item['Name']}-owned`;
-    const labelOwned = document.createElement('label');
-    labelOwned.for = itemNameOwned;
-    labelOwned.innerHTML = "Owned";
-    labelOwned.classList.add('checkbox-container');
-    cardText.appendChild(labelOwned);
+        const itemNameOwned = `${item['Name']}-owned`;
+        const labelOwned = document.createElement('label');
+        labelOwned.for = itemNameOwned;
+        labelOwned.innerHTML = "Owned";
+        labelOwned.classList.add('checkbox-container');
+        cardText.appendChild(labelOwned);
 
-    const checkboxOwned = document.createElement('input');
-    checkboxOwned.type = 'checkbox';
-    checkboxOwned.id = itemNameOwned;
-    labelOwned.appendChild(checkboxOwned);
-    
-    const checkmarkOwned = document.createElement('span');
-    checkmarkOwned.classList.add('checkmark');
-    labelOwned.appendChild(checkmarkOwned);
-    
-    let debounceTimer;
-    checkboxOwned.addEventListener('click', () => {
-        const isChecked = checkboxOwned.checked;
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-            console.log('Checkbox checked:', isChecked);
-            const payload = {
-                name: item['Name'],
-                user: localStorage.getItem('refresh_token'),
-                isChecked: isChecked
-            };
-        }, 500);
-    });
-    
-    const itemNameWish = `${item['Name']}-wished`;
-    const labelWished = document.createElement('label');
-    labelWished.for = itemNameWish;
-    labelWished.innerHTML = "Wishlist";
-    labelWished.classList.add('checkbox-container');
-    cardText.appendChild(labelWished);
-
-    const checkboxWished = document.createElement('input');
-    checkboxWished.type = 'checkbox';
-    checkboxWished.id = itemNameWish;
-    labelWished.appendChild(checkboxWished);
-    
-    const checkmarkWished = document.createElement('span');
-    checkmarkWished.classList.add('checkmark');
-    labelWished.appendChild(checkmarkWished);
-    
-    const itemNameLvl = `${item['Name']}-level`;
-    const labelLevel = document.createElement('label');
-    labelLevel.for = itemNameLvl;
-    labelLevel.innerHTML = "Level:"
-    cardText.appendChild(labelLevel);
-    
-    const levelInput = document.createElement('input');
-    levelInput.type = 'number';
-    levelInput.id = itemNameLvl;
-    levelInput.name = itemNameLvl;
-    levelInput.min = 0;
-    levelInput.max = 11;
-    cardText.appendChild(levelInput);
-    
-    const br1 = document.createElement('br');
-    cardText.appendChild(br1);
-    
-    const detailsLink = document.createElement('a');
-    const detailsButton = document.createElement('button');
-    detailsButton.classList.add('more-details-btn')
-    detailsButton.innerHTML = "More Details"
-    detailsLink.href = `#${item['Name']}`;
-    detailsLink.appendChild(detailsButton);
-    cardText.appendChild(detailsLink);
-    
-    if (item['Banner']) {
-        const br2 = document.createElement('br');
-        if (item['Banner'].includes("Past Content")) {
-            cardText.appendChild(br2);
-            const unobMsg = document.createElement('p');
-            unobMsg.innerHTML += 'Past Content';
-            unobMsg.classList.add('unobtainable-msg');
-            cardText.appendChild(unobMsg)
-        } else if (item['Banner'].includes("Future Content")) {
-            cardText.appendChild(br2);
-            const unobMsg = document.createElement('p');
-            unobMsg.innerHTML += 'Future Content';
-            unobMsg.classList.add('unobtainable-msg');
-            cardText.appendChild(unobMsg)
-        } else if (item['Banner'].includes("New!")) {
-            cardText.appendChild(br2);
-            const unobMsg = document.createElement('p');
-            unobMsg.innerHTML += 'New!';
-            unobMsg.classList.add('unobtainable-msg');
-            cardText.appendChild(unobMsg)
+        const checkboxOwned = document.createElement('input');
+        checkboxOwned.type = 'checkbox';
+        checkboxOwned.id = itemNameOwned;
+        labelOwned.appendChild(checkboxOwned);
+        
+        const checkmarkOwned = document.createElement('span');
+        checkmarkOwned.classList.add('checkmark');
+        if (owned) {
+            checkboxOwned.checked = true;
         }
-    }
-    
-    const heartButton = document.createElement('button');
-    heartButton.className = 'heart';
-    heartButton.innerHTML = '<i class="fa-regular fa-heart"></i>';
-    heartButton.title = 'Add to favorites';
+        labelOwned.appendChild(checkmarkOwned);
+        
+        let debounceTimerOwned;
+        checkboxOwned.addEventListener('click', () => {
+            const isChecked = checkboxOwned.checked;
+            clearTimeout(debounceTimerOwned);
+            debounceTimerOwned = setTimeout(() => {
+                const payload = {
+                    name: item['Name'],
+                    uid: sessionStorage.getItem('uid'),
+                    isChecked: isChecked
+                }
+                fetch(`${import.meta.env.PUBLIC_BASE_URL}owned`, {
+                    method: 'POST',
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+            }, 500);
+        });
+        
+        const itemNameWish = `${item['Name']}-wished`;
+        const labelWished = document.createElement('label');
+        labelWished.for = itemNameWish;
+        labelWished.innerHTML = "Wishlist";
+        labelWished.classList.add('checkbox-container');
+        cardText.appendChild(labelWished);
 
-    heartButton.addEventListener('click', () => {
+        const checkboxWished = document.createElement('input');
+        checkboxWished.type = 'checkbox';
+        checkboxWished.id = itemNameWish;
+        labelWished.appendChild(checkboxWished);
+        
+        const checkmarkWished = document.createElement('span');
+        checkmarkWished.classList.add('checkmark');
+        if (wishlisted) {
+            checkboxWished.checked = true;
+        }
+        labelWished.appendChild(checkmarkWished);
+        
+        let debounceTimerWished;
+        checkboxWished.addEventListener('click', () => {
+            const isCheckedWished = checkboxWished.checked;
+            clearTimeout(debounceTimerWished);
+            debounceTimerWished = setTimeout(() => {
+                const payload = {
+                    name: item['Name'],
+                    uid: sessionStorage.getItem('uid'),
+                    isChecked: isCheckedWished
+                }
+                fetch(`${import.meta.env.PUBLIC_BASE_URL}wishlist`, {
+                    method: 'POST',
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+            }, 500);
+        });
+        
+        const itemNameLvl = `${item['Name']}-level`;
+        const labelLevel = document.createElement('label');
+        labelLevel.for = itemNameLvl;
+        labelLevel.innerHTML = "Level:"
+        cardText.appendChild(labelLevel);
+        
+        const levelInput = document.createElement('input');
+        levelInput.type = 'number';
+        levelInput.id = itemNameLvl;
+        levelInput.name = itemNameLvl;
+        levelInput.min = 0;
+        levelInput.max = 11;
+        cardText.appendChild(levelInput);
+        
+        const br1 = document.createElement('br');
+        cardText.appendChild(br1);
+        
+        const detailsLink = document.createElement('a');
+        const detailsButton = document.createElement('button');
+        detailsButton.classList.add('more-details-btn')
+        detailsButton.innerHTML = "More Details"
+        detailsLink.href = `#${item['Name']}`;
+        detailsLink.appendChild(detailsButton);
+        cardText.appendChild(detailsLink);
+        
+        if (item['Banner']) {
+            const br2 = document.createElement('br');
+            if (item['Banner'].includes("Past Content")) {
+                cardText.appendChild(br2);
+                const unobMsg = document.createElement('p');
+                unobMsg.innerHTML += 'Past Content';
+                unobMsg.classList.add('unobtainable-msg');
+                cardText.appendChild(unobMsg)
+            } else if (item['Banner'].includes("Future Content")) {
+                cardText.appendChild(br2);
+                const unobMsg = document.createElement('p');
+                unobMsg.innerHTML += 'Future Content';
+                unobMsg.classList.add('unobtainable-msg');
+                cardText.appendChild(unobMsg)
+            } else if (item['Banner'].includes("New!")) {
+                cardText.appendChild(br2);
+                const unobMsg = document.createElement('p');
+                unobMsg.innerHTML += 'New!';
+                unobMsg.classList.add('unobtainable-msg');
+                cardText.appendChild(unobMsg)
+            }
+        }
+        
+        const heartButton = document.createElement('button');
+        heartButton.className = 'heart';
+        heartButton.innerHTML = '<i class="fa-regular fa-heart"></i>';
+        heartButton.title = 'Add to favorites';
+        
         const icon = heartButton.querySelector('i');
-        const isFavorited = icon.classList.toggle('fa-solid');
-        icon.classList.toggle('fa-regular', !isFavorited);
-        icon.style.color = isFavorited ? '#edb1bd' : 'white';
-        heartButton.title = isFavorited ? 'Remove from favorites' : 'Add to favorites';
-    });
-    card.appendChild(heartButton);
-    
+        if (favorited) {
+            icon.classList.add('fa-solid');
+            icon.classList.remove('fa-regular');
+            icon.style.color = '#edb1bd';
+            heartButton.title = 'Remove from favorites';
+        }
+        
+        let debounceTimerFav;
+        heartButton.addEventListener('click', () => {
+            const isFavorited = icon.classList.toggle('fa-solid');
+            icon.classList.toggle('fa-regular', !isFavorited);
+            icon.style.color = isFavorited ? '#edb1bd' : 'white';
+            heartButton.title = isFavorited ? 'Remove from favorites' : 'Add to favorites';
+            clearTimeout(debounceTimerFav);
+            debounceTimerFav = setTimeout(() => {
+                const payload = {
+                    name: item['Name'],
+                    uid: sessionStorage.getItem('uid'),
+                    isChecked: isFavorited
+                }
+                fetch(`${import.meta.env.PUBLIC_BASE_URL}favorite`, {
+                    method: 'POST',
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+            }, 500);
+        });
+        
+        card.appendChild(heartButton);
+    })
     itemCardContainer.appendChild(card);
 }
 
