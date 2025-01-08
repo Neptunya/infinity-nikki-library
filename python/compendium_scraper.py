@@ -94,7 +94,9 @@ def scrape_imgs():
         curr_name = img_to_str(sc("name", name_box))
         i += 1
 
-def single_img(name):
+def single_img():
+    name = img_to_str(sc("name", name_box))
+    print(name)
     sc(f'../../../public/images/items/{name}', img_box)
 
 def scrape_labels(label):
@@ -304,7 +306,7 @@ def print_new_makeup():
 
 time.sleep(1)
 pg.moveTo(90, 395)
-scrape_new_item(4)
+single_img()
 pg.moveTo(10, 10)
 
 
