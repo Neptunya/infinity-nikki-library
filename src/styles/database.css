@@ -59,7 +59,7 @@ button:disabled {
     color: white;
 }
 
-.item-card-link h3, .item-card-link p {
+.item-card-link h3, .item-card-link p:not(.unobtainable-msg) {
 	color: white;
 }
 
@@ -138,6 +138,7 @@ button:disabled {
 .unobtainable-msg {
     display: inline-block;
     margin-top: 8px;
+    margin-right: 4px;
     border: 2px solid #d3869b;
     padding: 0 10px;
     border-radius: 120px;

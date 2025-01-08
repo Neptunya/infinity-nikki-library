@@ -8,6 +8,7 @@ window.addEventListener('load', () => {
         link.addEventListener('click', () => {
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
+            sessionStorage.removeItem('uid');
             window.location.href = '/';
         });
     });

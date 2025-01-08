@@ -151,6 +151,7 @@ function renderDatabaseCard(item) {
     }
     
     if (item['Banner']) {
+        
         if (item['Banner'].includes("Past Content")) {
             const unobMsg = document.createElement('p');
             unobMsg.innerHTML += 'Past Content';
@@ -166,7 +167,14 @@ function renderDatabaseCard(item) {
             unobMsg.innerHTML += 'New!';
             unobMsg.classList.add('unobtainable-msg');
             cardText.appendChild(unobMsg)
-        }
+        } 
+    }
+    
+    if (item['Source'].includes("premium")) {
+        const unobMsg2 = document.createElement('p');
+        unobMsg2.innerHTML += 'Paid';
+        unobMsg2.classList.add('unobtainable-msg');
+        cardText.appendChild(unobMsg2)
     }
     
     itemCardContainer.appendChild(card);
@@ -204,6 +212,7 @@ function renderTrackerCard(item) {
     let owned;
     let wishlisted;
     let favorited;
+    let itemLevel;
     fetch(`${import.meta.env.PUBLIC_BASE_URL}check-item-status`, {
         method: 'POST',
         headers: {
@@ -219,8 +228,9 @@ function renderTrackerCard(item) {
         owned = data.owned;
         wishlisted = data.wishlisted;
         favorited = data.favorited;
+        itemLevel = data.level;
 
-        const itemNameOwned = `${item['Name']}-owned`;
+        const itemNameOwned = `${item['Name']}-owned`.replace(/\s+/g, '-');
         const labelOwned = document.createElement('label');
         labelOwned.for = itemNameOwned;
         labelOwned.innerHTML = "Owned";
@@ -239,28 +249,7 @@ function renderTrackerCard(item) {
         }
         labelOwned.appendChild(checkmarkOwned);
         
-        let debounceTimerOwned;
-        checkboxOwned.addEventListener('click', () => {
-            const isChecked = checkboxOwned.checked;
-            clearTimeout(debounceTimerOwned);
-            debounceTimerOwned = setTimeout(() => {
-                const payload = {
-                    name: item['Name'],
-                    uid: sessionStorage.getItem('uid'),
-                    isChecked: isChecked
-                }
-                fetch(`${import.meta.env.PUBLIC_BASE_URL}owned`, {
-                    method: 'POST',
-                    headers: {
-                        "Content-type": "application/json; charset=UTF-8"
-                    },
-                    body: JSON.stringify(payload)
-                })
-                .then(response => response.json())
-            }, 500);
-        });
-        
-        const itemNameWish = `${item['Name']}-wished`;
+        const itemNameWish = `${item['Name']}-wished`.replace(/\s+/g, '-');
         const labelWished = document.createElement('label');
         labelWished.for = itemNameWish;
         labelWished.innerHTML = "Wishlist";
@@ -300,7 +289,7 @@ function renderTrackerCard(item) {
             }, 500);
         });
         
-        const itemNameLvl = `${item['Name']}-level`;
+        const itemNameLvl = `${item['Name']}-level`.replace(/\s+/g, '-');
         const labelLevel = document.createElement('label');
         labelLevel.for = itemNameLvl;
         labelLevel.innerHTML = "Level:"
@@ -310,9 +299,65 @@ function renderTrackerCard(item) {
         levelInput.type = 'number';
         levelInput.id = itemNameLvl;
         levelInput.name = itemNameLvl;
+        levelInput.classList.add('level-input')
         levelInput.min = 0;
         levelInput.max = 11;
         cardText.appendChild(levelInput);
+        if (itemLevel >= 0) {
+            levelInput.value = itemLevel;
+        }
+        
+        let debounceTimerOwned;
+        checkboxOwned.addEventListener('click', () => {
+            const isChecked = checkboxOwned.checked;
+            clearTimeout(debounceTimerOwned);
+            if (isChecked) {
+                levelInput.value = 0;
+            } else {
+                levelInput.value = null;
+            }
+            debounceTimerOwned = setTimeout(() => {
+                const payload = {
+                    name: item['Name'],
+                    uid: sessionStorage.getItem('uid'),
+                    isChecked: isChecked
+                }
+                fetch(`${import.meta.env.PUBLIC_BASE_URL}owned`, {
+                    method: 'POST',
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+            }, 500);
+        });
+        
+        let debounceTimerLevel;
+        levelInput.addEventListener('input', () => {
+            clearTimeout(debounceTimerLevel);
+            debounceTimerOwned = setTimeout(() => {
+                const payload = {
+                    name: item['Name'],
+                    uid: sessionStorage.getItem('uid'),
+                    level: levelInput.value ? levelInput.value : -1
+                }
+                
+                fetch(`${import.meta.env.PUBLIC_BASE_URL}update-item-level`, {
+                    method: 'POST',
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+                if (levelInput.value) {
+                    checkboxOwned.checked = true;
+                } else {
+                    checkboxOwned.checked = false;
+                }
+            }, 500);
+        });
         
         const br1 = document.createElement('br');
         cardText.appendChild(br1);
@@ -346,6 +391,13 @@ function renderTrackerCard(item) {
                 unobMsg.classList.add('unobtainable-msg');
                 cardText.appendChild(unobMsg)
             }
+        }
+        
+        if (item['Source'].includes("premium")) {
+            const unobMsg2 = document.createElement('p');
+            unobMsg2.innerHTML += 'Paid';
+            unobMsg2.classList.add('unobtainable-msg');
+            cardText.appendChild(unobMsg2)
         }
         
         const heartButton = document.createElement('button');

@@ -2,11 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { Dialog, DialogTitle, IconButton, CssBaseline, ThemeProvider } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { theme } from '../styles/theme';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 
 export default function ItemDialog() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [levelData, setLevelData] = useState(null);
 	const [infoData, setInfoData] = useState(null);
+	const [value, setValue] = React.useState('1');
+	const [owned, setOwned] = useState(undefined);
+	const [wishlisted, setWishlisted] = useState(undefined);
+	const [favorited, setFavorited] = useState(undefined);
+	const[itemLevel, setLevel] = useState(undefined);
+	
 	const makeup = ["Base Makeup", "Eyebrows", "Eyelashes", "Contact Lenses", "Lips"];
 	
 	const handleHashChange = () => {
@@ -22,10 +33,32 @@ export default function ItemDialog() {
 		setIsOpen(false);
 	};
 	
+
+	const handleTabChange = (event, newValue) => {
+		setValue(newValue);
+	};
+	
+	function handleOwnedChange() {
+		
+	}
+	
+	function handleWishlistChange() {
+		
+	}
+	
+	function handleFavoriteChange() {
+		
+	}
+	
+	function handleLevelChange() {
+		
+	}
+	
 	const decodedHash = window.location.hash.substring(1);
 	const decodedString = decodeURIComponent(decodedHash);
+	const token = localStorage.getItem('refresh_token');
 	
-	const fetchApiData = async (name) => {
+	async function fetchApiData(name) {
 		try {
 			const levelResponse = await fetch(`${import.meta.env.PUBLIC_BASE_URL}api/items/${name}`);
 			const infoResponse = await fetch(`${import.meta.env.PUBLIC_BASE_URL}api/items/${name}/info`);
@@ -38,11 +71,38 @@ export default function ItemDialog() {
 		}
 	};
 	
+	async function fetchItemStatus(name) {
+		const uid = sessionStorage.getItem('uid');
+		if (uid) {
+			fetch(`${import.meta.env.PUBLIC_BASE_URL}check-item-status`, {
+				method: 'POST',
+				headers: {
+					"Content-type": "application/json; charset=UTF-8"
+				},
+				body: JSON.stringify({
+					name: name,
+					uid: uid
+				})
+			})
+			.then(response => response.json())
+			.then(data => {
+				setOwned(data.owned);
+				setWishlisted(data.wishlisted);
+				setFavorited(data.favorited);
+				setLevel(data.level)
+			})
+		}
+	}
+	
 	useEffect(() => {
 		handleHashChange();
 		window.addEventListener("hashchange", handleHashChange);
 		if (decodedString) {
 			fetchApiData(decodedString);
+			async function fetchData() {
+				await fetchItemStatus(decodedString);
+			  }
+			  fetchData();
 		  }
 		return () => {
 			window.removeEventListener("hashchange", handleHashChange);
@@ -74,7 +134,21 @@ export default function ItemDialog() {
 				<div id='basic-info'>
 					<img src={`/images/items/${infoData[0].Name}.png`} alt={infoData[0].Name} />
 					<div id='basic-info-text'>
-						<h3>{infoData[0].Name}</h3>
+						{token 
+							? <div className='dialog-header-fav'>
+								<h3>{infoData[0].Name}</h3>
+								<button className='dialog-heart' onClick={handleFavoriteChange}>
+									<i 
+										className={`fa-heart ${favorited ? 'fa-solid' : 'fa-regular'}`}
+										style={{
+											color: favorited ? '#edb1bd' : 'white'
+										  }}
+										>
+									</i>
+								</button>
+							</div>
+							: <h3>{infoData[0].Name}</h3>
+						}
 						<p id='outfit'><strong>{infoData[0].Outfit}</strong></p>
 						<div className='info-batch'>
 							<p id='rarity'>{'✧'.repeat(infoData[0].Rarity)}</p>
@@ -111,10 +185,14 @@ export default function ItemDialog() {
 							&& infoData[0].Banner.includes("New!") ?
 							<p className='unobtainable-msg-dialog'>New!</p>
 							: ''}
+							{infoData[0].Banner
+							&& infoData[0].Source.includes("premium") ?
+							<p className='unobtainable-msg-dialog'>Paid</p>
+							: ''}
 						</div>
 					</div>
 				</div>
-				{!makeup.includes(infoData[0]?.Slot) && (
+				{!makeup.includes(infoData[0]?.Slot) && !token && (
 				<div id='stats-table'>
 				<table>
 					<thead><tr>
@@ -166,6 +244,113 @@ export default function ItemDialog() {
 					</tbody>
 				</table>
 				</div>
+				)}
+				{ token && (
+					<Box sx={{
+						marginTop: -2,
+						padding: '0px 16px'
+					}}>
+					<TabContext value={value}>
+						<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+						<TabList onChange={handleTabChange}>
+							<Tab label="Stats" value="1" />
+							<Tab label="Status" value="2" />
+						</TabList>
+						</Box>
+						<TabPanel value="2">
+							<Box>
+								<label className='checkbox-container'>
+									Owned
+									<input 
+										type="checkbox" 
+										id={`${infoData[0].Name.replace(/\s+/g, '-')}-owned-dialog`}
+										checked={owned}
+										onChange={handleOwnedChange}
+									/>
+									<span className="checkmark"></span>
+								</label>
+								<label className='checkbox-container'>
+									Wishlist
+									<input 
+										type="checkbox" 
+										id={`${infoData[0].Name.replace(/\s+/g, '-')}-wishlisted-dialog`}
+										checked={wishlisted}
+										onChange={handleWishlistChange}
+									/>
+									<span className="checkmark"></span>
+								</label>
+								<label>Level:</label>
+								<input 
+									type="number" 
+									id={`${infoData[0].Name.replace(/\s+/g, '-')}-level-dialog`}
+									min="0"
+									max="11"
+									value={itemLevel < 0 ? '' : itemLevel}
+									onChange={handleLevelChange}
+									style={{
+										backgroundColor: '#555260',
+										border: '1px solid #88858f'
+									}}
+								/>
+							</Box>
+						</TabPanel>
+						<TabPanel value="1">
+						<table style={{
+							overflowX: 'auto',
+							overflowY: 'auto'
+						}}
+						id='table-in-tab'>
+							<thead><tr>
+								<th>Level</th>
+								<th>Elegant</th>
+								<th>Fresh</th>
+								<th>Sweet</th>
+								<th>Sexy</th>
+								<th>Cool</th>
+								<th>Blings</th>
+								<th>Threads</th>
+								<th>Bubbles</th>
+							</tr></thead>
+							<tbody>
+							{levelData
+							.slice()
+							.sort((a, b) => a.Level - b.Level)
+							.map((data, index) => {
+								if (data.Level === 0) {
+									return (
+									<tr key={data.Level}>
+										<td>{data.Level}</td>
+										<td>{data.Elegant}</td>
+										<td>{data.Fresh}</td>
+										<td>{data.Sweet}</td>
+										<td>{data.Sexy}</td>
+										<td>{data.Cool}</td>
+										<td>{data.Blings}</td>
+										<td>{data.Threads}</td>
+										<td>{data.Bubbles}</td>
+									</tr>
+								);
+								} else {
+									return (
+									<tr key={data.Level}>
+										<td>{data.Level}</td>
+										<td>{data.Elegant}</td>
+										<td>{data.Fresh}</td>
+										<td>{data.Sweet}</td>
+										<td>{data.Sexy}</td>
+										<td>{data.Cool}</td>
+										<td>{data.Blings}</td>
+										<td>{data.Threads}</td>
+										<td>{data.Bubbles === 0 ? '?' : data.Bubbles}</td>
+									</tr>
+									);
+								}
+							})}
+							</tbody>
+						</table>
+						</TabPanel>
+					</TabContext>
+				  </Box>
 				)}
 			</div>
 			</Dialog>

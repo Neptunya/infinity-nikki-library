@@ -7,11 +7,15 @@ with open('./python/json/costs.json') as f:
     costs_data = json.load(f)
 
 def merge_csv():
-    file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed')
+    # file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed')
+    # df = pd.DataFrame()
+    # for file in file_list:
+    #     df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/{file}')
+    #     df = pd.concat([df, df_temp], ignore_index=True)
+    # df.to_csv('D:/Documents/infinity_nikki_library/python/csv/full_item_data.csv', index=False)
     df = pd.DataFrame()
-    for file in file_list:
-        df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/{file}')
-        df = pd.concat([df, df_temp], ignore_index=True)
+    df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/1-1a-fix.csv')
+    df = pd.concat([df, df_temp], ignore_index=True)
     df.to_csv('D:/Documents/infinity_nikki_library/python/csv/full_item_data.csv', index=False)
 
 def add_new():
@@ -265,7 +269,7 @@ def sort_details():
     df_sorted = df.sort_values(by=['Rarity', 'Slot', 'Outfit'], ascending=[False, True, True])
     df_sorted.to_csv(f'./python/csv/clothing_items_details.csv', index=False)
 
-merge_csv()
+merge_csv() # modify to only pull necessary csvs
 add_style()
 add_makeup()
 split_csv()

@@ -60,7 +60,7 @@ class LevelDetails(db.Model):
 
 class UserDetails(db.Model):
     __tablename__ = 'users'
-    id = db.Column(db.String(255), primary_key=True)
+    id = db.Column(db.BigInteger, primary_key=True)
     username = db.Column(db.String(255), nullable=False)
     access_token = db.Column(db.String(255), nullable=False)
     refresh_token = db.Column(db.String(255), nullable=False)
@@ -70,17 +70,18 @@ class UserDetails(db.Model):
 
 class OwnedItems(db.Model):
     __tablename__ = 'owned_items'
-    user_id = db.Column(db.String(255), db.ForeignKey('users.id'), primary_key=True, nullable=False)
+    user_id = db.Column(db.BigInteger, db.ForeignKey('users.id'), primary_key=True, nullable=False)
     item_name = db.Column(db.String(255), db.ForeignKey('item_details.Name'), primary_key=True, nullable=False)
+    level = db.Column(db.SmallInteger)
 
 class WishlistedItems(db.Model):
     __tablename__ = 'wishlisted_items'
-    user_id = db.Column(db.String(255), db.ForeignKey('users.id'), primary_key=True, nullable=False)
+    user_id = db.Column(db.BigInteger, db.ForeignKey('users.id'), primary_key=True, nullable=False)
     item_name = db.Column(db.String(255), db.ForeignKey('item_details.Name'), primary_key=True, nullable=False)
 
 class FavoritedItems(db.Model):
     __tablename__ = 'favorited_items'
-    user_id = db.Column(db.String(255), db.ForeignKey('users.id'), primary_key=True, nullable=False)
+    user_id = db.Column(db.BigInteger, db.ForeignKey('users.id'), primary_key=True, nullable=False)
     item_name = db.Column(db.String(255), db.ForeignKey('item_details.Name'), primary_key=True, nullable=False)
 
 itemFields = {
@@ -472,7 +473,7 @@ def owned():
     ).scalar()
     if not exists and owned:
         try:
-            new_item = OwnedItems(user_id=uid, item_name=name)
+            new_item = OwnedItems(user_id=uid, item_name=name, level=0)
             db.session.add(new_item)
             db.session.commit()
             return jsonify({'message': 'Item added successfully'}), 201
@@ -596,11 +597,71 @@ def checkItemStatus():
         .exists()
     ).scalar()
     
+    owned_item = db.session.query(OwnedItems.level).filter(
+        OwnedItems.user_id == uid,
+        OwnedItems.item_name == name
+    ).first()
+    
+    level = -1
+    if owned_item:
+        level = owned_item.level
+    
     return jsonify({
         'owned': ownedExists,
         'wishlisted': wishlistExists,
-        'favorited': favoriteExists
+        'favorited': favoriteExists,
+        'level': level
     }), 200
+
+@app.route('/update-item-level', methods=['POST'])
+def updateItemLevel():
+    data = request.get_json()
+    name = data.get('name')
+    uid = data.get('uid')
+    level = int(data.get('level'))
+    
+    exists = db.session.query(
+        db.session.query(OwnedItems)
+        .filter(OwnedItems.user_id == uid, OwnedItems.item_name == name)
+        .exists()
+    ).scalar()
+    if exists and level >= 0:
+        try: 
+            existing_item = OwnedItems.query.filter_by(user_id=uid, item_name=name).first()
+            if not existing_item:
+                return jsonify({'error': 'Item not found'}), 404
+            existing_item.level = level
+            db.session.commit()
+            return jsonify({'message': 'Item updated successfully'}), 200
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while updating the item'}), 500
+    elif not exists and level >= 0:
+        try:
+            new_item = OwnedItems(user_id=uid, item_name=name, level=level)
+            db.session.add(new_item)
+            db.session.commit()
+            return jsonify({'message': 'Item added successfully'}), 201
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while adding the item'}), 500
+    elif exists and level < 0:
+        try:
+            item_to_delete = db.session.query(OwnedItems).filter_by(user_id=uid, item_name=name).first()
+            if not item_to_delete:
+                return jsonify({'error': 'Item not found'}), 404
+            db.session.delete(item_to_delete)
+            db.session.commit()
+            return jsonify({'message': 'Item removed successfully'}), 200
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while removing the item'}), 500
+    return jsonify({'message': 'No changes to database needed'}), 200
 
 if __name__ == '__main__':
     from waitress import serve

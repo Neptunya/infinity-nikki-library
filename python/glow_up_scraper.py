@@ -362,16 +362,17 @@ def glow_up_macro():
 		lc([131, 1007])
 		#scrape_new(slots[i])
 
+
 # time.sleep(2)
 # file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed/')
 # for file in file_list:
 # 	print(file)
 # 	check_incr(f'./python/csv/unprocessed/{file}')
 
-in_w.activate() 
+#in_w.activate() 
 time.sleep(1)
-glow_up_macro()
-# f = './python/csv/unprocessed/1-1a.csv'
-# with open(f, 'a', newline='') as csvfile:
-# 		csvwriter = csv.writer(csvfile)
-# 		csvwriter.writerows(rows)
+scrape_stats("Hollow Ellipse", 3, "Earrings")
+f = './python/csv/unprocessed/1-1a-fix.csv'
+with open(f, 'a', newline='') as csvfile:
+		csvwriter = csv.writer(csvfile)
+		csvwriter.writerows(rows)
