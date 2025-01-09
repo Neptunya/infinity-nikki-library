@@ -13,10 +13,10 @@ export default function ItemDialog() {
 	const [levelData, setLevelData] = useState(null);
 	const [infoData, setInfoData] = useState(null);
 	const [value, setValue] = React.useState('1');
-	const [owned, setOwned] = useState(undefined);
-	const [wishlisted, setWishlisted] = useState(undefined);
-	const [favorited, setFavorited] = useState(undefined);
-	const[itemLevel, setLevel] = useState(undefined);
+	const [owned, setOwned] = useState(false);
+	const [wishlisted, setWishlisted] = useState(false);
+	const [favorited, setFavorited] = useState(false);
+	const[itemLevel, setLevel] = useState(-1);
 	
 	const makeup = ["Base Makeup", "Eyebrows", "Eyelashes", "Contact Lenses", "Lips"];
 	
@@ -38,20 +38,134 @@ export default function ItemDialog() {
 		setValue(newValue);
 	};
 	
-	function handleOwnedChange() {
+	let debounceTimerOwned;
+	function handleOwnedChange(event) {
+		const itemName = `${infoData[0].Name.replace(/\s+/g, '-')}`;
+		const isChecked = event.target.checked;
+		const levelInput = document.getElementById(`${itemName}-level-dialog`);
+		const checkboxOwnedCard = document.getElementById(`${itemName}-owned`);
+		const levelInputCard = document.getElementById(`${itemName}-level`);
 		
+		setOwned(isChecked);
+		clearTimeout(debounceTimerOwned);
+		debounceTimerOwned = setTimeout(() => {
+			const payload = {
+				name: infoData[0].Name,
+				uid: sessionStorage.getItem('uid'),
+				isChecked: isChecked
+			}
+			fetch(`${import.meta.env.PUBLIC_BASE_URL}owned`, {
+				method: 'POST',
+				headers: {
+					"Content-type": "application/json; charset=UTF-8"
+				},
+				body: JSON.stringify(payload)
+			})
+			.then(response => {
+				if (isChecked && response.status == 201) {
+					levelInput.value = 0;
+					levelInputCard.value = 0;
+				} else if (!isChecked) {
+					levelInput.value = null;
+					levelInputCard.value = null;
+				}
+				checkboxOwnedCard.checked = isChecked;
+			})
+		}, 500);
 	}
 	
-	function handleWishlistChange() {
+	let debouceTimerWished;
+	function handleWishlistChange(event) {
+		const itemName = `${infoData[0].Name.replace(/\s+/g, '-')}`;
+		const isChecked = event.target.checked;
+		const checkboxWishCard = document.getElementById(`${itemName}-wished`);
 		
+		setWishlisted(isChecked);
+		clearTimeout(debouceTimerWished);
+		debounceTimerOwned = setTimeout(() => {
+			const payload = {
+				name: infoData[0].Name,
+				uid: sessionStorage.getItem('uid'),
+				isChecked: isChecked
+			}
+			fetch(`${import.meta.env.PUBLIC_BASE_URL}wishlist`, {
+				method: 'POST',
+				headers: {
+					"Content-type": "application/json; charset=UTF-8"
+				},
+				body: JSON.stringify(payload)
+			})
+			.then(response => {
+				checkboxWishCard.checked = isChecked;
+			})
+		}, 500);
 	}
 	
-	function handleFavoriteChange() {
+	let debounceTimerFavorited;
+	function handleFavoriteChange(event) {
+		const itemName = `${infoData[0].Name.replace(/\s+/g, '-')}`;
+		const isFavorited = event.target.classList.toggle('fa-solid');
+		const checkboxFavoriteCard = document.getElementById(`${itemName}-favorite`);
 		
+		setFavorited(isFavorited);
+		clearTimeout(debounceTimerFavorited);
+		debounceTimerOwned = setTimeout(() => {
+			const payload = {
+				name: infoData[0].Name,
+				uid: sessionStorage.getItem('uid'),
+				isChecked: isFavorited
+			}
+			fetch(`${import.meta.env.PUBLIC_BASE_URL}favorite`, {
+				method: 'POST',
+				headers: {
+					"Content-type": "application/json; charset=UTF-8"
+				},
+				body: JSON.stringify(payload)
+			})
+			.then(response => {
+				console.log(checkboxFavoriteCard);
+				checkboxFavoriteCard.querySelector('i').classList.toggle('fa-regular', !isFavorited);
+				checkboxFavoriteCard.querySelector('i').classList.toggle('fa-solid', isFavorited);
+				checkboxFavoriteCard.style.color = isFavorited ? '#edb1bd' : 'white';
+			})
+		}, 500);
 	}
 	
-	function handleLevelChange() {
+	let debounceTimerLevel;
+	function handleLevelChange(event) {
+		const itemName = `${infoData[0].Name.replace(/\s+/g, '-')}`;
+		const lvl = event.target.value;
+		setLevel(lvl);
 		
+		const checkboxOwnedCard = document.getElementById(`${itemName}-owned`);
+		const levelInputCard = document.getElementById(`${itemName}-level`);
+		
+		clearTimeout(debounceTimerLevel);
+            debounceTimerOwned = setTimeout(() => {
+			const payload = {
+				name: infoData[0].Name,
+				uid: sessionStorage.getItem('uid'),
+				level: lvl ? lvl : -1
+			}
+			
+			fetch(`${import.meta.env.PUBLIC_BASE_URL}update-item-level`, {
+				method: 'POST',
+				headers: {
+					"Content-type": "application/json; charset=UTF-8"
+				},
+				body: JSON.stringify(payload)
+			})
+			.then(response => response.json())
+			if (lvl) {
+				setOwned(true);
+				checkboxOwnedCard.checked = true;
+				levelInputCard.value = lvl;
+			} else {
+				setOwned(false);
+				checkboxOwnedCard.checked = false;
+				levelInputCard.value = null;
+			}
+		}, 500);
 	}
 	
 	const decodedHash = window.location.hash.substring(1);
@@ -62,10 +176,10 @@ export default function ItemDialog() {
 		try {
 			const levelResponse = await fetch(`${import.meta.env.PUBLIC_BASE_URL}api/items/${name}`);
 			const infoResponse = await fetch(`${import.meta.env.PUBLIC_BASE_URL}api/items/${name}/info`);
-			const levelData = await levelResponse.json();
-			const infoData = await infoResponse.json();
-			setLevelData(levelData);
-      		setInfoData(infoData);
+			const ldata = await levelResponse.json();
+			const idata = await infoResponse.json();
+			setLevelData(ldata);
+      		setInfoData(idata);
 		} catch (error) {
 			console.error("Error fetching data:", error);
 		}
@@ -285,7 +399,7 @@ export default function ItemDialog() {
 									id={`${infoData[0].Name.replace(/\s+/g, '-')}-level-dialog`}
 									min="0"
 									max="11"
-									value={itemLevel < 0 ? '' : itemLevel}
+									defaultValue={itemLevel < 0 ? '' : itemLevel}
 									onChange={handleLevelChange}
 									style={{
 										backgroundColor: '#555260',

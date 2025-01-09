@@ -311,11 +311,6 @@ function renderTrackerCard(item) {
         checkboxOwned.addEventListener('click', () => {
             const isChecked = checkboxOwned.checked;
             clearTimeout(debounceTimerOwned);
-            if (isChecked) {
-                levelInput.value = 0;
-            } else {
-                levelInput.value = null;
-            }
             debounceTimerOwned = setTimeout(() => {
                 const payload = {
                     name: item['Name'],
@@ -329,7 +324,14 @@ function renderTrackerCard(item) {
                     },
                     body: JSON.stringify(payload)
                 })
-                .then(response => response.json())
+                .then(response => {
+                    console.log(response.status);
+                    if (isChecked && response.status == 201) {
+                        levelInput.value = 0;
+                    } else if (!isChecked) {
+                        levelInput.value = null;
+                    }
+                })
             }, 500);
         });
         
@@ -404,6 +406,7 @@ function renderTrackerCard(item) {
         heartButton.className = 'heart';
         heartButton.innerHTML = '<i class="fa-regular fa-heart"></i>';
         heartButton.title = 'Add to favorites';
+        heartButton.id = `${item['Name']}-favorite`.replace(/\s+/g, '-')
         
         const icon = heartButton.querySelector('i');
         if (favorited) {
