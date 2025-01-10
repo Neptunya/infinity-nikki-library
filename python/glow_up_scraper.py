@@ -114,11 +114,10 @@ def scrape_one_lvl(name, rarity, slot, zero=False):
 		csvwriter.writerow(r)
 	r.clear()
 
-def scrape_stats(name, rarity, slot):
+def scrape_stats(name, rarity, slot, file):
 	r = []
 	rows = []
 	ss = [slot, '']
-	file = slot.lower()
 	r.append(name)
 	r.append(rarity)
 	r.extend(ss)
@@ -176,7 +175,7 @@ def scrape_stats(name, rarity, slot):
 
 #in_w.activate()
 time.sleep(1)
-scrape_stats("Stardust Tonight", 3, 'Arm Decoration')
+scrape_stats("Light Me Up", 4, 'Headwear', '1-1b')
 
 
 # time.sleep(2)

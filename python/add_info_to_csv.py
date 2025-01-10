@@ -7,11 +7,13 @@ with open('./python/json/costs.json') as f:
     costs_data = json.load(f)
 
 def merge_csv():
-    file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed')
+    # file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed')
     df = pd.DataFrame()
-    for file in file_list:
-        df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/{file}')
-        df = pd.concat([df, df_temp], ignore_index=True)
+    # for file in file_list:
+    #     df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/{file}')
+    #     df = pd.concat([df, df_temp], ignore_index=True)
+    df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/1-1b.csv')
+    df = pd.concat([df, df_temp], ignore_index=True)
     df.to_csv('D:/Documents/infinity_nikki_library/python/csv/full_item_data.csv', index=False)
 
 def add_new():
@@ -267,7 +269,7 @@ def sort_details():
 
 merge_csv()
 add_style()
-add_makeup()
+#add_makeup()
 split_csv()
 add_glow_up()
 add_costs()
@@ -276,4 +278,4 @@ add_sources()
 add_banners()
 add_outfits_and_recolors_details()
 add_outfits_and_recolors_lvls()
-sort_details()
+#sort_details()

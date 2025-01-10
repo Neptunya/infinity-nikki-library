@@ -74,7 +74,6 @@ lvlFields = {
 class Items(Resource):
     @marshal_with(itemFields)
     def get(self):
-         # Extract query parameters
         rarity = request.args.getlist('rarity')
         slot = request.args.getlist('slot')
         label = request.args.getlist('label')
@@ -124,7 +123,12 @@ class Items(Resource):
             'Premium Items': [ItemDetails.Source == premium],
             'Limited-Time Resonance': [ItemDetails.Source == lim_reso],
             'Event: Into a Starry Night': [ItemDetails.Source.contains('Into a Starry Night')],
-            'Event Items': [ItemDetails.Source.contains("event")],
+            'Event Items': [
+                or_(
+                    ItemDetails.Source.contains("event"),
+                    ItemDetails.Source.contains("mail")
+                )
+            ],
             'Currently Unobtainable': [
                 and_(
                     ItemDetails.Source.notin_(always_avail_vals),
@@ -173,6 +177,46 @@ class Items(Resource):
             q = and_(q, ItemDetails.Banner.contains('New'))
 
         query = query.filter(q)
+        
+        query = query.order_by(
+            case(
+                (ItemDetails.Banner.like('%New!%'), 0),
+                else_=1
+            ).asc(),
+            ItemDetails.Rarity.desc(),
+            case(
+                (ItemDetails.Slot == 'Hair', 1),
+                (ItemDetails.Slot == 'Dress', 2),
+                (ItemDetails.Slot == 'Outerwear', 3),
+                (ItemDetails.Slot == 'Top', 4),
+                (ItemDetails.Slot == 'Bottom', 5),
+                (ItemDetails.Slot == 'Socks', 6),
+                (ItemDetails.Slot == 'Shoes', 7),
+                (ItemDetails.Slot == 'Hair Accessory', 8),
+                (ItemDetails.Slot == 'Headwear', 9),
+                (ItemDetails.Slot == 'Earrings', 10),
+                (ItemDetails.Slot == 'Neckwear', 11),
+                (ItemDetails.Slot == 'Bracelet', 12),
+                (ItemDetails.Slot == 'Choker', 13),
+                (ItemDetails.Slot == 'Gloves', 14),
+                (ItemDetails.Slot == 'Face Decoration', 15),
+                (ItemDetails.Slot == 'Chest Accessory', 16),
+                (ItemDetails.Slot == 'Pendant', 17),
+                (ItemDetails.Slot == 'Backpiece', 18),
+                (ItemDetails.Slot == 'Ring', 19),
+                (ItemDetails.Slot == 'Arm Decoration', 20),
+                (ItemDetails.Slot == 'Handheld', 21),
+                (ItemDetails.Slot == 'Base Makeup', 22),
+                (ItemDetails.Slot == 'Eyebrows', 23),
+                (ItemDetails.Slot == 'Eyelashes', 24),
+                (ItemDetails.Slot == 'Contact Lenses', 25),
+                (ItemDetails.Slot == 'Lips', 26),
+                else_=27
+            ).asc(),
+            ItemDetails.Outfit.asc()
+        )
+
+        
         filtered_items = query.all()
         if not filtered_items:
             return [], 200
@@ -186,7 +230,7 @@ class Items(Resource):
         
         style_query = LevelDetails.query.filter(
             LevelDetails.Name.in_(filtered_item_names),
-            LevelDetails.Level == 10
+            LevelDetails.Level == 11
         )
         sorted_styles = style_query.all()
         
@@ -247,5 +291,5 @@ def index():
 
 if __name__ == '__main__':
     from waitress import serve
-    serve(app, host='0.0.0.0', port=5000)
-    #app.run(debug=True)
+    #serve(app, host='0.0.0.0', port=5000)
+    app.run(debug=True)
