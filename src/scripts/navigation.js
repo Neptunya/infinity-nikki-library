@@ -27,29 +27,31 @@ const updateNavLinks = () => {
     const logoutVert = document.getElementById('logout-vert');
     const width = window.innerWidth;
     
+    loginHori.style.display = 'none';
+    logoutHori.style.display = 'none';
+    loginVert.style.display = 'none';
+    logoutVert.style.display = 'none';
+    
+    loginHori.classList.add('hidden');
+    logoutHori.classList.add('hidden');
+    loginVert.classList.add('hidden');
+    logoutVert.classList.add('hidden');
+    
     if (refreshToken) {
         if (width < 600) {
-            loginHori.style.display = 'none';
-            logoutHori.style.display = 'none';
-            loginVert.style.display = 'none';
+            loginVert.classList.remove('hidden');
             logoutVert.style.display = 'block';
         } else {
-            loginHori.style.display = 'none';
+            logoutHori.classList.remove('hidden');
             logoutHori.style.display = 'inline-block';
-            loginVert.style.display = 'none';
-            logoutVert.style.display = 'none';
         }
     } else {
         if (width < 600) {
-            loginHori.style.display = 'none';
-            logoutHori.style.display = 'none';
+            loginVert.classList.remove('hidden');
             loginVert.style.display = 'block';
-            logoutVert.style.display = 'none';
         } else {
+            loginHori.classList.remove('hidden');
             loginHori.style.display = 'inline-block';
-            logoutHori.style.display = 'none';
-            loginVert.style.display = 'none';
-            logoutVert.style.display = 'none';
         }
     }
 }

@@ -130,6 +130,8 @@ class Items(Resource):
         label = request.args.getlist('label')
         style = request.args.getlist('style')
         source = request.args.getlist('source')
+        status = request.args.getlist('status')
+        uid = request.args.get('uid')
         styleSort = request.args.get('style-sort')
         sortOrder = request.args.get('sort-order')
 
@@ -195,6 +197,27 @@ class Items(Resource):
             'New Only': [ItemDetails.Banner.contains('New')]
         }
 
+        statusConditions = []
+        
+        if 'Owned' in status and uid:
+            owned_items_query = db.session.query(OwnedItems.item_name).filter(OwnedItems.user_id == uid)
+            owned_item_names = owned_items_query.all()
+            owned_item_names = [item[0] for item in owned_item_names]
+            statusConditions.append(ItemDetails.Name.in_(owned_item_names))
+        if 'Wishlisted' in status and uid:
+            wishlisted_items_query = db.session.query(WishlistedItems.item_name).filter(WishlistedItems.user_id == uid)
+            wishlisted_item_names = wishlisted_items_query.all()
+            wishlisted_item_names = [item[0] for item in wishlisted_item_names]
+            statusConditions.append(ItemDetails.Name.in_(wishlisted_item_names))
+        if 'Favorited' in status and uid:
+            favorited_items_query = db.session.query(FavoritedItems.item_name).filter(FavoritedItems.user_id == uid)
+            favorited_item_names = favorited_items_query.all()
+            favorited_item_names = [item[0] for item in favorited_item_names]
+            statusConditions.append(ItemDetails.Name.in_(favorited_item_names))
+        
+        if statusConditions:
+            query = query.filter(or_(*statusConditions))
+
         if rarity:
             query = query.filter(ItemDetails.Rarity.in_(rarity))
         if slot:
@@ -205,6 +228,8 @@ class Items(Resource):
         if style:
             query = query.filter(ItemDetails.Style.in_(style))
         
+       
+            
         matched_conditions = set()
         for s in source:
             if s in source_map and s != "Currently Unobtainable2" and s != "Recolor" and s != "New Only":

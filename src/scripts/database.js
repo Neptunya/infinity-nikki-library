@@ -7,6 +7,7 @@ let selectedSlots = [];
 let selectedLabels = [];
 let selectedStyles = [];
 let selectedSources = [];
+let selectedStatus = [];
 let selectedStyleSort = [];
 let selectedMode = 'db';
 let hideUnobtainable = false;
@@ -533,7 +534,7 @@ function adjustItemsPerPageAndRerender(data) {
 export function updateMode(mode) {
     selectedMode = mode;
     const title = document.getElementById('title');
-    title.innerHTML = selectedMode == 'db' ? "Database" : "Item Tracker"
+    title.innerHTML = selectedMode == 'db' ? "Database" : "Item Tracker (Beta)"
     applySearchFilter();
 }
 
@@ -568,6 +569,13 @@ export function getSelectedStyle(styleValues) {
 export function getSelectedSource(sourceValues) {
     currentPage = 1;
     selectedSources = sourceValues;
+    getFilteredItems();
+}
+
+export function getSelectedStatus(statusValues) {
+    currentPage = 1;
+    selectedStatus = statusValues;
+    console.log(selectedStatus);
     getFilteredItems();
 }
 
@@ -620,6 +628,11 @@ export function getFilteredItems() {
     
     if (selectedSources && selectedSources.length > 0) {
         url += `source=${selectedSources.join('&source=')}&`;
+    }
+    
+    if (selectedStatus && selectedStatus.length > 0) {
+        url += `status=${selectedStatus.join('&status=')}&`;
+        url += `uid=${sessionStorage.getItem('uid')}&`
     }
     
     if (hideUnobtainable) {

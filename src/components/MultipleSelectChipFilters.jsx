@@ -3,11 +3,17 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { theme } from '../styles/theme';
 import MultipleSelectChipContent from './MutipleSelectChipContent'
-import { getSelectedRarities, getSelectedSlots, getSelectedLabels, getSelectedStyle, getSelectedSource } from '../scripts/database';
+import {  getSelectedRarities,
+          getSelectedSlots,
+          getSelectedLabels,
+          getSelectedStyle,
+          getSelectedSource,
+          getSelectedStatus } from '../scripts/database';
 
 export default function MultipleSelectChipFilters() {
     const [isClient, setIsClient] = useState(false);
     const [selectedSources, setSelectedSources] = useState([]);
+    const uid = sessionStorage.getItem('uid');
     
     const rarities = [
       '✧✧',
@@ -58,6 +64,10 @@ export default function MultipleSelectChipFilters() {
       'Ballroom','Royal','Linlang','Pastoral','Cute'
     ]
     
+    const status = [
+      'Owned', 'Wishlisted', 'Favorited'
+    ]
+    
     useEffect(() => {
       setIsClient(true);
 
@@ -101,6 +111,16 @@ export default function MultipleSelectChipFilters() {
         label="Source"
         onSelectionChange={getSelectedSource}
         selected={selectedSources} />
+      {uid ? (
+        <MultipleSelectChipContent
+        names={status}
+        idPrefix="status"
+        label="Status"
+        onSelectionChange={getSelectedStatus}
+        selected={[]} />)
+        : ''
+      }
+      
       
     </ThemeProvider>
   ) : null;

@@ -38,7 +38,7 @@ export default function ModeSelect() {
             onChange={handleChange}
           >
             <MenuItem value={'db'}>Database</MenuItem>
-            {refreshToken ? <MenuItem value={'tracker'}>Item Tracker</MenuItem> :
+            {refreshToken ? <MenuItem value={'tracker'}>Item Tracker (Beta)</MenuItem> :
             <MenuItem value={'tracker-disabled'} disabled>Log In to use Item Tracker</MenuItem>}
           </Select>
         </FormControl>
