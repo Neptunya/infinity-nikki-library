@@ -13,6 +13,8 @@ let selectedMode = 'db';
 let hideUnobtainable = false;
 let hideRecolor = true;
 let newOnly = false;
+let favOnly = false;
+let hideValues = [];
 let searchQuery = "";
 let selectedSort = "";
 let descending = true;
@@ -340,7 +342,6 @@ function renderTrackerCard(item) {
                     body: JSON.stringify(payload)
                 })
                 .then(response => {
-                    console.log(response.status);
                     if (isChecked && response.status == 201) {
                         levelInput.value = 0;
                     } else if (!isChecked) {
@@ -589,25 +590,20 @@ export function getSelectedSource(sourceValues) {
 export function getSelectedStatus(statusValues) {
     currentPage = 1;
     selectedStatus = statusValues;
-    console.log(selectedStatus);
     getFilteredItems();
 }
 
-export function toggleUnobtainable() {
+export function toggleHide(hideValues) {
     currentPage = 1;
-    hideUnobtainable = !hideUnobtainable;
+    hideUnobtainable = hideValues.includes('hide-unobtainable');
+    hideRecolor = hideValues.includes('hide-recolors');
     getFilteredItems();
 }
 
-export function toggleRecolor() {
+export function toggleOnly(onlyValues) {
     currentPage = 1;
-    hideRecolor = !hideRecolor;
-    getFilteredItems();
-}
-
-export function toggleNew() {
-    currentPage = 1;
-    newOnly = !newOnly;
+    newOnly = onlyValues.includes('new-only');
+    favOnly = onlyValues.includes('fav-only');
     getFilteredItems();
 }
 
@@ -658,7 +654,12 @@ export function getFilteredItems() {
     }
     
     if (newOnly) {
-        url += 'source=New%20Only&'
+        url += 'source=New%20Only&';
+    }
+    
+    if (favOnly) {
+        url += 'source=Fav%20Only&';
+        url += `uid=${sessionStorage.getItem('uid')}&`
     }
     
     if (selectedStyleSort.length > 0 && styles.includes(selectedStyleSort)) {
@@ -668,6 +669,7 @@ export function getFilteredItems() {
     
     adjustCollapsibleMaxHeight();
     url = url.slice(0, -1);
+    console.log(url);
     fetch(url)
     .then(response => response.json())
     .then(data => {

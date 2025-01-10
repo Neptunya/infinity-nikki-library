@@ -127,6 +127,7 @@ export default function ItemDialog() {
 				checkboxFavoriteCard.querySelector('i').classList.toggle('fa-regular', !isFavorited);
 				checkboxFavoriteCard.querySelector('i').classList.toggle('fa-solid', isFavorited);
 				checkboxFavoriteCard.style.color = isFavorited ? '#edb1bd' : 'white';
+				checkboxFavoriteCard.querySelector('i').style.color = isFavorited ? '#edb1bd' : 'white';
 			})
 		}, 500);
 	}

@@ -214,11 +214,11 @@ class Items(Resource):
             wishlisted_item_names = wishlisted_items_query.all()
             wishlisted_item_names = [item[0] for item in wishlisted_item_names]
             statusConditions.append(ItemDetails.Name.in_(wishlisted_item_names))
-        if 'Favorited' in status and uid:
-            favorited_items_query = db.session.query(FavoritedItems.item_name).filter(FavoritedItems.user_id == uid)
-            favorited_item_names = favorited_items_query.all()
-            favorited_item_names = [item[0] for item in favorited_item_names]
-            statusConditions.append(ItemDetails.Name.in_(favorited_item_names))
+        if 'Not Owned' in status and uid:
+            not_owned_items_query = db.session.query(OwnedItems.item_name).filter(OwnedItems.user_id == uid)
+            not_owned_item_names = not_owned_items_query.all()
+            not_owned_item_names = [item[0] for item in not_owned_item_names]
+            statusConditions.append(~ItemDetails.Name.in_(not_owned_item_names))
         
         if statusConditions:
             query = query.filter(or_(*statusConditions))
@@ -251,6 +251,11 @@ class Items(Resource):
             q = and_(q, *source_map["Recolor"])
         if "New Only" in source:
             q = and_(q, ItemDetails.Banner.contains('New'))
+        if "Fav Only" in source:
+            fav_items_query = db.session.query(FavoritedItems.item_name).filter(FavoritedItems.user_id == uid)
+            fav_item_names = fav_items_query.all()
+            fav_item_names = [item[0] for item in fav_item_names]
+            q = and_(q, ItemDetails.Name.in_(fav_item_names))
 
         query = query.filter(q)
         

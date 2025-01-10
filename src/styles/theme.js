@@ -20,5 +20,8 @@ export const theme = createTheme({
   },
   typography: {
     fontFamily: 'PT Sans',
+    button: {
+      textTransform: 'none'
+    }
   },
 });

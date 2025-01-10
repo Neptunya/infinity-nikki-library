@@ -65,7 +65,7 @@ export default function MultipleSelectChipFilters() {
     ]
     
     const status = [
-      'Owned', 'Wishlisted', 'Favorited'
+      'Owned', 'Not Owned', 'Wishlisted'
     ]
     
     useEffect(() => {

@@ -172,16 +172,11 @@ button:disabled {
     .unobtainable-msg {
         font-size: 0.9rem;
     }
-    .card-row {
-        max-height: none;
-    }
 }
 
-@media (max-width: 420px) {
-    .item-card {
-    }
+.card-row {
+    max-height: none;
 }
-
 
 #search-and-sort {
     display: flex;
