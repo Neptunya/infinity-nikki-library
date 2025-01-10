@@ -409,6 +409,7 @@ export default function ItemDialog() {
 							</Box>
 						</TabPanel>
 						<TabPanel value="1">
+						<div id='stats-table-tab'>
 						<table style={{
 							overflowX: 'auto',
 							overflowY: 'auto'
@@ -462,6 +463,7 @@ export default function ItemDialog() {
 							})}
 							</tbody>
 						</table>
+						</div>
 						</TabPanel>
 					</TabContext>
 				  </Box>

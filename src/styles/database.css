@@ -67,6 +67,10 @@ button:disabled {
     background-color: #494554;
 }
 
+.item-card-text {
+    flex-grow: 1;
+}
+
 .page-input {
     max-width: 50px;
 }
@@ -162,7 +166,22 @@ button:disabled {
     .item-img {
         max-width: 40%;
     }
+    .item-card {
+        overflow: visible;
+    }
+    .unobtainable-msg {
+        font-size: 0.9rem;
+    }
+    .card-row {
+        max-height: none;
+    }
 }
+
+@media (max-width: 420px) {
+    .item-card {
+    }
+}
+
 
 #search-and-sort {
     display: flex;

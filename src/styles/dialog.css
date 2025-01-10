@@ -103,6 +103,11 @@ td {
     overflow-y: auto;
 }
 
+#stats-table-tab {
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
 #table-in-tab td {
     padding: 4px;
     font-size: 0.95rem;

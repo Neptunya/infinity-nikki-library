@@ -97,9 +97,9 @@ function renderItems(data) {
     const itemsToRender = data.slice(startIndex, endIndex);
 
     itemsToRender.forEach(item => {
-        selectedMode == 'db' ?
-            renderDatabaseCard(item) :
-            renderTrackerCard(item);
+        selectedMode == 'tracker' ?
+            renderTrackerCard(item) :
+            renderDatabaseCard(item);
     });
     renderPagination(data.length);
 }
@@ -109,7 +109,12 @@ function renderDatabaseCard(item) {
     const card = document.createElement('a');
     card.classList.add('item-card-link')
     card.classList.add('item-card');
-    card.classList.add('card-row');
+    if (window.innerWidth < 340) {
+        card.classList.add('card-col');
+        card.style.alignItems = 'center';
+    } else {
+        card.classList.add('card-row');
+    }
     card.style.minHeight = '190px';
     const link = `#${item['Name']}`;
     card.href = link;
@@ -185,7 +190,12 @@ function renderTrackerCard(item) {
     const itemCardContainer = document.getElementById('item-card-container');
     const card = document.createElement('div');
     card.classList.add('item-card');
-    card.classList.add('card-row');
+    if (window.innerWidth < 415) {
+        card.classList.add('card-col');
+        card.style.alignItems = 'center';
+    } else {
+        card.classList.add('card-row');
+    }
     card.style.minHeight = '260px';
 
     const img = document.createElement('img');
@@ -198,9 +208,13 @@ function renderTrackerCard(item) {
     cardText.classList.add('item-card-text');
     card.appendChild(cardText)
 
+    const cardHeader = document.createElement('div');
+    cardHeader.classList.add('card-header-fav');
     const h3 = document.createElement('h3');
     h3.textContent = item['Name'];
-    cardText.appendChild(h3);
+    cardHeader.appendChild(h3);
+    cardText.appendChild(cardHeader);
+    
     
     if (item['Outfit']) {
         const outfit = document.createElement('p')
@@ -441,7 +455,7 @@ function renderTrackerCard(item) {
             }, 500);
         });
         
-        card.appendChild(heartButton);
+        cardHeader.appendChild(heartButton);
     })
     itemCardContainer.appendChild(card);
 }
@@ -534,7 +548,7 @@ function adjustItemsPerPageAndRerender(data) {
 export function updateMode(mode) {
     selectedMode = mode;
     const title = document.getElementById('title');
-    title.innerHTML = selectedMode == 'db' ? "Database" : "Item Tracker (Beta)"
+    title.innerHTML = selectedMode == 'tracker' ? "Item Tracker (Beta)" : "Database"
     applySearchFilter();
 }
 

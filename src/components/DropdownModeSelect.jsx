@@ -16,30 +16,39 @@ export default function ModeSelect() {
     setMode(event.target.value);
     updateMode(event.target.value);
   };
-  
+
+  const handleLoginRedirect = () => {
+    console.log('clicked!');
+    window.location.href = 'https://discord.com/oauth2/authorize?client_id=1320670335896387615&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A4321%2Fdashboard&scope=identify';
+  };
+
   let refreshToken = localStorage.getItem('refresh_token');
-  
+
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline /> {}
-      <Box sx={{
-        alignSelf:'center'
-      }}>
-        <FormControl fullWidth
-            sx={{
-            }}>
-          <InputLabel
-            id="mode-select">Mode</InputLabel>
+      <CssBaseline />
+      <Box sx={{ alignSelf: 'center' }}>
+        <FormControl fullWidth>
+          <InputLabel id="mode-select">Mode</InputLabel>
           <Select
             labelId="mode-select"
             id="mode-select"
             value={mode}
-            label="mode"
+            label="Mode"
             onChange={handleChange}
           >
             <MenuItem value={'db'}>Database</MenuItem>
-            {refreshToken ? <MenuItem value={'tracker'}>Item Tracker (Beta)</MenuItem> :
-            <MenuItem value={'tracker-disabled'} disabled>Log In to use Item Tracker</MenuItem>}
+            {refreshToken ? (
+              <MenuItem value={'tracker'}>Item Tracker (Beta)</MenuItem>
+            ) : (
+              <MenuItem
+                value={'tracker-disabled'}
+                onClick={handleLoginRedirect}
+                sx={{ cursor: 'pointer' }}
+              >
+                Log In to use Item Tracker
+              </MenuItem>
+            )}
           </Select>
         </FormControl>
       </Box>

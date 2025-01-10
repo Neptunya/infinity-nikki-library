@@ -1,12 +1,15 @@
 .heart {
-    position: absolute;
-    top: 10px;
-    right: 10px;
     border: none;
     font-size: 20px;
     cursor: pointer;
     padding: 0px 5px;
     z-index: 10;
+}
+
+.card-header-fav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .more-details-btn {
@@ -84,4 +87,10 @@
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+
+@media (max-width: 350px) {
+    .more-details-btn {
+        font-size: 0.95rem;
+    }
 }

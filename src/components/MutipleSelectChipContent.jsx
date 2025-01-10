@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
+import { useMediaQuery } from "@mui/material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -31,6 +32,14 @@ export default function MultipleSelectChipContent({ names = [], idPrefix = 'demo
   const theme = useTheme();
   
   const [personName, setPersonName] = useState(selected);
+  const isSmallScreen = useMediaQuery("(max-width: 400px)");
+  const isSmallerScreen = useMediaQuery("(max-width: 320px)");
+  const dynamicWidth = isSmallScreen
+    ? (isSmallerScreen
+      ? '150px' 
+      : '200px'
+    )
+    : '270px'
   
   const handleChange = (event) => {
     const {
@@ -46,9 +55,9 @@ export default function MultipleSelectChipContent({ names = [], idPrefix = 'demo
       <FormControl
         sx={{
           m: 1,
-          width: 250,
-          bgcolor: theme.palette.background.paper, // Custom background color
-          color: theme.palette.text.primary, // Custom text color
+          width: dynamicWidth,
+          bgcolor: theme.palette.background.paper,
+          color: theme.palette.text.primary,
         }}
       >
         <InputLabel id={`${idPrefix}-select-multiple-chip`}>{label}</InputLabel>
