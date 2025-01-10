@@ -9,7 +9,7 @@ window.addEventListener('load', () => {
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
             sessionStorage.removeItem('uid');
-            window.location.href = '/';
+            location.reload();
         });
     });
     updateNavLinks();
