@@ -6,6 +6,7 @@ button {
     border-radius: 5px;
     font-size: 18px;
     cursor: pointer;
+    font-family: 'PT Sans', sans-serif;
 }
 
 button:hover {
@@ -28,18 +29,18 @@ button:disabled {
 
 .item-card {
     display: flex;
-    min-height: 190px;
     padding: 5px;
     margin: 5px 10px;
     border-radius: 10px;
     flex: 1 1 400px;
     overflow: hidden;
     background-color: #353142;
+    position: relative;
 }
 
 .item-card h3 {
     margin-top: 5px;
-    margin-bottom: 0px;
+    margin-bottom: 4px;
     line-height: 1;
     padding-top: 10px;
     padding-bottom: 1px;
@@ -58,12 +59,16 @@ button:disabled {
     color: white;
 }
 
-.item-card-link h3, .item-card-link p {
+.item-card-link h3, .item-card-link p:not(.unobtainable-msg) {
 	color: white;
 }
 
-.item-card:hover {
+.item-card-link:hover {
     background-color: #494554;
+}
+
+.item-card-text {
+    flex-grow: 1;
 }
 
 .page-input {
@@ -83,7 +88,6 @@ button:disabled {
 .pagination-button:not([disabled]):hover {
     background-color: #e0aab9;
 }
-
 
 .collapsible {
     width: 100%;
@@ -138,9 +142,11 @@ button:disabled {
 .unobtainable-msg {
     display: inline-block;
     margin-top: 8px;
-    background-color: #676373;
+    margin-right: 4px;
+    border: 2px solid #d3869b;
     padding: 0 10px;
-    border-radius: 12px;
+    border-radius: 120px;
+    color: #d3869b;
 }
 
 @keyframes spin {
@@ -160,7 +166,22 @@ button:disabled {
     .item-img {
         max-width: 40%;
     }
+    .item-card {
+        overflow: visible;
+    }
+    .unobtainable-msg {
+        font-size: 0.9rem;
+    }
+    .card-row {
+        max-height: none;
+    }
 }
+
+@media (max-width: 420px) {
+    .item-card {
+    }
+}
+
 
 #search-and-sort {
     display: flex;

@@ -81,10 +81,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const contentWithBanner = document.querySelector('.content-container.with-banner')
   hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('expanded');
-    if (contentWithBanner.id === "header-expanded") {
-      contentWithBanner.removeAttribute('id');
-    } else {
-      contentWithBanner.id = "header-expanded";
+    if (contentWithBanner) {
+      if (contentWithBanner.id === "header-expanded") {
+        contentWithBanner.removeAttribute('id');
+      } else {
+        contentWithBanner.id = "header-expanded";
+      }
     }
   });
     

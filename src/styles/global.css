@@ -5,7 +5,6 @@ html {
 	background-color: #292535;
 	color: white;
 	font-family: 'PT Sans', sans-serif;
-	
 }
 
 body {
@@ -55,6 +54,10 @@ a:visited {
 	color: #b38aca;
 }
 
+a:not([href]) {
+    color: #b38aca;
+}
+
 strong {
 	color: #edb1bd;
 }
@@ -93,6 +96,7 @@ input[type=text] {
     padding: 15px;
     margin: 10px 20px;
     border-radius: 10px;
+	min-height: 170px;
 	overflow: hidden;
 }
 

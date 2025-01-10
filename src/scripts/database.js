@@ -1,3 +1,5 @@
+import { render } from "astro/runtime/server/index.js";
+
 let itemsPerPage = 10;
 let currentPage = 1;
 let selectedRarities = [];
@@ -5,7 +7,9 @@ let selectedSlots = [];
 let selectedLabels = [];
 let selectedStyles = [];
 let selectedSources = [];
+let selectedStatus = [];
 let selectedStyleSort = [];
+let selectedMode = 'db';
 let hideUnobtainable = false;
 let hideRecolor = true;
 let newOnly = false;
@@ -93,72 +97,367 @@ function renderItems(data) {
     const itemsToRender = data.slice(startIndex, endIndex);
 
     itemsToRender.forEach(item => {
-        const card = document.createElement('a');
-        card.classList.add('item-card-link')
-        card.classList.add('item-card');
+        selectedMode == 'tracker' ?
+            renderTrackerCard(item) :
+            renderDatabaseCard(item);
+    });
+    renderPagination(data.length);
+}
+
+function renderDatabaseCard(item) {
+    const itemCardContainer = document.getElementById('item-card-container');
+    const card = document.createElement('a');
+    card.classList.add('item-card-link')
+    card.classList.add('item-card');
+    if (window.innerWidth < 340) {
+        card.classList.add('card-col');
+        card.style.alignItems = 'center';
+    } else {
         card.classList.add('card-row');
-        const link = `#${item['Name']}`;
-        card.href = link;
+    }
+    card.style.minHeight = '190px';
+    const link = `#${item['Name']}`;
+    card.href = link;
+
+    const img = document.createElement('img');
+    img.classList.add('item-img')
+    img.src = `/images/items/${item.Name}.png`;
+    img.alt = item.Name;
+    card.appendChild(img);
+
+    const cardText = document.createElement('div');
+    cardText.classList.add('item-card-text');
+    card.appendChild(cardText)
+
+    const h3 = document.createElement('h3');
+    h3.textContent = item['Name'];
+    cardText.appendChild(h3);
+
+    if (item['Outfit']) {
+        const outfit = document.createElement('p')
+        outfit.innerHTML += "<strong><i>" + item['Outfit'] + "</i></strong>";
+        outfit.style.textWrap = 'wrap';
+        outfit.style.marginTop = '4px';
+        cardText.appendChild(outfit);
+    }
+
+    const p = document.createElement('p');
+    let stars = '';
+    const rarityValue = item['Rarity'];
+    stars = '✧'.repeat(rarityValue);
+    p.innerHTML = stars;
+    cardText.appendChild(p)
+    
+    if (item['Style']) {
+        p.innerHTML += '<br>' + item['Style'];
+    }
+    
+    if (item['Labels']) {
+        p.innerHTML += '<br><i>' + item['Labels'] + '</i>';
+    }
+    
+    if (item['Banner']) {
         
+        if (item['Banner'].includes("Past Content")) {
+            const unobMsg = document.createElement('p');
+            unobMsg.innerHTML += 'Past Content';
+            unobMsg.classList.add('unobtainable-msg');
+            cardText.appendChild(unobMsg)
+        } else if (item['Banner'].includes("Future Content")) {
+            const unobMsg = document.createElement('p');
+            unobMsg.innerHTML += 'Future Content';
+            unobMsg.classList.add('unobtainable-msg');
+            cardText.appendChild(unobMsg)
+        } else if (item['Banner'].includes("New!")) {
+            const unobMsg = document.createElement('p');
+            unobMsg.innerHTML += 'New!';
+            unobMsg.classList.add('unobtainable-msg');
+            cardText.appendChild(unobMsg)
+        } 
+    }
+    
+    if (item['Source'].includes("premium")) {
+        const unobMsg2 = document.createElement('p');
+        unobMsg2.innerHTML += 'Paid';
+        unobMsg2.classList.add('unobtainable-msg');
+        cardText.appendChild(unobMsg2)
+    }
+    
+    itemCardContainer.appendChild(card);
+}
 
-        const img = document.createElement('img');
-        img.classList.add('item-img')
-        img.src = `/images/items/${item.Name}.png`;
-        img.alt = item.Name;
-        card.appendChild(img);
+function renderTrackerCard(item) {
+    const itemCardContainer = document.getElementById('item-card-container');
+    const card = document.createElement('div');
+    card.classList.add('item-card');
+    if (window.innerWidth < 415) {
+        card.classList.add('card-col');
+        card.style.alignItems = 'center';
+    } else {
+        card.classList.add('card-row');
+    }
+    card.style.minHeight = '260px';
 
-        const cardText = document.createElement('div');
-        cardText.classList.add('item-card-text');
-        card.appendChild(cardText)
+    const img = document.createElement('img');
+    img.classList.add('item-img')
+    img.src = `/images/items/${item.Name}.png`;
+    img.alt = item.Name;
+    card.appendChild(img);
+    
+    const cardText = document.createElement('div');
+    cardText.classList.add('item-card-text');
+    card.appendChild(cardText)
 
-        const h3 = document.createElement('h3');
-        h3.textContent = item['Name'];
-        cardText.appendChild(h3);
+    const cardHeader = document.createElement('div');
+    cardHeader.classList.add('card-header-fav');
+    const h3 = document.createElement('h3');
+    h3.textContent = item['Name'];
+    cardHeader.appendChild(h3);
+    cardText.appendChild(cardHeader);
+    
+    
+    if (item['Outfit']) {
+        const outfit = document.createElement('p')
+        outfit.innerHTML += "<strong><i>" + item['Outfit'] + "</i></strong>";
+        outfit.style.textWrap = 'wrap';
+        outfit.style.marginTop = '4px';
+        cardText.appendChild(outfit);
+    }
+    
+    let owned;
+    let wishlisted;
+    let favorited;
+    let itemLevel;
+    fetch(`${import.meta.env.PUBLIC_BASE_URL}check-item-status`, {
+        method: 'POST',
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        },
+        body: JSON.stringify({
+            name: item['Name'],
+            uid: sessionStorage.getItem('uid')
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        owned = data.owned;
+        wishlisted = data.wishlisted;
+        favorited = data.favorited;
+        itemLevel = data.level;
 
-        if (item['Outfit']) {
-            const outfit = document.createElement('p')
-            outfit.innerHTML += "<strong><i>" + item['Outfit'] + "</i></strong>";
-            outfit.style.textWrap = 'wrap';
-            outfit.style.marginTop = '4px';
-            cardText.appendChild(outfit);
-        }
+        const itemNameOwned = `${item['Name']}-owned`.replace(/\s+/g, '-');
+        const labelOwned = document.createElement('label');
+        labelOwned.for = itemNameOwned;
+        labelOwned.innerHTML = "Owned";
+        labelOwned.classList.add('checkbox-container');
+        cardText.appendChild(labelOwned);
 
-        const p = document.createElement('p');
-        let stars = '';
-        const rarityValue = item['Rarity'];
-        stars = '✧'.repeat(rarityValue);
-        p.innerHTML = stars;
-        cardText.appendChild(p)
+        const checkboxOwned = document.createElement('input');
+        checkboxOwned.type = 'checkbox';
+        checkboxOwned.id = itemNameOwned;
+        labelOwned.appendChild(checkboxOwned);
         
-        if (item['Style']) {
-            p.innerHTML += '<br>' + item['Style'];
+        const checkmarkOwned = document.createElement('span');
+        checkmarkOwned.classList.add('checkmark');
+        if (owned) {
+            checkboxOwned.checked = true;
+        }
+        labelOwned.appendChild(checkmarkOwned);
+        
+        const itemNameWish = `${item['Name']}-wished`.replace(/\s+/g, '-');
+        const labelWished = document.createElement('label');
+        labelWished.for = itemNameWish;
+        labelWished.innerHTML = "Wishlist";
+        labelWished.classList.add('checkbox-container');
+        cardText.appendChild(labelWished);
+
+        const checkboxWished = document.createElement('input');
+        checkboxWished.type = 'checkbox';
+        checkboxWished.id = itemNameWish;
+        labelWished.appendChild(checkboxWished);
+        
+        const checkmarkWished = document.createElement('span');
+        checkmarkWished.classList.add('checkmark');
+        if (wishlisted) {
+            checkboxWished.checked = true;
+        }
+        labelWished.appendChild(checkmarkWished);
+        
+        let debounceTimerWished;
+        checkboxWished.addEventListener('click', () => {
+            const isCheckedWished = checkboxWished.checked;
+            clearTimeout(debounceTimerWished);
+            debounceTimerWished = setTimeout(() => {
+                const payload = {
+                    name: item['Name'],
+                    uid: sessionStorage.getItem('uid'),
+                    isChecked: isCheckedWished
+                }
+                fetch(`${import.meta.env.PUBLIC_BASE_URL}wishlist`, {
+                    method: 'POST',
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+            }, 500);
+        });
+        
+        const itemNameLvl = `${item['Name']}-level`.replace(/\s+/g, '-');
+        const labelLevel = document.createElement('label');
+        labelLevel.for = itemNameLvl;
+        labelLevel.innerHTML = "Level:"
+        cardText.appendChild(labelLevel);
+        
+        const levelInput = document.createElement('input');
+        levelInput.type = 'number';
+        levelInput.id = itemNameLvl;
+        levelInput.name = itemNameLvl;
+        levelInput.classList.add('level-input')
+        levelInput.min = 0;
+        levelInput.max = 11;
+        cardText.appendChild(levelInput);
+        if (itemLevel >= 0) {
+            levelInput.value = itemLevel;
         }
         
-        if (item['Labels']) {
-            p.innerHTML += '<br><i>' + item['Labels'] + '</i>';
-        }
+        let debounceTimerOwned;
+        checkboxOwned.addEventListener('click', () => {
+            const isChecked = checkboxOwned.checked;
+            clearTimeout(debounceTimerOwned);
+            debounceTimerOwned = setTimeout(() => {
+                const payload = {
+                    name: item['Name'],
+                    uid: sessionStorage.getItem('uid'),
+                    isChecked: isChecked
+                }
+                fetch(`${import.meta.env.PUBLIC_BASE_URL}owned`, {
+                    method: 'POST',
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => {
+                    console.log(response.status);
+                    if (isChecked && response.status == 201) {
+                        levelInput.value = 0;
+                    } else if (!isChecked) {
+                        levelInput.value = null;
+                    }
+                })
+            }, 500);
+        });
+        
+        let debounceTimerLevel;
+        levelInput.addEventListener('input', () => {
+            clearTimeout(debounceTimerLevel);
+            debounceTimerOwned = setTimeout(() => {
+                const payload = {
+                    name: item['Name'],
+                    uid: sessionStorage.getItem('uid'),
+                    level: levelInput.value ? levelInput.value : -1
+                }
+                
+                fetch(`${import.meta.env.PUBLIC_BASE_URL}update-item-level`, {
+                    method: 'POST',
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+                if (levelInput.value) {
+                    checkboxOwned.checked = true;
+                } else {
+                    checkboxOwned.checked = false;
+                }
+            }, 500);
+        });
+        
+        const br1 = document.createElement('br');
+        cardText.appendChild(br1);
+        
+        const detailsLink = document.createElement('a');
+        const detailsButton = document.createElement('button');
+        detailsButton.classList.add('more-details-btn')
+        detailsButton.innerHTML = "More Details"
+        detailsLink.href = `#${item['Name']}`;
+        detailsLink.appendChild(detailsButton);
+        cardText.appendChild(detailsLink);
         
         if (item['Banner']) {
+            const br2 = document.createElement('br');
             if (item['Banner'].includes("Past Content")) {
+                cardText.appendChild(br2);
                 const unobMsg = document.createElement('p');
                 unobMsg.innerHTML += 'Past Content';
                 unobMsg.classList.add('unobtainable-msg');
                 cardText.appendChild(unobMsg)
             } else if (item['Banner'].includes("Future Content")) {
+                cardText.appendChild(br2);
                 const unobMsg = document.createElement('p');
                 unobMsg.innerHTML += 'Future Content';
                 unobMsg.classList.add('unobtainable-msg');
                 cardText.appendChild(unobMsg)
             } else if (item['Banner'].includes("New!")) {
+                cardText.appendChild(br2);
                 const unobMsg = document.createElement('p');
                 unobMsg.innerHTML += 'New!';
                 unobMsg.classList.add('unobtainable-msg');
                 cardText.appendChild(unobMsg)
             }
         }
-        itemCardContainer.appendChild(card);
-    });
-    renderPagination(data.length);
+        
+        if (item['Source'].includes("premium")) {
+            const unobMsg2 = document.createElement('p');
+            unobMsg2.innerHTML += 'Paid';
+            unobMsg2.classList.add('unobtainable-msg');
+            cardText.appendChild(unobMsg2)
+        }
+        
+        const heartButton = document.createElement('button');
+        heartButton.className = 'heart';
+        heartButton.innerHTML = '<i class="fa-regular fa-heart"></i>';
+        heartButton.title = 'Add to favorites';
+        heartButton.id = `${item['Name']}-favorite`.replace(/\s+/g, '-')
+        
+        const icon = heartButton.querySelector('i');
+        if (favorited) {
+            icon.classList.add('fa-solid');
+            icon.classList.remove('fa-regular');
+            icon.style.color = '#edb1bd';
+            heartButton.title = 'Remove from favorites';
+        }
+        
+        let debounceTimerFav;
+        heartButton.addEventListener('click', () => {
+            const isFavorited = icon.classList.toggle('fa-solid');
+            icon.classList.toggle('fa-regular', !isFavorited);
+            icon.style.color = isFavorited ? '#edb1bd' : 'white';
+            heartButton.title = isFavorited ? 'Remove from favorites' : 'Add to favorites';
+            clearTimeout(debounceTimerFav);
+            debounceTimerFav = setTimeout(() => {
+                const payload = {
+                    name: item['Name'],
+                    uid: sessionStorage.getItem('uid'),
+                    isChecked: isFavorited
+                }
+                fetch(`${import.meta.env.PUBLIC_BASE_URL}favorite`, {
+                    method: 'POST',
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+            }, 500);
+        });
+        
+        cardHeader.appendChild(heartButton);
+    })
+    itemCardContainer.appendChild(card);
 }
 
 function renderPagination(totalItems) {
@@ -246,6 +545,13 @@ function adjustItemsPerPageAndRerender(data) {
     renderItems(data);
 }
 
+export function updateMode(mode) {
+    selectedMode = mode;
+    const title = document.getElementById('title');
+    title.innerHTML = selectedMode == 'tracker' ? "Item Tracker (Beta)" : "Database"
+    applySearchFilter();
+}
+
 export function getSelectedRarities(rarityValues) {
     currentPage = 1;
     if (Array.isArray(rarityValues)) {
@@ -277,6 +583,13 @@ export function getSelectedStyle(styleValues) {
 export function getSelectedSource(sourceValues) {
     currentPage = 1;
     selectedSources = sourceValues;
+    getFilteredItems();
+}
+
+export function getSelectedStatus(statusValues) {
+    currentPage = 1;
+    selectedStatus = statusValues;
+    console.log(selectedStatus);
     getFilteredItems();
 }
 
@@ -329,6 +642,11 @@ export function getFilteredItems() {
     
     if (selectedSources && selectedSources.length > 0) {
         url += `source=${selectedSources.join('&source=')}&`;
+    }
+    
+    if (selectedStatus && selectedStatus.length > 0) {
+        url += `status=${selectedStatus.join('&status=')}&`;
+        url += `uid=${sessionStorage.getItem('uid')}&`
     }
     
     if (hideUnobtainable) {
@@ -450,12 +768,12 @@ function applySearchFilter() {
 }
 
 
-window.onload = function() {
+window.addEventListener('load', function() {
     initializePreselectedSource();
     adjustCollapsibleMaxHeight();
-};
+});
 
-window.onresize = function() {
+window.addEventListener('resize', function() {
     changePage(currentPage, totalItems);
     adjustCollapsibleMaxHeight();
-};
+});

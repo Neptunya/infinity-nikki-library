@@ -9,7 +9,7 @@ import { ThemeProvider } from "@emotion/react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { theme } from '../styles/theme';
 
-export default function BasicSelect() {
+export default function SortSelect() {
   const [sort, setSort] = React.useState('');
 
   const handleChange = (event) => {
@@ -30,10 +30,10 @@ export default function BasicSelect() {
         mb: '16px'
       }}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Sort By</InputLabel>
+          <InputLabel id="sort-select">Sort By</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="sort-select"
+            id="sort-select"
             value={sort}
             label="sort"
             onChange={handleChange}

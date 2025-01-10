@@ -4,10 +4,24 @@ from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from sqlalchemy import PrimaryKeyConstraint, and_, or_, case, func
 from sqlalchemy.sql import expression
 from flask_cors import CORS, cross_origin
+from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, get_jwt_identity, decode_token
+from jwt.exceptions import ExpiredSignatureError, DecodeError
+from datetime import datetime, timedelta, timezone
+from dotenv import load_dotenv
+import os
+import requests
+
+load_dotenv()
+db_password = os.getenv("DB_PASSWORD")
+jwt_key = os.getenv("JWT_KEY")
 
 app = Flask(__name__)
+app.config["JWT_SECRET_KEY"] = jwt_key
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=5)
+app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=7)
+jwt = JWTManager(app)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:password@localhost:5432/infinity_nikki_items'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:{db_password}@localhost:5432/infinity_nikki_items'
 db = SQLAlchemy(app)
 api = Api(app)
 
@@ -44,6 +58,32 @@ class LevelDetails(db.Model):
         PrimaryKeyConstraint('Name', 'Level'),
     )
 
+class UserDetails(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.BigInteger, primary_key=True)
+    username = db.Column(db.String(255), nullable=False)
+    access_token = db.Column(db.String(255), nullable=False)
+    refresh_token = db.Column(db.String(255), nullable=False)
+    expires_at = db.Column(db.DateTime(timezone=True), nullable=False)
+    avatar = db.Column(db.String(255), nullable=False)
+    source = db.Column(db.String(255), nullable=False)
+
+class OwnedItems(db.Model):
+    __tablename__ = 'owned_items'
+    user_id = db.Column(db.BigInteger, db.ForeignKey('users.id'), primary_key=True, nullable=False)
+    item_name = db.Column(db.String(255), db.ForeignKey('item_details.Name'), primary_key=True, nullable=False)
+    level = db.Column(db.SmallInteger)
+
+class WishlistedItems(db.Model):
+    __tablename__ = 'wishlisted_items'
+    user_id = db.Column(db.BigInteger, db.ForeignKey('users.id'), primary_key=True, nullable=False)
+    item_name = db.Column(db.String(255), db.ForeignKey('item_details.Name'), primary_key=True, nullable=False)
+
+class FavoritedItems(db.Model):
+    __tablename__ = 'favorited_items'
+    user_id = db.Column(db.BigInteger, db.ForeignKey('users.id'), primary_key=True, nullable=False)
+    item_name = db.Column(db.String(255), db.ForeignKey('item_details.Name'), primary_key=True, nullable=False)
+
 itemFields = {
     "Name": fields.String,
     "Rarity": fields.Integer,
@@ -71,6 +111,17 @@ lvlFields = {
     "Style": fields.String,
 }
 
+userFields = {
+    "id": fields.String,
+    "username": fields.String,
+    "access_token": fields.String,
+    "refresh_token": fields.String,
+    "expires_at": fields.DateTime,
+    "avatar": fields.String,
+    "source": fields.String
+}
+
+
 class Items(Resource):
     @marshal_with(itemFields)
     def get(self):
@@ -79,6 +130,8 @@ class Items(Resource):
         label = request.args.getlist('label')
         style = request.args.getlist('style')
         source = request.args.getlist('source')
+        status = request.args.getlist('status')
+        uid = request.args.get('uid')
         styleSort = request.args.get('style-sort')
         sortOrder = request.args.get('sort-order')
 
@@ -149,6 +202,27 @@ class Items(Resource):
             'New Only': [ItemDetails.Banner.contains('New')]
         }
 
+        statusConditions = []
+        
+        if 'Owned' in status and uid:
+            owned_items_query = db.session.query(OwnedItems.item_name).filter(OwnedItems.user_id == uid)
+            owned_item_names = owned_items_query.all()
+            owned_item_names = [item[0] for item in owned_item_names]
+            statusConditions.append(ItemDetails.Name.in_(owned_item_names))
+        if 'Wishlisted' in status and uid:
+            wishlisted_items_query = db.session.query(WishlistedItems.item_name).filter(WishlistedItems.user_id == uid)
+            wishlisted_item_names = wishlisted_items_query.all()
+            wishlisted_item_names = [item[0] for item in wishlisted_item_names]
+            statusConditions.append(ItemDetails.Name.in_(wishlisted_item_names))
+        if 'Favorited' in status and uid:
+            favorited_items_query = db.session.query(FavoritedItems.item_name).filter(FavoritedItems.user_id == uid)
+            favorited_item_names = favorited_items_query.all()
+            favorited_item_names = [item[0] for item in favorited_item_names]
+            statusConditions.append(ItemDetails.Name.in_(favorited_item_names))
+        
+        if statusConditions:
+            query = query.filter(or_(*statusConditions))
+
         if rarity:
             query = query.filter(ItemDetails.Rarity.in_(rarity))
         if slot:
@@ -159,6 +233,8 @@ class Items(Resource):
         if style:
             query = query.filter(ItemDetails.Style.in_(style))
         
+       
+            
         matched_conditions = set()
         for s in source:
             if s in source_map and s != "Currently Unobtainable2" and s != "Recolor" and s != "New Only":
@@ -285,9 +361,377 @@ api.add_resource(Items, '/api/items/')
 api.add_resource(Levels, '/api/items/<string:name>')
 api.add_resource(ItemInfo, '/api/items/<string:name>/info')
 
-@app.route('/')
+@app.route('/api')
 def index():
     return '<h1>Infinity Nikki Flask REST API</h1>'
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    code = data.get('code')
+    if not code:
+        return jsonify({'error': 'Missing authorization code'}), 400
+
+    token_url = 'https://discord.com/api/oauth2/token'
+    payload = {
+        'client_id': os.getenv("DISCORD_CLIENT_ID"),
+        'client_secret': os.getenv("DISCORD_CLIENT_SECRET"),
+        'code': code,
+        'grant_type': 'authorization_code',
+        'redirect_uri': os.getenv("REDIRECT_URI"),
+        'scope': 'identify',
+    }
+
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    response = requests.post(token_url, data=payload, headers=headers)
+    tokens = response.json()
+
+    access_token = tokens.get('access_token')
+    refresh_token = tokens.get('refresh_token')
+    expires_in = tokens.get('expires_in', 604800)
+    expires_at = datetime.now(timezone.utc) + timedelta(seconds=expires_in)
+
+    if not access_token or not refresh_token:
+        return jsonify({'error': 'Failed to get tokens'}), 500
+
+    discord_api_url = 'https://discord.com/api/users/@me'
+    discord_response = requests.get(discord_api_url, headers={
+        'Authorization': f'Bearer {access_token}',
+    })
+
+    if discord_response.status_code != 200:
+        return jsonify({"error": "Failed to fetch user data from Discord"}), 500
+
+    user_data = discord_response.json()
+    user_id = user_data.get('id')
+    username = user_data.get('username')
+    avatar = user_data.get('avatar')
+
+    try:
+        user = db.session.query(UserDetails).filter_by(id=user_id).first()
+        if user:
+            user.username = username
+            user.access_token = access_token
+            user.refresh_token = refresh_token
+            user.expires_at = expires_at
+            user.avatar = avatar
+            user.source = "discord"
+        else:
+            user = UserDetails(
+                id=user_id,
+                username=username,
+                access_token=access_token,
+                refresh_token=refresh_token,
+                expires_at=expires_at,
+                avatar=avatar,
+                source="discord"
+            )
+            db.session.add(user)
+
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Database error: {str(e)}"}), 500
+
+    access_jwt_token = create_access_token(identity=user_id)
+    refresh_jwt_token = create_refresh_token(identity=user_id)
+
+    return jsonify({
+        "access_token": access_jwt_token,
+        "refresh_token": refresh_jwt_token,
+    })
+
+@app.route('/refresh_jwt', methods=['GET'])
+@jwt_required(refresh=True)
+def refresh_jwt():
+    current_user = get_jwt_identity()
+    new_access_token = create_access_token(identity=current_user)
+    new_refresh_token = create_refresh_token(identity=current_user)
+    return jsonify({
+        'access_token': new_access_token,
+        'refresh_token': new_refresh_token,
+    })
+
+@app.route('/refresh-discord', methods=['POST'])
+def refresh_discord():
+    data = request.get_json()
+    user_id = data.get('user_id')
+
+    if not user_id:
+        return jsonify({"error": "User ID is required"}), 400
+    
+    user = db.session.query(UserDetails).filter_by(id=user_id).first()
+    if not user:
+        return jsonify({"error": "Invalid user"}), 401
+    
+    token_url = 'https://discord.com/api/oauth2/token'
+    client_id = os.getenv("DISCORD_CLIENT_ID")
+    client_secret = os.getenv("DISCORD_CLIENT_SECRET")
+    
+    payload = {
+        'client_id': client_id,
+        'client_secret': client_secret,
+        'grant_type': 'refresh_token',
+        'refresh_token': user.refresh_token,
+    }
+
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+
+    discord_response = requests.post(token_url, data=payload, headers=headers)
+
+    if discord_response.status_code != 200:
+        error_response = discord_response.json()
+        
+        if error_response.get('error') == 'invalid_grant':
+            return jsonify({
+                "error": "Refresh token is expired or invalid. Please log in again."
+            }), 401
+        
+        return jsonify({"error": "Failed to refresh token from Discord", "response": error_response}), 401
+
+    refreshed_tokens = discord_response.json()
+    new_access_token = refreshed_tokens.get('access_token')
+    new_refresh_token = refreshed_tokens.get('refresh_token')
+    expires_in = refreshed_tokens.get('expires_in', 604800)
+
+    if not new_access_token or not new_refresh_token:
+        return jsonify({"error": "Discord did not return new tokens"}), 500
+
+    try:
+        user.access_token = new_access_token
+        user.refresh_token = new_refresh_token
+        user.expires_at = datetime.now(timezone.utc) + timedelta(seconds=expires_in)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Database error: {str(e)}"}), 500
+    return jsonify({"message": "Discord token refreshed successfully."})
+
+@app.route('/get-expiration', methods=['GET'])
+def get_expiration():
+    refresh_token = request.args.get('refresh_token')
+
+    if not refresh_token:
+        return jsonify({'error': 'Missing refresh token'}), 400
+
+    try:
+        decoded_token = decode_token(refresh_token)
+        user_id = decoded_token['sub'] 
+        user = UserDetails.query.filter_by(id=user_id).first()
+        
+        if user:
+            return jsonify(
+                {'expires_at': user.expires_at.isoformat(),
+                 'user_id': user_id}
+            )
+        else:
+            return jsonify({'error': 'User not found'}), 404
+    except Exception as e:
+        return jsonify({'error': 'Invalid or expired refresh token'}), 401
+
+@app.route('/owned', methods=['POST'])
+def owned():
+    data = request.get_json()
+    name = data.get('name')
+    uid = data.get('uid')
+    owned = data.get('isChecked')
+    
+    exists = db.session.query(
+        db.session.query(OwnedItems)
+        .filter(OwnedItems.user_id == uid, OwnedItems.item_name == name)
+        .exists()
+    ).scalar()
+    if not exists and owned:
+        try:
+            new_item = OwnedItems(user_id=uid, item_name=name, level=0)
+            db.session.add(new_item)
+            db.session.commit()
+            return jsonify({'message': 'Item added successfully'}), 201
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while adding the item'}), 500
+    elif exists and not owned:
+        try:
+            item_to_delete = db.session.query(OwnedItems).filter_by(user_id=uid, item_name=name).first()
+            if not item_to_delete:
+                return jsonify({'error': 'Item not found'}), 404
+            db.session.delete(item_to_delete)
+            db.session.commit()
+            return jsonify({'message': 'Item removed successfully'}), 200
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while removing the item'}), 500
+    return jsonify({'message': 'No changes to database needed'}), 200
+
+@app.route('/wishlist', methods=['POST'])
+def wishlist():
+    data = request.get_json()
+    name = data.get('name')
+    uid = data.get('uid')
+    checked = data.get('isChecked')
+    
+    exists = db.session.query(
+        db.session.query(WishlistedItems)
+        .filter(WishlistedItems.user_id == uid, WishlistedItems.item_name == name)
+        .exists()
+    ).scalar()
+    if not exists and checked:
+        try:
+            new_item = WishlistedItems(user_id=uid, item_name=name)
+            db.session.add(new_item)
+            db.session.commit()
+            return jsonify({'message': 'Item added successfully'}), 201
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while adding the item'}), 500
+    elif exists and not checked:
+        try:
+            item_to_delete = db.session.query(WishlistedItems).filter_by(user_id=uid, item_name=name).first()
+            if not item_to_delete:
+                return jsonify({'error': 'Item not found'}), 404
+            db.session.delete(item_to_delete)
+            db.session.commit()
+            return jsonify({'message': 'Item removed successfully'}), 200
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while removing the item'}), 500
+    return jsonify({'message': 'No changes to database needed'}), 200
+
+@app.route('/favorite', methods=['POST'])
+def favorite():
+    data = request.get_json()
+    name = data.get('name')
+    uid = data.get('uid')
+    checked = data.get('isChecked')
+    
+    exists = db.session.query(
+        db.session.query(FavoritedItems)
+        .filter(FavoritedItems.user_id == uid, FavoritedItems.item_name == name)
+        .exists()
+    ).scalar()
+    if not exists and checked:
+        try:
+            new_item = FavoritedItems(user_id=uid, item_name=name)
+            db.session.add(new_item)
+            db.session.commit()
+            return jsonify({'message': 'Item added successfully'}), 201
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while adding the item'}), 500
+    elif exists and not checked:
+        try:
+            item_to_delete = db.session.query(FavoritedItems).filter_by(user_id=uid, item_name=name).first()
+            if not item_to_delete:
+                return jsonify({'error': 'Item not found'}), 404
+            db.session.delete(item_to_delete)
+            db.session.commit()
+            return jsonify({'message': 'Item removed successfully'}), 200
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while removing the item'}), 500
+    return jsonify({'message': 'No changes to database needed'}), 200
+
+@app.route('/check-item-status', methods=['POST'])
+def checkItemStatus():
+    data = request.get_json()
+    name = data.get('name')
+    uid = data.get('uid')
+    
+    ownedExists = db.session.query(
+        db.session.query(OwnedItems)
+        .filter(OwnedItems.user_id == uid, OwnedItems.item_name == name)
+        .exists()
+    ).scalar()
+    
+    wishlistExists = db.session.query(
+        db.session.query(WishlistedItems)
+        .filter(WishlistedItems.user_id == uid, WishlistedItems.item_name == name)
+        .exists()
+    ).scalar()
+    
+    favoriteExists = db.session.query(
+        db.session.query(FavoritedItems)
+        .filter(FavoritedItems.user_id == uid, FavoritedItems.item_name == name)
+        .exists()
+    ).scalar()
+    
+    owned_item = db.session.query(OwnedItems.level).filter(
+        OwnedItems.user_id == uid,
+        OwnedItems.item_name == name
+    ).first()
+    
+    level = -1
+    if owned_item:
+        level = owned_item.level
+    
+    return jsonify({
+        'owned': ownedExists,
+        'wishlisted': wishlistExists,
+        'favorited': favoriteExists,
+        'level': level
+    }), 200
+
+@app.route('/update-item-level', methods=['POST'])
+def updateItemLevel():
+    data = request.get_json()
+    name = data.get('name')
+    uid = data.get('uid')
+    level = int(data.get('level'))
+    
+    exists = db.session.query(
+        db.session.query(OwnedItems)
+        .filter(OwnedItems.user_id == uid, OwnedItems.item_name == name)
+        .exists()
+    ).scalar()
+    if exists and level >= 0:
+        try: 
+            existing_item = OwnedItems.query.filter_by(user_id=uid, item_name=name).first()
+            if not existing_item:
+                return jsonify({'error': 'Item not found'}), 404
+            existing_item.level = level
+            db.session.commit()
+            return jsonify({'message': 'Item updated successfully'}), 200
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while updating the item'}), 500
+    elif not exists and level >= 0:
+        try:
+            new_item = OwnedItems(user_id=uid, item_name=name, level=level)
+            db.session.add(new_item)
+            db.session.commit()
+            return jsonify({'message': 'Item added successfully'}), 201
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while adding the item'}), 500
+    elif exists and level < 0:
+        try:
+            item_to_delete = db.session.query(OwnedItems).filter_by(user_id=uid, item_name=name).first()
+            if not item_to_delete:
+                return jsonify({'error': 'Item not found'}), 404
+            db.session.delete(item_to_delete)
+            db.session.commit()
+            return jsonify({'message': 'Item removed successfully'}), 200
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error occurred: {e}")
+            return jsonify({'error': 'An error occurred while removing the item'}), 500
+    return jsonify({'message': 'No changes to database needed'}), 200
 
 if __name__ == '__main__':
     from waitress import serve

@@ -13,9 +13,29 @@ td {
 .unobtainable-msg-dialog {
     display: inline-block;
     margin-top: 8px;
-    background-color: #767281;
+    margin-right: 4px;
     padding: 0 10px;
-    border-radius: 12px;
+    border-radius: 120px;
+    border: 2px solid #d792a5;
+    color: #d792a5;
+}
+
+.css-13xfq8m-MuiTabPanel-root {
+    padding: 12;
+}
+
+.dialog-heart {
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0px 5px;
+    z-index: 10;
+    background-color: #555260;
+}
+
+.dialog-header-fav {
+    display: flex;
+    justify-content: space-between;
 }
 
 #basic-info {
@@ -81,4 +101,14 @@ td {
     padding-bottom: 16px;
     overflow-x: auto;
     overflow-y: auto;
+}
+
+#stats-table-tab {
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+#table-in-tab td {
+    padding: 4px;
+    font-size: 0.95rem;
 }
