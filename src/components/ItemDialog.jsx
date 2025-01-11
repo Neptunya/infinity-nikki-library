@@ -16,12 +16,13 @@ export default function ItemDialog() {
 	const [owned, setOwned] = useState(false);
 	const [wishlisted, setWishlisted] = useState(false);
 	const [favorited, setFavorited] = useState(false);
-	const[itemLevel, setLevel] = useState(-1);
+	const [itemLevel, setLevel] = useState(-1);
 	
 	const makeup = ["Base Makeup", "Eyebrows", "Eyelashes", "Contact Lenses", "Lips"];
 	
 	const handleHashChange = () => {
 		if (window.location.hash) {
+			setLevel(-1);
 			setIsOpen(true);
 		} else {
 			setIsOpen(false);
@@ -30,6 +31,7 @@ export default function ItemDialog() {
 	
 	const handleClose = () => {
 		history.replaceState(null, "", window.location.pathname + window.location.search);
+		setLevel(-1);
 		setIsOpen(false);
 	};
 	
@@ -54,7 +56,7 @@ export default function ItemDialog() {
 				uid: sessionStorage.getItem('uid'),
 				isChecked: isChecked
 			}
-			fetch(`${import.meta.env.PUBLIC_BASE_URL}owned`, {
+			fetch(`${import.meta.env.PUBLIC_BASE_URL}api/owned`, {
 				method: 'POST',
 				headers: {
 					"Content-type": "application/json; charset=UTF-8"
@@ -63,13 +65,13 @@ export default function ItemDialog() {
 			})
 			.then(response => {
 				if (isChecked && response.status == 201) {
-					levelInput.value = 0;
-					levelInputCard.value = 0;
+					if (levelInput) levelInput.value = 0;
+					if (levelInputCard) levelInputCard.value = 0;
 				} else if (!isChecked) {
-					levelInput.value = null;
-					levelInputCard.value = null;
+					if (levelInput) levelInput.value = null;
+					if (levelInputCard) levelInputCard.value = null;
 				}
-				checkboxOwnedCard.checked = isChecked;
+				if (checkboxOwnedCard) checkboxOwnedCard.checked = isChecked;
 			})
 		}, 500);
 	}
@@ -88,7 +90,7 @@ export default function ItemDialog() {
 				uid: sessionStorage.getItem('uid'),
 				isChecked: isChecked
 			}
-			fetch(`${import.meta.env.PUBLIC_BASE_URL}wishlist`, {
+			fetch(`${import.meta.env.PUBLIC_BASE_URL}api/wishlist`, {
 				method: 'POST',
 				headers: {
 					"Content-type": "application/json; charset=UTF-8"
@@ -96,7 +98,7 @@ export default function ItemDialog() {
 				body: JSON.stringify(payload)
 			})
 			.then(response => {
-				checkboxWishCard.checked = isChecked;
+				if (checkboxWishCard) checkboxWishCard.checked = isChecked;
 			})
 		}, 500);
 	}
@@ -115,7 +117,7 @@ export default function ItemDialog() {
 				uid: sessionStorage.getItem('uid'),
 				isChecked: isFavorited
 			}
-			fetch(`${import.meta.env.PUBLIC_BASE_URL}favorite`, {
+			fetch(`${import.meta.env.PUBLIC_BASE_URL}api/favorite`, {
 				method: 'POST',
 				headers: {
 					"Content-type": "application/json; charset=UTF-8"
@@ -123,11 +125,12 @@ export default function ItemDialog() {
 				body: JSON.stringify(payload)
 			})
 			.then(response => {
-				console.log(checkboxFavoriteCard);
-				checkboxFavoriteCard.querySelector('i').classList.toggle('fa-regular', !isFavorited);
-				checkboxFavoriteCard.querySelector('i').classList.toggle('fa-solid', isFavorited);
-				checkboxFavoriteCard.style.color = isFavorited ? '#edb1bd' : 'white';
-				checkboxFavoriteCard.querySelector('i').style.color = isFavorited ? '#edb1bd' : 'white';
+				if (checkboxFavoriteCard) {
+					checkboxFavoriteCard.querySelector('i').classList.toggle('fa-regular', !isFavorited);
+					checkboxFavoriteCard.querySelector('i').classList.toggle('fa-solid', isFavorited);
+					checkboxFavoriteCard.style.color = isFavorited ? '#edb1bd' : 'white';
+					checkboxFavoriteCard.querySelector('i').style.color = isFavorited ? '#edb1bd' : 'white';
+				}
 			})
 		}, 500);
 	}
@@ -135,7 +138,12 @@ export default function ItemDialog() {
 	let debounceTimerLevel;
 	function handleLevelChange(event) {
 		const itemName = `${infoData[0].Name.replace(/\s+/g, '-')}`;
-		const lvl = event.target.value;
+		let lvl = event.target.value;
+		if (lvl > 11) {
+			lvl = 11
+		} else if (lvl < 0) {
+			lvl = 0
+		}
 		setLevel(lvl);
 		
 		const checkboxOwnedCard = document.getElementById(`${itemName}-owned`);
@@ -149,7 +157,7 @@ export default function ItemDialog() {
 				level: lvl ? lvl : -1
 			}
 			
-			fetch(`${import.meta.env.PUBLIC_BASE_URL}update-item-level`, {
+			fetch(`${import.meta.env.PUBLIC_BASE_URL}api/update-item-level`, {
 				method: 'POST',
 				headers: {
 					"Content-type": "application/json; charset=UTF-8"
@@ -157,14 +165,14 @@ export default function ItemDialog() {
 				body: JSON.stringify(payload)
 			})
 			.then(response => response.json())
-			if (lvl) {
+			if (lvl >= 0) {
 				setOwned(true);
-				checkboxOwnedCard.checked = true;
-				levelInputCard.value = lvl;
+				if (checkboxOwnedCard) checkboxOwnedCard.checked = true;
+				if (levelInputCard) levelInputCard.value = lvl;
 			} else {
 				setOwned(false);
-				checkboxOwnedCard.checked = false;
-				levelInputCard.value = null;
+				if (checkboxOwnedCard) checkboxOwnedCard.checked = false;
+				if (levelInputCard) levelInputCard.value = null;
 			}
 		}, 500);
 	}
@@ -189,7 +197,7 @@ export default function ItemDialog() {
 	async function fetchItemStatus(name) {
 		const uid = sessionStorage.getItem('uid');
 		if (uid) {
-			fetch(`${import.meta.env.PUBLIC_BASE_URL}check-item-status`, {
+			fetch(`${import.meta.env.PUBLIC_BASE_URL}api/check-item-status`, {
 				method: 'POST',
 				headers: {
 					"Content-type": "application/json; charset=UTF-8"
@@ -204,7 +212,11 @@ export default function ItemDialog() {
 				setOwned(data.owned);
 				setWishlisted(data.wishlisted);
 				setFavorited(data.favorited);
-				setLevel(data.level)
+				if (data.owned) {
+					setLevel(data.level);
+				} else {
+					setLevel(-1);
+				}
 			})
 		}
 	}
@@ -400,7 +412,7 @@ export default function ItemDialog() {
 									id={`${infoData[0].Name.replace(/\s+/g, '-')}-level-dialog`}
 									min="0"
 									max="11"
-									defaultValue={itemLevel < 0 ? '' : itemLevel}
+									value={itemLevel < 0 ? '' : itemLevel}
 									onChange={handleLevelChange}
 									style={{
 										backgroundColor: '#555260',

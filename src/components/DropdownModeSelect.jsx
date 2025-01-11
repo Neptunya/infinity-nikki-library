@@ -18,11 +18,8 @@ export default function ModeSelect() {
   };
 
   const handleLoginRedirect = () => {
-    console.log('clicked!');
-    window.location.href = 'https://discord.com/oauth2/authorize?client_id=1320670335896387615&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A4321%2Fdashboard&scope=identify';
+    window.location.href = 'https://discord.com/oauth2/authorize?client_id=1320670335896387615&response_type=code&redirect_uri=https%3A%2F%2Finfinitynikkilibrary.com%2Fdashboard&scope=identify';
   };
-
-  let refreshToken = localStorage.getItem('refresh_token');
 
   return (
     <ThemeProvider theme={theme}>
@@ -38,7 +35,7 @@ export default function ModeSelect() {
             onChange={handleChange}
           >
             <MenuItem value={'db'}>Database</MenuItem>
-            {refreshToken ? (
+            { localStorage.getItem('refresh_token') ? (
               <MenuItem value={'tracker'}>Item Tracker (Beta)</MenuItem>
             ) : (
               <MenuItem

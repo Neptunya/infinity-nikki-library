@@ -63,7 +63,7 @@ const check_exp = () => {
     if (uid) {
         return;
     } else if (refreshToken) {
-        fetch(`${import.meta.env.PUBLIC_BASE_URL}get-expiration?refresh_token=${encodeURIComponent(refreshToken)}`, {
+        fetch(`${import.meta.env.PUBLIC_BASE_URL}api/get-expiration?refresh_token=${encodeURIComponent(refreshToken)}`, {
             method: 'GET',
             headers: {
             'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ const refresh = (expirationTime, userId) => {
 
     if (diffDays <= 6) {
 
-        fetch(`${import.meta.env.PUBLIC_BASE_URL}refresh-discord`, {
+        fetch(`${import.meta.env.PUBLIC_BASE_URL}api/refresh-discord`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -113,7 +113,7 @@ const refresh = (expirationTime, userId) => {
         .then(discordData => {
             if (discordData.message === "Discord token refreshed successfully.") {
 
-                fetch(`${import.meta.env.PUBLIC_BASE_URL}refresh_jwt`, {
+                fetch(`${import.meta.env.PUBLIC_BASE_URL}api/refresh_jwt`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('refresh_token')}`,

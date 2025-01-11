@@ -16,7 +16,7 @@ window.onload = () => {
     loadingSpinner.style.display = 'block';
     loginInfo.innerHTML = "Logging you in, please wait...<br>You will be automatically redirected if login is successful.";
 
-    fetch(`${import.meta.env.PUBLIC_BASE_URL}login`, {
+    fetch(`${import.meta.env.PUBLIC_BASE_URL}api/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -32,11 +32,7 @@ window.onload = () => {
         if (data.access_token && data.refresh_token) {
             localStorage.setItem('access_token', data.access_token);
             localStorage.setItem('refresh_token', data.refresh_token);
-            if (history.length > 2) {
-                history.go(-2);
-            } else {
-                window.location.href = '/';
-            }
+            window.location.href = 'https://infinitynikkilibrary.com/'
         } else {
             loginInfo.innerHTML = "Login failed: Missing tokens from the server. Please try again.<br>If error persists, contact Neptunya.";
             homeLink.style.display = 'block';
@@ -44,7 +40,6 @@ window.onload = () => {
     })
     .catch(error => {
         loadingSpinner.style.display = 'none';
-        
         let errorMessage = "An unexpected error occurred. Please try again later.<br>If error persists, contact Neptunya.";
         
         if (error.message.includes('NetworkError')) {

@@ -230,7 +230,7 @@ function renderTrackerCard(item) {
     let wishlisted;
     let favorited;
     let itemLevel;
-    fetch(`${import.meta.env.PUBLIC_BASE_URL}check-item-status`, {
+    fetch(`${import.meta.env.PUBLIC_BASE_URL}api/check-item-status`, {
         method: 'POST',
         headers: {
             "Content-type": "application/json; charset=UTF-8"
@@ -295,7 +295,7 @@ function renderTrackerCard(item) {
                     uid: sessionStorage.getItem('uid'),
                     isChecked: isCheckedWished
                 }
-                fetch(`${import.meta.env.PUBLIC_BASE_URL}wishlist`, {
+                fetch(`${import.meta.env.PUBLIC_BASE_URL}api/wishlist`, {
                     method: 'POST',
                     headers: {
                         "Content-type": "application/json; charset=UTF-8"
@@ -334,7 +334,7 @@ function renderTrackerCard(item) {
                     uid: sessionStorage.getItem('uid'),
                     isChecked: isChecked
                 }
-                fetch(`${import.meta.env.PUBLIC_BASE_URL}owned`, {
+                fetch(`${import.meta.env.PUBLIC_BASE_URL}api/owned`, {
                     method: 'POST',
                     headers: {
                         "Content-type": "application/json; charset=UTF-8"
@@ -355,13 +355,19 @@ function renderTrackerCard(item) {
         levelInput.addEventListener('input', () => {
             clearTimeout(debounceTimerLevel);
             debounceTimerOwned = setTimeout(() => {
+                if (levelInput.value < 0) {
+                    levelInput.value = 0;
+                } else if (levelInput.value > 11) {
+                    levelInput.value = 11;
+                }
+                
                 const payload = {
                     name: item['Name'],
                     uid: sessionStorage.getItem('uid'),
                     level: levelInput.value ? levelInput.value : -1
                 }
                 
-                fetch(`${import.meta.env.PUBLIC_BASE_URL}update-item-level`, {
+                fetch(`${import.meta.env.PUBLIC_BASE_URL}api/update-item-level`, {
                     method: 'POST',
                     headers: {
                         "Content-type": "application/json; charset=UTF-8"
@@ -445,7 +451,7 @@ function renderTrackerCard(item) {
                     uid: sessionStorage.getItem('uid'),
                     isChecked: isFavorited
                 }
-                fetch(`${import.meta.env.PUBLIC_BASE_URL}favorite`, {
+                fetch(`${import.meta.env.PUBLIC_BASE_URL}api/favorite`, {
                     method: 'POST',
                     headers: {
                         "Content-type": "application/json; charset=UTF-8"
@@ -669,7 +675,6 @@ export function getFilteredItems() {
     
     adjustCollapsibleMaxHeight();
     url = url.slice(0, -1);
-    console.log(url);
     fetch(url)
     .then(response => response.json())
     .then(data => {

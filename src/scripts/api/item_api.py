@@ -370,7 +370,7 @@ api.add_resource(ItemInfo, '/api/items/<string:name>/info')
 def index():
     return '<h1>Infinity Nikki Flask REST API</h1>'
 
-@app.route('/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
     code = data.get('code')
@@ -446,7 +446,7 @@ def login():
         "refresh_token": refresh_jwt_token,
     })
 
-@app.route('/refresh_jwt', methods=['GET'])
+@app.route('/api/refresh_jwt', methods=['GET'])
 @jwt_required(refresh=True)
 def refresh_jwt():
     current_user = get_jwt_identity()
@@ -457,7 +457,7 @@ def refresh_jwt():
         'refresh_token': new_refresh_token,
     })
 
-@app.route('/refresh-discord', methods=['POST'])
+@app.route('/api/refresh-discord', methods=['POST'])
 def refresh_discord():
     data = request.get_json()
     user_id = data.get('user_id')
@@ -512,7 +512,7 @@ def refresh_discord():
         return jsonify({"error": f"Database error: {str(e)}"}), 500
     return jsonify({"message": "Discord token refreshed successfully."})
 
-@app.route('/get-expiration', methods=['GET'])
+@app.route('/api/get-expiration', methods=['GET'])
 def get_expiration():
     refresh_token = request.args.get('refresh_token')
 
@@ -534,7 +534,7 @@ def get_expiration():
     except Exception as e:
         return jsonify({'error': 'Invalid or expired refresh token'}), 401
 
-@app.route('/owned', methods=['POST'])
+@app.route('/api/owned', methods=['POST'])
 def owned():
     data = request.get_json()
     name = data.get('name')
@@ -572,7 +572,7 @@ def owned():
             return jsonify({'error': 'An error occurred while removing the item'}), 500
     return jsonify({'message': 'No changes to database needed'}), 200
 
-@app.route('/wishlist', methods=['POST'])
+@app.route('/api/wishlist', methods=['POST'])
 def wishlist():
     data = request.get_json()
     name = data.get('name')
@@ -610,7 +610,7 @@ def wishlist():
             return jsonify({'error': 'An error occurred while removing the item'}), 500
     return jsonify({'message': 'No changes to database needed'}), 200
 
-@app.route('/favorite', methods=['POST'])
+@app.route('/api/favorite', methods=['POST'])
 def favorite():
     data = request.get_json()
     name = data.get('name')
@@ -648,7 +648,7 @@ def favorite():
             return jsonify({'error': 'An error occurred while removing the item'}), 500
     return jsonify({'message': 'No changes to database needed'}), 200
 
-@app.route('/check-item-status', methods=['POST'])
+@app.route('/api/check-item-status', methods=['POST'])
 def checkItemStatus():
     data = request.get_json()
     name = data.get('name')
@@ -688,7 +688,7 @@ def checkItemStatus():
         'level': level
     }), 200
 
-@app.route('/update-item-level', methods=['POST'])
+@app.route('/api/update-item-level', methods=['POST'])
 def updateItemLevel():
     data = request.get_json()
     name = data.get('name')

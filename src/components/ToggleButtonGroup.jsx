@@ -10,7 +10,6 @@ import { toggleHide, toggleOnly } from '../scripts/database';
 export default function ToggleButtonsMultiple() {
     const [filterHide, setFilterHide] = React.useState(() => ['hide-recolors']);
     const [filterOnly, setFilterOnly] = React.useState(() => []);
-    console.log(sessionStorage.getItem('uid'));
     
     const handleFilterHide = (event, newFilters) => {
       setFilterHide(newFilters);
