@@ -7,7 +7,27 @@
         "link": "/database?source=Resonance%3A%20Celestial%20Wishes",
         "button": "Check Out Banner Items",
         "shop": true,
-        "alt": "Shop banner"
+        "alt": "Celestial Wishes banner"
+    },
+    {
+        "img": "images/carousel/prw.png",
+        "text": "Ending",
+        "start": "January 12, 2024 20:00 UTC-7",
+        "end": "January 23, 2025 12:50 UTC-7",
+        "link": null,
+        "button": "Check Out Banner Items",
+        "shop": true,
+        "alt": "Pink Ribbon Waltz banner"
+    },
+    {
+        "img": "images/carousel/dotl.png",
+        "text": "Ending",
+        "start": "January 12, 2024 20:00 UTC-7",
+        "end": "January 23, 2025 12:50 UTC-7",
+        "link": null,
+        "button": "Check Out Banner Items",
+        "shop": true,
+        "alt": "Daughter of the Lake banner"
     },
     {
         "img": "images/carousel/event.png",
@@ -17,7 +37,7 @@
         "link": "/database?source=Event%3A%20Into%20a%20Starry%20Night",
         "button": "Check Out Event Items",
         "shop": true,
-        "alt": "Shop banner"
+        "alt": "Into a Starry Night Banner"
     },
     {
         "img": "images/carousel/shop.png",
