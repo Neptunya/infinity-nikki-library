@@ -372,7 +372,7 @@ export default function ItemDialog() {
 				</table>
 				</div>
 				)}
-				{ token && (
+				{!makeup.includes(infoData[0]?.Slot) && token && (
 					<Box sx={{
 						marginTop: -2,
 						padding: '0px 16px'
@@ -480,6 +480,45 @@ export default function ItemDialog() {
 						</TabPanel>
 					</TabContext>
 				  </Box>
+				)}
+				{makeup.includes(infoData[0]?.Slot) && token && (
+					<Box sx={{
+						m: '8px 24px',
+					}}>
+						<label className='checkbox-container'>
+							Owned
+							<input 
+								type="checkbox" 
+								id={`${infoData[0].Name.replace(/\s+/g, '-')}-owned-dialog`}
+								checked={owned}
+								onChange={handleOwnedChange}
+							/>
+							<span className="checkmark"></span>
+						</label>
+						<label className='checkbox-container'>
+							Wishlist
+							<input 
+								type="checkbox" 
+								id={`${infoData[0].Name.replace(/\s+/g, '-')}-wishlisted-dialog`}
+								checked={wishlisted}
+								onChange={handleWishlistChange}
+							/>
+							<span className="checkmark"></span>
+						</label>
+						<label>Level:</label>
+						<input 
+							type="number" 
+							id={`${infoData[0].Name.replace(/\s+/g, '-')}-level-dialog`}
+							min="0"
+							max="11"
+							value={itemLevel < 0 ? '' : itemLevel}
+							onChange={handleLevelChange}
+							style={{
+								backgroundColor: '#555260',
+								border: '1px solid #88858f'
+							}}
+						/>
+					</Box>
 				)}
 			</div>
 			</Dialog>

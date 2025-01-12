@@ -8,7 +8,7 @@ import { Box } from '@mui/material';
 import { toggleHide, toggleOnly } from '../scripts/database';
 
 export default function ToggleButtonsMultiple() {
-    const [filterHide, setFilterHide] = React.useState(() => ['hide-recolors']);
+    const [filterHide, setFilterHide] = React.useState(() => []);
     const [filterOnly, setFilterOnly] = React.useState(() => []);
     
     const handleFilterHide = (event, newFilters) => {
@@ -44,7 +44,7 @@ export default function ToggleButtonsMultiple() {
             <ToggleButton value="hide-recolors" sx={{
               lineHeight: '1.2'
             }}>
-              Hide Recolors
+              Hide Evolutions
             </ToggleButton>
         </ToggleButtonGroup>
           <ToggleButtonGroup

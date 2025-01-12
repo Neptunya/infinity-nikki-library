@@ -11,7 +11,7 @@ let selectedStatus = [];
 let selectedStyleSort = [];
 let selectedMode = 'db';
 let hideUnobtainable = false;
-let hideRecolor = true;
+let hideRecolor = false;
 let newOnly = false;
 let favOnly = false;
 let hideValues = [];
@@ -394,8 +394,9 @@ function renderTrackerCard(item) {
         detailsLink.appendChild(detailsButton);
         cardText.appendChild(detailsLink);
         
+        const br2 = document.createElement('br');
+        br2.id = 'banner-br';
         if (item['Banner']) {
-            const br2 = document.createElement('br');
             if (item['Banner'].includes("Past Content")) {
                 cardText.appendChild(br2);
                 const unobMsg = document.createElement('p');
@@ -418,6 +419,10 @@ function renderTrackerCard(item) {
         }
         
         if (item['Source'].includes("premium")) {
+            if (!document.getElementById('banner-br')) {
+                cardText.appendChild(br2);
+                br2.id = '';
+            }
             const unobMsg2 = document.createElement('p');
             unobMsg2.innerHTML += 'Paid';
             unobMsg2.classList.add('unobtainable-msg');
