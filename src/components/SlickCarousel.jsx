@@ -21,10 +21,11 @@ export default function SimpleSlider() {
 			setIsClient(true);
 	})
 	
-	const validSlides = items.filter(slide => 
-		new Date(slide.start) <= new Date() && 
-		(!slide.end || new Date(slide.end) >= new Date())
-	);
+	const validSlides = items.filter(slide => {
+		console.log('slide.start:', slide.start);
+		return new Date(slide.start) <= new Date() &&
+           (!slide.end || new Date(slide.end) >= new Date());
+	});
 	
 	var settings = {
 		dots: true,
