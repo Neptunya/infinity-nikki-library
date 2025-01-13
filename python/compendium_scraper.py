@@ -272,12 +272,12 @@ def print_no_source():
             if not row['Source']: 
                 print(row)
 
-def scrape_new_item(r):
+def scrape_new_suit(r):
     prev_name = ""
     curr_name = img_to_str(sc("name", name_box))
     i = 0
     while prev_name != curr_name:
-        glow_up_stats_to_new(curr_name, r)
+        #glow_up_stats_to_new(curr_name, r)
         #get_source(curr_name)
         sc(f'../../../public/images/items/{curr_name}', img_box)
         prev_name = curr_name
@@ -311,7 +311,7 @@ def print_new_makeup():
 #print_items_csv("new.csv")
 
 pg.moveTo(90, 395)
-single_item(5)
+single_img()
 pg.moveTo(10, 10)
 
 

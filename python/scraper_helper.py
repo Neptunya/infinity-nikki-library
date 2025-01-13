@@ -20,12 +20,12 @@ item_lvl = [1370, 529, 158, 35]
 initial_stat = [1350, 215, 95, 33]
 stat_interval = 57
 new_stat = [1612, 215, 115, 33]
-rarity = [352, 404, 129, 34]
+rarity = [352, 409, 129, 34]
 
 x_cards = [358, 625, 887, 1151, 1416, 1682]
 x_cards_interval = 265
-y_cards = [284, 653, 860]
-y_cards_interval = [0, 369, 554, 576]
+y_cards = [284, 653, 794]
+y_cards_interval = [0, 369, 510, 576]
 # 576 is last row
 
 ss = ['Test', '']
@@ -215,7 +215,10 @@ def get_item_details_mod(x_card, y_card, slot, last=False):
     r.append(rarity)
     r.extend(ss)
     time.sleep(2)
-    lc2(x_cards[x_card], y_cards[y_card])
+    if y_card > 2:
+        lc2(x_cards[x_card], y_cards[2])
+    else:
+        lc2(x_cards[x_card], y_cards[y_card])
     pg.moveTo(100, 100)
     time.sleep(2)
 

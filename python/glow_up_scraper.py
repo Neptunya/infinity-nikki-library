@@ -23,7 +23,33 @@ ignore = dict.fromkeys(["Noir Creed",
 						"Dominating Realms",
 						"Dancing Along Star Trails",
 						"Pink  Blue",
-						"Sweet  Cool"])
+						"Sweet  Cool"
+						"Quiet  Still"])
+
+new_items = dict.fromkeys([
+	"Rippling Time", 
+	"Collected Memories", 
+	"Drifting Paper Boat", 
+	"Sunlit Stars", 
+	"Dreamy Afternoon", 
+	"Dawn's First Light", 
+	"Soft Moonlight",
+	"Dreamed Steps",
+	"Rosecrown Dance",
+	"Dancing Ribbon",
+	"Gentle Ripple",
+	"Rippled Gleam",
+	"Scattered Lights",
+	"Dream in Pink",
+	"Mortal Waters",
+	"Dreamward",
+	"Gift of Fish",
+	"Soft Murmurs",
+	"Blue Teardrop",
+	"Lake Drops",
+	"Azure Whisper",
+	"Farewell Tail",
+])
 
 app = Flask(__name__)
 load_dotenv()
@@ -107,7 +133,7 @@ def scrape_all():
 				break
 	prev_item_name = get_name(0, y_cards_interval[1])
 	pg.moveTo(x_cards[0], y_cards[2])
-	pg.scroll(-850)
+	pg.scroll(-350)
 	time.sleep(1)
 
 	# additional rows
@@ -128,12 +154,12 @@ def scrape_all():
 					break
 
 		pg.moveTo(x_cards[0], y_cards[2])
-		pg.scroll(-1725)
+		pg.scroll(-575)
 		time.sleep(1)
 
 def scrape_new(slot):
 	with app.app_context():
-		for y in range(1, 2):
+		for y in range(1):
 			for x in range(6):
 				x_mod = x * x_cards_interval
 				y_mod = y_cards_interval[y]
@@ -142,45 +168,54 @@ def scrape_new(slot):
 					exists = db.session.query(
 								db.exists().where(ItemDetails.Name == name.strip())
 							).scalar()
+					if name in new_items:
+						print(name)
+						get_item_details_mod(x, y, slot)
 					if not exists and name not in ignore.keys():
 						print(name)
 						get_item_details_mod(x, y, slot)
 				else:
 					break
-		prev_item_name = get_name(0, y_cards_interval[1])
-		pg.moveTo(x_cards[0], y_cards[2])
-		pg.scroll(-850)
-		time.sleep(2)
+		# prev_item_name = get_name(0, y_cards_interval[1])
+		# pg.moveTo(x_cards[0], y_cards[2])
+		# pg.scroll(-350)
+		# time.sleep(2)
 
-		while (prev_item_name != get_name(0, y_cards_interval[2])):
-			prev_item_name = get_name(0, y_cards_interval[2])
-			for i in range(6):
-				x_mod = i * x_cards_interval
-				y_mod = y_cards_interval[2]
-				name = get_name(x_mod, y_mod)
+		# while (prev_item_name != get_name(0, y_cards_interval[2])):
+		# 	prev_item_name = get_name(0, y_cards_interval[2])
+		# 	for i in range(6):
+		# 		x_mod = i * x_cards_interval
+		# 		y_mod = y_cards_interval[2]
+		# 		name = get_name(x_mod, y_mod)
 				
-				if name.strip():
-					exists = db.session.query(
-								db.exists().where(ItemDetails.Name == name.strip())
-							).scalar()
-					if not exists and name not in ignore.keys():
-						print(name)
-						get_item_details_mod(i, 2, slot)
-				else:
-					name = get_name(x_mod, 576)
-					if name.strip():
-						exists = db.session.query(
-									db.exists().where(ItemDetails.Name == name.strip())
-								).scalar()
-						if not exists and name not in ignore.keys():
-							print(name)
-							get_item_details_mod(i, 3, slot)
-					else:
-						break
+		# 		if name.strip():
+		# 			exists = db.session.query(
+		# 						db.exists().where(ItemDetails.Name == name.strip())
+		# 					).scalar()
+		# 			if name in new_items:
+		# 				print(name)
+		# 				get_item_details_mod(i, 2, slot)
+		# 			if not exists and name not in ignore.keys():
+		# 				print(name)
+		# 				get_item_details_mod(i, 2, slot)
+		# 		else:
+		# 			name = get_name(x_mod, 576)
+		# 			if name.strip():
+		# 				exists = db.session.query(
+		# 							db.exists().where(ItemDetails.Name == name.strip())
+		# 						).scalar()
+		# 				if name in new_items:
+		# 					print(name)
+		# 					get_item_details_mod(i, 3, slot)
+		# 				if not exists and name not in ignore.keys():
+		# 					print(name)
+		# 					get_item_details_mod(i, 3, slot)
+		# 			else:
+		# 				break
 
-			pg.moveTo(x_cards[0], y_cards[2])
-			pg.scroll(-1725)
-			time.sleep(2)
+		# 	pg.moveTo(x_cards[0], y_cards[2])
+		# 	pg.scroll(-575)
+		# 	time.sleep(2)
 
 with open('./python/json/outfits.json', 'r') as file:
     outfits_data = json.load(file)
@@ -197,8 +232,9 @@ def check_outfits():
 			x_mod = x * x_cards_interval
 			y_mod = y_cards_interval[y]
 			name = get_name(x_mod, y_mod)
+			print(name)
 			if name.strip():
-				exists = exists = name_exists(name)
+				exists = name_exists(name)
 				if not exists:
 					with open("./python/txt/new_outfits.txt", "a") as file:
 						file.write(f"{name}\n")
@@ -206,7 +242,7 @@ def check_outfits():
 				break
 	prev_item_name = get_name(0, y_cards_interval[1])
 	pg.moveTo(x_cards[0], y_cards[2])
-	pg.scroll(-850)
+	pg.scroll(-350)
 	time.sleep(2)
 
 	while (prev_item_name != get_name(0, y_cards_interval[2])):
@@ -215,7 +251,6 @@ def check_outfits():
 			x_mod = i * x_cards_interval
 			y_mod = y_cards_interval[2]
 			name = get_name(x_mod, y_mod)
-			
 			if name.strip():
 				exists = exists = name_exists(name)
 				if not exists:
@@ -231,7 +266,7 @@ def check_outfits():
 				else:
 					break
 		pg.moveTo(x_cards[0], y_cards[2])
-		pg.scroll(-1725)
+		pg.scroll(-575)
 		time.sleep(2)
 
 def scrape_one_lvl(name, rarity, slot, zero=False):
@@ -337,29 +372,30 @@ def glow_up_macro():
 	
 	for i in range(7):
 		lc(buttons[i])
-		#scrape_new(slots[i])
+		scrape_new(slots[i])
 	
 	pg.moveTo(buttons[6][0], buttons[6][1])
 	pg.scroll(-500)
 	pg.click(buttons[6])
-	#scrape_new(slots[i])
+	scrape_new(slots[i])
 	
 	for i in range(8, 11):
 		lc(buttons[i])
-		#scrape_new(slots[i])
+		scrape_new(slots[i])
 	
 	pg.moveTo([131, 1007])	
 	pg.scroll(-200)
 	time.sleep(1.5)
 	lc([131, 1007])
-	#scrape_new(slots[11])
+	scrape_new(slots[11])
 	
 	for i in range(12, len(slots)):
 		time.sleep(1)
+		pg.moveTo([131, 1007])	
 		pg.scroll(-400)
 		time.sleep(1.5)
 		lc([131, 1007])
-		#scrape_new(slots[i])
+		scrape_new(slots[i])
 
 
 # time.sleep(2)
@@ -370,8 +406,8 @@ def glow_up_macro():
 
 #in_w.activate() 
 time.sleep(1)
-scrape_stats("Hollow Ellipse", 3, "Earrings")
-f = './python/csv/unprocessed/1-1a-fix.csv'
+scrape_stats("Drifting Paper Boat", 5, 'Pendant', '1-1c')
+f = './python/csv/unprocessed/1-1c.csv'
 with open(f, 'a', newline='') as csvfile:
 		csvwriter = csv.writer(csvfile)
 		csvwriter.writerows(rows)
