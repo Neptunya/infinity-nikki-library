@@ -99,6 +99,12 @@ def single_img():
     print(name)
     sc(f'../../../public/images/items/{name}', img_box)
 
+def single_item(r):
+    name = img_to_str(sc("name", name_box))
+    glow_up_stats_to_new(name, r)
+    get_source(name)
+    sc(f'../../../public/images/items/{name}', img_box)
+
 def scrape_labels(label):
     for i in range(4):
         for j in range(3):
@@ -175,7 +181,7 @@ def get_glow_up_stats(n):
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(r)
 
-new_data = './python/csv/unprocessed/new.csv'
+new_data = './python/csv/unprocessed/1-1c-gu.csv'
 def glow_up_stats_to_new(n, rarity):
     r = [n, rarity, None, None, 11]
     
@@ -271,8 +277,8 @@ def scrape_new_item(r):
     curr_name = img_to_str(sc("name", name_box))
     i = 0
     while prev_name != curr_name:
-        #glow_up_stats_to_new(curr_name, r)
-        #get_source()
+        glow_up_stats_to_new(curr_name, r)
+        #get_source(curr_name)
         sc(f'../../../public/images/items/{curr_name}', img_box)
         prev_name = curr_name
         if i < 3:
@@ -304,9 +310,8 @@ def print_new_makeup():
 
 #print_items_csv("new.csv")
 
-time.sleep(1)
 pg.moveTo(90, 395)
-single_img()
+single_item(5)
 pg.moveTo(10, 10)
 
 
