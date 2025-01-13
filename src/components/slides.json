@@ -10,24 +10,24 @@
         "alt": "Celestial Wishes banner"
     },
     {
-        "img": "images/carousel/prw.png",
+        "img": "images/carousel/ribbon_reverie.png",
         "text": "Ending",
         "start": "January 12, 2025 20:00 UTC-7",
         "end": "January 23, 2025 12:50 UTC-7",
         "link": null,
         "button": "Check Out Banner Items",
         "shop": true,
-        "alt": "Pink Ribbon Waltz banner"
+        "alt": "Ribbon Reverie banner"
     },
     {
-        "img": "images/carousel/dotl.png",
+        "img": "images/carousel/starlit_wishfin.png",
         "text": "Ending",
         "start": "January 12, 2025 20:00 UTC-7",
         "end": "January 23, 2025 12:50 UTC-7",
         "link": null,
         "button": "Check Out Banner Items",
         "shop": true,
-        "alt": "Daughter of the Lake banner"
+        "alt": "Starlit Wishfin banner"
     },
     {
         "img": "images/carousel/event.png",

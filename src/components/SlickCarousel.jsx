@@ -22,7 +22,6 @@ export default function SimpleSlider() {
 	})
 	
 	const validSlides = items.filter(slide => {
-		console.log('slide.start:', slide.start);
 		return new Date(slide.start) <= new Date() &&
            (!slide.end || new Date(slide.end) >= new Date());
 	});

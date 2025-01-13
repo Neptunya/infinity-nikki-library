@@ -172,6 +172,8 @@ class Items(Resource):
             'Styling Challenge': [ItemDetails.Source == always_avail["styling_challenge"]],
             'Surprise-O-Matic': [ItemDetails.Source == always_avail["rng"]],
             "Resonance: Celestial Wishes": [ItemDetails.Banner.contains("Celestial Wishes")],
+            'Resonance: Ribbon Reverie': [ItemDetails.Banner.contains('Ribbon Reverie')],
+            'Resonance: Starlit Wishfin': [ItemDetails.Banner.contains('Starlit Wishfin')],
             'Resonance: Distant Sea': [ItemDetails.Banner.contains('Distant Sea')],
             'Premium Items': [ItemDetails.Source == premium],
             'Limited-Time Resonance': [ItemDetails.Source == lim_reso],
