@@ -32,7 +32,7 @@ export default function MultipleSelectChipFilters() {
     const sources = [
       "Resonance: Celestial Wishes",
       'Resonance: Ribbon Reverie',
-      'Resosnance: Starlit Wishfin',
+      'Resonance: Starlit Wishfin',
       'Resonance: Distant Sea',
       'Limited-Time Resonance',
       'Premium Items',

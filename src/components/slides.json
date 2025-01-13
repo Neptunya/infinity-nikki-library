@@ -6,7 +6,6 @@
         "end": "January 23, 2025 12:50 UTC-7",
         "link": "/database?source=Resonance%3A%20Celestial%20Wishes",
         "button": "Check Out Banner Items",
-        "shop": true,
         "alt": "Celestial Wishes banner"
     },
     {
@@ -14,9 +13,8 @@
         "text": "Ending",
         "start": "January 12, 2025 20:00 UTC-7",
         "end": "January 23, 2025 12:50 UTC-7",
-        "link": null,
+        "link": "/database?source=Resonance%3A%20Ribbon%20Reverie",
         "button": "Check Out Banner Items",
-        "shop": true,
         "alt": "Ribbon Reverie banner"
     },
     {
@@ -24,9 +22,8 @@
         "text": "Ending",
         "start": "January 12, 2025 20:00 UTC-7",
         "end": "January 23, 2025 12:50 UTC-7",
-        "link": null,
+        "link": "/database?source=Resonance%3A%20Starlit%20Wishfin",
         "button": "Check Out Banner Items",
-        "shop": true,
         "alt": "Starlit Wishfin banner"
     },
     {
@@ -36,7 +33,6 @@
         "end": "January 23, 2025 12:50 UTC-7",
         "link": "/database?source=Event%3A%20Into%20a%20Starry%20Night",
         "button": "Check Out Event Items",
-        "shop": true,
         "alt": "Into a Starry Night Banner"
     },
     {
@@ -46,7 +42,6 @@
         "end": "January 23, 2025 12:50 UTC-7",
         "link": "/database?source=Premium%20Items",
         "button": "Check Out Shop Items",
-        "shop": true,
         "alt": "Shop banner"
     },
     {
