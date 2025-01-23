@@ -151,7 +151,7 @@ class Items(Resource):
                         "starting": "One of the initial items acquired upon arrival in Miraland.",
                         "pre_reg": "Pre-Reg Milestone Outfit"}
         always_avail_vals = list(always_avail.values())
-        limited_time = ["Celestial Wishes", "Into a Starry Night", "Distant Sea", "In Shop"]
+        limited_time = ["Skyward Bouquets", "Fireworks Prelude", "Event: Strings of Time", "Distant Sea", "In Shop"]
         lim_reso = "Limited-Time Resonance"
         premium = "Pear-Pal premium item highly recommended by the Stylist's Guild."
         
@@ -171,13 +171,12 @@ class Items(Resource):
             'Story Quest': [ItemDetails.Source == always_avail["journey_anecdote"]],
             'Styling Challenge': [ItemDetails.Source == always_avail["styling_challenge"]],
             'Surprise-O-Matic': [ItemDetails.Source == always_avail["rng"]],
-            "Resonance: Celestial Wishes": [ItemDetails.Banner.contains("Celestial Wishes")],
-            'Resonance: Ribbon Reverie': [ItemDetails.Banner.contains('Ribbon Reverie')],
-            'Resonance: Starlit Wishfin': [ItemDetails.Banner.contains('Starlit Wishfin')],
+            "Resonance: Skyward Bouquets": [ItemDetails.Banner.contains("Skyward Bouquets")],
+            'Resonance: Fireworks Prelude': [ItemDetails.Banner.contains('Fireworks Prelude')],
             'Resonance: Distant Sea': [ItemDetails.Banner.contains('Distant Sea')],
             'Premium Items': [ItemDetails.Source == premium],
             'Limited-Time Resonance': [ItemDetails.Source == lim_reso],
-            'Event: Into a Starry Night': [ItemDetails.Source.contains('Into a Starry Night')],
+            'Event: Strings of Time': [ItemDetails.Source.contains('Strings of Time')],
             'Event Items': [
                 or_(
                     ItemDetails.Source.contains("event"),

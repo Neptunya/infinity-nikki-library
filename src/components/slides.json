@@ -1,46 +1,37 @@
 [
     {
-        "img": "images/carousel/reso.png",
+        "img": "/images/carousel/reso_skyward.png",
         "text": "Ending",
-        "start": "December 29, 2024 12:50 UTC-7",
-        "end": "January 23, 2025 12:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Celestial%20Wishes",
+        "start": "January 23, 2024 20:00 UTC-7",
+        "end": "February 25, 2025 12:50 UTC-7",
+        "link": null,
         "button": "Check Out Banner Items",
-        "alt": "Celestial Wishes banner"
+        "alt": "Skyward Bouquet Banner"
     },
     {
-        "img": "images/carousel/ribbon_reverie.png",
+        "img": "/images/carousel/reso_firework.png",
         "text": "Ending",
-        "start": "January 12, 2025 20:00 UTC-7",
-        "end": "January 23, 2025 12:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Ribbon%20Reverie",
+        "start": "January 23, 2024 20:00 UTC-7",
+        "end": "February 25, 2025 12:50 UTC-7",
+        "link": null,
         "button": "Check Out Banner Items",
-        "alt": "Ribbon Reverie banner"
-    },
-    {
-        "img": "images/carousel/starlit_wishfin.png",
-        "text": "Ending",
-        "start": "January 12, 2025 20:00 UTC-7",
-        "end": "January 23, 2025 12:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Starlit%20Wishfin",
-        "button": "Check Out Banner Items",
-        "alt": "Starlit Wishfin banner"
+        "alt": "Fireworks Prelude Banner"
     },
     {
         "img": "images/carousel/event.png",
         "text": "Ending",
-        "start": "December 29, 2024 12:50 UTC-7",
-        "end": "January 23, 2025 12:50 UTC-7",
-        "link": "/database?source=Event%3A%20Into%20a%20Starry%20Night",
+        "start": "January 23, 2024 20:00 UTC-7",
+        "end": "February 25, 2025 12:50 UTC-7",
+        "link": null,
         "button": "Check Out Event Items",
-        "alt": "Into a Starry Night Banner"
+        "alt": "Endless Longing Banner"
     },
     {
         "img": "images/carousel/shop.png",
         "text": "Shop Update on",
-        "start": "December 29, 2024 12:50 UTC-7",
-        "end": "January 23, 2025 12:50 UTC-7",
-        "link": "/database?source=Premium%20Items",
+        "start": "January 23, 2024 20:00 UTC-7",
+        "end": "February 25, 2025 12:50 UTC-7",
+        "link": null,
         "button": "Check Out Shop Items",
         "alt": "Shop banner"
     },

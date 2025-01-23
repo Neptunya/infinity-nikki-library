@@ -30,13 +30,12 @@ export default function MultipleSelectChipFilters() {
     ];
     
     const sources = [
-      "Resonance: Celestial Wishes",
-      'Resonance: Ribbon Reverie',
-      'Resonance: Starlit Wishfin',
+      "Resonance: Skyward Bouquets",
+      'Resonance: Fireworks Prelude',
       'Resonance: Distant Sea',
       'Limited-Time Resonance',
       'Premium Items',
-      'Event: Into a Starry Night',
+      'Event: Strings of Time',
       'Event Items',
       'Treasure Chest',
       'Styling Challenge',
