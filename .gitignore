@@ -29,5 +29,6 @@ python/images/
 python/csv/
 python/json/
 python/sql/
+python/txt/
 src/scripts/api/dump/
 .venv/

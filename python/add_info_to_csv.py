@@ -17,7 +17,7 @@ def merge_csv():
     # for file in file_list:
     #     df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/{file}')
     #     df = pd.concat([df, df_temp], ignore_index=True)
-    df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/1-1c.csv')
+    df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/1-2a.csv')
     df = pd.concat([df, df_temp], ignore_index=True)
     df.to_csv('D:/Documents/infinity_nikki_library/python/csv/full_item_data.csv', index=False)
 
@@ -40,7 +40,7 @@ def add_style():
 
 def add_makeup():
     items = pd.read_csv('./python/csv/full_item_data.csv')
-    makeup = pd.read_csv('./python/csv/makeup.csv')
+    makeup = pd.read_csv('./python/csv/makeup_1-2a.csv')
     df = pd.concat([items, makeup], ignore_index=True)
     int_cols = ['Level', 'Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool', 'Blings','Threads', 'Bubbles']
     for c in int_cols:
@@ -57,7 +57,7 @@ def add_missing_items():
     df.to_csv("./python/csv/full_item_data.csv", index=False)
 
 def add_glow_up():
-    glow_up_file = './python/csv/glow_up.csv'
+    glow_up_file = './python/csv/unprocessed/1-2a-gu.csv'
     clothing_item_file = './python/csv/clothing_item_lvls.csv'
     glow_up_data = {}
     
@@ -274,9 +274,9 @@ def sort_details():
 
 merge_csv() # modify to only pull necessary csvs
 add_style()
-#add_makeup()
+add_makeup()
 split_csv()
-#add_glow_up()
+add_glow_up()
 add_costs()
 add_labels()
 add_sources()

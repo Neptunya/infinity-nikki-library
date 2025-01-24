@@ -153,7 +153,7 @@ class Items(Resource):
         always_avail_vals = list(always_avail.values())
         limited_time = ["Skyward Bouquets", "Fireworks Prelude", "Event: Strings of Time", "Distant Sea", "In Shop"]
         lim_reso = "Limited-Time Resonance"
-        premium = "Pear-Pal premium item highly recommended by the Stylist's Guild."
+        premium = "An item in Pear-Pal's Store endorsed by the Stylist's Guild."
         
         source_map = {
             'Independent Designer Store': [ItemDetails.Source == always_avail["designer"]],
@@ -174,7 +174,12 @@ class Items(Resource):
             "Resonance: Skyward Bouquets": [ItemDetails.Banner.contains("Skyward Bouquets")],
             'Resonance: Fireworks Prelude': [ItemDetails.Banner.contains('Fireworks Prelude')],
             'Resonance: Distant Sea': [ItemDetails.Banner.contains('Distant Sea')],
-            'Premium Items': [ItemDetails.Source == premium],
+            "Pear-Pal's Store": [
+                or_(
+                    ItemDetails.Source == premium,
+                    ItemDetails.Source.contains('Heartfelt Gifts')
+                )
+            ],
             'Limited-Time Resonance': [ItemDetails.Source == lim_reso],
             'Event: Strings of Time': [ItemDetails.Source.contains('Strings of Time')],
             'Event Items': [

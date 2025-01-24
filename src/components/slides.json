@@ -4,7 +4,7 @@
         "text": "Ending",
         "start": "January 23, 2024 20:00 UTC-7",
         "end": "February 25, 2025 12:50 UTC-7",
-        "link": null,
+        "link": "/database?source=Resonance%3A%20Skyward%20Bouquets",
         "button": "Check Out Banner Items",
         "alt": "Skyward Bouquet Banner"
     },
@@ -13,7 +13,7 @@
         "text": "Ending",
         "start": "January 23, 2024 20:00 UTC-7",
         "end": "February 25, 2025 12:50 UTC-7",
-        "link": null,
+        "link": "/database?source=Resonance%3A%20Fireworks%20Prelude",
         "button": "Check Out Banner Items",
         "alt": "Fireworks Prelude Banner"
     },
@@ -22,7 +22,7 @@
         "text": "Ending",
         "start": "January 23, 2024 20:00 UTC-7",
         "end": "February 25, 2025 12:50 UTC-7",
-        "link": null,
+        "link": "/database?source=Event%3A%20Strings%20of%20Time",
         "button": "Check Out Event Items",
         "alt": "Endless Longing Banner"
     },
@@ -31,7 +31,7 @@
         "text": "Shop Update on",
         "start": "January 23, 2024 20:00 UTC-7",
         "end": "February 25, 2025 12:50 UTC-7",
-        "link": null,
+        "link": "/database?source=Pear-Pal%27s%20Store",
         "button": "Check Out Shop Items",
         "alt": "Shop banner"
     },

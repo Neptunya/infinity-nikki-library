@@ -76,7 +76,7 @@ function renderItems(data) {
 
 
         const message = document.createElement('p');
-        message.innerHTML = "No items found.<br>Working hard to get new items in the database!";
+        message.innerHTML = "No items found.";
         message.style.textAlign = 'center';
         message.style.whiteSpace = 'pre-line';
         message.classList.add('no-results-message');
@@ -178,7 +178,7 @@ function renderDatabaseCard(item) {
         } 
     }
     
-    if (item['Source'].includes("premium")) {
+    if (item['Source'].includes("endorsed")) {
         const unobMsg2 = document.createElement('p');
         unobMsg2.innerHTML += 'Paid';
         unobMsg2.classList.add('unobtainable-msg');
@@ -560,7 +560,7 @@ function adjustItemsPerPageAndRerender(data) {
 export function updateMode(mode) {
     selectedMode = mode;
     const title = document.getElementById('title');
-    title.innerHTML = selectedMode == 'tracker' ? "Item Tracker (Beta)" : "Database"
+    title.innerHTML = selectedMode == 'tracker' ? "Item Tracker" : "Database"
     applySearchFilter();
 }
 

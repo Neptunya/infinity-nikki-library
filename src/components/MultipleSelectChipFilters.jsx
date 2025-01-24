@@ -34,7 +34,7 @@ export default function MultipleSelectChipFilters() {
       'Resonance: Fireworks Prelude',
       'Resonance: Distant Sea',
       'Limited-Time Resonance',
-      'Premium Items',
+      "Pear-Pal's Store",
       'Event: Strings of Time',
       'Event Items',
       'Treasure Chest',

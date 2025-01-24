@@ -26,31 +26,6 @@ ignore = dict.fromkeys(["Noir Creed",
 						"Sweet  Cool"
 						"Quiet  Still"])
 
-new_items = dict.fromkeys([
-	"Rippling Time", 
-	"Collected Memories", 
-	"Drifting Paper Boat", 
-	"Sunlit Stars", 
-	"Dreamy Afternoon", 
-	"Dawn's First Light", 
-	"Soft Moonlight",
-	"Dreamed Steps",
-	"Rosecrown Dance",
-	"Dancing Ribbon",
-	"Gentle Ripple",
-	"Rippled Gleam",
-	"Scattered Lights",
-	"Dream in Pink",
-	"Mortal Waters",
-	"Dreamward",
-	"Gift of Fish",
-	"Soft Murmurs",
-	"Blue Teardrop",
-	"Lake Drops",
-	"Azure Whisper",
-	"Farewell Tail",
-])
-
 app = Flask(__name__)
 load_dotenv()
 db_password = os.getenv("DB_PASSWORD")
@@ -168,54 +143,45 @@ def scrape_new(slot):
 					exists = db.session.query(
 								db.exists().where(ItemDetails.Name == name.strip())
 							).scalar()
-					if name in new_items:
-						print(name)
-						get_item_details_mod(x, y, slot)
 					if not exists and name not in ignore.keys():
 						print(name)
 						get_item_details_mod(x, y, slot)
 				else:
 					break
-		# prev_item_name = get_name(0, y_cards_interval[1])
-		# pg.moveTo(x_cards[0], y_cards[2])
-		# pg.scroll(-350)
-		# time.sleep(2)
+		prev_item_name = get_name(0, y_cards_interval[1])
+		pg.moveTo(x_cards[0], y_cards[2])
+		pg.scroll(-350)
+		time.sleep(2)
 
-		# while (prev_item_name != get_name(0, y_cards_interval[2])):
-		# 	prev_item_name = get_name(0, y_cards_interval[2])
-		# 	for i in range(6):
-		# 		x_mod = i * x_cards_interval
-		# 		y_mod = y_cards_interval[2]
-		# 		name = get_name(x_mod, y_mod)
+		while (prev_item_name != get_name(0, y_cards_interval[2])):
+			prev_item_name = get_name(0, y_cards_interval[2])
+			for i in range(6):
+				x_mod = i * x_cards_interval
+				y_mod = y_cards_interval[2]
+				name = get_name(x_mod, y_mod)
 				
-		# 		if name.strip():
-		# 			exists = db.session.query(
-		# 						db.exists().where(ItemDetails.Name == name.strip())
-		# 					).scalar()
-		# 			if name in new_items:
-		# 				print(name)
-		# 				get_item_details_mod(i, 2, slot)
-		# 			if not exists and name not in ignore.keys():
-		# 				print(name)
-		# 				get_item_details_mod(i, 2, slot)
-		# 		else:
-		# 			name = get_name(x_mod, 576)
-		# 			if name.strip():
-		# 				exists = db.session.query(
-		# 							db.exists().where(ItemDetails.Name == name.strip())
-		# 						).scalar()
-		# 				if name in new_items:
-		# 					print(name)
-		# 					get_item_details_mod(i, 3, slot)
-		# 				if not exists and name not in ignore.keys():
-		# 					print(name)
-		# 					get_item_details_mod(i, 3, slot)
-		# 			else:
-		# 				break
+				if name.strip():
+					exists = db.session.query(
+								db.exists().where(ItemDetails.Name == name.strip())
+							).scalar()
+					if not exists and name not in ignore.keys():
+						print(name)
+						get_item_details_mod(i, 2, slot)
+				else:
+					name = get_name(x_mod, 576)
+					if name.strip():
+						exists = db.session.query(
+									db.exists().where(ItemDetails.Name == name.strip())
+								).scalar()
+						if not exists and name not in ignore.keys():
+							print(name)
+							get_item_details_mod(i, 3, slot)
+					else:
+						break
 
-		# 	pg.moveTo(x_cards[0], y_cards[2])
-		# 	pg.scroll(-575)
-		# 	time.sleep(2)
+			pg.moveTo(x_cards[0], y_cards[2])
+			pg.scroll(-575)
+			time.sleep(2)
 
 with open('./python/json/outfits.json', 'r') as file:
     outfits_data = json.load(file)
@@ -232,7 +198,6 @@ def check_outfits():
 			x_mod = x * x_cards_interval
 			y_mod = y_cards_interval[y]
 			name = get_name(x_mod, y_mod)
-			print(name)
 			if name.strip():
 				exists = name_exists(name)
 				if not exists:
@@ -347,7 +312,7 @@ def scrape_stats(name, rarity, slot, file):
 		csvwriter.writerows(rows)
 
 def glow_up_macro():
-	#check_outfits()
+	check_outfits()
 	
 	slots = [
 		'Hair','Dress','Outerwear','Top','Bottom','Socks','Shoes',
@@ -404,10 +369,11 @@ def glow_up_macro():
 # 	print(file)
 # 	check_incr(f'./python/csv/unprocessed/{file}')
 
-#in_w.activate() 
+in_w.activate() 
 time.sleep(1)
-scrape_stats("Drifting Paper Boat", 5, 'Pendant', '1-1c')
-f = './python/csv/unprocessed/1-1c.csv'
+scrape_stats("Hidden Sentiments", 5, 'Handheld', '1-2a')
+#glow_up_macro()
+f = './python/csv/unprocessed/1-2a.csv'
 with open(f, 'a', newline='') as csvfile:
 		csvwriter = csv.writer(csvfile)
 		csvwriter.writerows(rows)

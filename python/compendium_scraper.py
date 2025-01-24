@@ -159,7 +159,7 @@ def scrape_sources():
 stat_window = [1513, 228, 50, 19]
 stat_y_interval = 53
 stat_x_interval = 246
-gu_data = './python/csv/glow_up.csv'
+gu_data = './python/csv/unprocessed/1-2a-gu.csv'
 def get_glow_up_stats(n):
     r = [n, 11]
     n = 'gu_stat'
@@ -181,7 +181,7 @@ def get_glow_up_stats(n):
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(r)
 
-new_data = './python/csv/unprocessed/1-1c-gu.csv'
+new_data = './python/csv/unprocessed/1-2a-gu.csv'
 def glow_up_stats_to_new(n, rarity):
     r = [n, rarity, None, None, 11]
     
@@ -272,12 +272,12 @@ def print_no_source():
             if not row['Source']: 
                 print(row)
 
-def scrape_new_suit(r):
+def scrape_new_suit():
     prev_name = ""
     curr_name = img_to_str(sc("name", name_box))
     i = 0
     while prev_name != curr_name:
-        #glow_up_stats_to_new(curr_name, r)
+        #get_glow_up_stats(curr_name)
         #get_source(curr_name)
         sc(f'../../../public/images/items/{curr_name}', img_box)
         prev_name = curr_name
@@ -311,6 +311,7 @@ def print_new_makeup():
 #print_items_csv("new.csv")
 
 pg.moveTo(90, 395)
+#scrape_new_suit()
 single_img()
 pg.moveTo(10, 10)
 

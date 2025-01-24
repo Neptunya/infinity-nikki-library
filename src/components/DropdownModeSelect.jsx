@@ -36,7 +36,7 @@ export default function ModeSelect() {
           >
             <MenuItem value={'db'}>Database</MenuItem>
             { localStorage.getItem('refresh_token') ? (
-              <MenuItem value={'tracker'}>Item Tracker (Beta)</MenuItem>
+              <MenuItem value={'tracker'}>Item Tracker</MenuItem>
             ) : (
               <MenuItem
                 value={'tracker-disabled'}
