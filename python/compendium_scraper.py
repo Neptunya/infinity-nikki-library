@@ -159,7 +159,7 @@ def scrape_sources():
 stat_window = [1513, 228, 50, 19]
 stat_y_interval = 53
 stat_x_interval = 246
-gu_data = './python/csv/unprocessed/1-2a-gu.csv'
+gu_data = './python/csv/unprocessed/1-2a-fix-gu.csv'
 def get_glow_up_stats(n):
     r = [n, 11]
     n = 'gu_stat'
@@ -311,8 +311,10 @@ def print_new_makeup():
 #print_items_csv("new.csv")
 
 pg.moveTo(90, 395)
-#scrape_new_suit()
-single_img()
+curr_name = img_to_str(sc("name", name_box))
+#get_glow_up_stats(curr_name)
+get_source(curr_name)
+#sc(f'../../../public/images/items/{curr_name}', img_box)
 pg.moveTo(10, 10)
 
 
