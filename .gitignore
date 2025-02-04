@@ -30,5 +30,8 @@ python/csv/
 python/json/
 python/sql/
 python/txt/
+
 src/scripts/api/dump/
+src/scripts/api/reso_sim.py
+
 .venv/

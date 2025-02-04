@@ -12,7 +12,7 @@ for (var i = 0; i < collapsible.length; i++) {
     });
 }
 
-function adjustCollapsibleMaxHeight() {
+export function adjustCollapsibleMaxHeight() {
     setTimeout(() => {
         for (let i = 0; i < collapsible.length; i++) {
             const content = collapsible[i].nextElementSibling;
