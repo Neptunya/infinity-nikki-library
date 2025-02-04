@@ -1,3 +1,12 @@
+.settings-num {
+    padding: 4px 8px;
+    margin: 0 4px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    background-color: #494554;
+    color: #ffffff;
+}
+
 #collapsible-options {
     margin-bottom: 20px;
 }
@@ -15,4 +24,18 @@
     margin-right: -5px;
     display: flex;
     flex-flow: column;
+}
+
+#success-rate {
+    padding: 4px 8px;
+    margin: 0 4px;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    background-color: #edb1bdab;
+    color: #ffffff;
+}
+
+#budget-msg {
+    padding-bottom: 16px;
+    line-height: 2;
 }

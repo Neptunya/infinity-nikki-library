@@ -32,6 +32,7 @@ python/sql/
 python/txt/
 
 src/scripts/api/dump/
+src/scripts/api/api.py
 src/scripts/api/reso_sim.py
 
 .venv/

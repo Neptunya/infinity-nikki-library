@@ -22,7 +22,6 @@ export default function SimOptions() {
         items: false,
         outfitItems: false,
         desiredItems: false,
-        blessing: false,
         display: false
       });
     
@@ -34,20 +33,31 @@ export default function SimOptions() {
         });
     };
     
-    const [sim, setSim] = React.useState('full');
+    const [sim, setSim] = React.useState('');
     const handleSimChange = (event) => {
         setSim(event.target.value);
         adjustCollapsibleMaxHeight();
     }
     
-    const [banner, setBanner] = React.useState(5);
+    const [banner, setBanner] = React.useState('');
     const handleBannerChange = (event) => {
         setBanner(event.target.value);
     };
     
-    const [items, setItems] = React.useState(10);
+    const [budget, setBudget] = React.useState('');
+    const handleBudgetChange = (event) => {
+        let value = Number(event.target.value);
+        if (value < 0) value = 0;
+        if (value > 600) value = 600;
+        setBudget(value);
+    };
+    
+    const [items, setItems] = React.useState('');
     const handleItemsChange = (event) => {
-        setItems(event.target.value);
+        let value = Number(event.target.value);
+        if (value < 1) value = 1;
+        if (value > 30) value = 30;
+        setItems(value);
     };
     
     const [outfitItems, setOutfitItems] = React.useState([]);
@@ -81,7 +91,7 @@ export default function SimOptions() {
         setBlessing(event.target.value);
     };
     
-    const [display, setDisplay] = React.useState('cumulative')
+    const [display, setDisplay] = React.useState('')
     const handleDisplayChange = (event) => {
         setDisplay(event.target.value);
     };
@@ -98,7 +108,6 @@ export default function SimOptions() {
                 items: !items,
                 outfitItems: false,
                 desiredItems: false,
-                blessing: false,
                 display: !display
             };
         } else if (sim && sim == 'desired') {
@@ -108,13 +117,8 @@ export default function SimOptions() {
                 items: false,
                 outfitItems: !(outfitItems.length > 0),
                 desiredItems: !(desiredItems.length > 0),
-                blessing: false,
                 display: !display
             };
-            
-            if (banner && banner == 5) {
-                updatedErrorState.blessing = !blessing;
-            }
         } else {
             updatedErrorState = {
                 sim: !sim,
@@ -122,7 +126,6 @@ export default function SimOptions() {
                 items: !items,
                 outfitItems: !(outfitItems.length > 0),
                 desiredItems: !(desiredItems.length > 0),
-                blessing: !blessing,
                 display: !display
             };
         }
@@ -137,14 +140,13 @@ export default function SimOptions() {
             setErrorState(updatedErrorState);
             document.getElementById("alert").innerHTML = "<p style='color: #edb1bd; margin-top: 16px; margin-bottom: 0;'>Please fill in required fields!</p>";
         } else {
-            setSimSettings(sim == "full", banner, +items, outfitItems, desiredItems, blessing, display == 'cumulative');
+            setSimSettings(sim == "full", banner, +budget, +items, outfitItems, desiredItems, blessing, display == 'cumulative');
             setErrorState({
                 sim: false,
                 banner: false,
                 items: false,
                 outfitItems: false,
                 desiredItems: false,
-                blessing: false,
                 display: false
             });
             document.getElementById("alert").innerHTML = "";
@@ -179,7 +181,7 @@ export default function SimOptions() {
                 m: "4px"
             }}
             error={errorState.sim}>
-                <InputLabel id="sim-select-label">Simulation</InputLabel>
+                <InputLabel id="sim-select-label">Simulation*</InputLabel>
                 <Select
                 labelId="sim-select-label"
                 id="sim-select"
@@ -197,7 +199,7 @@ export default function SimOptions() {
                 m: "4px"
             }}
             error={errorState.banner}>
-                <InputLabel id="banner-select-label">Banner</InputLabel>
+                <InputLabel id="banner-select-label">Banner*</InputLabel>
                 <Select
                 labelId="banner-select-label"
                 id="banner-select"
@@ -211,20 +213,31 @@ export default function SimOptions() {
                 </Select>
             </FormControl>
             
-            
+            <TextField
+                type="number"
+                label="Budget"
+                variant="outlined"
+                sx={{
+                    width: '100px',
+                    m: "4px",
+                }}
+                value={budget}
+                onChange={handleBudgetChange}
+                inputProps={{ min: 0, max: 600 }}
+            />
             
             {sim == 'desired' ? (
                 <MultipleSelectChipContent
                     names={slots}
                     idPrefix="outfit-items"
-                    label="Outfit Items"
+                    label="Outfit Items*"
                     error={errorState.outfitItems}
                     onSelectionChange={handleOutfitItemsChange}
                     selected={outfitItems} />
             ) : 
                 <TextField
                     type="number"
-                    label="Items"
+                    label="Items*"
                     variant="outlined"
                     sx={{
                         width: '100px',
@@ -233,6 +246,7 @@ export default function SimOptions() {
                     error={errorState.items}
                     value={items}
                     onChange={handleItemsChange}
+                    inputProps={{ min: 0, max: 30 }}
                 />
             }
             
@@ -240,7 +254,7 @@ export default function SimOptions() {
                 <MultipleSelectChipContent
                     names={outfitItems.length > 0 ? sortItems(outfitItems) : ['(Select Outfit Items First)']}
                     idPrefix="desired-items"
-                    label="Desired Items"
+                    label="Desired Items*"
                     error={errorState.desiredItems}
                     onSelectionChange={handleDesiredItemsChange}
                     selected={desiredItems} />
@@ -250,8 +264,7 @@ export default function SimOptions() {
                 <FormControl sx={{
                     width: '220px',
                     m: "4px"
-                }}
-                error={errorState.blessing}>
+                }}>
                 <InputLabel id="blessing-select-label">Ocean's Blessing</InputLabel>
                     <Select
                     labelId="blessing-select-label"
@@ -280,7 +293,7 @@ export default function SimOptions() {
                 m: "4px"
             }}
             error={errorState.display}>
-                <InputLabel id="display-select-label">Display</InputLabel>
+                <InputLabel id="display-select-label">Display*</InputLabel>
                 <Select
                 labelId="display-select-label"
                 id="display-select"
@@ -299,7 +312,7 @@ export default function SimOptions() {
                 margin: '8px',
                 fontSize: '1rem'
             }}>
-                Run Simulation
+                Calculate
             </Button>
             
             </Box>

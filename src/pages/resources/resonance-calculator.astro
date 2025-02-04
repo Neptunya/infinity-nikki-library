@@ -17,30 +17,41 @@ import '../../styles/reso-sim.css';
 		<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="keywords" content="Infinity, Nikki, IN, Library, Information, Guides, Compendium, Resources">
-		<meta name="description" content="A compendium of information and guides for Infinity Nikki, curated by your fellow stylists in Miraland.">
+		<meta name="keywords" content="Infinity, Nikki, IN, Library, Resonance, Gacha, Simulator, Calculator, Predictor, Prediction, Simulation">
+		<meta name="description" content="A calculator for Infinity Nikki's resonance system">
 		
-		<meta property="og:title" content="Infinity Nikki Library">
-		<meta property="og:description" content="A compendium of information and guides for Infinity Nikki, curated by your fellow stylists in Miraland.">
+		<meta property="og:title" content="Resonance Sim | IN Library">
+		<meta property="og:description" content="A calculator for Infinity Nikki's resonance system">
 		<meta property="og:image" content="https://infinitynikkilibrary.com/images/nikki_embed.png">
 		<meta property="og:image:url" content="https://infinitynikkilibrary.com/images/nikki_embed.png">
 		<meta property="og:image:type" content="image/png" />
-		<meta property="og:url" content="https://infinitynikkilibrary.com/">
+		<meta property="og:url" content="https://infinitynikkilibrary.com/resources/resonance-simulator">
 		<meta property="og:type" content="website">
 		
 		<meta name="twitter:card" content="summary_large_image">
-		<meta name="twitter:title" content="Infinity Nikki Library">
-		<meta name="twitter:description" content="A compendium of information and guides for Infinity Nikki, curated by your fellow stylists in Miraland.">
+		<meta name="twitter:title" content="Resonance Sim | IN Library">
+		<meta name="twitter:description" content="A calculator for Infinity Nikki's resonance system">
 		<meta name="twitter:image" content="https://infinitynikkilibrary.com/images/nikki_embed.png">
 		
 		<title>Infinity Nikki Library</title>
 	</head>
 	<body>
 		<Header />
+		<div class="banner-container" id="reso-sim-banner"></div>
         <div class="content-container">
+			<h1>Resonance Calculator (Beta)</h1>
+			<p>
+				Fill in the settings below and hit the [ Calculate ] button to see how many pulls it'll take to "win" the gacha.<br>
+				Settings with an asterisk(*) are required for the calculator to run.<br>
+			</p>
+			<p style="margin-bottom: 4px;"><b>Planned Features:</b></p>
+			<ul style="margin-top: 4px;">
+				<li><s>Scam</s> Suprise-O-Matic Calculator</li>
+				<li>Presets for current banners</li>
+			</ul>
             <div id="collapsible-options">
 				<button type="button" class="collapsible active">
-                    <p>Options</p>
+                    <p>Settings</p>
                     <p>+</p>
                 </button>
                 <div id = "options-container">
@@ -57,7 +68,8 @@ import '../../styles/reso-sim.css';
 					</svg>
 				</div>
 			</div>
-            <div id="chart-container"></div>
+            <div id="budget-msg"></div>
+			<div id="chart-container"></div>
         </div>
         <Footer />
 		<script>
