@@ -6,18 +6,9 @@ import os
 with open('./python/json/costs.json') as f:
     costs_data = json.load(f)
 
-def merge_csv():
-    # file_list = os.listdir('D:/Documents/infinity_nikki_library/python/csv/unprocessed')
-    # df = pd.DataFrame()
-    # for file in file_list:
-    #     df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/{file}')
-    #     df = pd.concat([df, df_temp], ignore_index=True)
-    # df.to_csv('D:/Documents/infinity_nikki_library/python/csv/full_item_data.csv', index=False)
+def merge_csv(file):
     df = pd.DataFrame()
-    # for file in file_list:
-    #     df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/{file}')
-    #     df = pd.concat([df, df_temp], ignore_index=True)
-    df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/1-2a-fix.csv')
+    df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/{file}.csv')
     df = pd.concat([df, df_temp], ignore_index=True)
     df.to_csv('D:/Documents/infinity_nikki_library/python/csv/full_item_data.csv', index=False)
 
@@ -56,8 +47,8 @@ def add_missing_items():
         df[c] = df[c].fillna(0).astype("int64")
     df.to_csv("./python/csv/full_item_data.csv", index=False)
 
-def add_glow_up():
-    glow_up_file = './python/csv/unprocessed/1-2a-fix-gu.csv'
+def add_glow_up(file):
+    glow_up_file = f'./python/csv/unprocessed/{file}-gu.csv'
     clothing_item_file = './python/csv/clothing_item_lvls.csv'
     glow_up_data = {}
     
@@ -272,11 +263,12 @@ def sort_details():
     df_sorted = df.sort_values(by=['Rarity', 'Slot', 'Outfit'], ascending=[False, True, True])
     df_sorted.to_csv(f'./python/csv/clothing_items_details.csv', index=False)
 
-merge_csv() # modify to only pull necessary csvs
+file = '1-2a-bag'
+merge_csv(file)
 add_style()
 #add_makeup()
 split_csv()
-add_glow_up()
+#add_glow_up(file)
 add_costs()
 add_labels()
 add_sources()

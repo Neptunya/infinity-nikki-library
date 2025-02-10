@@ -371,9 +371,9 @@ def glow_up_macro():
 
 in_w.activate() 
 time.sleep(1)
-scrape_stats("Cloudborne Cranes", 3, 'Bracelet', '1-2a-fix')
+scrape_stats("Starlit Reverie", 4, 'Handheld', '1-2a-bag')
 #glow_up_macro()
-f = './python/csv/unprocessed/1-2a-fix.csv'
+f = './python/csv/unprocessed/1-2a-bag.csv'
 with open(f, 'a', newline='') as csvfile:
 		csvwriter = csv.writer(csvfile)
 		csvwriter.writerows(rows)

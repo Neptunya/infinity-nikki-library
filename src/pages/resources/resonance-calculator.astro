@@ -1,0 +1,80 @@
+---
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import SimOptions from '../../components/SimulationOptions';
+import '../../styles/global.css';
+import '../../styles/database.css';
+import '../../styles/reso-sim.css';
+---
+
+<html lang="en">
+	<!-- Update description + title! -->
+    <head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/png" href="/images/nikki_logo.png" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="keywords" content="Infinity, Nikki, IN, Library, Resonance, Gacha, Simulator, Calculator, Predictor, Prediction, Simulation">
+		<meta name="description" content="A calculator for Infinity Nikki's resonance system">
+		
+		<meta property="og:title" content="Resonance Calculator | IN Library">
+		<meta property="og:description" content="A calculator for Infinity Nikki's resonance system">
+		<meta property="og:image" content="https://infinitynikkilibrary.com/images/nikki_embed.png">
+		<meta property="og:image:url" content="https://infinitynikkilibrary.com/images/nikki_embed.png">
+		<meta property="og:image:type" content="image/png" />
+		<meta property="og:url" content="https://infinitynikkilibrary.com/resources/resonance-simulator">
+		<meta property="og:type" content="website">
+		
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content="Resonance Calculator | IN Library">
+		<meta name="twitter:description" content="A calculator for Infinity Nikki's resonance system">
+		<meta name="twitter:image" content="https://infinitynikkilibrary.com/images/nikki_embed.png">
+		
+		<title>Resonance Calculator | INL</title>
+	</head>
+	<body>
+		<Header />
+		<div class="banner-container" id="reso-sim-banner"></div>
+        <div class="content-container">
+			<h1>Resonance Calculator (Beta)</h1>
+			<p>
+				Pick the type of simulation you want, fill in the settings below, and hit the Calculate button to see how many pulls it'll take to get what you want from the gacha.<br>
+				Settings with an asterisk(*) are required for the calculator to run.<br>
+			</p>
+			<p style="margin-bottom: 4px;"><b>Planned Features:</b></p>
+			<ul style="margin-top: 4px;">
+				<li><s>Scam</s> Surprise-O-Matic Calculator</li>
+			</ul>
+            <div id="collapsible-options">
+				<button type="button" class="collapsible active">
+                    <p>Settings</p>
+                    <p>+</p>
+                </button>
+                <div id = "options-container">
+					<div id="alert"><p style='margin-top: 16px; margin-bottom: 0;'>Settings with an asterisk(*) are required for the calculator to run.</p></div>
+                    <SimOptions client:only="react" />
+                </div>
+            </div>
+			<div id="loading-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 9999;">
+				<div style="color: white;">
+					<svg style="width: 50px; height: 50px; animation: spin 1s linear infinite;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+						<circle cx="25" cy="25" r="20" stroke="white" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="31.415, 31.415">
+							<animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite" />
+						</circle>
+					</svg>
+				</div>
+			</div>
+            <div id="budget-msg"></div>
+			<div id="chart-container"></div>
+        </div>
+        <Footer />
+		<script>
+			import "../../scripts/resize.js";
+            import "../../scripts/reso-sim.js";
+            import "../../scripts/sim-chart.js";
+		</script>
+	</body>
+</html>

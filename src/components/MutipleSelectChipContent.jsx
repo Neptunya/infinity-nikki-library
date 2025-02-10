@@ -28,7 +28,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function MultipleSelectChipContent({ names = [], idPrefix = 'demo', label = 'Chip', onSelectionChange, selected = [] }) {
+export default function MultipleSelectChipContent({ names, idPrefix, label, onSelectionChange, selected, error }) {
   const theme = useTheme();
   
   const [personName, setPersonName] = useState(selected);
@@ -49,6 +49,10 @@ export default function MultipleSelectChipContent({ names = [], idPrefix = 'demo
     setPersonName(updatedValues);
     onSelectionChange(updatedValues);
   };
+  
+  useEffect(() => {
+    setPersonName(selected);
+  }, [selected]);
 
   return (
     <div>
@@ -56,9 +60,9 @@ export default function MultipleSelectChipContent({ names = [], idPrefix = 'demo
         sx={{
           m: 1,
           width: dynamicWidth,
-          bgcolor: theme.palette.background.paper,
           color: theme.palette.text.primary,
         }}
+        error={error}
       >
         <InputLabel id={`${idPrefix}-select-multiple-chip`}>{label}</InputLabel>
         <Select
@@ -67,7 +71,7 @@ export default function MultipleSelectChipContent({ names = [], idPrefix = 'demo
           multiple
           value={personName}
           onChange={handleChange}
-          input={<OutlinedInput id={`${idPrefix}-select-multiple-chip-vals`} label="Chip" />}
+          input={<OutlinedInput id={`${idPrefix}-select-multiple-chip-vals`} label={label} />}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
@@ -81,6 +85,7 @@ export default function MultipleSelectChipContent({ names = [], idPrefix = 'demo
             <MenuItem
               key={name}
               value={name}
+              disabled={name === '(Select Outfit Items First)'}
               style={getStyles(name, personName, theme)}
             >
               {name}

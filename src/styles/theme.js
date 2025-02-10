@@ -17,6 +17,9 @@ export const theme = createTheme({
     },
     info: { main: '#a3c7f2' },
     divider: '#edb1bd',
+    error: {
+      main: '#edb1bd',
+    },
   },
   typography: {
     fontFamily: 'PT Sans',

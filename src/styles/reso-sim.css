@@ -1,0 +1,41 @@
+.settings-num {
+    padding: 4px 8px;
+    margin: 0 4px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    background-color: #494554;
+    color: #ffffff;
+}
+
+#collapsible-options {
+    margin-bottom: 20px;
+}
+
+#options-container {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #353142a2;
+    margin-top: 0px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-left: 5px;
+    margin-right: -5px;
+    display: flex;
+    flex-flow: column;
+}
+
+#success-rate {
+    padding: 4px 8px;
+    margin: 0 4px;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    background-color: #edb1bdab;
+    color: #ffffff;
+}
+
+#budget-msg {
+    padding-bottom: 16px;
+    line-height: 2;
+}
