@@ -1,0 +1,62 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+const guides = await Astro.glob('./guides/*.md');
+---
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<link rel="icon" type="image/png" href="/images/nikki_logo.png" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+		<meta name="keywords" content="Infinity, Nikki, IN, Library, Information, Guides, Compendium, Resources">
+		<meta name="description" content="A compendium of information and guides for Infinity Nikki, curated by your fellow stylists in Miraland.">
+		<meta name="viewport" content="width=device-width" />
+		
+		<meta property="og:title" content="Infinity Nikki Library Guides">
+		<meta property="og:description" content="A compendium of information and guides for Infinity Nikki, curated by your fellow stylists in Miraland.">
+		<meta property="og:image" content="https://infinitynikkilibrary.com/images/nikki_embed.png">
+		<meta property="og:image:url" content="https://infinitynikkilibrary.com/images/nikki_embed.png">
+		<meta property="og:image:type" content="image/png" />
+		<meta property="og:url" content="https://infinitynikkilibrary.com/guides">
+		<meta property="og:type" content="website">
+		
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content="Infinity Nikki Library Guides">
+		<meta name="twitter:description" content="A compendium of information and guides for Infinity Nikki, curated by your fellow stylists in Miraland.">
+		<meta name="twitter:image" content="https://infinitynikkilibrary.com/images/nikki_embed.png">
+		
+		<title>Guides | INL</title>
+	</head>
+	<body>
+		<Header />
+		<div class="content-container">
+			<h1>Guides</h1>
+			<p>Your fellow stylists are here to help!</p>
+			
+			<div id="guides-list" class="guides-grid">
+				{guides.map(guide => (
+					<a href={guide.url} class="guide-card-link">
+						<div class="guide-card" data-tags={guide.frontmatter.tags.join(", ")}>
+							<img src={guide.frontmatter.image} alt={guide.frontmatter.title} />
+							<div class="guide-card-text">
+								<h3>{guide.frontmatter.title}</h3>
+								<p>
+									By: {guide.frontmatter.authors.join(", ")} <br/>
+									Last Updated: {guide.frontmatter.lastUpdated} <br/>
+									{guide.frontmatter.description}
+								</p>
+							</div>
+						</div>
+					</a>
+				))}
+			</div>
+		</div>
+		<Footer />
+		<script>
+			import "../scripts/resize.js";
+		</script>
+	</body>
+</html>

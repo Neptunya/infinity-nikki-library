@@ -329,7 +329,6 @@ export default function SimOptions() {
                 >
                     <MenuItem value={'full'}>Full Outfit</MenuItem>
                     <MenuItem value={'desired'}>Specific Items</MenuItem>
-                    <MenuItem value={'som'}>Surprise-o-Matic</MenuItem>
                 </Select>
             </FormControl>
             
