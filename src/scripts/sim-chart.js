@@ -259,7 +259,7 @@ function renderBudgetMsg(successRate) {
         if (fullSim) {
             message.innerHTML = `
                 <span id="success-rate">${(successRate).toFixed(2)}%</span>
-                <span>is the probability of you obtaining a full ${star} outfit of 
+                <span>is the probability of obtaining a full ${star} outfit of 
                 <span class="settings-num">${items}</span> 
                 items from a ${reso} in 
                 <span class="settings-num">${budget}</span> pulls</span>
