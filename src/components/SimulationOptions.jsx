@@ -112,6 +112,24 @@ export default function SimOptions() {
                 ]);
                 setDisplay('cumulative');
                 break;
+            case 'whispers-of-bliss':
+                setBanner(4);
+                setItems(8);
+                setOutfitItems([
+                    'Hair', 'Dress', 'Shoes', 'Headwear', 
+                    'Earrings', 'Choker','Gloves', 'Handheld'
+                ]);
+                setDisplay('cumulative');
+                break;
+            case 'verdant-melodies':
+                setBanner(4);
+                setItems(8);
+                setOutfitItems([
+                    'Hair', 'Dress', 'Shoes', 
+                    'Headwear', 'Bracelet', 'Choker', 'Handheld'
+                ]);
+                setDisplay('cumulative');
+                break;
         }
         adjustCollapsibleMaxHeight();
     }

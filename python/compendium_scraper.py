@@ -100,10 +100,10 @@ def single_img():
     print(name)
     sc(f'../../../public/images/items/{name}', img_box)
 
-def single_item(r):
+def single_item():
     name = img_to_str(sc("name", name_box))
-    glow_up_stats_to_new(name, r)
-    get_source(name)
+    get_glow_up_stats(name)
+    #get_source(name)
     sc(f'../../../public/images/items/{name}', img_box)
 
 def scrape_labels(label):
@@ -141,7 +141,7 @@ def scrape_sources():
     curr_name = img_to_str(sc("name", name_box))
     i = 0
     while prev_name != curr_name:
-        get_source(curr_name)
+        #get_source(curr_name)
         prev_name = curr_name
         if i < 3:
             lc2(90, 395 + (i * compendium_interval))
@@ -160,7 +160,7 @@ def scrape_sources():
 stat_window = [1513, 228, 50, 19]
 stat_y_interval = 53
 stat_x_interval = 246
-gu_data = './python/csv/unprocessed/1-2a-fix-gu.csv'
+gu_data = './python/csv/unprocessed/1-2b-gu.csv'
 def get_glow_up_stats(n):
     r = [n, 11]
     n = 'gu_stat'
@@ -341,12 +341,12 @@ def scrape_outfit_items():
     curr_name = img_to_str(sc("name", name_box))
     i = 0
     
-    names = [curr_name]
+    names = []
     
     while prev_name != curr_name:
-        #get_glow_up_stats(curr_name)
+        get_glow_up_stats(curr_name)
         #get_source(curr_name)
-        #sc(f'../../../public/images/items/{curr_name}', img_box)
+        sc(f'../../../public/images/items/{curr_name}', img_box)
         
         names.append(curr_name)
         prev_name = curr_name
@@ -372,7 +372,7 @@ def scrape_new_suit():
     curr_name = img_to_str(sc("name", name_box))
     i = 0
     while prev_name != curr_name:
-        #get_glow_up_stats(curr_name)
+        get_glow_up_stats(curr_name)
         #get_source(curr_name)
         sc(f'../../../public/images/items/{curr_name}', img_box)
         prev_name = curr_name
@@ -391,6 +391,7 @@ def scrape_new_suit():
         i += 1
 
 pg.moveTo(90, 395)
-get_evos(1)
+#get_evos(2)
+single_item()
 pg.moveTo(10, 10)
 
