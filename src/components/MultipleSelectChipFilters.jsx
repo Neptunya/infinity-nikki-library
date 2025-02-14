@@ -30,6 +30,8 @@ export default function MultipleSelectChipFilters() {
     ];
     
     const sources = [
+      'Resonance: Blossom Silhouettes',
+      'Resonance: Breezy Melodies',
       "Resonance: Skyward Bouquets",
       'Resonance: Fireworks Prelude',
       'Resonance: Distant Sea',

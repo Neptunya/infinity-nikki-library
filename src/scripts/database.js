@@ -76,7 +76,7 @@ function renderItems(data) {
 
 
         const message = document.createElement('p');
-        message.innerHTML = "No items found.";
+        message.innerHTML = "No items found.<br>Working hard to get the new items from the 2/13 patch added!";
         message.style.textAlign = 'center';
         message.style.whiteSpace = 'pre-line';
         message.classList.add('no-results-message');
