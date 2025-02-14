@@ -40,7 +40,7 @@ def img_to_str(n):
     thresh = cv2.threshold(gray, 197, 255, cv2.THRESH_BINARY)[1]
     cv2.imwrite(f'./python/images/clothing_item_scraper/{n}_processed.png', thresh)
     text = str.strip(pytesseract.image_to_string(Image.open(f'./python/images/clothing_item_scraper/{n}_processed.png')))
-    filtered_text = re.sub(r"[^a-zA-Z' -]", "", text)
+    filtered_text = re.sub(r"[^a-zA-Z0-9'&: -]", "", text)
     while filtered_text.startswith(" ") or filtered_text.startswith("-") or filtered_text.startswith("'"):
         filtered_text = filtered_text[1:]
     while filtered_text.endswith(" ") or filtered_text.endswith("-") or filtered_text.endswith("'"):

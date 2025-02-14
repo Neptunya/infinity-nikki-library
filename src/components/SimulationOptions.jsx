@@ -125,7 +125,7 @@ export default function SimOptions() {
     const handleBudgetChange = (event) => {
         let value = Number(event.target.value);
         if (value < 0) value = 0;
-        if (value > 600) value = 600;
+        if (value > 2000) value = 2000;
         setBudget(value);
     };
     
@@ -275,7 +275,7 @@ export default function SimOptions() {
                 "<p style='color: #edb1bd; margin-top: 16px; margin-bottom: 0;'>Please fill in required fields!<br>One of the desired items dropdowns must be filled in.</p>":
                 "<p style='color: #edb1bd; margin-top: 16px; margin-bottom: 0;'>Please fill in required fields!</p>";
         } else {
-            setSimSettings(sim == "full", banner, +budget, +items, outfitItems, desiredItems, blessing, display == 'cumulative');
+            setSimSettings(sim, banner, +budget, +items, outfitItems, desiredItems, blessing, avail4, avail5, desired4, desired5, display == 'cumulative');
             setErrorState({
                 sim: false,
                 banner: false,
@@ -329,6 +329,7 @@ export default function SimOptions() {
                 >
                     <MenuItem value={'full'}>Full Outfit</MenuItem>
                     <MenuItem value={'desired'}>Specific Items</MenuItem>
+                    <MenuItem value={'som'}>Surprise-o-Matic</MenuItem>
                 </Select>
             </FormControl>
             
@@ -387,7 +388,7 @@ export default function SimOptions() {
                 }}
                 value={budget}
                 onChange={handleBudgetChange}
-                inputProps={{ min: 0, max: 600 }}
+                inputProps={{ min: 0, max: 2000 }}
             />
             
             {sim == 'desired' ? (
@@ -436,7 +437,7 @@ export default function SimOptions() {
                     selected={avail4} />
                 
                 <MultipleSelectChipContent
-                    names={avail4.length > 0 ? sortItems(avail4, som_4) : ['(Select Items in the 4-star Pool First)']}
+                    names={avail4.length > 0 ? sortItems(avail4, som_4) : ['(Select 4-star Pool First)']}
                     idPrefix="desired-4"
                     label="Desired 4-stars"
                     error={errorState.som}
@@ -451,7 +452,7 @@ export default function SimOptions() {
                     selected={avail5} />
                 
                 <MultipleSelectChipContent
-                    names={avail5.length > 0 ? sortItems(avail5, som_5) : ['(Select Items in the 5-star Pool First)']}
+                    names={avail5.length > 0 ? sortItems(avail5, som_5) : ['(Select 5-star Pool First)']}
                     idPrefix="desired-5"
                     label="Desired 5-stars"
                     error={errorState.som}

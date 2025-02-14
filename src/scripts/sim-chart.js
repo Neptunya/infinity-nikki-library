@@ -7,12 +7,17 @@ let rarity = 5;
 let items = 10;
 let budget = 0;
 let cumulative = true;
-let fullSim = true;
+let simType = 'full';
 let outfitItems = [];
 let desiredItems = [];
 let oceansBlessing;
+let avail4 = [];
+let avail5 = [];
+let desired4 = [];
+let desired5 = [];
 let update;
 let cumulativeData = [];
+let barWidth = 1;
 
 container.style.maxWidth = '100%';
 
@@ -86,9 +91,9 @@ function simulationChart(data) {
         .join("rect")
         .attr("x", d => x(d.x))
         .attr("y", d => y(d.y))
-        .attr("width", window.innerWidth < 600 ? x(1) - x(0) : x(1) - x(0) - 1)
+        .attr("width", window.innerWidth < 600 ? x(barWidth) - x(0) : x(barWidth) - x(0) - 1)
         .attr("height", d => height - marginBottom - y(d.y))
-        .attr("fill", d => d.x <= budget ? "#edb1bdec" : "#b38aca")
+        .attr("fill", d => d.x <= budget ? "#dea6b2" : "#b38aca")
         .each(function(d, i) {
             d.cumulativeChance = dataToRender.slice(0, i + 1).reduce((sum, item) => sum + item.y, 0);
         })
@@ -119,7 +124,7 @@ function simulationChart(data) {
             tooltip.style.top = `${event.pageY - 20}px`;
         })
         .on("mouseout", function(event, d) { 
-            d3.select(this).attr("fill", d => d.x <= budget ? "#edb1bdec" : "#b38aca");
+            d3.select(this).attr("fill", d => d.x <= budget ? "#dea6b2" : "#b38aca");
             const tooltip = document.getElementById("tooltip");
             if (tooltip) tooltip.remove();
         });
@@ -154,15 +159,15 @@ function simulationChart(data) {
                 enter => enter.append("rect")
                     .attr("x", d => x(d.x - 1))
                     .attr("y", d => y(d.y))
-                    .attr("width", window.innerWidth < 600 ? x(1) - x(0) : x(1) - x(0) - 1)
+                    .attr("width", window.innerWidth < 600 ? x(barWidth) - x(0) : x(barWidth) - x(0) - 1)
                     .attr("height", d => height - marginBottom - y(d.y))
-                    .attr("fill", d => d.x <= budget ? "#edb1bdec" : "#b38aca"),
+                    .attr("fill", d => d.x <= budget ? "#dea6b2" : "#b38aca"),
                 update => update.transition().duration(1000)
                     .attr("x", d => x(d.x - 1))
                     .attr("y", d => y(d.y))
-                    .attr("width", window.innerWidth < 600 ? x(1) - x(0) : x(1) - x(0) - 1)
+                    .attr("width", window.innerWidth < 600 ? x(barWidth) - x(0) : x(barWidth) - x(0) - 1)
                     .attr("height", d => height - marginBottom - y(d.y))
-                    .attr("fill", d => d.x <= budget ? "#edb1bdec" : "#b38aca"),
+                    .attr("fill", d => d.x <= budget ? "#dea6b2" : "#b38aca"),
                 exit => exit.transition().duration(1000)
                     .attr("height", 0)
                     .attr("y", height - marginBottom)
@@ -200,7 +205,7 @@ function simulationChart(data) {
                 tooltip.style.top = `${event.pageY - 20}px`;
             })
             .on("mouseout", function(event, d) { 
-                d3.select(this).attr("fill", d => (d.x <= budget) ? "#edb1bdec" : "#b38aca");
+                d3.select(this).attr("fill", d => (d.x <= budget) ? "#dea6b2" : "#b38aca");
                 const tooltip = document.getElementById("tooltip");
                 if (tooltip) tooltip.remove();
             });
@@ -235,7 +240,7 @@ async function renderChart() {
     container.appendChild(chartElement);
 }
 
-function renderBudgetMsg(successRate) {
+function renderBudgetMsg(successRate, overflowRate = null) {
     const message = document.getElementById('budget-msg');
     let star;
     let reso;
@@ -256,7 +261,7 @@ function renderBudgetMsg(successRate) {
     }
     
     if (budget > 0) {
-        if (fullSim) {
+        if (simType == 'full') {
             message.innerHTML = `
                 <span id="success-rate">${(successRate).toFixed(2)}%</span>
                 <span>is the probability of obtaining a full ${star} outfit of 
@@ -264,16 +269,30 @@ function renderBudgetMsg(successRate) {
                 items from a ${reso} in 
                 <span class="settings-num">${budget}</span> pulls</span>
             `;
-        } else {
+        } else if (simType == 'desired') {
             message.innerHTML = `
                 <span id="success-rate">${(successRate).toFixed(2)}%</span>
-                <span>is the probability of you obtaining 
+                <span>is the probability of obtaining 
                 <span class="settings-num">${desiredItems.length}</span> 
                 specific ${star} items from a ${reso} in 
                 <span class="settings-num">${budget}</span> pulls</span>
             `;
+        } else if (simType == 'som') {
+            message.innerHTML = `
+                <span id="success-rate">${(successRate).toFixed(2)}%</span>
+                <span>is the probability of obtaining 
+                your desired items from the <s>Scam</s> Surprise-o-Matic in 
+                <span class="settings-num">${budget}</span> pulls.
+                There is a <span id="success-rate">${(overflowRate).toFixed(2)}%</span> chance that getting your desired items will 
+                take over <span class="settings-num">2000</span> pulls</span>
+            `;
         }
         
+    } else if (simType == 'som') {
+        message.innerHTML = `
+            There is a <span id="success-rate">${(overflowRate).toFixed(2)}%</span> chance that getting your desired items will 
+            take over <span class="settings-num">2000</span> pulls</span>
+        `;
     } else {
         message.innerHTML = '';
     }
@@ -282,14 +301,14 @@ function renderBudgetMsg(successRate) {
 async function fetchSimResults() {
     let url;
     let payload;
-    if (fullSim) {
+    if (simType == 'full') {
         url = `${import.meta.env.PUBLIC_BASE_URL}api/gacha-sim/full-outfit-sim`
         payload = {
             "rarity": rarity,
             "budget": budget,
             "items": items,
         }
-    } else {
+    } else if (simType == 'desired') {
         url = `${import.meta.env.PUBLIC_BASE_URL}api/gacha-sim/desired-items-sim`
         payload = {
             "rarity": rarity,
@@ -297,6 +316,15 @@ async function fetchSimResults() {
             "outfit_items": outfitItems,
             "desired_items": desiredItems,
             "oceans_blessing": oceansBlessing
+        }
+    } else if (simType == 'som') {
+        url = `${import.meta.env.PUBLIC_BASE_URL}api/gacha-sim/surprise-o-matic-sim`
+        payload = {
+            "budget": budget,
+            "avail_4": avail4,
+            "avail_5": avail5,
+            "desired_4": desired4,
+            "desired_5": desired5
         }
     }
     
@@ -316,7 +344,7 @@ async function fetchSimResults() {
         }
 
         const data = await response.json();
-        renderBudgetMsg(data.success);
+        renderBudgetMsg(data.success, data.overflow ?? null);
         return data.results;
     } catch (error) {
         console.error("Error fetching simulation results:", error);
@@ -325,17 +353,22 @@ async function fetchSimResults() {
     }
 }
 
-export async function setSimSettings(simType, r, b, i, outfit, desired, blessing, c) {
-    fullSim = simType;
+export async function setSimSettings(s, r, b, i, outfit, desired, blessing, a4, a5, d4, d5, c) {
+    simType = s;
     rarity = r;
     budget = b;
     items = i;
     outfitItems = outfit;
     desiredItems = desired;
     oceansBlessing = blessing;
+    avail4 = a4;
+    avail5 = a5;
+    desired4 = d4;
+    desired5 = d5;
     cumulative = c;
-    data = await fetchSimResults();
+    barWidth = s == 'som' ? 10 : 1;
     
+    data = await fetchSimResults();
     if (!data) {
         console.error("Failed to fetch simulation data.");
         return;

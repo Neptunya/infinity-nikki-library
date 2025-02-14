@@ -85,7 +85,7 @@ export default function MultipleSelectChipContent({ names, idPrefix, label, onSe
             <MenuItem
               key={name}
               value={name}
-              disabled={name === '(Select Outfit Items First)'}
+              disabled={/^\(.*\)$/.test(name)}
               style={getStyles(name, personName, theme)}
             >
               {name}

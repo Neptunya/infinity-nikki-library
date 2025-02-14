@@ -4,13 +4,14 @@ import csv
 
 # 1920x1080
 img_box = [647, 214, 311, 434]
-name_box = [1340, 125, 427, 46]
+name_box = [1340, 125, 475, 46]
 compendium_interval = 166
 name_card = [579, 215, 250, 38]
 card_x_interval = 472
 card_y_interval = 179
 hay_img = [1300, 403, 553, 332]
 source_offset = [60, 30, 420, 75]
+expand_items = [1650, 992]
 
 with open('./python/json/labels.json') as f:
     labels_data = json.load(f)
@@ -31,12 +32,12 @@ def add_unique_value(label, value):
             json.dump(labels_data, f, indent=4)
 
 def img_to_str_mod(n):
-    file = f'./python/images/clothing_item_scraper/{n}.png'
+    file = f'./python/images/clothing_item_scraper/n.png'
     image = cv2.imread(file)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     thresh = cv2.threshold(gray, 155, 255, cv2.THRESH_BINARY)[1]
-    cv2.imwrite(f'./python/images/clothing_item_scraper/{n}_processed.png', thresh)
-    text = str.strip(pytesseract.image_to_string(Image.open(f'./python/images/clothing_item_scraper/{n}_processed.png')))
+    cv2.imwrite(f'./python/images/clothing_item_scraper/n_processed.png', thresh)
+    text = str.strip(pytesseract.image_to_string(Image.open(f'./python/images/clothing_item_scraper/n_processed.png')))
     filtered_text = re.sub(r"[^a-zA-Z' -]", "", text)
     while filtered_text.startswith(" ") or filtered_text.startswith("-") or filtered_text.startswith("'"):
         filtered_text = filtered_text[1:]
@@ -45,12 +46,12 @@ def img_to_str_mod(n):
     return filtered_text
 
 def img_to_str_mod2(n):
-    file = f'./python/images/clothing_item_scraper/{n}.png'
+    file = f'./python/images/clothing_item_scraper/n.png'
     image = cv2.imread(file)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     thresh = cv2.threshold(gray, 155, 255, cv2.THRESH_BINARY)[1]
-    cv2.imwrite(f'./python/images/clothing_item_scraper/{n}_processed.png', thresh)
-    text = str.strip(pytesseract.image_to_string(Image.open(f'./python/images/clothing_item_scraper/{n}_processed.png')))
+    cv2.imwrite(f'./python/images/clothing_item_scraper/n_processed.png', thresh)
+    text = str.strip(pytesseract.image_to_string(Image.open(f'./python/images/clothing_item_scraper/n_processed.png')))
     filtered_text = text.replace("\n", " ")
     filtered_text = re.sub(r"[^a-zA-Z' .-]", "", filtered_text)
     while filtered_text.startswith(" ") or filtered_text.startswith("-") or filtered_text.startswith("'"):
@@ -68,8 +69,8 @@ def img_to_num_mod(n):
     h = int(gray.shape[0] * scale)
     upscaled = cv2.resize(gray, (w, h), interpolation=cv2.INTER_LANCZOS4)
     thresh = cv2.threshold(upscaled, 195, 255, cv2.THRESH_BINARY)[1]
-    cv2.imwrite(f'./python/images/clothing_item_scraper/{n}_processed.png', thresh)
-    out = pytesseract.image_to_string(Image.open(f'./python/images/clothing_item_scraper/{n}_processed.png'),
+    cv2.imwrite(f'./python/images/clothing_item_scraper/n_processed.png', thresh)
+    out = pytesseract.image_to_string(Image.open(f'./python/images/clothing_item_scraper/n_processed.png'),
                                       config='--psm 7 -c tessedit_char_whitelist=0123456789')
     out = re.sub(r'\D', '', out)
     return int(out)
@@ -272,6 +273,100 @@ def print_no_source():
             if not row['Source']: 
                 print(row)
 
+def print_new_makeup():
+    makeup = set()
+    with open('./python/csv/makeup.csv', mode='r', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            makeup.add(row['Name'])
+    for i in range(4):
+        for j in range(3):
+            pg.screenshot('./python/images/clothing_item_scraper/name.png', region=(name_card[0] + (j * card_x_interval), name_card[1] + (i * card_y_interval), name_card[2], name_card[3]))
+            name = img_to_str_mod('name').strip()
+            if name and name not in makeup:
+                print(name)
+
+outfits_json = './python/json/outfits.json'
+def get_evos(evos):
+    outfit_names = []
+    outfit_names.append(img_to_str(sc("name", name_box)))
+    evo_interval = 70
+    evo_start = [1201, 423]
+    
+    for i in range(evos - 1):
+        lc2(evo_start[0], evo_start[1] + (evo_interval * i))
+        time.sleep(0.5)
+        outfit_names.append(img_to_str(sc("name", name_box)))
+    
+    item_names = []
+    
+    lc2(evo_start[0], evo_start[1] - evo_interval)
+    lc(expand_items)
+    names = scrape_outfit_items()
+    item_names.append(names)
+    lc(back)
+    
+    for i in range(evos - 1):
+        lc2(evo_start[0], evo_start[1] + (evo_interval * i))
+        time.sleep(0.5)
+        lc(expand_items)
+        names = scrape_outfit_items()
+        item_names.append(names)
+        lc(back)
+    
+    json_str = ""
+    
+    if evos == 1:
+        for i in range(len(item_names[0])):
+                json_str += f'"{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{}}]}},\n'
+    
+    if evos == 2:
+        for i in range(len(item_names[0])):
+            json_str += f'"{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{"{item_names[1][i]}": "{outfit_names[1]}"}}]}},\n'
+    
+    if evos == 4:
+        for i in range(len(item_names[0])):
+            json_str += f'''
+            "{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{
+                "{item_names[1][i]}": "{outfit_names[1]}", 
+                "{item_names[2][i]}": "{outfit_names[2]}", 
+                "{item_names[3][i]}": "{outfit_names[3]}", 
+            }}]}},
+            '''
+    
+    print(json_str)
+
+def scrape_outfit_items():
+    prev_name = ""
+    curr_name = img_to_str(sc("name", name_box))
+    i = 0
+    
+    names = [curr_name]
+    
+    while prev_name != curr_name:
+        #get_glow_up_stats(curr_name)
+        #get_source(curr_name)
+        #sc(f'../../../public/images/items/{curr_name}', img_box)
+        
+        names.append(curr_name)
+        prev_name = curr_name
+        
+        if i < 3:
+            lc2(90, 395 + (i * compendium_interval))
+        elif i == 3:
+            pg.moveTo(197, 781)
+            pg.scroll(-400)
+        else: 
+            pg.moveTo(197, 830)
+            pg.scroll(-607)
+        
+        pg.click()
+        time.sleep(0.5)
+        curr_name = img_to_str(sc("name", name_box))
+        i += 1
+    
+    return names
+
 def scrape_new_suit():
     prev_name = ""
     curr_name = img_to_str(sc("name", name_box))
@@ -295,26 +390,7 @@ def scrape_new_suit():
         curr_name = img_to_str(sc("name", name_box))
         i += 1
 
-def print_new_makeup():
-    makeup = set()
-    with open('./python/csv/makeup.csv', mode='r', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            makeup.add(row['Name'])
-    for i in range(4):
-        for j in range(3):
-            pg.screenshot('./python/images/clothing_item_scraper/name.png', region=(name_card[0] + (j * card_x_interval), name_card[1] + (i * card_y_interval), name_card[2], name_card[3]))
-            name = img_to_str_mod('name').strip()
-            if name and name not in makeup:
-                print(name)
-
-#print_items_csv("new.csv")
-
 pg.moveTo(90, 395)
-curr_name = img_to_str(sc("name", name_box))
-#get_glow_up_stats(curr_name)
-get_source(curr_name)
-#sc(f'../../../public/images/items/{curr_name}', img_box)
+get_evos(1)
 pg.moveTo(10, 10)
-
 
