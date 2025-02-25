@@ -114,9 +114,9 @@ export default function SimOptions() {
                 break;
             case 'whispers-of-bliss':
                 setBanner(4);
-                setItems(8);
+                setItems(9);
                 setOutfitItems([
-                    'Hair', 'Dress', 'Shoes', 'Headwear', 
+                    'Hair', 'Dress', 'Socks', 'Shoes', 'Headwear', 
                     'Earrings', 'Choker','Gloves', 'Handheld'
                 ]);
                 setDisplay('cumulative');
@@ -125,8 +125,8 @@ export default function SimOptions() {
                 setBanner(4);
                 setItems(8);
                 setOutfitItems([
-                    'Hair', 'Dress', 'Shoes', 
-                    'Headwear', 'Bracelet', 'Choker', 'Handheld'
+                    'Hair', 'Dress', 'Shoes', 'Headwear', 
+                    'Earrings', 'Bracelet', 'Choker', 'Handheld'
                 ]);
                 setDisplay('cumulative');
                 break;
@@ -371,6 +371,8 @@ export default function SimOptions() {
                     <MenuItem value={'dance-till-dawn'}>Dance Till Dawn</MenuItem>
                     <MenuItem value={'midnight-vigil'}>Midnight Vigil</MenuItem>
                     <MenuItem value={'enduring-bond'}>Enduring Bond</MenuItem>
+                    <MenuItem value={'whispers-of-bliss'}>Whispers of Bliss</MenuItem>
+                    <MenuItem value={'verdant-melodies'}>Verdant Melodies</MenuItem>
                     <MenuItem value={''}>Reset Settings</MenuItem>
                 </Select>
             </FormControl>

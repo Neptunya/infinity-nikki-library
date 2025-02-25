@@ -372,7 +372,7 @@ def scrape_new_suit():
     curr_name = img_to_str(sc("name", name_box))
     i = 0
     while prev_name != curr_name:
-        get_glow_up_stats(curr_name)
+        #get_glow_up_stats(curr_name)
         #get_source(curr_name)
         sc(f'../../../public/images/items/{curr_name}', img_box)
         prev_name = curr_name
@@ -391,7 +391,10 @@ def scrape_new_suit():
         i += 1
 
 pg.moveTo(90, 395)
+time.sleep(0.5)
 #get_evos(2)
-single_item()
+#single_item()
+#single_img()
+scrape_new_suit()
 pg.moveTo(10, 10)
 
