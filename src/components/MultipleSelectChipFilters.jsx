@@ -30,14 +30,11 @@ export default function MultipleSelectChipFilters() {
     ];
     
     const sources = [
-      'Resonance: Blossom Silhouettes',
-      'Resonance: Breezy Melodies',
-      "Resonance: Skyward Bouquets",
-      'Resonance: Fireworks Prelude',
+      'Resonance: Lingering Finale',
       'Resonance: Distant Sea',
       'Limited-Time Resonance',
       "Pear-Pal's Store",
-      'Event: Strings of Time',
+      'Event: In Search of Lost Dreams',
       'Event Items',
       'Treasure Chest',
       'Styling Challenge',

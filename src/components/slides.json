@@ -1,60 +1,33 @@
 [
     {
-        "img": "/images/carousel/reso_blossom.png",
+        "img": "/images/carousel/1-3_reso_lingering.png",
         "text": "Ending",
-        "start": "January 23, 2024 20:00 UTC-7",
-        "end": "February 25, 2025 12:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Blossom%20Silhouettes",
+        "start": "February 25, 2024 20:00 UTC-7",
+        "end": "March 25, 2025 12:50 UTC-7",
+        "link": "/database?source=Resonance%3A%20Lingering%20Finale",
         "button": "Check Out Banner Items",
-        "alt": "Blossom Silhouettes Banner"
+        "alt": "Lingering Finale Banner"
     },
     {
-        "img": "/images/carousel/reso_breezy.png",
+        "img": "images/carousel/1-3_event.png",
         "text": "Ending",
-        "start": "January 23, 2024 20:00 UTC-7",
-        "end": "February 25, 2025 12:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Breezy%20Melodies",
-        "button": "Check Out Banner Items",
-        "alt": "Breezy Melodies Banner"
-    },
-    {
-        "img": "/images/carousel/reso_skyward.png",
-        "text": "Ending",
-        "start": "January 23, 2024 20:00 UTC-7",
-        "end": "February 25, 2025 12:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Skyward%20Bouquets",
-        "button": "Check Out Banner Items",
-        "alt": "Skyward Bouquet Banner"
-    },
-    {
-        "img": "/images/carousel/reso_firework.png",
-        "text": "Ending",
-        "start": "January 23, 2024 20:00 UTC-7",
-        "end": "February 25, 2025 12:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Fireworks%20Prelude",
-        "button": "Check Out Banner Items",
-        "alt": "Fireworks Prelude Banner"
-    },
-    {
-        "img": "images/carousel/event.png",
-        "text": "Ending",
-        "start": "January 23, 2024 20:00 UTC-7",
-        "end": "February 25, 2025 12:50 UTC-7",
-        "link": "/database?source=Event%3A%20Strings%20of%20Time",
+        "start": "February 23, 2024 20:00 UTC-7",
+        "end": "March 25, 2025 12:50 UTC-7",
+        "link": "/database?source=Event%3A%20In%20Search%20of%20Lost%20Dreams",
         "button": "Check Out Event Items",
-        "alt": "Endless Longing Banner"
+        "alt": "In Search of Lost Dreams Banner"
     },
     {
-        "img": "images/carousel/shop.png",
+        "img": "images/carousel/1-3_shop.png",
         "text": "Shop Update on",
-        "start": "January 23, 2024 20:00 UTC-7",
-        "end": "February 25, 2025 12:50 UTC-7",
+        "start": "February 23, 2024 20:00 UTC-7",
+        "end": "March 25, 2025 12:50 UTC-7",
         "link": "/database?source=Pear-Pal%27s%20Store",
         "button": "Check Out Shop Items",
         "alt": "Shop banner"
     },
     {
-        "img": "/images/carousel/reso_DistantSea_2x.png",
+        "img": "/images/carousel/1-3_distant_sea.png",
         "start": "December 4, 2024 19:00 UTC-7",
         "end": null,
         "link": "/database?source=Resonance%3A%20Distant%20Sea",

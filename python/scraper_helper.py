@@ -74,7 +74,6 @@ def lc2_v2(x, y):
     pg.mouseDown()
     time.sleep(0.2)
     pg.mouseUp()
-    print("lc2_v2 click")
 
 def get_name(x_mod, y_mod, last=False):
     if last: 
