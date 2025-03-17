@@ -9,6 +9,24 @@
         "alt": "Lingering Finale Banner"
     },
     {
+        "img": "/images/carousel/dream_banquet.png",
+        "text": "Ending",
+        "start": "February 25, 2024 20:00 UTC-7",
+        "end": "March 25, 2025 12:50 UTC-7",
+        "link": "/database?source=Resonance%3A%20Time%20of%20Serenity",
+        "button": "Check Out Banner Items",
+        "alt": "Time of Serenity Banner"
+    },
+    {
+        "img": "/images/carousel/adventure_ride.png",
+        "text": "Ending",
+        "start": "February 25, 2024 20:00 UTC-7",
+        "end": "March 25, 2025 12:50 UTC-7",
+        "link": "/database?source=Resonance%3A%20Journey%20on%20Wind",
+        "button": "Check Out Banner Items",
+        "alt": "Journey on Wind Banner"
+    },
+    {
         "img": "images/carousel/1-3_event.png",
         "text": "Ending",
         "start": "February 23, 2024 20:00 UTC-7",

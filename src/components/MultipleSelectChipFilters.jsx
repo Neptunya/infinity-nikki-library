@@ -31,6 +31,8 @@ export default function MultipleSelectChipFilters() {
     
     const sources = [
       'Resonance: Lingering Finale',
+      'Resonance: Time of Serenity',
+      'Resonance: Journey on Wind',
       'Resonance: Distant Sea',
       'Limited-Time Resonance',
       "Pear-Pal's Store",

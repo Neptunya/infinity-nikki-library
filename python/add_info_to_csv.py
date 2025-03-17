@@ -1,5 +1,6 @@
 import json
 import pandas as pd
+import numpy as np
 import csv
 import os
 
@@ -11,6 +12,32 @@ def merge_csv(file):
     df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/{file}.csv')
     df = pd.concat([df, df_temp], ignore_index=True)
     df.to_csv('D:/Documents/infinity_nikki_library/python/csv/full_item_data.csv', index=False)
+
+def add_stats(file):
+    df_temp = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/unprocessed/{file}.csv')
+    
+    stat_cols = ['Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool']
+    multipliers = [1.25, 1.55, 1.9, 2.3, 2.75, 3.25, 3.8, 4.4, 5, 5.6]
+    
+    all_rows = []
+    
+    for _, row in df_temp.iterrows():
+        base_stats = {col: np.floor(row[col] / 6.2).astype(int) for col in stat_cols}
+        
+        for level in range(12):
+            new_row = row.copy()
+            new_row['Level'] = level
+            if level == 0:
+                for col in stat_cols:
+                    new_row[col] = base_stats[col]
+            elif level <= 10:
+                multiplier = multipliers[level - 1]
+                for col in stat_cols:
+                    new_row[col] = int(base_stats[col] * multiplier)
+            all_rows.append(new_row)
+    
+    df_expanded = pd.DataFrame(all_rows)
+    df_expanded.to_csv('D:/Documents/infinity_nikki_library/python/csv/full_item_data.csv', index=False)
 
 def add_new():
     df_1 = pd.read_csv(f'D:/Documents/infinity_nikki_library/python/csv/clothing_item_lvls.csv')
@@ -263,8 +290,9 @@ def sort_details():
     df_sorted = df.sort_values(by=['Rarity', 'Slot', 'Outfit'], ascending=[False, True, True])
     df_sorted.to_csv(f'./python/csv/clothing_items_details.csv', index=False)
 
-file = '1-3a-makeup'
-merge_csv(file)
+file = '1-3b'
+#merge_csv(file)
+add_stats(file)
 add_style()
 #add_makeup()
 split_csv()
