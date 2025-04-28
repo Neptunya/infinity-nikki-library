@@ -160,7 +160,7 @@ def scrape_sources():
 stat_window = [1513, 228, 50, 19]
 stat_y_interval = 53
 stat_x_interval = 246
-gu_data = './python/csv/unprocessed/1-3b-gu.csv'
+gu_data = './python/csv/unprocessed/1-4b-gu.csv'
 def get_glow_up_stats(n):
     r = [n, 11]
     n = 'gu_stat'
@@ -182,7 +182,7 @@ def get_glow_up_stats(n):
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(r)
 
-new_data = './python/csv/unprocessed/1-2a-gu.csv'
+new_data = './python/csv/unprocessed/1-ba-gu.csv'
 def glow_up_stats_to_new(n, rarity):
     r = [n, rarity, None, None, 11]
     
@@ -339,6 +339,8 @@ def get_evos(evos):
 def scrape_outfit_items():
     prev_name = ""
     curr_name = img_to_str(sc("name", name_box))
+    if not curr_name.strip():
+        curr_name = prev_name + "_fix"
     i = 0
     
     names = []
@@ -346,6 +348,7 @@ def scrape_outfit_items():
     while prev_name != curr_name:
         #get_glow_up_stats(curr_name)
         #get_source(curr_name)
+        time.sleep(0.5)
         sc(f'../../../public/images/items/{curr_name}', img_box)
         
         names.append(curr_name)
@@ -390,11 +393,10 @@ def scrape_new_suit():
         curr_name = img_to_str(sc("name", name_box))
         i += 1
 
-pg.moveTo(90, 395)
 time.sleep(0.5)
 #get_evos(2)
 #scrape_outfit_items()
-single_img()
+#single_img()
 #single_item()
 pg.moveTo(10, 10)
 

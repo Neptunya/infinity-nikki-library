@@ -1,52 +1,60 @@
 [
     {
-        "img": "/images/carousel/1-3_reso_lingering.png",
+        "img": "/images/carousel/1-4a_reso.png",
         "text": "Ending",
-        "start": "February 25, 2024 20:00 UTC-7",
-        "end": "March 25, 2025 12:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Lingering%20Finale",
+        "start": "March 25, 2024 20:00 UTC-8",
+        "end": "April 28, 2025 10:50 UTC-7",
+        "link": "/database?source=Resonance%3A%20Into%20the%20Illusion",
         "button": "Check Out Banner Items",
-        "alt": "Lingering Finale Banner"
+        "alt": "Limited-time Resonance Banner"
     },
     {
-        "img": "/images/carousel/dream_banquet.png",
+        "img": "/images/carousel/1-4b_reso_pastoral_dance.png",
         "text": "Ending",
-        "start": "February 25, 2024 20:00 UTC-7",
-        "end": "March 25, 2025 12:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Time%20of%20Serenity",
+        "start": "March 25, 2024 20:00 UTC-8",
+        "end": "April 28, 2025 10:50 UTC-7",
+        "link": "/database?source=Resonance%3A%20Dancing%20Shepherdess",
         "button": "Check Out Banner Items",
-        "alt": "Time of Serenity Banner"
+        "alt": "Limited-time Resonance Banner"
     },
     {
-        "img": "/images/carousel/adventure_ride.png",
+        "img": "/images/carousel/1-4b_reso_enchanted_writing.png",
         "text": "Ending",
-        "start": "February 25, 2024 20:00 UTC-7",
-        "end": "March 25, 2025 12:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Journey%20on%20Wind",
+        "start": "March 25, 2024 20:00 UTC-8",
+        "end": "April 28, 2025 10:50 UTC-7",
+        "link": "/database?source=Resonance%3A%20Magical%20Scribbles",
         "button": "Check Out Banner Items",
-        "alt": "Journey on Wind Banner"
+        "alt": "Limited-time Resonance Banner"
     },
     {
-        "img": "images/carousel/1-3_event.png",
+        "img": "images/carousel/1-4_event.png",
         "text": "Ending",
-        "start": "February 23, 2024 20:00 UTC-7",
-        "end": "March 25, 2025 12:50 UTC-7",
-        "link": "/database?source=Event%3A%20In%20Search%20of%20Lost%20Dreams",
+        "start": "March 25, 2024 20:00 UTC-8",
+        "end": "April 28, 2025 10:50 UTC-7",
+        "link": "/database?source=Event%3A%20Fields%20of%20Vernal%20Bloom",
         "button": "Check Out Event Items",
-        "alt": "In Search of Lost Dreams Banner"
+        "alt": "Fields of Vernal Bloom Banner"
     },
     {
-        "img": "images/carousel/1-3_shop.png",
+        "img": "images/carousel/1-4_shop.png",
         "text": "Shop Update on",
-        "start": "February 23, 2024 20:00 UTC-7",
-        "end": "March 25, 2025 12:50 UTC-7",
+        "start": "March 25, 2024 20:00 UTC-8",
+        "end": "April 28, 2025 10:50 UTC-7",
         "link": "/database?source=Pear-Pal%27s%20Store",
         "button": "Check Out Shop Items",
         "alt": "Shop banner"
     },
     {
-        "img": "/images/carousel/1-3_distant_sea.png",
+        "img": "/images/carousel/1-4_dist_sea.png",
         "start": "December 4, 2024 19:00 UTC-7",
+        "end": null,
+        "link": "/database?source=Resonance%3A%20Distant%20Sea",
+        "button": "Check Out Banner Items",
+        "alt": "Distant Sea Banner"
+    },
+    {
+        "img": "/images/carousel/1-4_dist_sea.png",
+        "start": "April 28, 2025 10:50 UTC-7",
         "end": null,
         "link": "/database?source=Resonance%3A%20Distant%20Sea",
         "button": "Check Out Banner Items",

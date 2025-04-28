@@ -30,13 +30,13 @@ export default function MultipleSelectChipFilters() {
     ];
     
     const sources = [
-      'Resonance: Lingering Finale',
-      'Resonance: Time of Serenity',
-      'Resonance: Journey on Wind',
+      'Resonance: Into the Illusion',
+      'Resonance: Dancing Shepherdess',
+      'Resonance: Magical Scribbles',
       'Resonance: Distant Sea',
       'Limited-Time Resonance',
       "Pear-Pal's Store",
-      'Event: In Search of Lost Dreams',
+      'Event: Fields of Vernal Bloom',
       'Event Items',
       'Treasure Chest',
       'Styling Challenge',
