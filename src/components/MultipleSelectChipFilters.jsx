@@ -30,13 +30,12 @@ export default function MultipleSelectChipFilters() {
     ];
     
     const sources = [
-      'Resonance: Into the Illusion',
-      'Resonance: Dancing Shepherdess',
-      'Resonance: Magical Scribbles',
+      'Resonance: Eternal Snow',
+      'Resonance: Unfading Heart',
       'Resonance: Distant Sea',
       'Limited-Time Resonance',
       "Pear-Pal's Store",
-      'Event: Fields of Vernal Bloom',
+      'Event: Bubble Trace',
       'Event Items',
       'Treasure Chest',
       'Styling Challenge',

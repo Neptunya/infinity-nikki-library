@@ -1,51 +1,42 @@
 [
     {
-        "img": "/images/carousel/1-4a_reso.png",
-        "text": "Ending",
-        "start": "March 25, 2024 20:00 UTC-8",
-        "end": "April 28, 2025 10:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Into%20the%20Illusion",
+        "img": "/images/carousel/1-5_eternal_snow.png",
+        "text": "Eternal Snow ends",
+        "start": "April 26, 2025 20:00 UTC-7",
+        "end": "June 4, 2025 13:00 UTC-7",
+        "link": null,
         "button": "Check Out Banner Items",
         "alt": "Limited-time Resonance Banner"
     },
     {
-        "img": "/images/carousel/1-4b_reso_pastoral_dance.png",
-        "text": "Ending",
-        "start": "March 25, 2024 20:00 UTC-8",
-        "end": "April 28, 2025 10:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Dancing%20Shepherdess",
+        "img": "/images/carousel/1-5_unfading_heart.png",
+        "text": "Unfading Heart ends",
+        "start": "April 26, 2025 20:00 UTC-7",
+        "end": "June 4, 2025 13:00 UTC-7",
+        "link": null,
         "button": "Check Out Banner Items",
         "alt": "Limited-time Resonance Banner"
     },
     {
-        "img": "/images/carousel/1-4b_reso_enchanted_writing.png",
-        "text": "Ending",
-        "start": "March 25, 2024 20:00 UTC-8",
-        "end": "April 28, 2025 10:50 UTC-7",
-        "link": "/database?source=Resonance%3A%20Magical%20Scribbles",
-        "button": "Check Out Banner Items",
-        "alt": "Limited-time Resonance Banner"
-    },
-    {
-        "img": "images/carousel/1-4_event.png",
-        "text": "Ending",
-        "start": "March 25, 2024 20:00 UTC-8",
-        "end": "April 28, 2025 10:50 UTC-7",
-        "link": "/database?source=Event%3A%20Fields%20of%20Vernal%20Bloom",
+        "img": "images/carousel/1-5_event.png",
+        "text": "Bubble Trace Event ends",
+        "start": "April 26, 2025 20:00 UTC-7",
+        "end": "June 4, 2025 13:00 UTC-7",
+        "link": null,
         "button": "Check Out Event Items",
         "alt": "Fields of Vernal Bloom Banner"
     },
     {
-        "img": "images/carousel/1-4_shop.png",
+        "img": "images/carousel/1-5_shop.png",
         "text": "Shop Update on",
-        "start": "March 25, 2024 20:00 UTC-8",
-        "end": "April 28, 2025 10:50 UTC-7",
-        "link": "/database?source=Pear-Pal%27s%20Store",
+        "start": "April 26, 2025 20:00 UTC-7",
+        "end": "June 4, 2025 13:00 UTC-7",
+        "link": null,
         "button": "Check Out Shop Items",
         "alt": "Shop banner"
     },
     {
-        "img": "/images/carousel/1-4_dist_sea.png",
+        "img": "/images/carousel/1-5_dist_sea.png",
         "start": "December 4, 2024 19:00 UTC-7",
         "end": null,
         "link": "/database?source=Resonance%3A%20Distant%20Sea",
@@ -53,8 +44,8 @@
         "alt": "Distant Sea Banner"
     },
     {
-        "img": "/images/carousel/1-4_dist_sea.png",
-        "start": "April 28, 2025 10:50 UTC-7",
+        "img": "/images/carousel/1-5_dist_sea.png",
+        "start": "June 4, 2025 13:00 UTC-7",
         "end": null,
         "link": "/database?source=Resonance%3A%20Distant%20Sea",
         "button": "Check Out Banner Items",
