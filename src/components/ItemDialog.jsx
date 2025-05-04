@@ -259,7 +259,10 @@ export default function ItemDialog() {
 				</DialogTitle>
 				<div className="MuiDialog-content">
 				<div id='basic-info'>
-					<img src={`/images/items/${infoData[0].Name}.png`} alt={infoData[0].Name} />
+				<img
+					src={`/images/items/${infoData[0].Name.replace(/:/g, "_")}.png`}
+					alt={infoData[0].Name}
+				/>
 					<div id='basic-info-text'>
 						{token 
 							? <div className='dialog-header-fav'>

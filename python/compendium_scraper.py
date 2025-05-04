@@ -1,6 +1,7 @@
 from scraper_helper import *
 import json
 import csv
+import winsound
 
 # 1920x1080
 img_box = [647, 214, 311, 434]
@@ -160,7 +161,7 @@ def scrape_sources():
 stat_window = [1513, 228, 50, 19]
 stat_y_interval = 53
 stat_x_interval = 246
-gu_data = './python/csv/unprocessed/1-4b-gu.csv'
+gu_data = './python/csv/unprocessed/1-5a-gu.csv'
 def get_glow_up_stats(n):
     r = [n, 11]
     n = 'gu_stat'
@@ -182,7 +183,7 @@ def get_glow_up_stats(n):
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(r)
 
-new_data = './python/csv/unprocessed/1-ba-gu.csv'
+new_data = './python/csv/unprocessed/1-5a-gu.csv'
 def glow_up_stats_to_new(n, rarity):
     r = [n, rarity, None, None, 11]
     
@@ -294,7 +295,10 @@ def get_evos(evos):
     evo_start = [1201, 423]
     
     for i in range(evos - 1):
-        lc2(evo_start[0], evo_start[1] + (evo_interval * i))
+        if i == 3:
+            lc2(evo_start[0], evo_start[1] + 250)
+        else: 
+            lc2(evo_start[0], evo_start[1] + (evo_interval * i))
         time.sleep(0.5)
         outfit_names.append(img_to_str(sc("name", name_box)))
     
@@ -307,7 +311,10 @@ def get_evos(evos):
     lc(back)
     
     for i in range(evos - 1):
-        lc2(evo_start[0], evo_start[1] + (evo_interval * i))
+        if i == 3:
+            lc2(evo_start[0], evo_start[1] + 250)
+        else: 
+            lc2(evo_start[0], evo_start[1] + (evo_interval * i))
         time.sleep(0.5)
         lc(expand_items)
         names = scrape_outfit_items()
@@ -333,6 +340,16 @@ def get_evos(evos):
                 "{item_names[3][i]}": "{outfit_names[3]}"
             }}]}},
             '''
+    if evos == 5:
+        for i in range(len(item_names[0])):
+            json_str += f'''
+            "{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{
+                "{item_names[1][i]}": "{outfit_names[1]}",
+                "{item_names[2][i]}": "{outfit_names[2]}",
+                "{item_names[3][i]}": "{outfit_names[3]}",
+                "{item_names[4][i]}": "{outfit_names[4]}"
+            }}]}},
+            '''
     
     print(json_str)
 
@@ -341,6 +358,8 @@ def scrape_outfit_items():
     curr_name = img_to_str(sc("name", name_box))
     if not curr_name.strip():
         curr_name = prev_name + "_fix"
+    image_name = curr_name.replace(':', '_')
+        
     i = 0
     
     names = []
@@ -349,7 +368,42 @@ def scrape_outfit_items():
         #get_glow_up_stats(curr_name)
         #get_source(curr_name)
         time.sleep(0.5)
-        sc(f'../../../public/images/items/{curr_name}', img_box)
+        sc(f'../../../public/images/items/{image_name}', img_box)
+        
+        names.append(curr_name)
+        prev_name = curr_name
+        
+        if i < 3:
+            lc2(90, 395 + (i * compendium_interval))
+        elif i == 3:
+            pg.moveTo(197, 781)
+            pg.scroll(-400)
+        else: 
+            pg.moveTo(197, 830)
+            pg.scroll(-607)
+        
+        pg.click()
+        time.sleep(0.5)
+        curr_name = img_to_str(sc("name", name_box))
+        image_name = curr_name.replace(':', '_')
+        i += 1
+    
+    return names
+
+def scrape_outfit_stats():
+    prev_name = ""
+    curr_name = img_to_str(sc("name", name_box))
+    if not curr_name.strip():
+        curr_name = prev_name + "_fix"
+    image_name = curr_name.replace(':', '_')
+        
+    i = 0
+    
+    names = []
+    
+    while prev_name != curr_name:
+        get_glow_up_stats(curr_name)
+        time.sleep(0.5)
         
         names.append(curr_name)
         prev_name = curr_name
@@ -368,8 +422,6 @@ def scrape_outfit_items():
         curr_name = img_to_str(sc("name", name_box))
         i += 1
     
-    return names
-
 def scrape_new_suit():
     prev_name = ""
     curr_name = img_to_str(sc("name", name_box))
@@ -393,10 +445,63 @@ def scrape_new_suit():
         curr_name = img_to_str(sc("name", name_box))
         i += 1
 
+def scrape_recolor_pics():
+    recolor_name = img_to_str(sc("name", name_box))
+    if ':' in recolor_name:
+        split_index = recolor_name.index(':')
+        outfit = recolor_name[:split_index].strip()
+        recolor = recolor_name[split_index:].strip()
+    else:
+        outfit = recolor_name.strip()
+        recolor = ""
+    
+    with open("./python/txt/recolors.txt", "a", encoding="utf-8") as f:
+        f.write(f"'{outfit}': '{recolor}',\n")
+    
+    lc(expand_items)
+    
+    prev_name = ""
+    curr_name = img_to_str(sc("name", name_box))
+    if not curr_name.strip():
+        curr_name = prev_name + "_fix"
+    image_name = curr_name.replace(':', '_')
+        
+    i = 0
+    
+    names = []
+    
+    while prev_name != curr_name:
+        time.sleep(0.5)
+        sc(f'../../../public/images/items/{image_name}', img_box)
+        
+        names.append(curr_name)
+        prev_name = curr_name
+        
+        if i < 3:
+            lc2(90, 395 + (i * compendium_interval))
+        elif i == 3:
+            pg.moveTo(197, 781)
+            pg.scroll(-400)
+        else: 
+            pg.moveTo(197, 830)
+            pg.scroll(-607)
+        
+        pg.click()
+        time.sleep(0.5)
+        curr_name = img_to_str(sc("name", name_box))
+        image_name = curr_name.replace(':', '_')
+        i += 1
+    
+    return names
+
+
 time.sleep(0.5)
-#get_evos(2)
+#get_evos(5)
+#scrape_outfit_stats()
 #scrape_outfit_items()
+scrape_recolor_pics()
 #single_img()
 #single_item()
 pg.moveTo(10, 10)
+winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS)
 

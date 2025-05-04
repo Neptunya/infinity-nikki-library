@@ -4,7 +4,7 @@
         "text": "Eternal Snow ends",
         "start": "April 26, 2025 20:00 UTC-7",
         "end": "June 4, 2025 13:00 UTC-7",
-        "link": null,
+        "link": "/database?source=Resonance%3A%20Eternal%20Snow",
         "button": "Check Out Banner Items",
         "alt": "Limited-time Resonance Banner"
     },
@@ -13,25 +13,25 @@
         "text": "Unfading Heart ends",
         "start": "April 26, 2025 20:00 UTC-7",
         "end": "June 4, 2025 13:00 UTC-7",
-        "link": null,
+        "link": "/database?source=Resonance%3A%20Unfading%20Heart",
         "button": "Check Out Banner Items",
         "alt": "Limited-time Resonance Banner"
     },
     {
         "img": "images/carousel/1-5_event.png",
-        "text": "Bubble Trace Event ends",
+        "text": "Floating Bubbles Event ends",
         "start": "April 26, 2025 20:00 UTC-7",
         "end": "June 4, 2025 13:00 UTC-7",
-        "link": null,
+        "link": "/database?source=Event%3A%20Floating%20Bubbles",
         "button": "Check Out Event Items",
-        "alt": "Fields of Vernal Bloom Banner"
+        "alt": "Floating Bubbles Banner"
     },
     {
         "img": "images/carousel/1-5_shop.png",
         "text": "Shop Update on",
         "start": "April 26, 2025 20:00 UTC-7",
         "end": "June 4, 2025 13:00 UTC-7",
-        "link": null,
+        "link": "/database?source=Pear-Pal%27s%20Store",
         "button": "Check Out Shop Items",
         "alt": "Shop banner"
     },

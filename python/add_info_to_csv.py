@@ -291,8 +291,8 @@ def sort_details():
     df_sorted.to_csv(f'./python/csv/clothing_items_details.csv', index=False)
 
 # RUN GU FIX FIRST
-file = '1-4a-3'
-#merge_csv(file)
+file = '1-5a-fix1'
+merge_csv(file)
 add_stats(file)
 add_style()
 split_csv()

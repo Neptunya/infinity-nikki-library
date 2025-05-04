@@ -76,7 +76,7 @@ function renderItems(data) {
 
 
         const message = document.createElement('p');
-        message.innerHTML = "No items found.<br>Working hard to add the new items from 1.5 to the database!";
+        message.innerHTML = "No items found.";
         message.style.textAlign = 'center';
         message.style.whiteSpace = 'pre-line';
         message.classList.add('no-results-message');
@@ -123,7 +123,7 @@ function renderDatabaseCard(item) {
 
     const img = document.createElement('img');
     img.classList.add('item-img')
-    img.src = `/images/items/${item.Name}.png`;
+    img.src = `/images/items/${item.Name.replace(/:/g, '_')}.png`;
     img.alt = item.Name;
     card.appendChild(img);
 
@@ -202,7 +202,7 @@ function renderTrackerCard(item) {
 
     const img = document.createElement('img');
     img.classList.add('item-img')
-    img.src = `/images/items/${item.Name}.png`;
+    img.src = `/images/items/${item.Name.replace(/:/g, '_')}.png`;
     img.alt = item.Name;
     card.appendChild(img);
     
