@@ -161,7 +161,7 @@ def scrape_sources():
 stat_window = [1513, 228, 50, 19]
 stat_y_interval = 53
 stat_x_interval = 246
-gu_data = './python/csv/unprocessed/1-5a-gu.csv'
+gu_data = './python/csv/unprocessed/1-6a-gu.csv'
 def get_glow_up_stats(n):
     r = [n, 11]
     n = 'gu_stat'
@@ -183,7 +183,7 @@ def get_glow_up_stats(n):
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(r)
 
-new_data = './python/csv/unprocessed/1-5a-gu.csv'
+new_data = './python/csv/unprocessed/1-6a-gu.csv'
 def glow_up_stats_to_new(n, rarity):
     r = [n, rarity, None, None, 11]
     
@@ -496,12 +496,12 @@ def scrape_recolor_pics():
 
 
 time.sleep(0.5)
-#get_evos(5)
+#get_evos(2)
 #scrape_outfit_stats()
+#scrape_recolor_pics()
 #scrape_outfit_items()
-scrape_recolor_pics()
 #single_img()
-#single_item()
+single_item()
 pg.moveTo(10, 10)
 winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS)
 

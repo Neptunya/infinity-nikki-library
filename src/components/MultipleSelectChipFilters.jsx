@@ -30,12 +30,11 @@ export default function MultipleSelectChipFilters() {
     ];
     
     const sources = [
-      'Resonance: Eternal Snow',
-      'Resonance: Unfading Heart',
+      "Resonance: Fairy's Secret",
       'Resonance: Distant Sea',
       'Limited-Time Resonance',
       "Pear-Pal's Store",
-      'Event: Floating Bubbles',
+      'Event: Veiled in Verses',
       'Event Items',
       'Treasure Chest',
       'Styling Challenge',

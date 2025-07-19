@@ -50,8 +50,7 @@ WHERE "Outfit" = '{outfit}';
     print(f"SQL written to {filename}")
 
 
-# Example usage:
 mapping = {
-'Adventure Ride': ': Shadow Chaser',
+'Twilight Crown': ': Slumber'
 }
 generate_sql(mapping)

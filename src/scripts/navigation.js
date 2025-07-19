@@ -85,11 +85,15 @@ const check_exp = () => {
                 }
             } else if (data.error) {
                 console.error("Error:", data.error);
+                // log out user
             }
         })
         .catch(error => {
             console.error('Error:', error);
+            // log out user
         });
+    } else {
+        // log out user
     }
 }
 
