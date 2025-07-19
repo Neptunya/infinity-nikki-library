@@ -104,7 +104,6 @@ def single_img():
 def single_item():
     name = img_to_str(sc("name", name_box))
     get_glow_up_stats(name)
-    #get_source(name)
     sc(f'../../../public/images/items/{name}', img_box)
 
 def scrape_labels(label):
@@ -119,49 +118,10 @@ def scrape_labels(label):
                     json.dump(labels_data, f, indent=4)
                 return 
 
-def get_source(name):
-    needle_img = './python/images/clothing_item_scraper/divider.png'
-    hay_img = './python/images/clothing_item_scraper/hay.png'
-    pg.screenshot(hay_img)
-    img_rgb = cv2.imread(hay_img)
-    img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
-    template = cv2.imread(needle_img, cv2.IMREAD_GRAYSCALE)
-    res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
-    _, _, _, max_loc = cv2.minMaxLoc(res)
-    pg.screenshot('./python/images/clothing_item_scraper/source.png', region=(
-        max_loc[0]+source_offset[0], max_loc[1]+source_offset[1], source_offset[2], source_offset[3]))
-    source = img_to_str_mod2('source')
-    print(f"{name}: {source}")
-    if name not in source_data:
-        source_data.update({name: source})
-        with open('./python/json/source.json', 'w') as f:
-            json.dump(source_data, f, indent=4)
-
-def scrape_sources():
-    prev_name = ""
-    curr_name = img_to_str(sc("name", name_box))
-    i = 0
-    while prev_name != curr_name:
-        #get_source(curr_name)
-        prev_name = curr_name
-        if i < 3:
-            lc2(90, 395 + (i * compendium_interval))
-        elif i == 3:
-            pg.moveTo(197, 781)
-            pg.scroll(-400)
-        else: 
-            pg.moveTo(197, 777)
-            pg.scroll(-607)
-        
-        pg.click()
-        time.sleep(0.5)
-        curr_name = img_to_str(sc("name", name_box))
-        i += 1
-
 stat_window = [1513, 228, 50, 19]
 stat_y_interval = 53
 stat_x_interval = 246
-gu_data = './python/csv/unprocessed/1-6a-gu.csv'
+gu_data = './python/csv/unprocessed/1-7a-gu.csv'
 def get_glow_up_stats(n):
     r = [n, 11]
     n = 'gu_stat'
@@ -183,110 +143,6 @@ def get_glow_up_stats(n):
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(r)
 
-new_data = './python/csv/unprocessed/1-6a-gu.csv'
-def glow_up_stats_to_new(n, rarity):
-    r = [n, rarity, None, None, 11]
-    
-    for i in range(3):
-        pg.screenshot(f'./python/images/clothing_item_scraper/{n}.png', region=(
-            stat_window[0],  stat_window[1]+(stat_y_interval * i),  stat_window[2],  stat_window[3]))
-        try:
-            r.append(img_to_num_mod(n))
-        except ValueError:
-            r.append(0)
-    for i in range(2):
-        pg.screenshot(f'./python/images/clothing_item_scraper/{n}.png', region=(
-            stat_window[0]+stat_x_interval,  stat_window[1]+(stat_y_interval * i),  stat_window[2],  stat_window[3]))
-        try:
-            r.append(img_to_num_mod(n))
-        except ValueError:
-            r.append(0)
-    
-    r.extend([0, 0, 0, None, None])
-    
-    with open(new_data, 'a', newline='') as csvfile:
-        csvwriter = csv.writer(csvfile)
-        csvwriter.writerow(r)
-
-def scrape_glow_up_stats():
-    prev_name = ""
-    curr_name = img_to_str(sc("name", name_box))
-    i = 0
-    while prev_name != curr_name:
-        get_glow_up_stats(curr_name)
-        prev_name = curr_name
-        if i < 3:
-            lc2(90, 395 + (i * compendium_interval))
-        elif i == 3:
-            pg.moveTo(197, 781)
-            pg.scroll(-400)
-        else: 
-            pg.moveTo(197, 777)
-            pg.scroll(-607)
-        
-        pg.click()
-        time.sleep(0.5)
-        curr_name = img_to_str(sc("name", name_box))
-        i += 1
-
-def extract_unique_vals(data):
-    unique_values = set()
-
-    if isinstance(data, dict):
-        for value in data.values():
-            unique_values.update(extract_unique_vals(value))
-    elif isinstance(data, list):
-        for item in data:
-            unique_values.update(extract_unique_vals(item))
-    else:
-        unique_values.add(data)
-
-    return unique_values
-
-def print_unique_vals():
-    file_path = './python/json/source.json'
-    with open(file_path, 'r') as file:
-        json_data = json.load(file)
-
-    unique_values = extract_unique_vals(json_data)
-    sorted_values = sorted(unique_values)
-    print('Unique Values in JSON:')
-    for value in sorted_values:
-        print(value)
-
-def print_items_csv(name):
-    f = f'./python/csv/unprocessed/{name}'
-    unique_names = set()
-    with open(f, mode='r', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            unique_names.add(row['Name'])
-    for unique_name in unique_names:
-        print(f'"{unique_name}",')
-
-def print_no_source():
-    file_path = './python/csv/clothing_items_details.csv'
-    with open(file_path, "r", encoding="utf-8") as csvfile:
-        reader = csv.DictReader(csvfile)
-    
-        print("Rows where 'Source' is empty or null:")
-        for row in reader:
-            if not row['Source']: 
-                print(row)
-
-def print_new_makeup():
-    makeup = set()
-    with open('./python/csv/makeup.csv', mode='r', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            makeup.add(row['Name'])
-    for i in range(4):
-        for j in range(3):
-            pg.screenshot('./python/images/clothing_item_scraper/name.png', region=(name_card[0] + (j * card_x_interval), name_card[1] + (i * card_y_interval), name_card[2], name_card[3]))
-            name = img_to_str_mod('name').strip()
-            if name and name not in makeup:
-                print(name)
-
 outfits_json = './python/json/outfits.json'
 def get_evos(evos):
     outfit_names = []
@@ -294,30 +150,36 @@ def get_evos(evos):
     evo_interval = 70
     evo_start = [1201, 423]
     
-    for i in range(evos - 1):
-        if i == 3:
-            lc2(evo_start[0], evo_start[1] + 250)
+    e = 0
+    while e < evos - 1:
+        if evos - 1 - e == 0.5:
+            lc2(evo_start[0], evo_start[1] + (evo_interval * e) + 40)
+            e += 0.5
         else: 
-            lc2(evo_start[0], evo_start[1] + (evo_interval * i))
+            lc2(evo_start[0], evo_start[1] + (evo_interval * e))
+            e += 1
         time.sleep(0.5)
         outfit_names.append(img_to_str(sc("name", name_box)))
     
-    item_names = []
     
+    item_names = []
     lc2(evo_start[0], evo_start[1] - evo_interval)
     lc(expand_items)
-    names = scrape_outfit_items()
+    names = scrape_outfit_stats()
     item_names.append(names)
     lc(back)
     
-    for i in range(evos - 1):
-        if i == 3:
-            lc2(evo_start[0], evo_start[1] + 250)
+    e = 0
+    while e < evos - 1:
+        if evos - 1 - e == 0.5:
+            lc2(evo_start[0], evo_start[1] + (evo_interval * e) + 40)
+            e += 0.5
         else: 
-            lc2(evo_start[0], evo_start[1] + (evo_interval * i))
+            lc2(evo_start[0], evo_start[1] + (evo_interval * e))
+            e += 1
         time.sleep(0.5)
         lc(expand_items)
-        names = scrape_outfit_items()
+        names = scrape_outfit_pics()
         item_names.append(names)
         lc(back)
     
@@ -331,6 +193,15 @@ def get_evos(evos):
         for i in range(len(item_names[0])):
             json_str += f'"{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{"{item_names[1][i]}": "{outfit_names[1]}"}}]}},\n'
     
+    if evos == 2.5:
+        for i in range(len(item_names[0])):
+            json_str += f'''
+            "{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{
+                "{item_names[1][i]}": "{outfit_names[1]}",
+                "{item_names[2][i]}": "{outfit_names[2]}"
+            }}]}},
+            '''
+    
     if evos == 4:
         for i in range(len(item_names[0])):
             json_str += f'''
@@ -340,7 +211,7 @@ def get_evos(evos):
                 "{item_names[3][i]}": "{outfit_names[3]}"
             }}]}},
             '''
-    if evos == 5:
+    if evos == 4.5:
         for i in range(len(item_names[0])):
             json_str += f'''
             "{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{
@@ -353,7 +224,7 @@ def get_evos(evos):
     
     print(json_str)
 
-def scrape_outfit_items():
+def scrape_outfit_pics():
     prev_name = ""
     curr_name = img_to_str(sc("name", name_box))
     if not curr_name.strip():
@@ -365,8 +236,6 @@ def scrape_outfit_items():
     names = []
     
     while prev_name != curr_name:
-        #get_glow_up_stats(curr_name)
-        #get_source(curr_name)
         time.sleep(0.5)
         sc(f'../../../public/images/items/{image_name}', img_box)
         
@@ -404,6 +273,7 @@ def scrape_outfit_stats():
     while prev_name != curr_name:
         get_glow_up_stats(curr_name)
         time.sleep(0.5)
+        sc(f'../../../public/images/items/{image_name}', img_box)
         
         names.append(curr_name)
         prev_name = curr_name
@@ -420,15 +290,17 @@ def scrape_outfit_stats():
         pg.click()
         time.sleep(0.5)
         curr_name = img_to_str(sc("name", name_box))
+        image_name = curr_name.replace(':', '_')
         i += 1
-    
+        
+    return names
+
 def scrape_new_suit():
     prev_name = ""
     curr_name = img_to_str(sc("name", name_box))
     i = 0
     while prev_name != curr_name:
         get_glow_up_stats(curr_name)
-        #get_source(curr_name)
         sc(f'../../../public/images/items/{curr_name}', img_box)
         prev_name = curr_name
         if i < 3:
@@ -494,14 +366,18 @@ def scrape_recolor_pics():
     
     return names
 
+def clean_gu_csv():
+    input_file = './python/csv/unprocessed/1-7a-gu.csv'
+    output_file = './python/csv/unprocessed/gu.csv'
+    with open(input_file, "r", encoding="utf-8") as f, open(output_file, "w", encoding="utf-8") as out:
+        for line in f:
+            first_part, _ = line.split(",", 1)
+            out.write(f'"{first_part}",\n')
+
 
 time.sleep(0.5)
-#get_evos(2)
-#scrape_outfit_stats()
-#scrape_recolor_pics()
-#scrape_outfit_items()
-#single_img()
-single_item()
+#get_evos(2.5)
+#single_item()
+clean_gu_csv()
 pg.moveTo(10, 10)
 winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS)
-
