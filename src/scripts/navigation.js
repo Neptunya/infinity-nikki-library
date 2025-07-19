@@ -59,7 +59,7 @@ const updateNavLinks = () => {
 const check_exp = () => {
     refreshToken = localStorage.getItem('refresh_token'); 
     uid = sessionStorage.getItem('uid');
-
+    
     if (uid) {
         return;
     } else if (refreshToken) {
@@ -76,24 +76,25 @@ const check_exp = () => {
                 const currentTime = new Date();
                 
                 if (currentTime > expirationTime) {
-                    localStorage.removeItem('refresh_token');
-                    localStorage.removeItem('access_token');
-                    updateNavLinks();
+                    logout();
+                    location.reload();
                 } else {
                     sessionStorage.setItem('uid', data.user_id);
                     refresh(expirationTime, data.user_id);
                 }
             } else if (data.error) {
                 console.error("Error:", data.error);
-                // log out user
+                logout();
+                location.reload();
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            // log out user
+            logout();
+            location.reload();
         });
     } else {
-        // log out user
+        logout();
     }
 }
 
@@ -143,4 +144,10 @@ const refresh = (expirationTime, userId) => {
             console.error('Error refreshing token:', error);
         });
     }
+}
+
+const logout = () => {
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('access_token');
+    updateNavLinks();
 }
