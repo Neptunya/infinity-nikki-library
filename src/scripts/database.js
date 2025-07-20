@@ -512,15 +512,15 @@ function renderPagination(totalItems) {
 
 function changePage(newPage, totalItems) {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
+    console.log("total items: ", totalItems, " || new page: ", newPage, " || per page: ", itemsPerPage, " || total pages: ", totalPages);
     if (newPage >= 1 && newPage <= totalPages) {
         currentPage = newPage;
         applySearchFilter();
     } 
     
     let currentColCount = countFlexColumns();
-    if (currentColCount != lastColCount) {
+    if (currentColCount == 0) {
         currentPage = 1;
-        lastColCount = currentColCount;
         applySearchFilter();
     }
 }
@@ -786,6 +786,11 @@ window.addEventListener('load', function() {
 });
 
 window.addEventListener('resize', function() {
-    changePage(currentPage, totalItems);
+    let currentColCount = countFlexColumns();
+    if (currentColCount != lastColCount) {
+        currentPage = 1;
+        lastColCount = currentColCount;
+        applySearchFilter();
+    }
     adjustCollapsibleMaxHeight();
 });
