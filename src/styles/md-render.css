@@ -3,11 +3,11 @@
 }
 
 .md-content h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
 }
 
 .md-content h3 {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-style: italic;
     font-weight: 500;
 }
@@ -18,14 +18,52 @@
 
 .md-content p {
     margin: 1rem 0;
+    font-size: 18px;
 }
 
 .md-content table {
-    max-width: 800px;
+    max-width: 400px;
     margin-left: auto;
     margin-right: auto;
 }
 
+.md-content td {
+    padding: 5px;
+}
+
+.md-content strong {
+    color: white;
+}
+
 .guide-banner {
     background-position: 50% 30%;
+}
+
+@media (max-width: 750px) {
+    .md-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .md-content h2 {
+        font-size: 2rem;
+    }
+
+    .md-content h3 {
+        font-size: 1.75rem;
+    }
+
+    .md-content p {
+        font-size: 16px;
+    }
+}
+
+.pinnacle-slides {
+    width: auto;
+    height: auto;
+    max-height: 80vh;
+}
+
+.slides-bg {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 1rem 0rem;
 }

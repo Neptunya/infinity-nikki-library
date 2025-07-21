@@ -1,0 +1,71 @@
+---
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PinnacleCarousel from '../../components/PinnacleCarousel';
+import ImageDialog from '../../components/ImageDialog';
+import '../../styles/global.css';
+import '../../styles/md-render.css';
+import '../../styles/carousel.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+const frontmatter = {
+  title: 'Pinnacle Contest F2P Guide',
+  id: 'pinnacle-contest',
+  lastUpdated: '07/21/2025',
+  description: 'Recommendations and F2P examples for how you can clear the current Mira Crown Pinnacle Contest.',
+  authors: ['Neptunya'],
+  image: '/images/guides/pinnacle-contest/pinnacle_contest_banner.jpeg'
+};
+---
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<link rel="icon" type="image/png" href="/images/nikki_logo.png" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content={frontmatter.description}>
+		
+		<meta property="og:title" content={frontmatter.title}>
+		<meta property="og:description" content={frontmatter.description}>
+		<meta property="og:image" content={`https://infinitynikkilibrary.com${frontmatter.image}`}>
+		<meta property="og:image:url" content={`https://infinitynikkilibrary.com${frontmatter.image}`}>
+		<meta property="og:image:type" content="image/png" />
+		<meta property="og:url" content={`https://infinitynikkilibrary.com/${frontmatter.id}`}>
+		<meta property="og:type" content="website">
+		
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content={frontmatter.title}>
+		<meta name="twitter:description" content={frontmatter.description}>
+		<meta name="twitter:image" content={`https://infinitynikkilibrary.com${frontmatter.image}`}>
+		
+		<title>{frontmatter.title} | INL</title>
+		
+	</head>
+	<body>
+		<Header />
+        <ImageDialog client:only="react" />
+        <div 
+			class="banner-container guide-banner" 
+			id={frontmatter.id + "-banner"}
+			style={`background-image: url(${frontmatter.image});`}
+		></div>
+		<div class="content-container md-content" id={frontmatter.id}>
+			<h1>Pinnacle Contest F2P Guide</h1>
+            <p>
+                Last Updated: 07/21/2025<br>
+                By: Neptunya<br>
+                Redeem Code: AAtQpftMMcr
+            </p>
+            <PinnacleCarousel client:load />
+		</div>
+        <div style="margin: 2rem"></div>
+        <Footer />
+		<script>
+			import "../../scripts/resize.js";
+		</script>
+    </body>
+</html>

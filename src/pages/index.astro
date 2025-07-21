@@ -6,6 +6,7 @@ import '../styles/global.css';
 import '../styles/carousel.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+const guides = await Astro.glob('./guides/*.md');
 ---
 
 <html lang="en">
@@ -41,22 +42,27 @@ import "slick-carousel/slick/slick-theme.css";
 		<div class="content-container">
 			<h1>Infinity Nikki Library</h1>
 			<p>A compendium of information and guides for Infinity Nikki, curated by your fellow stylists in Miraland and in collaboration with the official Pearfect Guide program.</p>
-			<SimpleSlider client:load />
 			
-			<h2>Recently Updated Guides!</h2>
-			<a href="guides/styling-challenge-scoring" class="guide-card-link">
-				<div class="guide-card">
-					<img src = "/images/guides/styling-challenge-scoring/styling_challenge_scoring_banner.jpeg" alt="Styling Challenge Scoring banner">
-					<div class="guide-card-text">
-						<h3>Styling Challenge Scoring</h3>
-						<p>
-							By: Saela, Neptunya <br>
-							Last Updated: 07/20/2025 <br>
-							A breakdown on how styling challenges are scored
-						</p>
-					</div>
-				</div>
-			</a>
+			<h2>Recently Updated Guides</h2>
+			<div id="guides-list" class="guides-grid">
+				{guides
+					.sort((a, b) => new Date(b.frontmatter.lastUpdated).getTime() - new Date(a.frontmatter.lastUpdated).getTime())
+					.map(guide => (
+					<a href={guide.url} class="guide-card-link">
+						<div class="guide-card">
+							<img src={guide.frontmatter.image} alt={guide.frontmatter.title} />
+							<div class="guide-card-text">
+								<h3>{guide.frontmatter.title}</h3>
+								<p>
+									By: {guide.frontmatter.authors.join(", ")} <br/>
+									Last Updated: {guide.frontmatter.lastUpdated} <br/>
+									{guide.frontmatter.description}
+								</p>
+							</div>
+						</div>
+					</a>
+				))}
+			</div>
 		</div>
 		<Footer />
 		<script>

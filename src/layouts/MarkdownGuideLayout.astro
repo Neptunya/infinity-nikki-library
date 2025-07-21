@@ -39,7 +39,7 @@ import Footer from '../components/Footer.astro';
 			id={frontmatter.id + "-banner"}
 			style={`background-image: url(${frontmatter.image});`}
 		></div>
-		<div class="content-container md-content">
+		<div class="content-container md-content" id={frontmatter.id}>
 			<slot />
 		</div>
         <Footer />

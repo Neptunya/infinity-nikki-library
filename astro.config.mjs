@@ -19,9 +19,10 @@ export default defineConfig({
      rehypePlugins: [rehypeKatex],
    },
   redirects: {
-    "/resources/styling-challenge-scoring/": "/guides/styling-challenge-scoring/",
-    "/tools/styling-challenge-scoring/": "/tools/resonance-calculator/",
-    "/resources/resonance-calculator/": "/tools/resonance-calculator/",
-    "/resources/": "/guides/"
+    "/resources/styling-challenge-scoring": "/guides/styling-challenge-scoring",
+    "/tools/styling-challenge-scoring": "/tools/resonance-calculator",
+    "/resources/resonance-calculator": "/tools/resonance-calculator",
+    "/guides/pinnacle-contest-md": "/guides/pinnacle-contest",
+    "/resources": "/guides"
   }
 });
