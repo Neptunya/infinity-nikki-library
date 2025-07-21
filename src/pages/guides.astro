@@ -41,7 +41,7 @@ const guides = await Astro.glob('./guides/*.md');
 					.sort((a, b) => new Date(b.frontmatter.lastUpdated).getTime() - new Date(a.frontmatter.lastUpdated).getTime())
 					.map(guide => (
 					<a href={guide.url} class="guide-card-link">
-						<div class="guide-card" data-tags={guide.frontmatter.tags.join(", ")}>
+						<div class="guide-card">
 							<img src={guide.frontmatter.image} alt={guide.frontmatter.title} />
 							<div class="guide-card-text">
 								<h3>{guide.frontmatter.title}</h3>

@@ -2,75 +2,72 @@
 layout: ../../layouts/MarkdownGuideLayout.astro
 title: 'Styling Challenge Scoring'
 id: 'styling-challenge-scoring'
-createDate: 12/04/2024
-lastUpdated: 12/04/2024
+lastUpdated: 07/20/2025
 description: 'A breakdown on how styling challenges are scored'
-authors: ['Neptunya']
+authors: ['Saela, Neptunya']
 image: '/images/guides/styling-challenge-scoring/styling_challenge_scoring_banner.jpeg'
-tags: ["math", "guide", "styling", "challenge", "scoring", "formula"]
 ---
 # Styling Challenge Scoring
 
-Last Updated: 12/04/2024  
-By: Neptunya
+Last Updated: 07/20/2025  
+By: Saela and Neptunya  
+Special thanks to Wildclaw
 
-## Why does knowing the scoring formula matter?
-To be frank, it doesn’t, unless you happen to be like me and are curious about what goes on under the hood. While knowing the scoring formula may not be immediately applicable to scoring better, it serves as a foundation for future calculations that may be more applicable. For example, knowing how to spend your vital energy and resources to get the most bang for your buck so you can clear styling challenges earlier.
+This guide is meant as a reference for how we currently understand how pieces are scored.  It's meant to be accurate so there may be somewhat technical terms, but it will be all covered in this guide.
 
-## Disclaimers
+## Why does it matter?
+To be frank, it doesn’t, unless you happen to be like me and are curious about what goes on under the hood. While knowing the scoring formula may not be immediately applicable to scoring better, it serves as a foundation for calculations that may be more applicable. For example, knowing how to spend your vital energy and resources to get the most bang for your buck so you can clear styling challenges earlier.
 
-This formula is **only an estimate based on the results I got in-game**, I do not have any way to 100% confirm its validity. Additionally, this estimation only holds true **when all scoring nodes in the Heart of Infinity are unlocked**. The below image shows where nodes that increase your score are located on the Heart of Infinity. That whole line gives you bonuses to your styling challenge scores.
+## Clothing Stats
+Before going into scoring, let's talk about clothing stats.  
 
-![](/images/guides/styling-challenge-scoring/scoring_nodes.png)
+![clothing_item_details](https://gist.github.com/user-attachments/assets/a59b91f8-a8a5-4f4c-b372-ae45ab09e753)
 
-If you haven’t unlocked any scoring nodes in the Heart of Infinity yet and would be willing to do some data collection, please shoot me (Neptunya) a DM on Discord.
+Above, shows the stats of Perfect Start at level 0.  There are 5 Styles: Elegant, Fresh, Sweet, Sexy, and Cool.  You can get to the above window that has the style values by mousing over an item icon in the dress-up menu and hovering over the i that shows up, which will open up a window with the item’s details.  On mobile, you can long hold the item.
 
-## How are styling challenges scored?
-The score of any clothing item **except Eurekas** in a styling challenge can be estimated by the below formula, **assuming all scoring nodes in the Heart of Infinity are unlocked**. 
+When you level up a piece, the stats of each stat is determined by the level 0 stats multiplied by a multiplier, then rounded up.  After level 10, clothing pieces can be Glowed-Up for more stats.  For Eurekas, the same principle applies, except they can't be Glowed-Up.  Colors and evolutions do not affect stats.
 
-![](/images/guides/styling-challenge-scoring/styling_challenge_score_formula.png)
+| Level        | Multiplier |
+| ------------ | ---------- |
+| 0            | 1x         |
+| 1            | 1.25x      |
+| 2            | 1.55x      |
+| 3            | 1.9x       |
+| 4            | 2.3x       |
+| 5            | 2.75x      |
+| 6            | 3.25x      |
+| 7            | 3.8x       |
+| 8            | 4.4x       |
+| 9            | 5x         |
+| 10           | 5.6x       |
+| 11 (Glow Up) | 6.2x       |
 
-### In plain language:
+## Scoring
+$$Item Score = \lceil(StatScore + LabelScore) \times ScorePercentage\rceil$$
 
-An item’s score in a styling challenge is calculated by multiplying the recommended attribute’s value by 3.7 and adding that with the sum of the other attribute’s values, each multiplied by 0.336.
+The full score for each clothing piece and Eureka is just the sum of the scores from its stats and matching labels scores, multiplied by a score multiplier, and finally rounded up.  The total score is the sum of these rounded up scores.
 
-Style values refer to the elegant, fresh, sweet, sexy, and cool numbers each clothing item has.
+### Stat Score
+$$StatScore = \sum_{i}^{Styles} ((StyleStat_i + StyleFlat_i) \times StylePercentage_i \times StyleScore_i$$
 
-![](/images/guides/styling-challenge-scoring/clothing_item_details.png)
+Each stat is multiplied by a $StyleScore$ multiplier depending on the styling battle theme.  The primary (or only) Style is multiplied by $3.3$.  If there is a secondary Style, then that stat is multiplied by $2.1$.  All remaining Styles still contribute and their stats are multiplied by $0.3$.
 
-You can get to the above window that has the style values by mousing over an item icon in the dress-up menu and hovering over the i that shows up, which will open up a window with the item’s details.
+For example, using *Perfect Start* for a Sweet + Fresh battle will score 2312.5 from its stats.
 
-![](/images/guides/styling-challenge-scoring/clothing_item_info_hover.png)
+$$ 64 \times 0.3 + 248 \times 2.1 + 507 \times 3.3 + 94 \times 0.3 + 87 \times 0.3 = 2312.5 $$
 
-### How do recommended labels play into this?
+The other two bonuses ($StyleFlat$ and $StylePercentage$) come from the Heart of Infinity. Note that none of these Heart of Infinity bonuses apply to Eureka scores.
 
-Unfortunately, as of now, I do not have enough data to definitively say how a clothing item having the recommended label in a style challenge changes the scoring formula.
+### Label Score
+$$LabelScore = LabelValue \times LevelMul$$
 
-### Why doesn’t this include eureka items?
+Labels are only scored if they match the theme.  Perfect Start's Label is Cute.  If the Labels don't match, it's worth 0 score.  $LabelValue$ is determined empirically for each styling battle, but have only been either 200 or 300.  $LevelMul$ is the same multiplier from Clothing Stats section, and depends on the level of the clothing piece.  Lastly, this score is doubled for Dresses.  For Eurekas, even if a Eureka's Label is not yet unlocked, the Label unlocked at level 5 is still active and counts for score.
 
-Once again, I just don’t have enough data. Eureka items don’t get score bonuses from the Heart of Infinity like clothing items do, and I don’t have enough eureka items at the time to determine how its style values are weighted.
+### Score Percentage
+Finally, we have the $ScorePercentage$.  All $ScorePercentage$ bonuses are additive.  One bonus is from the Heart of Infinity, and this bonus goes up to +8% depending on the nodes that have been unlocked for certain pieces.  Likewise, this bonus does not apply to Eurekas.  The other bonus is from Ripples of Infinity in Mira Crown Pinnacle, and it changes for each Pinnacle. Example bonuses include "+50% to Eureka scores" or "+35% to Dress scores".  
 
-## How was this formula derived?
+### Inconsistencies
+There is possibly a bug for Eurekas, where if there's a +50% score bonus, the current score formula instead matches $\lfloor\lceil StatScore + LabelScore\rceil \times ScorePercentage\rfloor$ , where the ceiling doesn't include the percentage, and there's a truncation later.  However, on the preview screen, the score still uses the original formula.
 
-I used round 1 of mira crown wishfield styling challenge, where the recommended style was sweet. I unequipped everything and just chose a dress, hair, and shoes and noted down the style values for each piece. Then, I went through the styling challenge, noting down the score I got for the clothing, hair, and footwear category, which I did with all the dress, hair, and shoe options I had available.
-
-I modeled the scoring formula as:
-
-![](/images/guides/styling-challenge-scoring/score_formula_model.png)
-
-To determine each Style’s weight, I applied the least squares method using the equations from all available scores. The python code below shows how I did ran those calculations:
-
-```py
-import pandas as pd
-import numpy as np
-
-data = pd.read_csv('./csv/IN Data - Main.csv')
-styless = data[['Elegant', 'Fresh', 'Sweet', 'Sexy', 'Cool']].values
-sweet_scores = data['Sweet Score'].values
-weights, _, _, _ = np.linalg.lstsq(styles, sweet_scores, rcond=None)
-print(weights)
-```
-
-```py
-[0.33584481 0.33704082 3.69803792 0.33638204 0.33578301]
-```
+## How was this derived?
+The quick version was that regressions were used to get close to the multipliers, and then playing with `floor` and `ceiling` functions were able to get to the exact values.  Plus, when the formula didn't work, it was determined that Nikki's base clothing had some stats.  Additionally, Infold had to fix a number of bugs with the formulas, which helped understanding as well.

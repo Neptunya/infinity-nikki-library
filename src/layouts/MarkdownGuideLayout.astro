@@ -1,6 +1,7 @@
 ---
 const { frontmatter } = Astro.props;
 import '../styles/global.css';
+import '../styles/md-render.css'
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 ---
@@ -11,8 +12,8 @@ import Footer from '../components/Footer.astro';
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
 		<meta name="viewport" content="width=device-width" />
-		<meta name="keywords" content={frontmatter.tags ? frontmatter.tags.join(", ") : "Infinity, Nikki, IN"}>
 		<meta name="description" content={frontmatter.description}>
 		
 		<meta property="og:title" content={frontmatter.title}>
@@ -34,11 +35,11 @@ import Footer from '../components/Footer.astro';
 	<body>
 		<Header />
         <div 
-			class="banner-container" 
+			class="banner-container guide-banner" 
 			id={frontmatter.id + "-banner"}
 			style={`background-image: url(${frontmatter.image});`}
 		></div>
-		<div class="content-container">
+		<div class="content-container md-content">
 			<slot />
 		</div>
         <Footer />

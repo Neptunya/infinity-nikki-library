@@ -1,5 +1,7 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
+import remarkMath from 'remark-math';
+ import rehypeKatex from 'rehype-katex';
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,6 +14,10 @@ export default defineConfig({
       external: ['@mui/material', '@emotion/react', '@emotion/styled'],
     },
   },
+  markdown: {
+     remarkPlugins: [remarkMath],
+     rehypePlugins: [rehypeKatex],
+   },
   redirects: {
     "/resources/styling-challenge-scoring/": "/guides/styling-challenge-scoring/",
     "/tools/styling-challenge-scoring/": "/tools/resonance-calculator/",

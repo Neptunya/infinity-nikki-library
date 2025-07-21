@@ -1,0 +1,31 @@
+.md-content h1 {
+    font-size: 3rem;
+}
+
+.md-content h2 {
+    font-size: 2rem;
+}
+
+.md-content h3 {
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.md-content h2, .md-content h3 {
+    margin: 1rem 0 .5rem 0;
+}
+
+.md-content p {
+    margin: 1rem 0;
+}
+
+.md-content table {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.guide-banner {
+    background-position: 50% 30%;
+}
