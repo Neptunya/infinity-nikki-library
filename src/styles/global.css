@@ -100,7 +100,7 @@ input[type=text] {
 	overflow: hidden;
 }
 
-.guide-card:hover {
+.guide-card:hover, .ext-link-card:hover{
     background-color: #494554;
 }
 
@@ -135,6 +135,59 @@ input[type=text] {
 }
 
 .guide-card-link h3, .guide-card-link p {
+	color: white;
+}
+
+.links {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.guides-tools {
+  flex: 2 2 80%;
+}
+
+.external {
+  flex: 1 1 20%;
+}
+
+@media (max-width: 1200px) {
+	.guides-tools {
+		flex: 2 2 70%;
+	}
+
+	.external {
+		flex: 1 1 30%;
+	}
+}
+
+@media (max-width: 740px) {
+	.links {
+		display: block;
+	}
+}
+
+.ext-link {
+	text-decoration: none;
+}
+
+.ext-link-card {
+	display: flex;
+	justify-content: flex-start;
+	background-color: #353142;
+	border-radius: 10px;
+	padding: 8px;
+	margin: 10px 0;
+}
+
+.link-icon {
+	flex-shrink: 2;
+	height: 50px;
+	width: auto;
+	margin: 0 12px;
+}
+
+.link-text {
 	color: white;
 }
 

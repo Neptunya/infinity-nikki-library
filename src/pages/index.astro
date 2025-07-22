@@ -1,12 +1,9 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import SimpleSlider from '../components/SlickCarousel';
 import '../styles/global.css';
-import '../styles/carousel.css';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 const guides = await Astro.glob('./guides/*.md');
+const tools = await Astro.glob('./tools/*.md');
 ---
 
 <html lang="en">
@@ -43,25 +40,68 @@ const guides = await Astro.glob('./guides/*.md');
 			<h1>Infinity Nikki Library</h1>
 			<p>A compendium of information and guides for Infinity Nikki, curated by your fellow stylists in Miraland and in collaboration with the official Pearfect Guide program.</p>
 			
-			<h2>Recently Updated Guides</h2>
-			<div id="guides-list" class="guides-grid">
-				{guides
-					.sort((a, b) => new Date(b.frontmatter.lastUpdated).getTime() - new Date(a.frontmatter.lastUpdated).getTime())
-					.map(guide => (
-					<a href={guide.url} class="guide-card-link">
-						<div class="guide-card">
-							<img src={guide.frontmatter.image} alt={guide.frontmatter.title} />
-							<div class="guide-card-text">
-								<h3>{guide.frontmatter.title}</h3>
-								<p>
-									By: {guide.frontmatter.authors.join(", ")} <br/>
-									Last Updated: {guide.frontmatter.lastUpdated} <br/>
-									{guide.frontmatter.description}
-								</p>
-							</div>
+			<div class="links">
+				<div class="guides-tools">
+					<h2>Recently Updated Guides</h2>
+					<div id="guides-list" class="guides-grid">
+						{guides
+							.sort((a, b) => new Date(b.frontmatter.lastUpdated).getTime() - new Date(a.frontmatter.lastUpdated).getTime())
+							.map(guide => (
+							<a href={guide.url} class="guide-card-link">
+								<div class="guide-card">
+									<img src={guide.frontmatter.image} alt={guide.frontmatter.title} />
+									<div class="guide-card-text">
+										<h3>{guide.frontmatter.title}</h3>
+										<p>
+											By: {guide.frontmatter.authors.join(", ")} <br/>
+											Last Updated: {guide.frontmatter.lastUpdated} <br/>
+											{guide.frontmatter.description}
+										</p>
+									</div>
+								</div>
+							</a>
+						))}
+					</div>
+				</div>
+				<div class="external">
+					<h2>Tools</h2>
+					<a class="ext-link" href="/database">
+						<div class="ext-link-card">
+							<img src="/images/nikki_icons/1-6_16.png" class="link-icon">
+							<p class="link-text">Clothing Database + Tracker</p>
 						</div>
 					</a>
-				))}
+					<a class="ext-link" href="/tools/resonance-calculator">
+						<div class="ext-link-card">
+							<img src="/images/nikki_icons/1-5_13.png" class="link-icon">
+							<p class="link-text">Resonance Calculator</p>
+						</div>
+					</a>
+					
+					<h2>External Links</h2>
+					
+					<a class="ext-link" href="https://pearpal.infoldgames.com/en/home" target="_blank">
+						<div class="ext-link-card">
+							<img src="/images/nikki_icons/1-3_15.png" class="link-icon">
+							<p class="link-text">Pear-fect Guides</p>
+						</div>
+					</a>
+					
+					<a class="ext-link" href="https://docs.google.com/spreadsheets/d/1Q5yjX8roIyIRvaddOEI24hEBq4JZtSQ-7x61rFvyrds/edit?usp=sharing" target="_blank">
+						<div class="ext-link-card">
+							<img src="/images/nikki_icons/1-0-1_8.png" class="link-icon">
+							<p class="link-text">Styling Challenge Score Calculator</p>
+						</div>
+					</a>
+					
+					<a class="ext-link" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRAIMu_ZaMixERauwCyLTJmBJkO-ouqQlbdbeQmpESgMyijzNMXfiT5iIKNftkyUr4egEO_PlCGJwOw/pubhtml" target="_blank">
+						<div class="ext-link-card">
+							<img src="/images/nikki_icons/1-4_8.png" class="link-icon">
+							<p class="link-text">Outfits Ranked by Contest Score</p>
+						</div>
+					</a>
+					
+				</div>
 			</div>
 		</div>
 		<Footer />

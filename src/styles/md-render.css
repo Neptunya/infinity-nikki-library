@@ -67,3 +67,23 @@
     background-color: rgba(0, 0, 0, 0.1);
     padding: 1rem 0rem;
 }
+
+.link-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 1rem;
+}
+
+.ext-link {
+    flex-grow: 1;
+    min-width: 400px;
+}
+
+.ext-link-card {
+    align-items: center;
+}
+
+.md-content .ext-link-card {
+    height: 100%;
+}

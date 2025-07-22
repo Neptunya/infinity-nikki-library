@@ -4,13 +4,13 @@ title: 'Styling Challenge Scoring'
 id: 'styling-challenge-scoring'
 lastUpdated: 06/20/2025
 description: 'A breakdown on how styling challenges are scored'
-authors: ['Saela, Neptunya']
+authors: ['Neptunya']
 image: '/images/guides/styling-challenge-scoring/styling_challenge_scoring_banner.jpeg'
 ---
 # Styling Challenge Scoring
 
 Last Updated: 06/20/2025  
-By: Saela and Neptunya  
+By: Neptunya  
 Special thanks to Wildclaw
 
 This guide is meant as a reference for how we currently understand how pieces are scored.  It's meant to be accurate so there may be somewhat technical terms, but it will be all covered in this guide.

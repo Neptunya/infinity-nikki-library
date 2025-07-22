@@ -1,12 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import Slider from "react-slick";
-import items from './pinnacle-slides.json'
 
-export default function PinnacleCarousel() {
+export default function PinnacleCarousel({ items }) {
 	const [isClient, setIsClient] = useState(false);
+	const [hasHash, setHasHash] = useState(false);
+	
 	useEffect(() => {
-			setIsClient(true);
-	})
+    setIsClient(true);
+
+    if (window.location.hash) {
+      setHasHash(true);
+    }
+
+    const onHashChange = () => {
+      setHasHash(window.location.hash !== '');
+    };
+    window.addEventListener('hashchange', onHashChange);
+
+    return () => {
+      window.removeEventListener('hashchange', onHashChange);
+    };
+  }, []);
 	
 	var settings = {
 		dots: true,
@@ -14,7 +28,7 @@ export default function PinnacleCarousel() {
 		speed: 1300,
 		slidesToShow: 1,
 		slidesToScroll: 1,
-		autoplay: true,
+		autoplay: !hasHash,
 		autoplaySpeed: 5000,
 		centerMode: true,
 		adaptiveHeight: true,
@@ -31,7 +45,7 @@ export default function PinnacleCarousel() {
 	function Item(props) {
 		return (
 			<div className="slides-bg">
-				<a href={`/guides/pinnacle-contest#${props.item.round}`}>
+				<a href={`#${props.item.round}`}>
 					<img className="pinnacle-slides" src={props.item.img}/>
 				</a>
 			</div>

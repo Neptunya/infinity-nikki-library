@@ -3,6 +3,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import PinnacleCarousel from '../../components/PinnacleCarousel';
 import ImageDialog from '../../components/ImageDialog';
+import items from './pinnacle-slides.json'
 import '../../styles/global.css';
 import '../../styles/md-render.css';
 import '../../styles/carousel.css';
@@ -10,13 +11,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const frontmatter = {
-  title: 'Pinnacle Contest F2P Guide',
+  title: 'Pinnacle Contest Guide',
   id: 'pinnacle-contest',
   lastUpdated: '07/21/2025',
   description: 'Recommendations and F2P examples for how you can clear the current Mira Crown Pinnacle Contest.',
   authors: ['Neptunya'],
   image: '/images/guides/pinnacle-contest/pinnacle_contest_banner.jpeg'
 };
+
 ---
 <html lang="en">
 	<head>
@@ -54,15 +56,45 @@ const frontmatter = {
 			style={`background-image: url(${frontmatter.image});`}
 		></div>
 		<div class="content-container md-content" id={frontmatter.id}>
-			<h1>Pinnacle Contest F2P Guide</h1>
+			<h1>Pinnacle Contest Guide</h1>
             <p>
                 Last Updated: 07/21/2025<br>
                 By: Neptunya<br>
                 Redeem Code: AAtQpftMMcr
             </p>
-            <PinnacleCarousel client:load />
+            <PinnacleCarousel items={items} client:load />
+        	
+			<div style="margin: 2rem"></div>
+			
+			<h2>Additional Resources</h2>
+			<div class="link-container">
+				<a class="ext-link" href="https://discord.gg/infinitynikki" target="_blank">
+					<div class="ext-link-card">
+						<img src="/images/nikki_icons/1-0-2_9.png" class="link-icon">
+						<p class="link-text"><u>Official Infinity Nikki Discord</u><br>Come check out #strategy-help!</p>
+					</div>
+				</a>
+				<a class="ext-link" href="https://docs.google.com/spreadsheets/d/1j4Ype6Q6hFXL1KTdutLQKWYilFkRQk6oW6BjXibUM4g/edit?usp=sharing" target="_blank">
+					<div class="ext-link-card">
+						<img src="/images/nikki_icons/1-0-2_1.png" class="link-icon">
+						<p class="link-text"><u>Score Tracker</u><br>By: Rani and KittenFacedWitch</p>
+					</div>
+				</a>
+				<a class="ext-link" href="https://docs.google.com/spreadsheets/d/1Q5yjX8roIyIRvaddOEI24hEBq4JZtSQ-7x61rFvyrds/edit?usp=sharing" target="_blank">
+					<div class="ext-link-card">
+						<img src="/images/nikki_icons/1-0-1_8.png" class="link-icon">
+						<p class="link-text"><u>Styling Challenge Score Calculator</u></p>
+					</div>
+				</a>
+				<a class="ext-link" href="https://docs.google.com/document/d/1HS3rRGz3Ytm-tJkUBmiF5vETcT4EP9zB2a8-4xWgIrU/edit?usp=sharing" target="_blank">
+					<div class="ext-link-card">
+						<img src="/images/nikki_icons/1-0-3_3.png" class="link-icon">
+						<p class="link-text"><u>Definitive Guide</u><br>By: Purple Cosmonaut and Moon</p>
+					</div>
+				</a>
+			</div>
+			<div style="margin: 2rem"></div>
 		</div>
-        <div style="margin: 2rem"></div>
         <Footer />
 		<script>
 			import "../../scripts/resize.js";

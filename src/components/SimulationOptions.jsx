@@ -59,81 +59,6 @@ export default function SimOptions() {
         adjustCollapsibleMaxHeight();
     }
     
-    const [preset, setPreset] = React.useState('');
-    const handlePresetChange = (event) => {
-        setPreset(event.target.value);
-        console.log(event.target.value);
-        if (display) {
-            setDisplay('cumulative');
-        }
-        switch(event.target.value) {
-            case '':
-                setBanner('');
-                setBudget('');
-                setItems('');
-                setOutfitItems([]);
-                setDesiredItems([]);
-                setBlessing('');
-                setDisplay('');
-                break;
-            case 'stardust-flare':
-                setBanner(5);
-                setItems(10);
-                setOutfitItems([
-                    'Hair', 'Dress', 'Shoes', 'Hair Accessory', 'Headwear',
-                    'Earrings', 'Neckwear', 'Bracelet', 'Choker', 'Gloves'
-                ]);
-                setDisplay('cumulative');
-                break;
-            case 'dance-till-dawn':
-                setBanner(5);
-                setItems(10);
-                setOutfitItems([
-                    'Hair', 'Dress', 'Socks', 'Shoes', 'Hair Accessory',
-                    'Headwear', 'Earrings', 'Choker', 'Gloves', 'Backpiece'
-                ]);
-                setDisplay('cumulative');
-                break;
-            case 'midnight-vigil':
-                setBanner(4.5);
-                setItems(8);
-                setOutfitItems([
-                    'Hair', 'Outerwear', 'Top', 'Bottom',
-                    'Headwear', 'Earrings', 'Choker', 'Gloves', 'Backpiece'
-                ]);
-                setDisplay('cumulative');
-                break;
-            case 'enduring-bond':
-                setBanner(4.5);
-                setItems(9);
-                setOutfitItems([
-                    'Hair', 'Dress', 'Socks', 'Shoes', 'Hair Accessory',
-                    'Choker', 'Gloves', 'Face Decoration', 'Backpiece'
-                ]);
-                setDisplay('cumulative');
-                break;
-            case 'whispers-of-bliss':
-                setBanner(4);
-                setItems(9);
-                setOutfitItems([
-                    'Hair', 'Dress', 'Socks', 'Shoes', 'Headwear', 
-                    'Earrings', 'Choker','Gloves', 'Handheld'
-                ]);
-                setDisplay('cumulative');
-                break;
-            case 'verdant-melodies':
-                setBanner(4);
-                setItems(8);
-                setOutfitItems([
-                    'Hair', 'Dress', 'Shoes', 'Headwear', 
-                    'Earrings', 'Bracelet', 'Choker', 'Handheld'
-                ]);
-                setDisplay('cumulative');
-                break;
-        }
-        adjustCollapsibleMaxHeight();
-    }
-    
     const [banner, setBanner] = React.useState('');
     const handleBannerChange = (event) => {
         setBanner(event.target.value);
@@ -355,28 +280,6 @@ export default function SimOptions() {
             <>
             {sim != 'som' ? (
             <>
-            <FormControl sx={{
-                width: '200px',
-                m: "4px"
-            }}>
-                <InputLabel id="preset-select-label">Option Presets</InputLabel>
-                <Select
-                labelId="preset-select-label"
-                id="preset-select"
-                value={preset}
-                label="Option Presets"
-                onChange={handlePresetChange}
-                >
-                    <MenuItem value={'stardust-flare'}>Stardust Flare</MenuItem>
-                    <MenuItem value={'dance-till-dawn'}>Dance Till Dawn</MenuItem>
-                    <MenuItem value={'midnight-vigil'}>Midnight Vigil</MenuItem>
-                    <MenuItem value={'enduring-bond'}>Enduring Bond</MenuItem>
-                    <MenuItem value={'whispers-of-bliss'}>Whispers of Bliss</MenuItem>
-                    <MenuItem value={'verdant-melodies'}>Verdant Melodies</MenuItem>
-                    <MenuItem value={''}>Reset Settings</MenuItem>
-                </Select>
-            </FormControl>
-            
             <FormControl sx={{
                 width: '200px',
                 m: "4px"

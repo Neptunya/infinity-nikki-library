@@ -23,6 +23,8 @@ export default defineConfig({
     "/tools/styling-challenge-scoring": "/tools/resonance-calculator",
     "/resources/resonance-calculator": "/tools/resonance-calculator",
     "/guides/pinnacle-contest-md": "/guides/pinnacle-contest",
+    "/tools/database": "/database",
+    "/tools/reso-sim": "/tools/resonance-calculator",
     "/resources": "/guides"
   }
 });

@@ -44,11 +44,26 @@ export default function ImageDialog() {
 					overflowY: 'auto',
 					overflowX: 'hidden',
 					maxWidth: '800px',
-					width: '100%',
+					width: '90%',
 					margin: 'auto',
 				},
 			}}
 		>
+			<DialogTitle sx={{ position: 'relative', padding: 0 }}>
+				<IconButton
+					edge="end"
+					color="inherit"
+					onClick={handleClose}
+					sx={{
+					position: 'absolute',
+					right: 4,
+					zIndex: 1,
+					color: 'white'
+					}}
+				>
+					<CloseIcon sx={{ fontSize: '40px'}} />
+				</IconButton>
+			</DialogTitle>
 			<img
 				src={`/images/guides/pinnacle-contest/${imageHash}.png`}
 				alt={imageHash}
