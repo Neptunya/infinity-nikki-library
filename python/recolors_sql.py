@@ -51,6 +51,7 @@ WHERE "Outfit" = '{outfit}';
 
 
 mapping = {
-'Twilight Crown': ': Slumber'
+'Crimson Rhapsody': ': Dreamlike Past',
+'Dancing Waves': ': Sand Waves'
 }
 generate_sql(mapping)

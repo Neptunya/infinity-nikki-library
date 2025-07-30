@@ -121,7 +121,7 @@ def scrape_labels(label):
 stat_window = [1513, 228, 50, 19]
 stat_y_interval = 53
 stat_x_interval = 246
-gu_data = './python/csv/unprocessed/1-7a-gu.csv'
+gu_data = './python/csv/unprocessed/1-7b-gu-fix.csv'
 def get_glow_up_stats(n):
     r = [n, 11]
     n = 'gu_stat'
@@ -144,7 +144,7 @@ def get_glow_up_stats(n):
         csvwriter.writerow(r)
 
 outfits_json = './python/json/outfits.json'
-def get_evos(evos):
+def get_evos(evos, stats=True):
     outfit_names = []
     outfit_names.append(img_to_str(sc("name", name_box)))
     evo_interval = 70
@@ -165,7 +165,7 @@ def get_evos(evos):
     item_names = []
     lc2(evo_start[0], evo_start[1] - evo_interval)
     lc(expand_items)
-    names = scrape_outfit_stats()
+    names = scrape_outfit_stats() if stats else scrape_outfit_pics()
     item_names.append(names)
     lc(back)
     
@@ -185,44 +185,45 @@ def get_evos(evos):
     
     json_str = ""
     
-    if evos == 1:
-        for i in range(len(item_names[0])):
-                json_str += f'"{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{}}]}},\n'
-    
-    if evos == 2:
-        for i in range(len(item_names[0])):
-            json_str += f'"{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{"{item_names[1][i]}": "{outfit_names[1]}"}}]}},\n'
-    
-    if evos == 2.5:
-        for i in range(len(item_names[0])):
-            json_str += f'''
-            "{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{
-                "{item_names[1][i]}": "{outfit_names[1]}",
-                "{item_names[2][i]}": "{outfit_names[2]}"
-            }}]}},
-            '''
-    
-    if evos == 4:
-        for i in range(len(item_names[0])):
-            json_str += f'''
-            "{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{
-                "{item_names[1][i]}": "{outfit_names[1]}",
-                "{item_names[2][i]}": "{outfit_names[2]}",
-                "{item_names[3][i]}": "{outfit_names[3]}"
-            }}]}},
-            '''
-    if evos == 4.5:
-        for i in range(len(item_names[0])):
-            json_str += f'''
-            "{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{
-                "{item_names[1][i]}": "{outfit_names[1]}",
-                "{item_names[2][i]}": "{outfit_names[2]}",
-                "{item_names[3][i]}": "{outfit_names[3]}",
-                "{item_names[4][i]}": "{outfit_names[4]}"
-            }}]}},
-            '''
-    
-    print(json_str)
+    if stats:
+        if evos == 1:
+            for i in range(len(item_names[0])):
+                    json_str += f'"{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{}}]}},\n'
+        
+        if evos == 2:
+            for i in range(len(item_names[0])):
+                json_str += f'"{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{"{item_names[1][i]}": "{outfit_names[1]}"}}]}},\n'
+        
+        if evos == 2.5:
+            for i in range(len(item_names[0])):
+                json_str += f'''
+                "{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{
+                    "{item_names[1][i]}": "{outfit_names[1]}",
+                    "{item_names[2][i]}": "{outfit_names[2]}"
+                }}]}},
+                '''
+        
+        if evos == 4:
+            for i in range(len(item_names[0])):
+                json_str += f'''
+                "{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{
+                    "{item_names[1][i]}": "{outfit_names[1]}",
+                    "{item_names[2][i]}": "{outfit_names[2]}",
+                    "{item_names[3][i]}": "{outfit_names[3]}"
+                }}]}},
+                '''
+        if evos == 4.5:
+            for i in range(len(item_names[0])):
+                json_str += f'''
+                "{item_names[0][i]}": {{"Outfit": "{outfit_names[0]}", "Recolor": [{{
+                    "{item_names[1][i]}": "{outfit_names[1]}",
+                    "{item_names[2][i]}": "{outfit_names[2]}",
+                    "{item_names[3][i]}": "{outfit_names[3]}",
+                    "{item_names[4][i]}": "{outfit_names[4]}"
+                }}]}},
+                '''
+        
+        print(json_str)
 
 def scrape_outfit_pics():
     prev_name = ""
@@ -367,7 +368,7 @@ def scrape_recolor_pics():
     return names
 
 def clean_gu_csv():
-    input_file = './python/csv/unprocessed/1-7a-gu.csv'
+    input_file = './python/csv/unprocessed/1-7b-gu-fix.csv'
     output_file = './python/csv/unprocessed/gu.csv'
     with open(input_file, "r", encoding="utf-8") as f, open(output_file, "w", encoding="utf-8") as out:
         for line in f:
@@ -376,8 +377,9 @@ def clean_gu_csv():
 
 
 time.sleep(0.5)
-#get_evos(2.5)
-#single_item()
-clean_gu_csv()
+#get_evos(2.5, False)
+scrape_outfit_stats()
+#single_img()
+#clean_gu_csv()
 pg.moveTo(10, 10)
 winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS)

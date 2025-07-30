@@ -30,6 +30,7 @@ python/csv/
 python/json/
 python/sql/
 python/txt/
+python/sql_fix.py
 
 src/scripts/api/dump/
 src/scripts/api/api.py

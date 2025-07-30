@@ -291,7 +291,7 @@ def sort_details():
     df_sorted.to_csv(f'./python/csv/clothing_items_details.csv', index=False)
 
 # RUN GU FIX FIRST
-file = '1-7a'
+file = '1-7b'
 merge_csv(file)
 add_stats(file)
 add_style()
@@ -300,6 +300,6 @@ add_costs()
 add_labels()
 add_sources()
 add_banners()
-add_outfits_and_recolors_details()
-add_outfits_and_recolors_lvls()
+#add_outfits_and_recolors_details()
+#add_outfits_and_recolors_lvls()
 sort_details()
