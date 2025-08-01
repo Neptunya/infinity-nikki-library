@@ -14,23 +14,10 @@ hay_img = [1300, 403, 553, 332]
 source_offset = [60, 30, 420, 75]
 expand_items = [1650, 992]
 
-with open('./python/json/labels.json') as f:
-    labels_data = json.load(f)
-    
-with open('./python/json/source.json') as f:
-    source_data = json.load(f)
-
     
 def sc(name, vals): 
     pg.screenshot(f'./python/images/clothing_item_scraper/{name}.png', region=(vals[0], vals[1], vals[2], vals[3]))
     return name
-
-def add_unique_value(label, value):
-    if value not in labels_data["labels"][label]:
-        labels_data["labels"][label].append(value)
-        print(value)
-        with open('./python/json/labels.json', 'w') as f:
-            json.dump(labels_data, f, indent=4)
 
 def img_to_str_mod(n):
     file = f'./python/images/clothing_item_scraper/n.png'
@@ -121,7 +108,7 @@ def scrape_labels(label):
 stat_window = [1513, 228, 50, 19]
 stat_y_interval = 53
 stat_x_interval = 246
-gu_data = './python/csv/unprocessed/1-7b-gu-fix.csv'
+gu_data = './python/csv/unprocessed/1-8a-gu.csv'
 def get_glow_up_stats(n):
     r = [n, 11]
     n = 'gu_stat'
@@ -147,8 +134,8 @@ outfits_json = './python/json/outfits.json'
 def get_evos(evos, stats=True):
     outfit_names = []
     outfit_names.append(img_to_str(sc("name", name_box)))
-    evo_interval = 70
-    evo_start = [1201, 423]
+    evo_interval = 115
+    evo_start = [1197, 351]
     
     e = 0
     while e < evos - 1:
@@ -368,7 +355,7 @@ def scrape_recolor_pics():
     return names
 
 def clean_gu_csv():
-    input_file = './python/csv/unprocessed/1-7b-gu-fix.csv'
+    input_file = './python/csv/unprocessed/1-8a-gu.csv'
     output_file = './python/csv/unprocessed/gu.csv'
     with open(input_file, "r", encoding="utf-8") as f, open(output_file, "w", encoding="utf-8") as out:
         for line in f:
@@ -377,9 +364,8 @@ def clean_gu_csv():
 
 
 time.sleep(0.5)
-#get_evos(2.5, False)
-scrape_outfit_stats()
-#single_img()
+#get_evos(2.5)
+single_item()
 #clean_gu_csv()
 pg.moveTo(10, 10)
-winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS)
+#winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS)

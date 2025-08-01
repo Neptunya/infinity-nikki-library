@@ -26,4 +26,4 @@ def reorder_csv(input_file, output_file):
         writer.writeheader()
         writer.writerows(new_rows)
 
-reorder_csv('./python/csv/unprocessed/1-7b.csv', './python/csv/unprocessed/1-7b.csv')
+reorder_csv('./python/csv/unprocessed/1-8a-gu.csv', './python/csv/unprocessed/1-8a.csv')

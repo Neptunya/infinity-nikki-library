@@ -30,14 +30,13 @@ export default function MultipleSelectChipFilters() {
     ];
     
     const sources = [
-      "Resonance: In Tears, We Meet Again",
-      "Resonance: Blooming Fantasy",
-      "Resonance: Flight to Freedom",
-      "Resonance: The Mist's Call",
+      "Resonance: Inkwoven Bonds",
+      "Resonance: Palette of Destiny",
       'Resonance: Distant Sea',
       'Limited-Time Resonance',
       "Pear-Pal's Store",
-      'Event: When Blue Tears Overflow',
+      'Event: Fortune Sticks',
+      'Event: Fleeting Dreams',
       'Event Items',
       'Treasure Chest',
       'Styling Challenge',

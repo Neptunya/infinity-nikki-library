@@ -22,7 +22,7 @@ def add_stats(file):
     all_rows = []
     
     for _, row in df_temp.iterrows():
-        base_stats = {col: np.floor(row[col] / 6.2).astype(int) for col in stat_cols}
+        base_stats = {col: np.floor(int(row[col]) / 6.2).astype(int) for col in stat_cols}
         
         for level in range(12):
             new_row = row.copy()
@@ -291,7 +291,7 @@ def sort_details():
     df_sorted.to_csv(f'./python/csv/clothing_items_details.csv', index=False)
 
 # RUN GU FIX FIRST
-file = '1-7b'
+file = '1-8a'
 merge_csv(file)
 add_stats(file)
 add_style()
@@ -300,6 +300,6 @@ add_costs()
 add_labels()
 add_sources()
 add_banners()
-#add_outfits_and_recolors_details()
-#add_outfits_and_recolors_lvls()
+add_outfits_and_recolors_details()
+add_outfits_and_recolors_lvls()
 sort_details()
