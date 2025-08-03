@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/MarkdownGuideLayout.astro
-title: 'Pinnacle Contest Guide'
+title: 'Mira Crown Pinnacle Contest Guide'
 id: 'pinnacle-contest-md'
-lastUpdated: 07/21/2025
+lastUpdated: 08/01/2025
 description: 'Recommendations and F2P examples for how you can clear the current Mira Crown Pinnacle Contest.'
 authors: ['Neptunya']
 image: '/images/guides/pinnacle-contest/pinnacle_contest_banner.jpeg'
