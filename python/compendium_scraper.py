@@ -93,22 +93,14 @@ def single_item():
     get_glow_up_stats(name)
     sc(f'../../../public/images/items/{name}', img_box)
 
-def scrape_labels(label):
-    for i in range(4):
-        for j in range(3):
-            pg.screenshot('./python/images/clothing_item_scraper/name.png', region=(name_card[0] + (j * card_x_interval), name_card[1] + (i * card_y_interval), name_card[2], name_card[3]))
-            name = img_to_str_mod('name')
-            if name.strip():
-                add_unique_value(label, name)
-            else:
-                with open('./python/json/labels.json', 'w') as f:
-                    json.dump(labels_data, f, indent=4)
-                return 
+def single_stats():
+    name = img_to_str(sc("name", name_box))
+    get_glow_up_stats(name)
 
 stat_window = [1513, 228, 50, 19]
 stat_y_interval = 53
 stat_x_interval = 246
-gu_data = './python/csv/unprocessed/1-8a-gu.csv'
+gu_data = './python/csv/unprocessed/fix-gu.csv'
 def get_glow_up_stats(n):
     r = [n, 11]
     n = 'gu_stat'
@@ -355,7 +347,7 @@ def scrape_recolor_pics():
     return names
 
 def clean_gu_csv():
-    input_file = './python/csv/unprocessed/1-8a-gu.csv'
+    input_file = './python/csv/unprocessed/fix-gu.csv'
     output_file = './python/csv/unprocessed/gu.csv'
     with open(input_file, "r", encoding="utf-8") as f, open(output_file, "w", encoding="utf-8") as out:
         for line in f:
@@ -365,7 +357,7 @@ def clean_gu_csv():
 
 time.sleep(0.5)
 #get_evos(2.5)
-single_item()
+single_stats()
 #clean_gu_csv()
 pg.moveTo(10, 10)
 #winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS)

@@ -178,7 +178,7 @@ function renderDatabaseCard(item) {
         } 
     }
     
-    if (item['Source'].includes("endorsed")) {
+    if (item['Source'].includes("endorsed") && !item['Source'].includes("diamond")) {
         const unobMsg2 = document.createElement('p');
         unobMsg2.innerHTML += 'Paid';
         unobMsg2.classList.add('unobtainable-msg');
@@ -418,7 +418,7 @@ function renderTrackerCard(item) {
             }
         }
         
-        if (item['Source'].includes("premium")) {
+        if (item['Source'].includes("premium") && !item['Source'].includes("diamond")) {
             if (!document.getElementById('banner-br')) {
                 cardText.appendChild(br2);
                 br2.id = '';
